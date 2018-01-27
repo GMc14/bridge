@@ -1,0 +1,433 @@
+html {
+  overflow:hidden;
+}
+body {
+  height:100vh;
+  width:100vw;
+  margin:0;
+  font-family: "Trebuchet MS", Helvetica, sans-serif;
+  color: white;
+  background:
+    linear-gradient(27deg, #151515 5px, transparent 5px) 0 5px,
+    linear-gradient(207deg, #151515 5px, transparent 5px) 10px 0px,
+    linear-gradient(27deg, #222 5px, transparent 5px) 0px 10px,
+    linear-gradient(207deg, #222 5px, transparent 5px) 10px 5px,
+    linear-gradient(90deg, #1b1b1b 10px, transparent 10px),
+    linear-gradient(#1d1d1d 25%, #1a1a1a 25%, #1a1a1a 50%, transparent 50%, transparent 75%, #242424 75%, #242424);
+  background-color: #131313;
+  background-size: 20px 20px;
+}
+#bidOfRound {
+  position:absolute;
+  height:10%;
+  width:10%;
+  text-align: center;
+  top: 45%;
+  right:45%;
+}
+#legend_container {
+  position:absolute;
+  height:40%;
+  width:20%;
+  top:30%;
+  left:3%;
+  color:white;
+  text-align: center;
+  opacity:0.8;
+}
+#legend {
+  position:relative;
+  top:50%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+#legend>span {
+  position:static;
+  padding:5px;
+  margin:5px;
+  border-radius: 6px;
+  display:block;
+}
+#pass {
+  font-size: large;
+  position:absolute;
+  height:20%;
+  width:20%;
+  top:40%;
+  right:3%;
+}
+table {
+  margin-left: auto;
+  margin-right:auto;
+  table-layout: fixed;
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  background-color:white;
+  opacity: 0.8;
+  color:black;
+}
+td, th {
+  height:25px;
+  width:25px;
+  text-align:center;
+  border: 1px solid black;
+  padding: 5px;
+}
+.logo {
+  max-width: 100%;
+  max-height:100%;
+}
+#topbar {
+  display: block;
+  text-align:right;
+  font-weight: bold;
+  padding:5px
+}
+#gameBoard {
+  position: relative;
+  margin: 0;
+  height: 100%;
+  width: 100%;
+  box-sizing: border-box;
+}
+#playArea {
+  display: none;
+  position: absolute;
+  top: 15%;
+  left: 15%;
+  height: 65%;
+  width: 70%;
+  box-sizing: border-box;
+  border: 3px solid white;
+}
+.plays {
+  position: absolute;
+  height:23.1%;
+  width:35%;
+  box-sizing: border-box;
+  text-align: center;
+}
+.name {
+  height:7%;
+  width:25%;
+  position:absolute;
+  font-size: large;
+  text-align: center;
+}
+#rightName {
+  bottom:19%;
+  right: -12%;
+  transform:rotate(-90deg);
+}
+#acrossName {
+  right:0;
+  top:0;
+}
+#leftName {
+  top:19%;
+  left: -12%;
+  transform:rotate(90deg);
+}
+.stuff {
+  position: absolute;
+  display: block;
+  height: 8%;
+  width: 50%;
+  text-align:center;
+}
+#myStuff {
+  box-sizing: border-box;
+  bottom:5%;
+  left:25%;
+}
+#rightStuff {
+  box-sizing: border-box;
+  top: 46%;
+  right:-19%;
+  transform: rotate(-90deg);
+}
+#acrossStuff {
+  box-sizing: border-box;
+  top:5%;
+  left:25%;
+}
+#leftStuff {
+  box-sizing: border-box;
+  transform: rotate(90deg);
+  box-sizing: border-box;
+  top: 46%;
+  left:-19%;
+}
+#myPlay {
+  box-sizing: border-box;
+  bottom: 17%;
+  left: 32.5%;
+}
+#rightPlay {
+  box-sizing: border-box;
+  bottom: 38.45%;
+  right: 5%;
+  transform: rotate(-90deg);
+}
+#acrossPlay {
+  box-sizing: border-box;
+  top: 17%;
+  left: 32.5%;
+}
+#leftPlay {
+  box-sizing: border-box;
+  bottom: 38.45%;
+  left: 5%;
+  transform: rotate(90deg);
+}
+.winCount {
+  position:absolute;
+  height: 2%;
+  width: 2%;
+  text-align:center;
+  font-weight: bold;
+  line-height: 100%;
+}
+#myWin {
+  bottom:2%;
+  left:42.5%;
+  width:15%;
+}
+#rightWin {
+  bottom:49%;
+  right:1%;
+}
+#acrossWin {
+  top:1%;
+  left:42.5%;
+  width:15%;
+}
+#leftWin {
+  bottom:49%;
+  left:1%;
+}
+#gameSetup {
+  display: table;
+  position: absolute;
+  top: 27.5%;
+  left:30%;
+  height:40%;
+  width:40%;
+  box-sizing: border-box;
+  text-align:center;
+}
+#gameRecap {
+  height:100%;
+  width: 50%;
+  background-color:white;
+  color:black;
+  border: 2px solid black;
+  box-sizing: border-box;
+  margin-left:auto;
+  margin-right:auto;
+  font-size:large;
+  text-align: center;
+}
+#gameRecap>p {
+  font-size: large;
+}
+#gameRecap>button {
+  height:40%;
+  width:50%;
+  text-align:center;
+  background-color:black;
+  color:white;
+}
+#gameRecap>button:hover {
+  background-color: #ffccfa;
+  color: black;
+}
+.setupModule {
+  display: table-cell;
+  vertical-align: middle;
+}
+#roomID {
+  text-align:center;
+  margin:10px;
+}
+.gameButtons {
+  background-color: white;
+  color: black;
+  text-align:center;
+  font-size:medium;
+  margin: 0px 0px 0px 10px;
+  border-radius: 4px;
+  transition-duration:0.2s;
+}
+.gameButtons:hover{
+  background-color: #435078;
+  color: white;
+}
+.playerBtns {
+  background-color:white;
+  color:black;
+  text-align: center;
+  font-size: large;
+  margin: 5px;
+  border-radius:4px;
+  transition-duration:0.1s;
+}
+.playerBtns:hover {
+  box-shadow: 0px 0px 15px red;
+}
+.myPlayer {
+  display:block;
+  position:absolute;
+  height:15%;
+  width:100%;
+  bottom: 2%;
+  /*margin:auto;
+  height: 100%;*/
+  text-align:center;
+  box-sizing: border-box;
+}
+p {
+  font-size: xx-large;
+}
+.otherPlayers {
+  position: absolute;
+  display: block;
+  height: 8%;
+  width: 50%;
+  text-align:center;
+}
+#PlayerRight {
+  top: 46%;
+  right:-22%;
+  transform: rotate(-90deg);
+  box-sizing: border-box;
+}
+#PlayerAcross {
+  top:4%;
+  left:25%;
+  box-sizing: border-box;
+}
+#PlayerLeft {
+  top: 46%;
+  left:-22%;
+  transform: rotate(90deg);
+  box-sizing: border-box;
+}
+.myCards {
+  display:inline-block;
+  background-color:white;
+  height: 100%;
+  margin:0px 2px;
+  border-radius:6px;
+  transition-duration: 0.1s;
+}
+.myCards:hover {
+  box-shadow: 0px 0px 15px red;
+}
+.otherCards {
+  display:inline-block;
+  background-color:white;
+  height: 100%;
+  margin:0px -5px;
+  border-radius:8px;
+  box-sizing: border-box;
+}
+#chat {
+  position:absolute;
+  bottom:0%;
+  right:0;
+  height:60%;
+  width:25%;
+  padding:0;
+  pointer-events: none;
+}
+#chatBox {
+  position:static;
+  display: flex;
+  flex-direction: column-reverse;
+  height:100%;
+  width:100%;
+  color:black;
+  font-size: small;
+}
+#boxTop {
+  pointer-events: auto;
+  position:relative;
+  background-color:#435078;
+  height:7%;
+  width:100%;
+  border: 1px solid black;
+  text-align:right;
+  color:white;
+  font-size: 100%;
+}
+#boxBottom {
+  pointer-events: auto;
+  display:none;
+  position:relative;
+  border: 1px solid black;
+  background-color: white;
+  height:93%;
+  width:100%;
+}
+#msgBox{
+  pointer-events: auto;
+  font-size: small;
+  padding:5px;
+  box-sizing: border-box;
+  position:absolute;
+  top:0;
+  height:80%;
+  display:block;
+  width:100%;
+  overflow: scroll;
+  overflow-x: hidden;
+}
+#txtBox {
+  pointer-events: auto;
+  position:absolute;
+  bottom:0;
+  height:20%;
+  display:block;
+  width:100%;
+  text-align:center;
+}
+#textArea {
+  pointer-events: auto;
+  height:100%;
+  width:96%
+}
+#boxTop>.closeBtn {
+  pointer-events: auto;
+  display:inline-block;
+  height:100%;
+  padding:2%;
+  box-sizing: border-box;
+}
+
+
+.loading {
+  font-size: 20px;
+}
+.loading:after {
+  overflow: hidden;
+  display: inline-block;
+  vertical-align: bottom;
+  -webkit-animation: ellipsis steps(4,end) 900ms infinite;
+  animation: ellipsis steps(4,end) 900ms infinite;
+  content: "\2026"; /* ascii code for the ellipsis character */
+  width: 0px;
+}
+
+@keyframes ellipsis {
+  to {
+    width: 1.25em;
+  }
+}
+
+@-webkit-keyframes ellipsis {
+  to {
+    width: 1.25em;
+  }
+}
