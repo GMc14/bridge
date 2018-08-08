@@ -1,14 +1,15 @@
 var http = require("http"),
     socketio = require("socket.io"),
     fs = require("fs"),
-    path = require("path");
+    path = require("path"),
+    PORT = process.env.PORT || 1234;
 
 var server = http.createServer(function(req, res) {
 
   var filePath = req.url;
 
   if (filePath == '/') {
-    filePath = './main.html';
+    filePath = './index.html';
   }
 
   filePath = "./"+filePath;
@@ -41,7 +42,7 @@ var server = http.createServer(function(req, res) {
 
   });
 
-}).listen(1234);
+}).listen(PORT);
 console.log("server running on Port 1234");
 
 var nextPlayer = {"Player1":"Player2", "Player2":"Player3", "Player3":"Player4", "Player4":"Player1"};

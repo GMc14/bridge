@@ -25,6 +25,9 @@ body {
   top: 45%;
   right:45%;
 }
+.bidCell:hover {
+  border: 2px solid greenyellow;
+}
 #legend_container {
   position:absolute;
   height:40%;
