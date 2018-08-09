@@ -8,9 +8,9 @@ Viewable @ http://play-bridge.herokuapp.com/
 ```
 npm install
 ```
-Node V10.8.0 <br />
-Nodemon V1.18.3 <br />
-Socket.IO V2.1.1 <br />
+Node v10.8.0 <br />
+Nodemon v1.18.3 <br />
+Socket.IO v2.1.1 <br />
 
 
 ### How to Run: 
