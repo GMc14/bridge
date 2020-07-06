@@ -104,7 +104,7 @@ function displayCards() {
   displayOtherCards(Player2);
   displayOtherCards(Player3);
   displayOtherCards(Player4);
-  displayOtherCards(Player5);
+  //displayOtherCards(Player5);
   
   //Display My Cards
   var hand = document.getElementById("myPlayer");
