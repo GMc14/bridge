@@ -3,6 +3,7 @@ var roomID;
 var nickname;
 var pLeft;
 var playerNum;
+var game_playerCount=3;
 var numRounds=0;
 var player1NN, player2NN, player3NN, player4NN;
 
@@ -280,7 +281,7 @@ function clearSetupModule() {
 
 function joinRoom() {
   roomID = $("#roomID").val();
-  pLeft = 4;
+  pLeft = game_playerCount;
   if (roomID == '') {
     alert('RoomID must be 1-4 characters long');
   }
