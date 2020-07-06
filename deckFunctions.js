@@ -9,7 +9,7 @@ var ranks = new Array(2,3,4,5,6,7,8,9,10,11,12,13,14);
 var suits = new Array("C", "D", "H", "S");
 var cardback = "card_imgs/cardback.png";
 
-var Player1 =[], Player2 = [], Player3 = [], Player4 = [], Player5 = [];
+
 
 function Card(suit,rank) {
   this.suit = suit;
@@ -101,9 +101,10 @@ function sortHand() {
 
 function displayCards() {
   //Other people's cards
-  displayOtherCards(Player2);
-  displayOtherCards(Player3);
-  displayOtherCards(Player4);
+  for (var j = 0; j < gameConfig_startCardsPerPlayer-1; j++) {
+    displayOtherCards(j);
+  }
+  
   //displayOtherCards(Player5);
   
   //Display My Cards
@@ -126,20 +127,16 @@ function displayCards() {
   reset_dimensions();
 }
 
-function displayOtherCards(player) {
+function displayOtherCards(playerIndex) {
   var hand;
-  if (player==Player2) {
+  if (playerIndex==0) {
     hand = document.getElementById("PlayerRight");
-  }
-  else if (player==Player3) {
+  } else if (playerIndex==1) {
     hand = document.getElementById("PlayerAcross");
-  }
-  if (player==Player4) {
+  } else if (playerIndex==2) {
     hand = document.getElementById("PlayerLeft");
   }
-  if (player==Player5) {
-    hand = document.getElementById("PlayerOtherAcross");
-  }
+
   while (hand.firstChild) {
     hand.removeChild(hand.firstChild);
   }
