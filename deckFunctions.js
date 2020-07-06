@@ -140,7 +140,7 @@ function displayOtherCards(playerIndex) {
   while (hand.firstChild) {
     hand.removeChild(hand.firstChild);
   }
-  for (var i=0; i<player.length; i++) {
+  for (var i=0; i<7; i++) { //FIXME:hardcoded opponent hand size
     var card = document.createElement("div");
     card.setAttribute("class","otherCards");
     $(".cardback:eq(0)").clone().show().appendTo(card);
