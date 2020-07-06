@@ -27,7 +27,7 @@ $(function() {
       }
   });
   socketio.on('wait4Players', function(numPlayers) {
-    if (numPlayers<4) {
+    if (numPlayers<3) {
       waitRoom(numPlayers);
     }
     else {
