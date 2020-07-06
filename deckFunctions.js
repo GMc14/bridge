@@ -1,13 +1,15 @@
+//Game Config
+var gameConfig_playerCount = 3;
+var gameConfig_isBridge = false;
+var gameConfig_startCardsPerPlayer = 5;
+
 //Variables
 var deck = [];
 var ranks = new Array(2,3,4,5,6,7,8,9,10,11,12,13,14);
 var suits = new Array("C", "D", "H", "S");
 var cardback = "card_imgs/cardback.png";
 
-var Hand1 = [], Hand2 = [], Hand3 = [], Hand4 = [];
-var Hand1Value = 0, Hand2Value = 0, Hand3Value = 0, Hand4Value=0;
-
-var Player1 =[], Player2 = [], Player3 = [], Player4 = [];
+var Player1 =[], Player2 = [], Player3 = [], Player4 = [], Player5 = [];
 
 function Card(suit,rank) {
   this.suit = suit;
@@ -57,30 +59,25 @@ function shuffle() {
     deck = shuffled;
 }
 
+
 function dealCards() {
-  Hand1 = []; Hand2 = []; Hand3 = []; Hand4 = [];
-
-  while(deck.length>0) {
-    Hand1Value += cardValue(deck[deck.length-1]);
-    Hand1.push(deck.pop());
-
-    Hand2Value += cardValue(deck[deck.length-1]);
-    Hand2.push(deck.pop());
-
-    Hand3Value += cardValue(deck[deck.length-1]);
-    Hand3.push(deck.pop());
-
-    Hand4Value += cardValue(deck[deck.length-1]);
-    Hand4.push(deck.pop());
+  //TODO: vary by player count and cards dealt per player
+  var hands=[];
+  var handValues=[];
+  for (var i = 0; i < gameConfig_playerCount; i++) {
+    hands[i]=[];
+    handValues[i]=0;
+    for (var j = 0; j < gameConfig_startCardsPerPlayer; j++) {
+        handValues[i] += cardValue(deck[deck.length-1]);
+        hands[i].push(deck.pop());
+    }
+    if(gameConfig_isBridge && handValues[i] < 4){
+        shuffle();
+        dealCards();
+        return;
+    }
   }
-
-  if ((Hand1Value < 4)||(Hand2Value < 4)||(Hand3Value < 4)||(Hand4Value < 4)) {
-    shuffle();
-    dealCards();
-  }
-  else {
-  socketio.emit('dealCards', {Hand1:Hand1,Hand2:Hand2, Hand3:Hand3, Hand4:Hand4, roomID:roomID});
-}
+  socketio.emit('dealCards', {Hand1:hands[0],Hand2:hands[1], Hand3:hands[2], Hand4:hands[3], roomID:roomID});
 }
 
 function cardValue(card) {
@@ -107,7 +104,8 @@ function displayCards() {
   displayOtherCards(Player2);
   displayOtherCards(Player3);
   displayOtherCards(Player4);
-
+  displayOtherCards(Player5);
+  
   //Display My Cards
   var hand = document.getElementById("myPlayer");
   while (hand.firstChild) {
@@ -138,6 +136,9 @@ function displayOtherCards(player) {
   }
   if (player==Player4) {
     hand = document.getElementById("PlayerLeft");
+  }
+  if (player==Player5) {
+    hand = document.getElementById("PlayerOtherAcross");
   }
   while (hand.firstChild) {
     hand.removeChild(hand.firstChild);
