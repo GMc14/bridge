@@ -4,8 +4,10 @@ var currentBidder;
 var currentBid;
 var passCount;
 
-function listenToBids() {
-    $('#pass').click(function() {
+function listenToBids() {        
+    console.log("GMcCards-bidFunctions.js-listenToBids-#0000");
+    $('#pass').click(function() {        
+    console.log("GMcCards-bidFunctions.js-passClick-#0000");
       if (playerNum==currentBidder) {
         var pass = confirm('Pass');
         if (pass) {
@@ -16,7 +18,8 @@ function listenToBids() {
         alert("Not your turn to bid!");
       }
   });
-  $(".bidCell").click(function(e) {
+  $(".bidCell").click(function(e) {        
+    console.log("GMcCards-bidFunctions.js-bidCellClick-#0000");
     var id = $(this).attr('id');
     if (e.which){
       if (playerNum == currentBidder) {
@@ -42,7 +45,8 @@ function listenToBids() {
   });
 }
 
-function disablePrevCells(row, col) {
+function disablePrevCells(row, col) {        
+console.log("GMcCards-bidFunctions.js-disablePrevCells-#0000");
   var table = document.getElementById("bidTable");
   var colLength = table.rows[0].cells.length;
 
