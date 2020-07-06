@@ -373,8 +373,8 @@ function playerSelect() {
     $(".playerBtns").on("click", function() {
       playerNum = $(this).attr('id');
       nickname = String($("#nickname").val());
-      if (nickname =='') {
-        alert('Pick a Nickname!');
+      if (nickname == '' || nickname == player1NN || nickname == player2NN || nickname == player3NN || nickname == player4NN) {
+        alert('Pick a unique Nickname!');
       }
       else {
         $("#playerSetup").hide();
