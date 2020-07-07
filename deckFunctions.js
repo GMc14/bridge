@@ -137,7 +137,7 @@ function displayOtherCards(playerIndex) {
     hand = document.getElementById("PlayerLeft");
   }
 
-  while (hand.firstChild) {
+  while (hand && hand.firstChild) {
     hand.removeChild(hand.firstChild);
   }
   for (var i=0; i<7; i++) { //FIXME:hardcoded opponent hand size
