@@ -4,10 +4,9 @@ var nickname;
 var pLeft;
 var playerNum;
 var game_playerCount=3;
+var gameConfig_bidForTrump=false;
 var numRounds=0;
 var player1NN, player2NN, player3NN, player4NN;
-
-
 
 $(function() {
   $('#restartGame').on('click',function() {
@@ -127,12 +126,23 @@ $(function() {
     }
     sortHand();
     displayCards();
-    currentBidder = nextPlayer[dealer];
-    listenToBids();
     $(".setupModule").hide();
-    $("#bidArea").show();
-    if (playerNum==currentBidder) {
-      alert("Your Turn to Bid");
+    if(gameConfig_bidForTrump) {
+      currentBidder = nextPlayer[dealer];
+      listenToBids();
+      $("#bidArea").show();
+      if (playerNum==currentBidder) {
+        alert("Your Turn to Bid");
+      }
+    } else {
+        trumpSuit = '';
+        handsNeeded = 3;
+        currentPlayer = nextPlayer[dealer];
+        lead = currentPlayer;
+        if (playerNum == currentPlayer) {
+          alert("You lead");
+        }
+        $('#bidOfRound').show();
     }
   });
   socketio.on('cardPlayed', function(data) {
