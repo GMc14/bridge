@@ -31,12 +31,16 @@ function checkLegal(cardID) {
 function winRound() {
   console.log("GMcCards-rules.js-winRound-#0000");
   var myCard = $("#myPlay");
-  var rightCard = $("#rightPlay");
-  var acrossCard = $("#acrossPlay");
-  var leftCard = $("#leftPlay");
 
-  if (compareCard(myCard, rightCard) && compareCard(myCard, acrossCard) && compareCard(myCard, leftCard)) {
+  var isWinner = true;
 
+  $(".plays").each(function(){
+    if(!compareCard(myCard, $(this))){
+      isWinner=false;
+    }
+  });
+
+  if (isWinner) {
     console.log("GMcCards-rules.js-winRound-#0300");
     addWin("myStuff");
     roundWins++;
@@ -47,8 +51,14 @@ function winRound() {
   }
 
   function compareCard(card1, card2) {
-
     console.log("GMcCards-rules.js-compareCard-#0000");
+    if(!card1.find("img").attr("id")){
+      return false;
+    }
+    if(!card2.find("img").attr("id")){
+      return true;
+    }
+    console.log("GMcCards-rules.js-compareCard-#0500"+ JSON.stringify(card1)+ " vs. "+ JSON.stringify(card2));
     var card1ID = card1.find("img").attr("id").slice(0, -4);
     var card2ID = card2.find("img").attr("id").slice(0, -4);
     var win = 1;
