@@ -1,7 +1,5 @@
 var dealer = "Player1";
 var currentPlayer;
-var nextPlayer = {"Player1":"Player2", "Player2":"Player3", "Player3":"Player4", "Player4":"Player1"};
-var prevPlayer = {"Player1":"Player4", "Player2":"Player1", "Player3":"Player2", "Player4":"Player3"};
 var lead;
 var leadSuit;
 var trumpSuit;

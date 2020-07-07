@@ -45,8 +45,6 @@ var server = http.createServer(function(req, res) {
 }).listen(PORT);
 console.log("server running on Port 1234");
 
-var nextPlayer = {"Player1":"Player2", "Player2":"Player3", "Player3":"Player4", "Player4":"Player1"};
-
 var io = socketio.listen(server);
 io.sockets.on('connection', function(socket) {
   socket.on('create', function(room) {
