@@ -3,21 +3,17 @@ var roomID;
 var nickname;
 var pLeft;
 var playerNum;
+
 var game_playerCount = 3;
 var gameConfig_bidForTrump = false;
-var numRounds = 0;
+var gameConfig_isBridge = false;
+var gameConfig_hasTeams = false;
+var gameConfig_numberOfRounds = 13;
+
+var roundNumber = 0;
 var playerNickNames = ['', '', '', ''];
 var playersArray = ["Player1", "Player2", "Player3"];
 
-function nextPlayer(currPlayer) {
-    var i = playersArray.indexOf(currPlayer);
-    return playersArray[i == playersArray.length - 1 ? 0 : i + 1];
-}
-
-function prevPlayer(currPlayer) {
-    var i = playersArray.indexOf(currPlayer);
-    return playersArray[i == 0 ? playersArray.length - 1 : i - 1];
-}
 $(function () {
     $('#restartGame').on('click', function () {
         socketio.emit('restartGame');
@@ -111,6 +107,40 @@ $(function () {
 
         startGame();
     });
+    socketio.on('some1Bid', function (data) {
+        passCount = 0;
+        currentBidder = nextPlayer(currentBidder);
+        currentBid = data.bid;
+        otherColor = data.color;
+        $('#' + data.bid).trigger('click');
+        if (playerNum == currentBidder) {
+            alert("Your Turn to Bid");
+        }
+    });
+    socketio.on('some1Passed', function () {
+        passCount++;
+        if (passCount == 4) {
+            $('#bidOfRound').html('<b>' + currentBidder + ": " + currentBid + '</b>');
+            trumpSuit = currentBid.charAt(1);
+            if (playerNum == currentBidder || playerNum == nextPlayer(nextPlayer(currentBidder))) {
+                handsNeeded = 6 + Number(currentBid.charAt(0));
+            } else {
+                handsNeeded = 14 - (6 + Number(currentBid.charAt(0)));
+            }
+            currentPlayer = nextPlayer(currentBidder);
+            lead = currentPlayer;
+            $('#bidArea').hide();
+            if (playerNum == currentPlayer) {
+                alert("You lead");
+            }
+            $('#bidOfRound').show();
+        } else {
+            currentBidder = nextPlayer(currentBidder);
+            if (playerNum == currentBidder) {
+                alert("Your Turn to Bid");
+            }
+        }
+    });
     socketio.on('deal', function (data) {
         var Hand1 = data.Hand1;
         var Hand2 = data.Hand2;
@@ -176,42 +206,13 @@ $(function () {
             $(".plays").empty();
         }
         switch (true) {
-            case ((playerNum == "Player1") && (player == "Player2")):
+            case (nextPlayer(playerNum)==player):
                 othersPlayed("leftPlay", card);
                 break;
-            case ((playerNum == "Player1") && (player == "Player3")):
+            case (game_playerCount == 4 && nextPlayer(nextPlayer(playerNum))==player):
                 othersPlayed("acrossPlay", card);
                 break;
-            case ((playerNum == "Player1") && (player == "Player4")):
-                othersPlayed("rightPlay", card);
-                break;
-
-            case ((playerNum == "Player2") && (player == "Player3")):
-                othersPlayed("leftPlay", card);
-                break;
-            case ((playerNum == "Player2") && (player == "Player4")):
-                othersPlayed("acrossPlay", card);
-                break;
-            case ((playerNum == "Player2") && (player == "Player1")):
-                othersPlayed("rightPlay", card);
-                break;
-
-            case ((playerNum == "Player3") && (player == "Player4")):
-                othersPlayed("leftPlay", card);
-                break;
-            case ((playerNum == "Player3") && (player == "Player1")):
-                othersPlayed("acrossPlay", card);
-                break;
-            case ((playerNum == "Player3") && (player == "Player2")):
-                othersPlayed("rightPlay", card);
-                break;
-            case ((playerNum == "Player4") && (player == "Player1")):
-                othersPlayed("leftPlay", card);
-                break;
-            case ((playerNum == "Player4") && (player == "Player2")):
-                othersPlayed("acrossPlay", card);
-                break;
-            case ((playerNum == "Player4") && (player == "Player3")):
+            case (prevPlayer(playerNum)==player):
                 othersPlayed("rightPlay", card);
                 break;
             default:
@@ -227,7 +228,7 @@ $(function () {
         currentPlayer = nextPlayer(currentPlayer);
     });
     socketio.on('winnerOfRound', function (player) {
-        numRounds++;
+        roundNumber++;
         lead = player;
         currentPlayer = player;
         switch (true) {
@@ -279,42 +280,8 @@ $(function () {
                 break;
         }
 
-        if (numRounds == 13) {
+        if (roundNumber == gameConfig_numberOfRounds) {
             calculateWinner();
-        }
-    });
-    socketio.on('some1Bid', function (data) {
-        passCount = 0;
-        currentBidder = nextPlayer(currentBidder);
-        currentBid = data.bid;
-        otherColor = data.color;
-        $('#' + data.bid).trigger('click');
-        if (playerNum == currentBidder) {
-            alert("Your Turn to Bid");
-        }
-    });
-    socketio.on('some1Passed', function () {
-        passCount++;
-        if (passCount == 4) {
-            $('#bidOfRound').html('<b>' + currentBidder + ": " + currentBid + '</b>');
-            trumpSuit = currentBid.charAt(1);
-            if (playerNum == currentBidder || playerNum == nextPlayer(nextPlayer(currentBidder))) {
-                handsNeeded = 6 + Number(currentBid.charAt(0));
-            } else {
-                handsNeeded = 14 - (6 + Number(currentBid.charAt(0)));
-            }
-            currentPlayer = nextPlayer(currentBidder);
-            lead = currentPlayer;
-            $('#bidArea').hide();
-            if (playerNum == currentPlayer) {
-                alert("You lead");
-            }
-            $('#bidOfRound').show();
-        } else {
-            currentBidder = nextPlayer(currentBidder);
-            if (playerNum == currentBidder) {
-                alert("Your Turn to Bid");
-            }
         }
     });
     socketio.on('message', function (data) {
@@ -327,6 +294,16 @@ $(function () {
         $('#boxBottom').show();
     });
 });
+
+function nextPlayer(currPlayer) {
+    var i = playersArray.indexOf(currPlayer);
+    return playersArray[i == playersArray.length - 1 ? 0 : i + 1];
+}
+
+function prevPlayer(currPlayer) {
+    var i = playersArray.indexOf(currPlayer);
+    return playersArray[i == 0 ? playersArray.length - 1 : i - 1];
+}
 
 function clearSetupModule() {
     var setupModule = document.getElementsByClassName("setupModule")[0];
@@ -430,16 +407,16 @@ function playerSelect() {
             $('#chat').show();
             switch (playerNum) {
                 case 'Player1':
-                    playerColor = '#5642f4';
+                    playerColor = '#550099';
                     break;
                 case 'Player2':
-                    playerColor = '#e00d10';
+                    playerColor = '#116600';
                     break;
                 case 'Player3':
-                    playerColor = '#123496';
+                    playerColor = '#003399';
                     break;
                 case 'Player4':
-                    playerColor = '#75221f';
+                    playerColor = '#771100';
                     break;
             }
         }
@@ -465,7 +442,7 @@ function calculateWinner() {
     $('#wins').html('<b>YOU WON:</b> ' + roundWins + ' hands');
     refreshTeamWins(win);
     dealer = nextPlayer(dealer);
-    currentPlayer = '', lead = '', leadSuit = '', trumpSuit = '', handsNeeded = '', roundWins = 0, numRounds = 0;
+    currentPlayer = '', lead = '', leadSuit = '', trumpSuit = '', handsNeeded = '', roundWins = 0, roundNumber = 0;
     $('#gameRecap').show();
 }
 
