@@ -369,54 +369,40 @@ function playerModule() {
     clearSetupModule();
     var playerSetup = document.createElement("div");
     playerSetup.setAttribute("id", "playerSetup");
+
     var nickname = document.createElement("input");
     nickname.setAttribute("type", "text");
     nickname.setAttribute("id", "nickname");
-    //create buttons for Player Selection
-    var Player1 = document.createElement("input");
-    Player1.setAttribute("type", "button");
-    Player1.setAttribute("id", "Player1");
-    Player1.setAttribute("class", "playerBtns");
-    Player1.setAttribute("value", "Player 1");
-
-    var Player2 = document.createElement("input");
-    Player2.setAttribute("type", "button");
-    Player2.setAttribute("id", "Player2");
-    Player2.setAttribute("class", "playerBtns");
-    Player2.setAttribute("value", "Player 2");
-
-    var Player3 = document.createElement("input");
-    Player3.setAttribute("type", "button");
-    Player3.setAttribute("id", "Player3");
-    Player3.setAttribute("class", "playerBtns");
-    Player3.setAttribute("value", "Player 3");
-
-    var Player4 = document.createElement("input");
-    Player4.setAttribute("type", "button");
-    Player4.setAttribute("id", "Player4");
-    Player4.setAttribute("class", "playerBtns");
-    Player4.setAttribute("value", "Player 4");
-
     var span1 = document.createElement("span");
-    var span2 = document.createElement("span");
-
     span1.appendChild(document.createTextNode("NICKNAME:"));
-    span2.appendChild(document.createTextNode("SELECT PLAYER: (TEAMS: 1and3 & 2and4)"));
 
+    var teamInfo='';
+    if(gameConfig_isBridge|| gameConfig_hasTeams){
+        teamInfo = "(TEAMS: 1 & 3 and 2 & 4)"
+    }
+    var span2 = document.createElement("span");
+    span2.appendChild(document.createTextNode("SELECT PLAYER: "+teamInfo));
+    playerSetup.appendChild(span2);
+    
     playerSetup.appendChild(span1);
     playerSetup.appendChild(document.createElement("br"));
     playerSetup.appendChild(nickname);
     playerSetup.appendChild(document.createElement("br"));
     playerSetup.appendChild(document.createElement("br"));
-    playerSetup.appendChild(span2);
-    playerSetup.appendChild(document.createElement("br"));
-    playerSetup.appendChild(Player1);
-    playerSetup.appendChild(document.createElement("br"));
-    playerSetup.appendChild(Player2);
-    playerSetup.appendChild(document.createElement("br"));
-    playerSetup.appendChild(Player3);
-    playerSetup.appendChild(document.createElement("br"));
-    playerSetup.appendChild(Player4);
+
+
+    for (var j = 1; j <= game_playerCount; j++) {
+
+        var currPlayer = document.createElement("input");
+        currPlayer.setAttribute("type", "button");
+        currPlayer.setAttribute("id", "Player"+j);
+        currPlayer.setAttribute("class", "playerBtns");
+        currPlayer.setAttribute("value", "Player "+j);
+
+        playerSetup.appendChild(document.createElement("br"));
+        playerSetup.appendChild(currPlayer);
+    }
+
     $(".setupModule:eq(0)").append(playerSetup);
     playerSelect();
 }
@@ -425,7 +411,7 @@ function playerSelect() {
     $(".playerBtns").on("click", function () {
         playerNum = $(this).attr('id');
         nickname = String($("#nickname").val());
-        if (nickname == '' || nickname == player1NN || nickname == player2NN || nickname == player3NN || nickname == player4NN) {
+        if (nickname == '' || playerNickNames.indexOf(nickname) > -1) {
             alert('Pick a unique Nickname!');
         } else {
             $("#playerSetup").hide();
