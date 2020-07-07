@@ -6,8 +6,17 @@ var playerNum;
 var game_playerCount = 3;
 var gameConfig_bidForTrump = false;
 var numRounds = 0;
-var player1NN, player2NN, player3NN, player4NN;
+var playerNickNames = ['','','',''];
+var playersArray=["Player1","Player2","Player3"];
 
+function nextPlayer(currPlayer) {    
+    var i=playersArray.indexOf(currPlayer);
+    return playersArray[i==playersArray.length-1?0:i+1];
+}
+function prevPlayer(currPlayer) {
+    var i=playersArray.indexOf(currPlayer);
+    return playersArray[i==0?playersArray.length-1:i-1];
+}
 $(function () {
     $('#restartGame').on('click', function () {
         socketio.emit('restartGame');
@@ -30,7 +39,7 @@ $(function () {
         }
     });
     socketio.on('wait4Players', function (numPlayers) {
-        if (numPlayers < 3) {
+        if (numPlayers < game_playerCount) {
             waitRoom(numPlayers);
         } else {
             playerModule();
@@ -47,19 +56,19 @@ $(function () {
         if (player == 'Player1') {
             $("#Player1").remove();
             $("#myPlayer").append($("<p></p>").text(nickname));
-            player1NN = nickname;
+            playerNickNames[0] = nickname;
         } else if (player == 'Player2') {
             $("#Player2").remove();
             $("#PlayerLeft").append($("<p></p>").text(nickname));
-            player2NN = nickname;
+            playerNickNames[1] = nickname;
         } else if (player == 'Player3') {
             $("#Player3").remove();
             $("#PlayerAcross").append($("<p></p>").text(nickname));
-            player3NN = nickname;
+            playerNickNames[2] = nickname;
         } else {
             $("#Player4").remove();
             $("#PlayerRight").append($("<p></p>").text(nickname));
-            player4NN = nickname;
+            playerNickNames[3] = nickname;
         }
     });
     socketio.on('leftInGame', function (nickname) {
@@ -70,24 +79,24 @@ $(function () {
         $("#playArea").show();
         switch (playerNum) {
             case 'Player1':
-                $('#leftName').html('Player2: ' + player2NN);
-                $('#acrossName').html('Player 3: ' + player3NN);
-                $('#rightName').html('Player 4: ' + player4NN);
+                $('#leftName').html('Player2: ' + playerNickNames[1]);
+                $('#acrossName').html('Player 3: ' + playerNickNames[2]);
+                $('#rightName').html('Player 4: ' + playerNickNames[3]);
                 break;
             case 'Player2':
-                $('#leftName').html('Player 3: ' + player3NN);
-                $('#acrossName').html('Player 4: ' + player4NN);
-                $('#rightName').html('Player 1: ' + player1NN);
+                $('#leftName').html('Player 3: ' + playerNickNames[2]);
+                $('#acrossName').html('Player 4: ' + playerNickNames[3]);
+                $('#rightName').html('Player 1: ' + playerNickNames[0]);
                 break;
             case 'Player3':
-                $('#leftName').html('Player 4: ' + player4NN);
-                $('#acrossName').html('Player 1: ' + player1NN);
-                $('#rightName').html('Player 2: ' + player2NN);
+                $('#leftName').html('Player 4: ' + playerNickNames[3]);
+                $('#acrossName').html('Player 1: ' + playerNickNames[0]);
+                $('#rightName').html('Player 2: ' + playerNickNames[1]);
                 break;
             case 'Player4':
-                $('#leftName').html('Player 1: ' + player1NN);
-                $('#acrossName').html('Player 2: ' + player2NN);
-                $('#rightName').html('Player 3: ' + player3NN);
+                $('#leftName').html('Player 1: ' + playerNickNames[0]);
+                $('#acrossName').html('Player 2: ' + playerNickNames[1]);
+                $('#rightName').html('Player 3: ' + playerNickNames[2]);
                 break;
         }
         startGame();
@@ -141,7 +150,7 @@ $(function () {
         displayCards();
         $(".setupModule").hide();
         if (gameConfig_bidForTrump) {
-            currentBidder = nextPlayer[dealer];
+            currentBidder = nextPlayer(dealer);
             listenToBids();
             $("#bidArea").show();
             if (playerNum == currentBidder) {
@@ -150,7 +159,7 @@ $(function () {
         } else {
             trumpSuit = '';
             handsNeeded = 3;
-            currentPlayer = nextPlayer[dealer];
+            currentPlayer = nextPlayer(dealer);
             lead = currentPlayer;
             if (playerNum == currentPlayer) {
                 alert("You lead");
@@ -210,11 +219,11 @@ $(function () {
         if (currentPlayer == lead) {
             leadSuit = card.charAt(0);
         }
-        if (nextPlayer[currentPlayer] == lead) {
+        if (nextPlayer(currentPlayer) == lead) {
             winRound();
         }
 
-        currentPlayer = nextPlayer[currentPlayer];
+        currentPlayer = nextPlayer(currentPlayer);
     });
     socketio.on('winnerOfRound', function (player) {
         numRounds++;
@@ -275,7 +284,7 @@ $(function () {
     });
     socketio.on('some1Bid', function (data) {
         passCount = 0;
-        currentBidder = nextPlayer[currentBidder];
+        currentBidder = nextPlayer(currentBidder);
         currentBid = data.bid;
         otherColor = data.color;
         $('#' + data.bid).trigger('click');
@@ -288,12 +297,12 @@ $(function () {
         if (passCount == 4) {
             $('#bidOfRound').html('<b>' + currentBidder + ": " + currentBid + '</b>');
             trumpSuit = currentBid.charAt(1);
-            if (playerNum == currentBidder || playerNum == nextPlayer[nextPlayer[currentBidder]]) {
+            if (playerNum == currentBidder || playerNum == nextPlayer(nextPlayer(currentBidder))) {
                 handsNeeded = 6 + Number(currentBid.charAt(0));
             } else {
                 handsNeeded = 14 - (6 + Number(currentBid.charAt(0)));
             }
-            currentPlayer = nextPlayer[currentBidder];
+            currentPlayer = nextPlayer(currentBidder);
             lead = currentPlayer;
             $('#bidArea').hide();
             if (playerNum == currentPlayer) {
@@ -301,7 +310,7 @@ $(function () {
             }
             $('#bidOfRound').show();
         } else {
-            currentBidder = nextPlayer[currentBidder];
+            currentBidder = nextPlayer(currentBidder);
             if (playerNum == currentBidder) {
                 alert("Your Turn to Bid");
             }
@@ -468,7 +477,7 @@ function calculateWinner() {
     $('#gameBid').html('<b>BID:</b> ' + currentBid + ' (' + currentBidder + ')');
     $('#wins').html('<b>YOU WON:</b> ' + roundWins + ' hands');
     refreshTeamWins(win);
-    dealer = nextPlayer[dealer];
+    dealer = nextPlayer(dealer);
     currentPlayer = '', lead = '', leadSuit = '', trumpSuit = '', handsNeeded = '', roundWins = 0, numRounds = 0;
     $('#gameRecap').show();
 }
