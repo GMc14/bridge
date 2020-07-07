@@ -136,15 +136,16 @@ function displayOtherCards(playerIndex) {
   } else if (playerIndex==2) {
     hand = document.getElementById("PlayerLeft");
   }
-
-  while (hand && hand.firstChild) {
-    hand.removeChild(hand.firstChild);
-  }
-  for (var i=0; i<7; i++) { //FIXME:hardcoded opponent hand size
-    var card = document.createElement("div");
-    card.setAttribute("class","otherCards");
-    $(".cardback:eq(0)").clone().show().appendTo(card);
-    hand.appendChild(card);
+  if (hand) {
+    while (hand.firstChild) {
+        hand.removeChild(hand.firstChild);
+    }
+    for (var i=0; i<7; i++) { //FIXME:hardcoded opponent hand size
+        var card = document.createElement("div");
+        card.setAttribute("class","otherCards");
+        $(".cardback:eq(0)").clone().show().appendTo(card);
+        hand.appendChild(card);
+    }
   }
 }
 
