@@ -6,16 +6,17 @@ var playerNum;
 var game_playerCount = 3;
 var gameConfig_bidForTrump = false;
 var numRounds = 0;
-var playerNickNames = ['','','',''];
-var playersArray=["Player1","Player2","Player3"];
+var playerNickNames = ['', '', '', ''];
+var playersArray = ["Player1", "Player2", "Player3"];
 
-function nextPlayer(currPlayer) {    
-    var i=playersArray.indexOf(currPlayer);
-    return playersArray[i==playersArray.length-1?0:i+1];
+function nextPlayer(currPlayer) {
+    var i = playersArray.indexOf(currPlayer);
+    return playersArray[i == playersArray.length - 1 ? 0 : i + 1];
 }
+
 function prevPlayer(currPlayer) {
-    var i=playersArray.indexOf(currPlayer);
-    return playersArray[i==0?playersArray.length-1:i-1];
+    var i = playersArray.indexOf(currPlayer);
+    return playersArray[i == 0 ? playersArray.length - 1 : i - 1];
 }
 $(function () {
     $('#restartGame').on('click', function () {
