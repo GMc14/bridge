@@ -18,7 +18,7 @@
     var cardImg = document.createElement("img");
     cardImg.setAttribute("src",img_src);
     cardImg.setAttribute("class","cardback");
-    cardImg.style.cssText="width:100%;height:100%;display:none";
+    cardImg.style.cssText="display:none";
     $("body").append(cardImg);
 
     for (var i = 0; i<suits.length; i++) {
@@ -28,7 +28,7 @@
         var cardImg = document.createElement("img");
         cardImg.setAttribute("src",img_src);
         cardImg.setAttribute("id",cardID+"_img");
-        cardImg.style.cssText="width:100%;height:100%;display:none";
+        cardImg.style.cssText="display:none";
         $("body").append(cardImg);
       }
     }
