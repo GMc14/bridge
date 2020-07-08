@@ -310,6 +310,7 @@ p {
   top:4%;
   left:25%;
   box-sizing: border-box;
+  display:none;
 }
 #PlayerLeft {
   top: 46%;

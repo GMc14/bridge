@@ -33,10 +33,16 @@ function winRound() {
   var myCard = $("#myPlay");
 
   var isWinner = true;
-
+  var card1ID = myCard.find("img").attr("id").slice(0, -4);
   $(".plays").each(function(){
-    if(!compareCard(myCard, $(this))){
-      isWinner=false;
+    var cardImgId = $(this).find("img").attr("id"); 
+    if (cardImgId) {
+      var card2ID = cardImgId.slice(0, -4);
+      if(!compareCard(card1ID, card2ID)){
+        isWinner=false;
+      }
+    } else {
+      console.log("noslice: "+cardImgId);
     }
   });
 
@@ -51,20 +57,17 @@ function winRound() {
     });
   }
 
-  function compareCard(card1, card2) {
+  function compareCard(card1ID, card2ID) {
     console.log("GMcCards-rules.js-compareCard-#0000");
-    if(!card1.find("img").attr("id")){
+    if(!card1ID){
       console.log("GMcCards-rules.js-compareCard-#0200---------------false");
       return false;
     }
-    if(!card2.find("img").attr("id")){
+    if(!card2ID){
       console.log("GMcCards-rules.js-compareCard-#0300---------------true");
       return true;
     }
-    console.log("GMcCards-rules.js-compareCard-#0500"+ JSON.stringify(card1)+ " vs. "+ JSON.stringify(card2));
-    var card1ID = card1.find("img").attr("id").slice(0, -4);
-    var card2ID = card2.find("img").attr("id").slice(0, -4);
-
+    console.log("GMcCards-rules.js-compareCard-#0500    "+ card1ID+ "    <<<  vs. >>>   "+ card2ID);
     const card1Suit = card1ID.charAt(0);
     const card2Suit = card2ID.charAt(0);
     const card1Rank = Number(card1ID.substr(1));
@@ -72,14 +75,14 @@ function winRound() {
 
     var win = 1;
     if (card1Suit == card2Suit) {
-      win = (card1Rank > card2Rank) ? 1 : 0;
+      win = (card1Rank >= card2Rank) ? 1 : 0;
     } else if (card1Suit != trumpSuit && card2Suit == trumpSuit) {
       win = 0;
     } else if ((card1Suit != trumpSuit && card1Suit != leadSuit) && card2Suit == leadSuit) {
       win = 0;
     }
     
-    console.log("GMcCards-rules.js-compareCard-#1000---------------"+win);
+    console.log("GMcCards-rules.js-compareCard-#1000---------------  "+win);
     return win;
   }
 
