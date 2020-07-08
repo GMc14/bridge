@@ -323,11 +323,13 @@ p {
   weight: 5vmax !important;
   border-radius:5vmax;
 }
+.myCards > img {
+  height: 7vmax !important;
+  weight: 5vmax !important;
+}
 .myCards {
   display:inline-block;
   background-color:white;
-  height: 7vmax !important;
-  weight: 5vmax !important;
   margin:0px 2px;
   border-radius:6px;
   transition-duration: 0.1s;
