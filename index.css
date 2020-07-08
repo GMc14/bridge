@@ -338,7 +338,7 @@ p {
 .otherCards {
   display:inline-block;
   background-color:white;
-  height: 7vmax%;
+  height: 7vmax;
   margin:0px -5px;
   border-radius:8px;
   box-sizing: border-box;

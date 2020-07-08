@@ -203,7 +203,10 @@ $(function () {
         var card = data.card;
 
         if (playerNum != lead && player == lead) {
+            console.log("ssocketFunctions -> cardPLayed EMPTY"+playerNum+"  :  "+player+"  |  "+lead);
             $(".plays").empty();
+        } else {
+            console.log("ssocketFunctions -> cardPLayed "+playerNum+"  :  "+player+"  |  "+lead);
         }
         switch (true) {
             case (nextPlayer(playerNum)==player):
@@ -216,6 +219,7 @@ $(function () {
                 othersPlayed("rightPlay", card);
                 break;
             default:
+                console.log("ssocketFunctions -> cardPLayed switch {}"+player+"  :n  "+nextPlayer(playerNum)+"  |p  "+prevPlayer(playerNum));
                 break;
         }
         if (currentPlayer == lead) {
@@ -228,6 +232,8 @@ $(function () {
         currentPlayer = nextPlayer(currentPlayer);
     });
     socketio.on('winnerOfRound', function (player) {
+        
+        console.log("socketFunctions:->winnerOfRound");
         roundNumber++;
         lead = player;
         currentPlayer = player;

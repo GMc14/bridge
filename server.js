@@ -103,6 +103,7 @@ io.sockets.on('connection', function (socket) {
     });
   });
   socket.on('winner', function (data) {
+    console.log("server:->winner");
     io.sockets.to(data.roomID).emit('winnerOfRound', data.player);
   });
   socket.on('bid', function (data) {
