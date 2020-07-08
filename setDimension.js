@@ -4,6 +4,6 @@ $(function () {
 });
 
 function reset_dimensions() {
-  $(".myCards").width(0.71 * $(".myCards").height());
-  $(".otherCards").width(0.71 * $(".otherCards").height());
+ // $(".myCards").width(0.71 * $(".myCards").height());
+ // $(".otherCards").width(0.71 * $(".otherCards").height());
 }

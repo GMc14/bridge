@@ -53,9 +53,11 @@ function winRound() {
   function compareCard(card1, card2) {
     console.log("GMcCards-rules.js-compareCard-#0000");
     if(!card1.find("img").attr("id")){
+      console.log("GMcCards-rules.js-compareCard-#0200---------------false");
       return false;
     }
     if(!card2.find("img").attr("id")){
+      console.log("GMcCards-rules.js-compareCard-#0300---------------true");
       return true;
     }
     console.log("GMcCards-rules.js-compareCard-#0500"+ JSON.stringify(card1)+ " vs. "+ JSON.stringify(card2));
