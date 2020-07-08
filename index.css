@@ -296,7 +296,7 @@ p {
 .otherPlayers {
   position: absolute;
   display: block;
-  height: 8%;
+  height: 7vmax;
   width: 50%;
   text-align:center;
 }
@@ -318,14 +318,14 @@ p {
   box-sizing: border-box;
 }
 .cardback {
-  height: 7vmax;
-  weight: 5vmax;
+  height: 7vmax !important;
+  weight: 5vmax !important;
 }
 .myCards {
   display:inline-block;
   background-color:white;
-  height: 7vmax;
-  weight: 5vmax;
+  height: 7vmax !important;
+  weight: 5vmax !important;
   margin:0px 2px;
   border-radius:6px;
   transition-duration: 0.1s;

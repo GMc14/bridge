@@ -40,6 +40,7 @@ function winRound() {
     }
   });
 
+  console.log("GMcCards-rules.js-winRound-#0200======="+isWinner);
   if (isWinner) {
     console.log("GMcCards-rules.js-winRound-#0300");
     addWin("myStuff");
@@ -77,6 +78,8 @@ function winRound() {
     } else if ((card1Suit != trumpSuit && card1Suit != leadSuit) && card2Suit == leadSuit) {
       win = 0;
     }
+    
+    console.log("GMcCards-rules.js-compareCard-#1000---------------"+win);
     return win;
   }
 
