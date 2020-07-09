@@ -8,10 +8,13 @@ var euchreRanks = new Array(9, 10, 11, 12, 13, 14);
 //Variables
 var deck = [];
 var ranks = euchreRanks;
-var suits = new Array("C", "D", "H", "S");
+var suits = new Array("C", "D", "H", "");
+var suitColors=[];
+suitColors["C"] = "Black";
+suitColors["S"] = "Black";
+suitColors["H"] = "Red";
+suitColors["D"] = "Red";
 var cardback = "card_imgs/cardback.png";
-
-
 
 function Card(suit, rank) {
   this.suit = suit;
@@ -35,7 +38,7 @@ function startGame() {
     dealCards();
   }
 }
-//Functions
+
 function createDeck() {
   deck = [];
   for (var i = 0; i < suits.length; i++) {
@@ -61,7 +64,6 @@ function shuffle() {
   }
   deck = shuffled;
 }
-
 
 function dealCards() {
   //TODO: vary by player count and cards dealt per player
@@ -124,16 +126,10 @@ function displayTrumpCard(trumpCard) {
   document.getElementById("PlayerAcross").appendChild(card);
 }
 
-
 function displayCards() {
-  //Other people's cards
   for (var j = 0; j < gameConfig_startCardsPerPlayer - 1; j++) {
     displayOtherCards(j);
   }
-
-  //displayOtherCards(Player5);
-
-  //Display My Cards
   var hand = document.getElementById("myPlayer");
   while (hand.firstChild) {
     hand.removeChild(hand.firstChild);

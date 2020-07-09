@@ -5,9 +5,9 @@ var leadSuit;
 var trumpSuit;
 var handsNeeded;
 var roundWins = 0;
+var gameConfig_euchreBowers = true;
 
 function checkLegal(cardID) {
-
   console.log("GMcCards-rules.js-checkLegal-#0000");
   if (cardID.charAt(0) == leadSuit) {
     console.log("GMcCards-rules.js-checkLegal-#0300");
@@ -21,11 +21,9 @@ function checkLegal(cardID) {
         return false;
       }
     }
-
     console.log("GMcCards-rules.js-checkLegal-#1000");
     return true;
   }
-
 }
 
 function resolveTrick() {
@@ -47,7 +45,6 @@ function resolveTrick() {
       console.log("noslice: "+cardImgId);
     }
   });
-
   console.log("GMcCards-rules.js-resolveTrick-#0200======="+isWinner+"  cards:"+ JSON.stringify(trickCards));
   if (isWinner) {
     console.log("GMcCards-rules.js-resolveTrick-#0300");
@@ -73,8 +70,23 @@ function resolveTrick() {
     console.log("GMcCards-rules.js-compareCard-#0500    "+ card1ID+ "    <<<  vs. >>>   "+ card2ID);
     const card1Suit = card1ID.charAt(0);
     const card2Suit = card2ID.charAt(0);
+
     const card1Rank = Number(card1ID.substr(1));
     const card2Rank = Number(card2ID.substr(1));
+    if(gameConfig_euchreBowers && card1Rank == 11 && suitColors[card1Suit] == suitColors[trumpSuit]){
+        if(card1Suit == trumpSuit){
+          card1Rank += 1;
+        }
+        card1Rank += 4;
+        card1Suit = trumpSuit;
+    }
+    if(gameConfig_euchreBowers && card2Rank == 11 && suitColors[card2Suit] == suitColors[trumpSuit]){
+      if(card2Suit == trumpSuit){
+        card2Rank += 1;
+      }
+      card2Rank += 4;
+      card2Suit = trumpSuit;
+  }
 
     var win = 1;
     if (card1Suit == card2Suit) {
@@ -84,10 +96,8 @@ function resolveTrick() {
     } else if ((card1Suit != trumpSuit && card1Suit != leadSuit) && card2Suit == leadSuit) {
       win = 0;
     }
-    
     console.log("GMcCards-rules.js-compareCard-#1000---------------  "+win);
     return win;
   }
-
   console.log("GMcCards-rules.js-resolveTrick-#1000");
 }
