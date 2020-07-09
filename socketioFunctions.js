@@ -192,7 +192,7 @@ $(function () {
             }
         } else {
             if(data.trumpCard){
-                console.log("------- Trump Card: ");
+                console.log("------- Trump Card: "+data.trumpCard);
                 displayTrumpCard(data.trumpCard)
                 trumpSuit = data.trumpCard.suit;
             }  else {

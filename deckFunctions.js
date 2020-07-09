@@ -116,7 +116,7 @@ function displayTrumpCard(trumpCard) {
   var cardSuit = String(trumpCard.suit);
   var cardID = cardSuit + cardRank;
   var card = document.createElement("div");
-  card.setAttribute("class", "trumpCard");
+  card.setAttribute("class", "trumpCard otherCards");
   card.setAttribute("id", 'trump' + cardID);
   $("#" + cardID + "_img").clone().show().appendTo(card);
   card.addEventListener("click", playCard, true);
@@ -124,7 +124,7 @@ function displayTrumpCard(trumpCard) {
 }
 
 function displayCards() {
-  for (var j = 0; j < gameConfig_startCardsPerPlayer - 1; j++) {
+  for (var j = 0; j < gameConfig_playerCount; j++) {
     displayOtherCards(j);
   }
   var hand = document.getElementById("myPlayer");
@@ -150,7 +150,7 @@ function displayOtherCards(playerIndex) {
   if (playerIndex == 0) {
     hand = document.getElementById("PlayerRight");
   } else if (playerIndex == 1) {
-    hand = document.getElementById("PlayerAcross");
+    //hand = document.getElementById("PlayerAcross");
   } else if (playerIndex == 2) {
     hand = document.getElementById("PosLeft");
   }
