@@ -90,10 +90,7 @@ io.sockets.on('connection', function (socket) {
   });
   socket.on('dealCards', function (data) {
     io.sockets.to(data.roomID).emit('deal', {
-      Hand1: data.Hand1,
-      Hand2: data.Hand2,
-      Hand3: data.Hand3,
-      Hand4: data.Hand4
+      hands: data.hands
     });
   });
   socket.on('playCard', function (data) {

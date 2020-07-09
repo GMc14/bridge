@@ -3,9 +3,11 @@ var gameConfig_playerCount = 3;
 var gameConfig_isBridge = false;
 var gameConfig_startCardsPerPlayer = 5;
 
+var standardRanks = new Array(2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14);
+var euchreRanks = new Array(9, 10, 11, 12, 13, 14);
 //Variables
 var deck = [];
-var ranks = new Array(2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14);
+var ranks = euchreRanks;
 var suits = new Array("C", "D", "H", "S");
 var cardback = "card_imgs/cardback.png";
 
@@ -79,10 +81,7 @@ function dealCards() {
     }
   }
   socketio.emit('dealCards', {
-    Hand1: hands[0],
-    Hand2: hands[1],
-    Hand3: hands[2],
-    Hand4: hands[3],
+    hands: hands,
     roomID: roomID
   });
 }
@@ -142,7 +141,7 @@ function displayOtherCards(playerIndex) {
   } else if (playerIndex == 1) {
     hand = document.getElementById("PlayerAcross");
   } else if (playerIndex == 2) {
-    hand = document.getElementById("PlayerLeft");
+    hand = document.getElementById("PosLeft");
   }
   if (hand) {
     while (hand.firstChild) {
@@ -185,15 +184,20 @@ function playCard() {
 
 function othersPlayed(play, card) {
   var area = document.getElementById(play);
+  console.log("othersPlayed++++++++++++");
   switch (play) {
     case "rightPlay":
+      
+      console.log("othersPlayed++++++++++++ Remove Right");
       $("#PlayerRight").find(".otherCards").first().remove();
       break;
     case "acrossPlay":
+      console.log("othersPlayed++++++++++++ Remove Across");
       $("#PlayerAcross").find(".otherCards").first().remove();
       break;
     case "leftPlay":
-      $("#PlayerLeft").find(".otherCards").first().remove();
+      console.log("othersPlayed++++++++++++ Remove Left");
+      $("#PosLeft").find(".otherCards").first().remove();
       break;
   }
 

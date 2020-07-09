@@ -56,7 +56,7 @@ $(function () {
             playerNickNames[0] = nickname;
         } else if (player == 'Player2') {
             $("#Player2").remove();
-            $("#PlayerLeft").append($("<p></p>").text(nickname));
+            $("#PosLeft").append($("<p></p>").text(nickname));
             playerNickNames[1] = nickname;
         } else if (player == 'Player3') {
             $("#Player3").remove();
@@ -142,39 +142,34 @@ $(function () {
         }
     });
     socketio.on('deal', function (data) {
-        var Hand1 = data.Hand1;
-        var Hand2 = data.Hand2;
-        var Hand3 = data.Hand3;
-        var Hand4 = data.Hand4;
-
         switch (playerNum) {
             case 'Player1':
                 //lightblue
-                Player1 = Hand1;
-                Player2 = Hand2;
-                Player3 = Hand3;
-                Player4 = Hand4;
+                Player1 = data.hands[0];
+                Player2 = data.hands[1];
+                Player3 = data.hands[2];
+                Player4 = data.hands[3];
                 break;
             case 'Player2':
                 //light orange
-                Player1 = Hand2;
-                Player2 = Hand3;
-                Player3 = Hand4;
-                Player4 = Hand1;
+                Player1 = data.hands[1];
+                Player2 = data.hands[2];
+                Player3 = data.hands[3];
+                Player4 = data.hands[0];
                 break;
             case 'Player3':
                 //darkblue
-                Player1 = Hand3;
-                Player2 = Hand4;
-                Player3 = Hand1;
-                Player4 = Hand2;
+                Player1 = data.hands[2];
+                Player2 = data.hands[3];
+                Player3 = data.hands[0];
+                Player4 = data.hands[1];
                 break;
             case 'Player4':
                 // beige
-                Player1 = Hand4;
-                Player2 = Hand1;
-                Player3 = Hand2;
-                Player4 = Hand3;
+                Player1 = data.hands[3];
+                Player2 = data.hands[0];
+                Player3 = data.hands[1];
+                Player4 = data.hands[2];
                 break;
         }
         sortHand();
@@ -226,7 +221,7 @@ $(function () {
             leadSuit = card.charAt(0);
         }
         if (nextPlayer(currentPlayer) == lead) {
-            winRound();
+            resolveTrick();
         }
 
         currentPlayer = nextPlayer(currentPlayer);

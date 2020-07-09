@@ -316,7 +316,7 @@ p {
   box-sizing: border-box;
   display:none;
 }
-#PlayerLeft {
+#PosLeft {
   top: 46%;
   left:-22%;
   transform: rotate(90deg);
@@ -325,7 +325,7 @@ p {
 .cardback {
   height: 7vmax !important;
   weight: 5vmax !important;
-  border-radius:5vmax;
+  border-radius:4px;
 }
 .myCards > img {
   height: 7vmax !important;
@@ -346,7 +346,7 @@ p {
   background-color:white;
   height: 7vmax;
   margin:0px -5px;
-  border-radius:8px;
+  border-radius:4px;
   box-sizing: border-box;
 }
 #chat {
