@@ -8,7 +8,7 @@ var euchreRanks = new Array(9, 10, 11, 12, 13, 14);
 //Variables
 var deck = [];
 var ranks = euchreRanks;
-var suits = new Array("C", "D", "H", "");
+var suits = new Array("C", "D", "H", "S");
 var suitColors=[];
 suitColors["C"] = "Black";
 suitColors["S"] = "Black";
@@ -56,7 +56,6 @@ function shuffle() {
     m--;
     //Pick a remaining element
     i = Math.floor(Math.random() * m);
-
     // Swap with last remaining element
     t = shuffled[m];
     shuffled[m] = shuffled[i];
@@ -104,7 +103,6 @@ function sortHand() {
     var bSuit = b.suit;
     var aRank = a.rank;
     var bRank = b.rank;
-
     if (aSuit == bSuit) {
       return (aRank < bRank) ? -1 : (aRank > bRank) ? 1 : 0;
     } else {
@@ -200,7 +198,6 @@ function othersPlayed(play, card) {
   console.log("othersPlayed++++++++++++");
   switch (play) {
     case "rightPlay":
-      
       console.log("othersPlayed++++++++++++ Remove Right");
       $("#PlayerRight").find(".otherCards").first().remove();
       break;
@@ -213,6 +210,5 @@ function othersPlayed(play, card) {
       $("#PosLeft").find(".otherCards").first().remove();
       break;
   }
-
   $("#" + card + "_img").attr("class", "myCards").clone().show().appendTo(area);
 }

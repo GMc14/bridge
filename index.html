@@ -22,6 +22,7 @@
     for (var i = 0; i<suits.length; i++) {
       for (var j = 0; j<ranks.length; j++) {
         var cardID = suits[i]+ranks[j];
+        comsole.log("==="+cardID);
         var img_src = "/card_imgs/"+cardID+".png";
         var cardImg = document.createElement("img");
         cardImg.setAttribute("src",img_src);
@@ -167,9 +168,7 @@
     </div>
 
     <div class="myPlayer" id="myPlayer">
-
     </div>
-
     <div class="otherPlayers" id="PlayerRight">
     </div>
     <div class="otherPlayers" id="PlayerAcross">
@@ -193,6 +192,5 @@
     </div>
   </div>
   </div>
-
 </body>
 </html>
