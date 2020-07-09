@@ -9,7 +9,7 @@ var gameConfig_euchreBowers = true;
 
 function checkLegal(cardID) {
   console.log("GMcCards-rules.js-checkLegal-#0000");
-  if (cardID.charAt(0) == leadSuit || (gameConfig_euchreBowers && card1ID.substr(1) == "11" && suitColors[cardID.charAt(0)] == suitColors[leadSuit])) {
+  if (cardID.charAt(0) == leadSuit || (gameConfig_euchreBowers && cardID.substr(1) == "11" && suitColors[cardID.charAt(0)] == suitColors[leadSuit])) {
     console.log("GMcCards-rules.js-checkLegal-#0300");
     return true;
   } else {
