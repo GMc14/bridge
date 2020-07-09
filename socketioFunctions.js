@@ -234,6 +234,10 @@ $(function () {
         }
         if (currentPlayer == lead) {
             leadSuit = card.charAt(0);
+            if(gameConfig_euchreBowers && card1ID.substr(1) == "11" && suitColors[leadSuit] == suitColors[trumpSuit]){
+                leadSuit = trumpSuit;
+            }
+            
         }
         if (nextPlayer(currentPlayer) == lead) {
             resolveTrick();
