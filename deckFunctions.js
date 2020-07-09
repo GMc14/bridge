@@ -118,9 +118,8 @@ function displayTrumpCard(trumpCard) {
   var cardSuit = String(trumpCard.suit);
   var cardID = cardSuit + cardRank;
   var card = document.createElement("div");
-  var encodedI = i + 10;
   card.setAttribute("class", "trumpCard");
-  card.setAttribute("id", encodedI + cardID);
+  card.setAttribute("id", 'trump' + cardID);
   $("#" + cardID + "_img").clone().show().appendTo(card);
   card.addEventListener("click", playCard, true);
   document.getElementById("PlayerAcross").appendChild(card);
