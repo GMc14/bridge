@@ -2,7 +2,7 @@
 var gameConfig_playerCount = 3;
 var gameConfig_isBridge = false;
 var gameConfig_startCardsPerPlayer = 5;
-
+var gameConfig_topDeckTrump = true;
 var standardRanks = new Array(2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14);
 var euchreRanks = new Array(9, 10, 11, 12, 13, 14);
 //Variables
