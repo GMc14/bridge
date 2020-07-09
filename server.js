@@ -90,7 +90,8 @@ io.sockets.on('connection', function (socket) {
   });
   socket.on('dealCards', function (data) {
     io.sockets.to(data.roomID).emit('deal', {
-      hands: data.hands
+      hands: data.hands,
+      trumpCard: data.trumpCard
     });
   });
   socket.on('playCard', function (data) {

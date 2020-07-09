@@ -80,9 +80,14 @@ function dealCards() {
       return;
     }
   }
+  var trumpCard='';
+  if(gameConfig_topDeckTrump && deck.length > 0){
+    trumpCard = deck.pop();
+  }
   socketio.emit('dealCards', {
     hands: hands,
-    roomID: roomID
+    roomID: roomID,
+    trumpCard: trumpCard
   });
 }
 
@@ -105,6 +110,20 @@ function sortHand() {
     }
   });
 }
+
+function displayTrumpCard(trumpCard) {
+  var cardRank = String(trumpCard.rank);
+  var cardSuit = String(trumpCard.suit);
+  var cardID = cardSuit + cardRank;
+  var card = document.createElement("div");
+  var encodedI = i + 10;
+  card.setAttribute("class", "trumpCard");
+  card.setAttribute("id", encodedI + cardID);
+  $("#" + cardID + "_img").clone().show().appendTo(card);
+  card.addEventListener("click", playCard, true);
+  document.getElementById("PlayerAcross").appendChild(card);
+}
+
 
 function displayCards() {
   //Other people's cards
@@ -131,7 +150,6 @@ function displayCards() {
     card.addEventListener("click", playCard, true);
     hand.appendChild(card);
   }
-  reset_dimensions();
 }
 
 function displayOtherCards(playerIndex) {
@@ -147,7 +165,7 @@ function displayOtherCards(playerIndex) {
     while (hand.firstChild) {
       hand.removeChild(hand.firstChild);
     }
-    for (var i = 0; i < 7; i++) { //FIXME:hardcoded opponent hand size
+    for (var i = 0; i < gameConfig_startCardsPerPlayer; i++) {
       var card = document.createElement("div");
       card.setAttribute("class", "otherCards");
       $(".cardback:eq(0)").clone().show().appendTo(card);
