@@ -68,11 +68,11 @@ function resolveTrick() {
       return true;
     }
     console.log("GMcCards-rules.js-compareCard-#0500    "+ card1ID+ "    <<<  vs. >>>   "+ card2ID);
-    const card1Suit = card1ID.charAt(0);
-    const card2Suit = card2ID.charAt(0);
+    var card1Suit = card1ID.charAt(0);
+    var card2Suit = card2ID.charAt(0);
 
-    const card1Rank = Number(card1ID.substr(1));
-    const card2Rank = Number(card2ID.substr(1));
+    var card1Rank = Number(card1ID.substr(1));
+    var card2Rank = Number(card2ID.substr(1));
     if(gameConfig_euchreBowers && card1Rank == 11 && suitColors[card1Suit] == suitColors[trumpSuit]){
         if(card1Suit == trumpSuit){
           card1Rank += 1;
