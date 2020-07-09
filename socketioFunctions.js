@@ -231,7 +231,7 @@ $(function () {
 
         currentPlayer = nextPlayer(currentPlayer);
     });
-    socketio.on('winnerOfRound', function (trickWinner) {
+    socketio.on('winnerOfRound', function (trickWinner, trickCards) {
         
         console.log("socketFunctions:->winnerOfRound");
         roundNumber++;
@@ -240,14 +240,14 @@ $(function () {
         switch (true) {
             //Player1
             case (trickWinner == nextPlayer(playerNum)):
-                addWin("leftStuff");
+                addWin("leftStuff", trickCards);
                 break;
             case (game_playerCount == 4 && trickWinner == nextPlayer(nextPlayer(playerNum))):
-                addWin("acrossStuff");
+                addWin("acrossStuff", trickCards);
                 roundWins++;
                 break;
             case (trickWinner == prevPlayer(playerNum)):
-                addWin("rightStuff");
+                addWin("rightStuff", trickCards);
                 break;
             default:
                 break;
@@ -396,12 +396,13 @@ function playerSelect() {
     });
 }
 
-function addWin(who) {
+function addWin(who, cards) {
 
     console.log("addWin "+$(".plays").length+"plays:   "+JSON.stringify($(".plays")));
     var stuff = $('#' + who);
     var card = document.createElement("div");
     card.setAttribute('class', 'otherCards');
+    card.setAttribute('data-cards', cards);
     $(".cardback:eq(0)").clone().show().appendTo(card);
     stuff.append(card);
 }

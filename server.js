@@ -104,7 +104,7 @@ io.sockets.on('connection', function (socket) {
   });
   socket.on('winner', function (data) {
     console.log("server:->winner");
-    io.sockets.to(data.roomID).emit('winnerOfRound', data.player);
+    io.sockets.to(data.roomID).emit('winnerOfRound', data.player, data.trickCards);
   });
   socket.on('bid', function (data) {
     io.sockets.to(socket.room).emit('some1Bid', data);

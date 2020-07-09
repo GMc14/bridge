@@ -31,13 +31,15 @@ function checkLegal(cardID) {
 function winRound() {
   console.log("GMcCards-rules.js-winRound-#0000");
   var myCard = $("#myPlay");
-
+  var trickCards = [];
   var isWinner = true;
   var card1ID = myCard.find("img").attr("id").slice(0, -4);
+  trickCards.push(card1ID);
   $(".plays").each(function(){
     var cardImgId = $(this).find("img").attr("id"); 
     if (cardImgId) {
       var card2ID = cardImgId.slice(0, -4);
+      trickCards.push(card2ID);
       if(!compareCard(card1ID, card2ID)){
         isWinner=false;
       }
@@ -46,14 +48,15 @@ function winRound() {
     }
   });
 
-  console.log("GMcCards-rules.js-winRound-#0200======="+isWinner);
+  console.log("GMcCards-rules.js-winRound-#0200======="+isWinner+"  cards:"+ JSON.stringify(trickCards));
   if (isWinner) {
     console.log("GMcCards-rules.js-winRound-#0300");
-    addWin("myStuff");
+    addWin("myStuff", trickCards);
     roundWins++;
     socketio.emit('winner', {
       player: playerNum,
-      roomID: roomID
+      roomID: roomID,
+      trickCards: trickCards
     });
   }
 

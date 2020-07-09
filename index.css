@@ -111,6 +111,10 @@ td, th {
   box-sizing: border-box;
   text-align: center;
 }
+.plays > img {
+  height: 7vmax; 
+  width: 5vmax;
+}
 .name {
   height:7%;
   width:25%;
