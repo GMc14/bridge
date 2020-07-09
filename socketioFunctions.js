@@ -74,7 +74,7 @@ $(function () {
     });
     socketio.on('startGame', function () {
         $("#playArea").show();
-  /*
+  
         switch (playerNum) {
             case 'Player1':
                 $('#leftName').html('Player2: ' + playerNickNames[1]);
@@ -97,13 +97,13 @@ $(function () {
                 $('#rightName').html('Player 3: ' + playerNickNames[2]);
                 break;
         }
-*/
 
+/*
         var clientNumber = parseInt(playerNum.slice(-1));
         $('#leftName').html('Player'+(clientNumber%4)+1+': ' + playerNickNames[clientNumber]);
         $('#acrossName').html('Player '+((clientNumber+1)%4)+1+': ' + playerNickNames[(clientNumber+1)%4]);
         $('#rightName').html('Player '+((clientNumber+2)%4)+1+': ' + playerNickNames[(clientNumber+2)%4]);
-
+*/
         startGame();
     });
     socketio.on('restartGame', function () {
