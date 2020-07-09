@@ -314,7 +314,6 @@ p {
   top:4%;
   left:25%;
   box-sizing: border-box;
-  display:none;
 }
 #PosLeft {
   top: 46%;
@@ -341,7 +340,7 @@ p {
 .myCards:hover {
   box-shadow: 0px 0px 15px red;
 }
-.otherCards {
+.otherCards, .otherCards > img  {
   display:inline-block;
   background-color:white;
   height: 7vmax;
