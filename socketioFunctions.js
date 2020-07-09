@@ -231,55 +231,22 @@ $(function () {
 
         currentPlayer = nextPlayer(currentPlayer);
     });
-    socketio.on('winnerOfRound', function (player) {
+    socketio.on('winnerOfRound', function (trickWinner) {
         
         console.log("socketFunctions:->winnerOfRound");
         roundNumber++;
-        lead = player;
-        currentPlayer = player;
+        lead = trickWinner;
+        currentPlayer = trickWinner;
         switch (true) {
             //Player1
-            case ((playerNum == "Player1") && (player == "Player2")):
+            case (trickWinner == nextPlayer(playerNum)):
                 addWin("leftStuff");
                 break;
-            case ((playerNum == "Player1") && (player == "Player3")):
+            case (game_playerCount == 4 && trickWinner == nextPlayer(nextPlayer(playerNum))):
                 addWin("acrossStuff");
                 roundWins++;
                 break;
-            case ((playerNum == "Player1") && (player == "Player4")):
-                addWin("rightStuff");
-                break;
-                //Player2
-            case ((playerNum == "Player2") && (player == "Player3")):
-                addWin("leftStuff");
-                break;
-            case ((playerNum == "Player2") && (player == "Player4")):
-                addWin("acrossStuff");
-                roundWins++;
-                break;
-            case ((playerNum == "Player2") && (player == "Player1")):
-                addWin("rightStuff");
-                break;
-                //Player3
-            case ((playerNum == "Player3") && (player == "Player4")):
-                addWin("leftStuff");
-                break;
-            case ((playerNum == "Player3") && (player == "Player1")):
-                addWin("acrossStuff");
-                roundWins++;
-                break;
-            case ((playerNum == "Player3") && (player == "Player2")):
-                addWin("rightStuff");
-                break;
-                //Player4
-            case ((playerNum == "Player4") && (player == "Player1")):
-                addWin("leftStuff");
-                break;
-            case ((playerNum == "Player4") && (player == "Player2")):
-                addWin("acrossStuff");
-                roundWins++;
-                break;
-            case ((playerNum == "Player4") && (player == "Player3")):
+            case (trickWinner == prevPlayer(playerNum)):
                 addWin("rightStuff");
                 break;
             default:
@@ -430,6 +397,8 @@ function playerSelect() {
 }
 
 function addWin(who) {
+
+    console.log("addWin "+$(".plays").length+"plays:   "+JSON.stringify($(".plays")));
     var stuff = $('#' + who);
     var card = document.createElement("div");
     card.setAttribute('class', 'otherCards');
