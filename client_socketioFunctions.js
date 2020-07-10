@@ -456,7 +456,6 @@ function constructPlayArea() {
         $(playerContainer).append(name);
         $(playerContainer).append(winCounter);
 
-
         $("#playArea").append(playerContainer);
         
         rotate($("#loc"+j+"Container"), j * 360 / gameConfig_playerCount);

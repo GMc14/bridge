@@ -100,7 +100,7 @@ function displayTrumpCard(trumpCard) {
   card.setAttribute("id", 'trump' + cardID);
   $("#" + cardID + "_img").clone().show().appendTo(card);
   card.addEventListener("click", playCard, true);
-  document.getElementById("showCase").appendChild(card);
+  $("#showCase").append(card);
 }
 
 function displayCards() {
@@ -118,7 +118,7 @@ function displayCards() {
     card.setAttribute("id", encodedI + cardID);
     $("#" + cardID + "_img").clone().show().appendTo(card);
     card.addEventListener("click", playCard, true);
-    hand.appendChild(card);
+    $(hand).append(card);
   }
 }
 
@@ -128,7 +128,7 @@ function displayOtherCards(playerIndex) {
     var card = document.createElement("div");
     card.setAttribute("class", "otherCards");
     $(".cardback:eq(0)").clone().show().appendTo(card);
-    $('#loc'+playerIndex+'Hand').appendChild(card);
+    $('#loc'+playerIndex+'Hand').append(card);
   }
 }
 
@@ -148,8 +148,7 @@ function playCard() {
       card = document.getElementById(num + cardID);
       cardsub = card;
       card.parentNode.removeChild(card);
-      myPlay = document.getElementById("myPlay");
-      myPlay.appendChild(cardsub);
+      $("#myPlay").append(cardsub);
       socketio.emit('playCard', {
         roomID: roomID,
         card: cardID
