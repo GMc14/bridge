@@ -104,6 +104,11 @@ td, th {
   box-sizing: border-box;
   border: 3px solid white;
 }
+.locationContainer{
+  min-width: 20vmin;
+  min-height: 20vmin;
+  border: 1px dashed #f68;
+}
 .plays {
   position: absolute;
   height:23vmin;

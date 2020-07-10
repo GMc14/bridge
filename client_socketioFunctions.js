@@ -450,7 +450,7 @@ function constructPlayArea() {
         var name = $('<div id="loc'+j+'name" class="name"></div>');
         var winCounter = $('<div id="loc'+j+'wins" class="winCount">0</div>');
 
-        var playerContainer = $("<div id='loc"+j+"Container'></div>");
+        var playerContainer = $("<div id='loc"+j+"Container' class='locationContainer'></div>");
         $(playerContainer).append(stuff);
         $(playerContainer).append(plays);
         $(playerContainer).append(name);
@@ -458,7 +458,7 @@ function constructPlayArea() {
 
         $("#playArea").append(playerContainer);
         
-        rotate($("#loc"+j+"Container"), j * 360 / gameConfig_playerCount);
+        //FIXME: use this once player locations are functioning --> rotate($("#loc"+j+"Container"), j * 360 / gameConfig_playerCount);
         var playerHand = '<div class="otherPlayerHand" id="loc'+j+'Hand"></div>';
         $("#gameBoard").append(playerHand);
         $("#loc"+j+"name").html('Player'+(clientNumber%gameConfig_playerCount)+(j+1)+': ' + playerNickNames[(clientNumber+j)%gameConfig_playerCount]);
