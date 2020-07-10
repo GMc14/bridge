@@ -77,7 +77,7 @@ io.sockets.on('connection', function (socket) {
     var playerNum = data.playerNum;
     socket.player = playerNum;
     var pLeft = data.pLeft;
-    console.log("--------------selPlayer----------------pLeft:"+pLeft);
+    console.log("--------------selPlayer----------------pLeft: "+pLeft+"  >>  playerIndex: "+playerIndex);
     io.sockets.to(data.roomID).emit('playerDataToClient', {
       nickname: socket.nickname,
       playerIndex: playerIndex,

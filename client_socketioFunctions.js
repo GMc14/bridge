@@ -2,9 +2,10 @@ var socketio = io.connect();
 var roomID;
 
 //Meta
-var playerNickNames = ['', '', '', ''];
-var playersArray = ["Player1", "Player2", "Player3"];
+var playerNickNames = ['', '', '', '','', '', '', ''];
+var playersArray = ["Player1", "Player2", "Player3", "Player4", "Player5", "Player6", "Player7" ,"Player8"];
 var playerColors = ['#004499','#770011','#666600','#116600','#440099','#883300','#006666','#660066'];
+var positions = ["#myPlayer","#PosLeft","#PlayerAcross","#PlayerRight"];
 
 //Game Config
 var gameConfig_playerCount = 3;
@@ -102,10 +103,9 @@ $(function () {
         pLeft = data.pLeft;
         
         console.log("playerDataToClient---- >> playerIndex: "+playerIndex+"  >> nickname: "+nickname+"  >>  pLeft: "+pLeft);
-        $("#btnPlayer"+(playerIndex+1)).remove();
-        playerNickNames[playerIndex] = nickname;
-        var positions = ["#myPlayer","#PosLeft","#PlayerAcross","#PlayerRight"];
-        $(positions[playerIndex]).append($("<p></p>").text(nickname));
+        $("#btnPlayer"+playerIndex).remove();
+        playerNickNames[playerIndex-1] = nickname;
+        $(positions[playerIndex-1]).append($("<p></p>").text(nickname));
 
     });
     socketio.on('leftInGame', function (nickname) {
@@ -114,7 +114,7 @@ $(function () {
     });
     socketio.on('startGame', function () {
         $("#playArea").show();
-  
+        console.log("client_socket :: startGame");
         switch (playerNum) {
             case 'Player1':
                 $('#leftName').html('Player2: ' + playerNickNames[1]);
@@ -413,6 +413,7 @@ function playerModule() {
 
 function playerSelect() {
     $(".playerBtns").on("click", function () {
+        console.log("--------------playerBtns Click----------------");
         playerNum = $(this).val();
         nickname = String($("#nickname").val());
         playerIndex = Number($(this).attr("data-player-number"));
@@ -427,6 +428,8 @@ function playerSelect() {
             $('#topbar').append('<br/>');
             $("#topbar").append(boldNames);
             pLeft--;
+            
+            console.log("--------------playerBtns emit selPlayer...----------------");
             socketio.emit('selPlayer', {
                 nickname: nickname,
                 playerNum: playerNum,
@@ -435,7 +438,7 @@ function playerSelect() {
                 pLeft: pLeft
             });
             $('#chat').show();
-            playerColor = playerColors[playerIndex];
+            playerColor = playerColors[playerIndex-1];
             
         }
     });
