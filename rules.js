@@ -9,7 +9,12 @@ var gameConfig_euchreBowers = true;
 
 function checkLegal(cardID) {
   console.log("GMcCards-rules.js-checkLegal-#0000");
-  if (cardID.charAt(0) == leadSuit || (gameConfig_euchreBowers && cardID.substr(1) == "11" && suitColors[cardID.charAt(0)] == suitColors[leadSuit])) {
+  var cardSuit = cardID.charAt(0);
+  if(gameConfig_euchreBowers && cardID.substr(1) == "11" && suitColors[cardSuit] == suitColors[leadSuit]){
+    cardSuit = leadSuit;
+  }
+
+  if (cardID.charAt(0) == leadSuit) {
     console.log("GMcCards-rules.js-checkLegal-#0300");
     return true;
   } else {
@@ -72,21 +77,22 @@ function resolveTrick() {
 
     var card1Rank = Number(card1ID.substr(1));
     var card2Rank = Number(card2ID.substr(1));
-    if(gameConfig_euchreBowers && card1Rank == 11 && suitColors[card1Suit] == suitColors[trumpSuit]){
-        if(card1Suit == trumpSuit){
-          card1Rank += 1;
-        }
-        card1Rank += 4;
-        card1Suit = trumpSuit;
-    }
-    if(gameConfig_euchreBowers && card2Rank == 11 && suitColors[card2Suit] == suitColors[trumpSuit]){
-      if(card2Suit == trumpSuit){
-        card2Rank += 1;
+    if(gameConfig_euchreBowers){
+      if(card1Rank == 11 && suitColors[card1Suit] == suitColors[trumpSuit]){
+          if(card1Suit == trumpSuit){
+            card1Rank += 1;
+          }
+          card1Rank += 4;
+          card1Suit = trumpSuit;
       }
-      card2Rank += 4;
-      card2Suit = trumpSuit;
-  }
-
+      if(card2Rank == 11 && suitColors[card2Suit] == suitColors[trumpSuit]){
+        if(card2Suit == trumpSuit){
+          card2Rank += 1;
+        }
+        card2Rank += 4;
+        card2Suit = trumpSuit;
+      }
+    }
     var win = 1;
     if (card1Suit == card2Suit) {
       win = (card1Rank >= card2Rank) ? 1 : 0;
