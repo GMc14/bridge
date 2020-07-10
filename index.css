@@ -106,13 +106,13 @@ td, th {
 }
 .locationContainer{
   min-width: 20vmin;
-  min-height: 20vmin;
+  min-height: 15vmin;
   border: 1px dashed #f68;
 }
 .plays {
   position: absolute;
-  height:23vmin;
-  width:35vmin;
+  height:15vmin;
+  width:15vmin;
   box-sizing: border-box;
   text-align: center;
   border: 1px solid #ff8;
@@ -123,7 +123,7 @@ td, th {
 }
 .name {
   height:7vmin;
-  width:25vmin;
+  width:15vmin;
   position:absolute;
   font-size: large;
   text-align: center;
@@ -134,7 +134,7 @@ td, th {
   position: absolute;
   display: block;
   height: 8vmin;
-  width: 50vmin;
+  width: 15vmin;
   text-align:center;
   border: 1px solid #8f8;
 }

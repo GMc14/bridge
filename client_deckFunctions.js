@@ -162,6 +162,6 @@ function othersPlayed(play, card) {
   console.log("othersPlayed++++++++++++ play: "+play+" card:"+card);
 
   var area = document.getElementById(play);
-  $("#loc"+playerIndex+"Hand").find(".otherCards").first().remove();
+  $("#loc"+playerIndex+"hand").find(".otherCards").first().remove();
   $("#" + card + "_img").attr("class", "myCards").clone().show().appendTo(area);
 }
