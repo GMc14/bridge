@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-
 <head>
   <meta charset="utf-8">
   <title>My Bridge</title>
@@ -34,29 +33,9 @@
       console.log("GMcCards-#1000");
     });
   </script>
-
 </head>
-
 <body>
   <div id="gameBoard">
-    <div id="playArea">
-      <div id='bidOfRound' style="font-size:large"></div>
-      <div id="myPlay" class="plays"></div>
-      <div id="myStuff" class="stuff"></div>
-      <div id="rightName" class="name"></div>
-      <div id="rightPlay" class="plays"></div>
-      <div id="rightStuff" class="stuff"></div>
-      <div id="acrossName" class="name"></div>
-      <div id="acrossPlay" class="plays"></div>
-      <div id="acrossStuff" class="stuff"></div>
-      <div id="leftName" class="name"></div>
-      <div id="leftPlay" class="plays"></div>
-      <div id="leftStuff" class="stuff"></div>
-      <div id="rightWin" class="winCount">0</div>
-      <div id="leftWin" class="winCount">0</div>
-      <div id="myWin" class="winCount"><b>Team Wins: 0</b></div>
-      <div id="acrossWin" class="winCount">0</div>
-    </div>
     <div id=topbar>
       <button class="gameButtons" id="leaveRoom" onclick="leaveRoom()" style="display:none">Leave</button><br>
     </div>
@@ -155,15 +134,35 @@
         <button id="restartGame" class="gameButtons">RESTART GAME</button>
       </div>
     </div>
+    <div id="playArea">
+      <div id='bidOfRound' style="font-size:large"></div>
 
-    <div class="myPlayer" id="myPlayer">
+      <div id="myStuff" class="stuff"></div>      
+      <div id="rightStuff" class="stuff"></div>
+      <div id="acrossStuff" class="stuff"></div>
+      <div id="leftStuff" class="stuff"></div>
+      
+      <div id="myPlay" class="plays"></div>
+      <div id="acrossPlay" class="plays"></div>
+      <div id="rightPlay" class="plays"></div>
+      <div id="leftPlay" class="plays"></div>
+
+      
+      <div id="myName" class="name">I am ...</div>
+      <div id="leftName" class="name"></div>
+      <div id="acrossName" class="name"></div>   
+      <div id="rightName" class="name"></div>
+
+      <div id="myWin" class="winCount"><b>Team Wins: 0</b></div>
+      <div id="rightWin" class="winCount">0</div>
+      <div id="leftWin" class="winCount">0</div>
+      <div id="acrossWin" class="winCount">0</div>
     </div>
-    <div class="otherPlayers" id="PlayerRight">
-    </div>
-    <div class="otherPlayers" id="PlayerAcross">
-    </div>
-    <div class="otherPlayers" id="PosLeft">
-    </div>
+
+    <div class="myPlayer" id="myPlayer"></div>
+    <div class="otherPlayers" id="PlayerRight"></div>
+    <div class="otherPlayers" id="PlayerAcross"></div>
+    <div class="otherPlayers" id="PosLeft"></div>
 
     <div id="chat" style="display:none">
       <div id="chatBox">
