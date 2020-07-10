@@ -402,7 +402,7 @@ function playerModule() {
         currPlayer.setAttribute("id", "btnPlayer"+j);
         currPlayer.setAttribute("data-player-number", j);
         currPlayer.setAttribute("class", "playerBtns");
-        currPlayer.setAttribute("value", "Player "+j);
+        currPlayer.setAttribute("value", "Player"+j);
 
         playerSetup.appendChild(document.createElement("br"));
         playerSetup.appendChild(currPlayer);

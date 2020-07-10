@@ -4,8 +4,8 @@ function Card(suit, rank) {
 }
 
 function startGame() {
-  console.log("--------------startGame----------------");
   if (playerNum == dealer) {
+    console.log("--------------startGame-------I'm the dealer---------"+playerNum+" == "+dealer);
     var myHand = document.getElementById("myPlayer");
     while (myHand.firstChild) {
       myHand.removeChild(myHand.firstChild);
@@ -19,6 +19,8 @@ function startGame() {
     createDeck();
     shuffle();
     dealCards();
+  } else {
+    console.log("--------------startGame-------not the dealer---------"+playerNum+" == "+dealer);
   }
 }
 
