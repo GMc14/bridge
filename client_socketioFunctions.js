@@ -444,7 +444,7 @@ function scrollToBottom() {
 
 function constructPlayArea() {
     var clientNumber = Number(playerNum.slice(-1));
-    for (var j = 1; j <= gameConfig_playerCount; j++) {
+    for (var j = 1; j < gameConfig_playerCount; j++) {
         var stuff = $('<div id="loc'+j+'stuff" class="stuff"></div>');
         var plays = $('<div id="loc'+j+'play" class="plays"></div>');
         var name = $('<div id="loc'+j+'name" class="name"></div>');
@@ -457,19 +457,24 @@ function constructPlayArea() {
         $(playerContainer).append(winCounter);
 
         $("#playArea").append(playerContainer);
-        
-        //FIXME: use this once player locations are functioning --> rotate($("#loc"+j+"Container"), j * 360 / gameConfig_playerCount);
         var playerHand = '<div class="otherPlayerHand" id="loc'+j+'hand" ></div>';
         $("#gameBoard").append(playerHand);
 
-        var positionRelativeToCenter = 1 + j - ((gameConfig_playerCount+1)/2);
+
+        var positionRelativeToCenter = j - ((gameConfig_playerCount)/2);
+        $(playerContainer).css({ 
+            "left": ((j-1)*100/gameConfig_playerCount)+"vw", 
+            "top": "25vh", 
+            "transform": "rotate("+positionRelativeToCenter*4+"deg) translateY("+Math.abs(positionRelativeToCenter)*7+"px)" 
+        });
         $("#loc"+j+"hand").css({ 
-            "left": (j*100/gameConfig_playerCount)+"vw", 
+            "left": ((j-1)*100/gameConfig_playerCount)+"vw", 
             "top": "5vh", 
             "transform": "rotate("+positionRelativeToCenter*4+"deg) translateY("+Math.abs(positionRelativeToCenter)*7+"px)" 
         });
 
-        $("#loc"+j+"name").html('Player'+(clientNumber%gameConfig_playerCount)+(j+1)+': ' + playerNickNames[(clientNumber+j)%gameConfig_playerCount]);
+        var pNumber = Number((clientNumber%gameConfig_playerCount)+(j+1));
+        $("#loc"+j+"name").html('Player'+pNumber+': ' + playerNickNames[(clientNumber+j)%gameConfig_playerCount]);
     }
 }
 
