@@ -97,17 +97,17 @@ td, th {
 #playArea {
   display: none;
   position: absolute;
-  top: 15%;
-  left: 15%;
-  height: 65%;
-  width: 70%;
+  top: 15vh;
+  left: 15vw;
+  height: 65vh;
+  width: 70vw;
   box-sizing: border-box;
   border: 3px solid white;
 }
 .plays {
   position: absolute;
-  height:23.1%;
-  width:35%;
+  height:23vmin;
+  width:35vmin;
   box-sizing: border-box;
   text-align: center;
   border: 1px solid #ff8;
@@ -117,8 +117,8 @@ td, th {
   width: 5vmax;
 }
 .name {
-  height:7%;
-  width:25%;
+  height:7vmin;
+  width:25vmin;
   position:absolute;
   font-size: large;
   text-align: center;
@@ -128,15 +128,15 @@ td, th {
   box-sizing: border-box;
   position: absolute;
   display: block;
-  height: 8%;
-  width: 50%;
+  height: 8vmin;
+  width: 50vmin;
   text-align:center;
   border: 1px solid #8f8;
 }
 .winCount {
   position:absolute;
-  height: 2%;
-  width: 2%;
+  height: 2vmin;
+  width: 2vmin;
   text-align:center;
   font-weight: bold;
   line-height: 100%;

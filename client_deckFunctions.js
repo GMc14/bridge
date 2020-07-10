@@ -118,7 +118,7 @@ function displayCards() {
     card.setAttribute("id", encodedI + cardID);
     $("#" + cardID + "_img").clone().show().appendTo(card);
     card.addEventListener("click", playCard, true);
-    $(hand).append(card);
+    $("#myHand").append(card);
   }
 }
 
