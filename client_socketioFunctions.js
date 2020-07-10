@@ -459,8 +459,16 @@ function constructPlayArea() {
         $("#playArea").append(playerContainer);
         
         //FIXME: use this once player locations are functioning --> rotate($("#loc"+j+"Container"), j * 360 / gameConfig_playerCount);
-        var playerHand = '<div class="otherPlayerHand" id="loc'+j+'Hand"></div>';
+        var playerHand = '<div class="otherPlayerHand" id="loc'+j+'hand" ></div>';
         $("#gameBoard").append(playerHand);
+
+        var positionRelativeToCenter = 1 + j - ((gameConfig_playerCount+1)/2);
+        $("#loc"+j+"hand").css({ 
+            "left": (j*100/gameConfig_playerCount)+"vw", 
+            "top": "5vh", 
+            "transform": "rotate("+positionRelativeToCenter*4+"deg) translateY("+Math.abs(positionRelativeToCenter)*7+"px)" 
+        });
+
         $("#loc"+j+"name").html('Player'+(clientNumber%gameConfig_playerCount)+(j+1)+': ' + playerNickNames[(clientNumber+j)%gameConfig_playerCount]);
     }
 }
