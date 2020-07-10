@@ -445,23 +445,24 @@ function scrollToBottom() {
 function constructPlayArea() {
     var clientNumber = Number(playerNum.slice(-1));
     for (var j = 1; j <= gameConfig_playerCount; j++) {
-        var stuff = $('<div id="loc'+i+'stuff" class="stuff"></div>');
-        var plays = $('<div id="loc'+i+'play" class="plays"></div>');
-        var name = $('<div id="loc'+i+'name" class="name"></div>');
-        var winCounter = $('<div id="loc'+i+'wins" class="winCount">0</div>');
+        var stuff = $('<div id="loc'+j+'stuff" class="stuff"></div>');
+        var plays = $('<div id="loc'+j+'play" class="plays"></div>');
+        var name = $('<div id="loc'+j+'name" class="name"></div>');
+        var winCounter = $('<div id="loc'+j+'wins" class="winCount">0</div>');
 
-        var playerContainer = $("<div></div>");
+        var playerContainer = $("<div id='loc"+j+"Container"></div>");
         $(playerContainer).append(stuff);
         $(playerContainer).append(plays);
         $(playerContainer).append(name);
         $(playerContainer).append(winCounter);
 
-        rotate(playerContainer, j * 360 / gameConfig_playerCount);
 
         $("#playArea").append(playerContainer);
-        var playerHand = '<div class="otherPlayerHand" id="loc'+i+'Hand"></div>';
+        
+        rotate($("#loc"+j+"Container"), j * 360 / gameConfig_playerCount);
+        var playerHand = '<div class="otherPlayerHand" id="loc'+j+'Hand"></div>';
         $("#gameBoard").append(playerHand);
-        $("#loc"+i+"name").html('Player'+(clientNumber%gameConfig_playerCount)+(i+1)+': ' + playerNickNames[(clientNumber+i)%gameConfig_playerCount]);
+        $("#loc"+j+"name").html('Player'+(clientNumber%gameConfig_playerCount)+(j+1)+': ' + playerNickNames[(clientNumber+j)%gameConfig_playerCount]);
     }
 }
 
