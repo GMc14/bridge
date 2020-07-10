@@ -256,7 +256,7 @@ p {
   position: absolute;
   display: block;
   height: 7vmax;
-  width: 50%;
+  width: 20vmax;
   text-align:center;
   box-sizing: border-box;
   border: 1px dotted #c37;

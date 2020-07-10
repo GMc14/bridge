@@ -463,17 +463,17 @@ function constructPlayArea() {
 
         var positionRelativeToCenter = j - ((gameConfig_playerCount)/2);
         $(playerContainer).css({ 
-            "left": ((j-1)*100/gameConfig_playerCount)+"vw", 
+            "left": ((j-1)*100/(gameConfig_playerCount-1))+"vw", 
             "top": "25vh", 
             "transform": "rotate("+positionRelativeToCenter*4+"deg) translateY("+Math.abs(positionRelativeToCenter)*7+"px)" 
         });
         $("#loc"+j+"hand").css({ 
-            "left": ((j-1)*100/gameConfig_playerCount)+"vw", 
+            "left": ((j-1)*100/(gameConfig_playerCount-1))+"vw", 
             "top": "5vh", 
             "transform": "rotate("+positionRelativeToCenter*4+"deg) translateY("+Math.abs(positionRelativeToCenter)*7+"px)" 
         });
 
-        var pNumber = Number(clientNumber%gameConfig_playerCount);
+        var pNumber = Number((clientNumber+1)%gameConfig_playerCount);
         $("#loc"+j+"name").html('Player'+pNumber+': ' + playerNickNames[pNumber-1]);
     }
 }
