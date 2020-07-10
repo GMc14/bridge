@@ -450,7 +450,7 @@ function constructPlayArea() {
         var name = $('<div id="loc'+j+'name" class="name"></div>');
         var winCounter = $('<div id="loc'+j+'wins" class="winCount">0</div>');
 
-        var playerContainer = $("<div id='loc"+j+"Container"></div>");
+        var playerContainer = $("<div id='loc"+j+"Container'></div>");
         $(playerContainer).append(stuff);
         $(playerContainer).append(plays);
         $(playerContainer).append(name);
