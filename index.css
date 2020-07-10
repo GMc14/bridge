@@ -209,15 +209,18 @@ td, th {
 #rightWin {
   bottom:49%;
   right:1%;
+  display:none;
 }
 #acrossWin {
   top:1%;
   left:42.5%;
   width:15%;
+  display:none;
 }
 #leftWin {
   bottom:49%;
   left:1%;
+  display:none;
 }
 #gameSetup {
   display: table;
@@ -309,6 +312,7 @@ p {
   height: 7vmax;
   width: 50%;
   text-align:center;
+  border: 1px dotted #c37;
 }
 #PlayerRight {
   top: 46%;
