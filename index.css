@@ -204,6 +204,7 @@ td, th {
   bottom:2%;
   left:42.5%;
   width:15%;
+  display:none;
 }
 #rightWin {
   bottom:49%;

@@ -12,10 +12,17 @@ var gameConfig_startCardsPerPlayer = 5;
 var gameConfig_numberOfRounds = gameConfig_startCardsPerPlayer; //Plya all cards in hand
 
 var gameConfid_isCrew = true;
-var crewBonusCards = new Array("R1","R2","R3",'R4');
 var gameConfig_permaTrumpSuit = gameConfid_isCrew?"R":'';
+var crewBonusCards = new Array("R1","R2","R3",'R4');
 var bonusCards = gameConfid_isCrew?crewBonusCards:[];
-
+var crewMissions=[
+    "1T", //1 Task
+    "2T",
+    "2T,2O", //2 Ordered Tasks
+    "3T",
+    "1Z", //One player receives no tricks (Captain decides)
+    "3T2O,?C"
+]
 var gameConfig_isBridge = false;
 var gameConfig_bidForTrump = gameConfig_isBridge;
 var gameConfig_hasTeams = gameConfig_isBridge;
@@ -34,9 +41,9 @@ var euchreRanks = new Array(9, 10, 11, 12, 13, 14);
 var crewRanks = new Array(1, 2, 3, 4, 5, 6, 7, 8, 9);
 
 var ranks = standardRanks;
-if(isEuchre){
+if(gameConfig_isEuchre){
     ranks = euchreRanks;
-} else if (isCrew) {
+} else if (gameConfid_isCrew) {
     ranks = crewRanks;
 } 
 var cardback = "card_imgs/cardback.png";
