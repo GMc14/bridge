@@ -1,6 +1,6 @@
 var socketio = io.connect();
 var roomID;
-
+var xoob;
 //Meta
 var playerNickNames = ['', '', '', '','', '', '', ''];
 var playersArray = ["Player1", "Player2", "Player3", "Player4", "Player5", "Player6", "Player7" ,"Player8"];
@@ -162,8 +162,8 @@ $(function () {
         }
     });
     socketio.on('deal', function (data) {
-        
-    console.log("--------------deal----------------");
+     xoob = data;  
+    console.log("--------------deal---------------- "+JSON.stringify(data, null, 4));
         switch (playerNum) {
             case 'Player1':
                 //lightblue
@@ -457,7 +457,7 @@ function constructPlayArea() {
         $(playerContainer).append(winCounter);
 
         $("#playArea").append(playerContainer);
-        var playerHand = '<div class="otherPlayerHand" id="loc'+j+'hand" ></div>';
+        var playerHand = '<div class="otherPlayerHand" id="loc'+j+'Hand" ></div>';
         $("#gameBoard").append(playerHand);
 
 
@@ -467,13 +467,13 @@ function constructPlayArea() {
             "top": "12vh", 
             "transform": "rotate("+positionRelativeToCenter*4+"deg) translateY("+Math.abs(positionRelativeToCenter)*7+"px)" 
         });
-        $("#loc"+j+"hand").css({ 
+        $("#loc"+j+"Hand").css({ 
             "left": ((j-1)*100/(gameConfig_playerCount-1))+"vw", 
             "top": "5vh", 
             "transform": "rotate("+positionRelativeToCenter*4+"deg) translateY("+Math.abs(positionRelativeToCenter)*7+"px)" 
         });
 
-        var pNumber = Number((clientNumber+j)%gameConfig_playerCount);
+        var pNumber = Number((clientNumber+j)%gameConfig_playerCount)+1;
         $("#loc"+j+"name").html('Player'+pNumber+': ' + playerNickNames[pNumber-1]);
     }
 }
