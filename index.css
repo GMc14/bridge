@@ -105,14 +105,17 @@ td, th {
   border: 3px solid white;
 }
 .locationContainer{
-  min-width: 20vmin;
-  min-height: 15vmin;
+  position: absolute;
+  width: 20vw;
+  height: 33vh;
   border: 1px dashed #f68;
 }
 .plays {
   position: absolute;
   height:15vmin;
   width:15vmin;
+  top:18vmin;
+  left:0vmin;
   box-sizing: border-box;
   text-align: center;
   border: 1px solid #ff8;
@@ -122,9 +125,11 @@ td, th {
   width: 5vmax;
 }
 .name {
-  height:7vmin;
-  width:15vmin;
   position:absolute;
+  height:8vmin;
+  width:12vmin;
+  top:10vmin;
+  left:14vmin;
   font-size: large;
   text-align: center;
   border: 1px solid #8ff;
@@ -133,15 +138,19 @@ td, th {
   box-sizing: border-box;
   position: absolute;
   display: block;
-  height: 8vmin;
-  width: 15vmin;
+  height: 7vmin;
+  width: 5vmin;
+  top:10vmin;
+  left:4vmin;
   text-align:center;
   border: 1px solid #8f8;
 }
 .winCount {
   position:absolute;
-  height: 2vmin;
-  width: 2vmin;
+  height: 3vmin;
+  width: 3vmin;
+  top:10vmin;
+  left:0vmin;
   text-align:center;
   font-weight: bold;
   line-height: 100%;

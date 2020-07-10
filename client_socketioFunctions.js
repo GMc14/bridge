@@ -464,7 +464,7 @@ function constructPlayArea() {
         var positionRelativeToCenter = j - ((gameConfig_playerCount)/2);
         $(playerContainer).css({ 
             "left": ((j-1)*100/(gameConfig_playerCount-1))+"vw", 
-            "top": "25vh", 
+            "top": "12vh", 
             "transform": "rotate("+positionRelativeToCenter*4+"deg) translateY("+Math.abs(positionRelativeToCenter)*7+"px)" 
         });
         $("#loc"+j+"hand").css({ 
@@ -473,7 +473,7 @@ function constructPlayArea() {
             "transform": "rotate("+positionRelativeToCenter*4+"deg) translateY("+Math.abs(positionRelativeToCenter)*7+"px)" 
         });
 
-        var pNumber = Number((clientNumber+1)%gameConfig_playerCount);
+        var pNumber = Number((clientNumber+j)%gameConfig_playerCount);
         $("#loc"+j+"name").html('Player'+pNumber+': ' + playerNickNames[pNumber-1]);
     }
 }
