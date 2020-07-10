@@ -76,14 +76,14 @@ io.sockets.on('connection', function (socket) {
     var playerIndex = data.playerIndex;
     var playerNum = data.playerNum;
     socket.player = playerNum;
-    var pLeft = data.pLeft;
-    console.log("--------------selPlayer----------------pLeft: "+pLeft+"  >>  playerIndex: "+playerIndex);
+    var remainingPlayers = data.remainingPlayers;
+    console.log("--------------selPlayer----------------remainingPlayers: "+remainingPlayers+"  >>  playerIndex: "+playerIndex);
     io.sockets.to(data.roomID).emit('playerDataToClient', {
       nickname: socket.nickname,
       playerIndex: playerIndex,
-      pLeft: pLeft
+      remainingPlayers: remainingPlayers
     });
-    if (pLeft == 0) {
+    if (remainingPlayers == 0) {
       io.sockets.to(data.roomID).emit('startGame');
     }
 

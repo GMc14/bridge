@@ -5,7 +5,7 @@ var roomID;
 var playerNickNames = ['', '', '', '','', '', '', ''];
 var playersArray = ["Player1", "Player2", "Player3", "Player4", "Player5", "Player6", "Player7" ,"Player8"];
 var playerColors = ['#004499','#770011','#666600','#116600','#440099','#883300','#006666','#660066'];
-var positions = ["#myPlayer","#PosLeft","#PlayerAcross","#PlayerRight"];
+var positions = ["#myHand","#loc1Hand","#loc2Hand","#loc3Hand"];
 
 //Game Config
 var gameConfig_playerCount = 3;
@@ -51,7 +51,7 @@ var cardback = "card_imgs/cardback.png";
 
 //Player values
 var nickname;
-var pLeft;
+var remainingPlayers;
 var playerNum;
 var playerIndex;
 
@@ -100,9 +100,9 @@ $(function () {
     socketio.on('playerDataToClient', function (data) {
         var nickname = data.nickname;
         var playerIndex = data.playerIndex;
-        pLeft = data.pLeft;
+        remainingPlayers = data.remainingPlayers;
         
-        console.log("playerDataToClient---- >> playerIndex: "+playerIndex+"  >> nickname: "+nickname+"  >>  pLeft: "+pLeft);
+        console.log("playerDataToClient---- >> playerIndex: "+playerIndex+"  >> nickname: "+nickname+"  >>  remainingPlayers: "+remainingPlayers);
         $("#btnPlayer"+playerIndex).remove();
         playerNickNames[playerIndex-1] = nickname;
         $(positions[playerIndex-1]).append($("<p></p>").text(nickname));
@@ -115,35 +115,7 @@ $(function () {
     socketio.on('startGame', function () {
         $("#playArea").show();
         console.log("client_socket :: startGame");
-        switch (playerNum) {
-            case 'Player1':
-                $('#leftName').html('Player2: ' + playerNickNames[1]);
-                $('#acrossName').html('Player 3: ' + playerNickNames[2]);
-                $('#rightName').html('Player 4: ' + playerNickNames[3]);
-                break;
-            case 'Player2':
-                $('#leftName').html('Player 3: ' + playerNickNames[2]);
-                $('#acrossName').html('Player 4: ' + playerNickNames[3]);
-                $('#rightName').html('Player 1: ' + playerNickNames[0]);
-                break;
-            case 'Player3':
-                $('#leftName').html('Player 4: ' + playerNickNames[3]);
-                $('#acrossName').html('Player 1: ' + playerNickNames[0]);
-                $('#rightName').html('Player 2: ' + playerNickNames[1]);
-                break;
-            case 'Player4':
-                $('#leftName').html('Player 1: ' + playerNickNames[0]);
-                $('#acrossName').html('Player 2: ' + playerNickNames[1]);
-                $('#rightName').html('Player 3: ' + playerNickNames[2]);
-                break;
-        }
-
-/*
-        var clientNumber = parseInt(playerNum.slice(-1));
-        $('#leftName').html('Player'+(clientNumber%4)+1+': ' + playerNickNames[clientNumber]);
-        $('#acrossName').html('Player '+((clientNumber+1)%4)+1+': ' + playerNickNames[(clientNumber+1)%4]);
-        $('#rightName').html('Player '+((clientNumber+2)%4)+1+': ' + playerNickNames[(clientNumber+2)%4]);
-*/
+        constructPlayArea();
         startGame();
     });
     socketio.on('restartGame', function () {
@@ -254,27 +226,15 @@ $(function () {
     socketio.on('cardPlayed', function (data) {
         var player = data.player;
         var card = data.card;
-
+        console.log("socketFunctions -> cardPayed card: "+card+"  >>  player: "+player+"  >> nextPlayer: "+nextPlayer(playerNum)+"  >>  prevPlayer: "+prevPlayer(playerNum));
         if (playerNum != lead && player == lead) {
             console.log("ssocketFunctions -> cardPLayed EMPTY"+playerNum+"  :  "+player+"  |  "+lead);
             $(".plays").empty();
         } else {
             console.log("ssocketFunctions -> cardPLayed "+playerNum+"  :  "+player+"  |  "+lead);
         }
-        switch (true) {
-            case (nextPlayer(playerNum)==player):
-                othersPlayed("leftPlay", card);
-                break;
-            case (gameConfig_playerCount == 4 && nextPlayer(nextPlayer(playerNum))==player):
-                othersPlayed("acrossPlay", card);
-                break;
-            case (prevPlayer(playerNum)==player):
-                othersPlayed("rightPlay", card);
-                break;
-            default:
-                console.log("ssocketFunctions -> cardPLayed switch {}"+player+"  :n  "+nextPlayer(playerNum)+"  |p  "+prevPlayer(playerNum));
-                break;
-        }
+
+        othersPlayed(player, card);
         if (currentPlayer == lead) {
             leadSuit = card.charAt(0);
             if(gameConfig_euchreBowers && card.substr(1) == "11" && suitColors[leadSuit] == suitColors[trumpSuit]){
@@ -292,20 +252,9 @@ $(function () {
         roundNumber++;
         lead = trickWinner;
         currentPlayer = trickWinner;
-        switch (true) {
-            //Player1
-            case (trickWinner == nextPlayer(playerNum)):
-                addWin("leftStuff", trickCards);
-                break;
-            case (gameConfig_playerCount == 4 && trickWinner == nextPlayer(nextPlayer(playerNum))):
-                addWin("acrossStuff", trickCards);
-                tricksWon++;
-                break;
-            case (trickWinner == prevPlayer(playerNum)):
-                addWin("rightStuff", trickCards);
-                break;
-            default:
-                break;
+        addWin("loc"+trickWinner+"Stuff", trickCards);
+        if (gameConfig_isBridge && gameConfig_playerCount == 4 && trickWinner == nextPlayer(nextPlayer(playerNum))){
+            tricksWon++;
         }
         if (roundNumber == gameConfig_numberOfRounds) {
             calculateWinner();
@@ -342,7 +291,7 @@ function clearSetupModule() {
 
 function joinRoom() {
     roomID = $("#roomID").val();
-    pLeft = gameConfig_playerCount;
+    remainingPlayers = gameConfig_playerCount;
     if (roomID == '') {
         alert('RoomID must be 1-4 characters long');
     } else {
@@ -427,7 +376,7 @@ function playerSelect() {
             boldNames.appendChild(document.createTextNode(playerNum + ': ' + nickname));
             $('#topbar').append('<br/>');
             $("#topbar").append(boldNames);
-            pLeft--;
+            remainingPlayers--;
             
             console.log("--------------playerBtns emit selPlayer...----------------");
             socketio.emit('selPlayer', {
@@ -435,7 +384,7 @@ function playerSelect() {
                 playerNum: playerNum,
                 playerIndex: playerIndex,
                 roomID: roomID,
-                pLeft: pLeft
+                remainingPlayers: remainingPlayers
             });
             $('#chat').show();
             playerColor = playerColors[playerIndex-1];
@@ -471,6 +420,7 @@ function calculateWinner() {
 }
 
 function refreshTeamWins(win) {
+    console.log("refreshTeamWins rewrite this with locations instead of 'left/right/across'");
     switch (win) {
         case 0:
             var numWins = $('#leftWin').html();
@@ -490,4 +440,39 @@ function refreshTeamWins(win) {
 function scrollToBottom() {
     var divObj = $("#msgBox");
     divObj.scrollTop($(divObj)[0].scrollHeight);
+}
+
+function constructPlayArea() {
+    var clientNumber = Number(playerNum.slice(-1));
+    for (var j = 1; j <= gameConfig_playerCount; j++) {
+        var stuff = $('<div id="loc'+i+'stuff" class="stuff"></div>');
+        var plays = $('<div id="loc'+i+'play" class="plays"></div>');
+        var name = $('<div id="loc'+i+'name" class="name"></div>');
+        var winCounter = $('<div id="loc'+i+'wins" class="winCount">0</div>');
+
+        var playerContainer = $("<div></div>");
+        $(playerContainer).append(stuff);
+        $(playerContainer).append(plays);
+        $(playerContainer).append(name);
+        $(playerContainer).append(winCounter);
+
+        rotate(playerContainer, j * 360 / gameConfig_playerCount);
+
+        $("#playArea").append(playerContainer);
+        var playerHand = '<div class="otherPlayerHand" id="loc'+i+'Hand"></div>';
+        $("#gameBoard").append(playerHand);
+        $("#loc"+i+"name").html('Player'+(clientNumber%gameConfig_playerCount)+(i+1)+': ' + playerNickNames[(clientNumber+i)%gameConfig_playerCount]);
+    }
+}
+
+function rotate($el, degrees) {
+    $el.css({
+  '-webkit-transform' : 'rotate('+degrees+'deg)',
+     '-moz-transform' : 'rotate('+degrees+'deg)',  
+      '-ms-transform' : 'rotate('+degrees+'deg)',  
+       '-o-transform' : 'rotate('+degrees+'deg)',  
+          'transform' : 'rotate('+degrees+'deg)',  
+               'zoom' : 1
+
+    });
 }

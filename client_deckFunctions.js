@@ -6,16 +6,8 @@ function Card(suit, rank) {
 function startGame() {
   if (playerNum == dealer) {
     console.log("--------------startGame-------I'm the dealer---------"+playerNum+" == "+dealer);
-    var myHand = document.getElementById("myPlayer");
-    while (myHand.firstChild) {
-      myHand.removeChild(myHand.firstChild);
-    }
-    var otherHands = document.getElementsByClassName("otherPlayers");
-    for (var i = 0; i < $("#gameBoard .otherPlayers").length; i++) {
-      while (otherHands[i].firstChild) {
-        otherHands[i].removeChild(otherHands[i].firstChild);
-      }
-    }
+    $("#myHand").empty();
+    $(".otherPlayerHand").empty();
     createDeck();
     shuffle();
     dealCards();
@@ -108,17 +100,14 @@ function displayTrumpCard(trumpCard) {
   card.setAttribute("id", 'trump' + cardID);
   $("#" + cardID + "_img").clone().show().appendTo(card);
   card.addEventListener("click", playCard, true);
-  document.getElementById("PlayerAcross").appendChild(card);
+  document.getElementById("showCase").appendChild(card);
 }
 
 function displayCards() {
   for (var j = 0; j < gameConfig_playerCount; j++) {
     displayOtherCards(j);
   }
-  var hand = document.getElementById("myPlayer");
-  while (hand.firstChild) {
-    hand.removeChild(hand.firstChild);
-  }
+  $("#myHand").empty();
   for (var i = 0; i < Player1.length; i++) {
     var cardRank = String(Player1[i].rank);
     var cardSuit = String(Player1[i].suit);
@@ -134,24 +123,12 @@ function displayCards() {
 }
 
 function displayOtherCards(playerIndex) {
-  var hand;
-  if (playerIndex == 0) {
-    hand = document.getElementById("PlayerRight");
-  } else if (playerIndex == 1) {
-    //hand = document.getElementById("PlayerAcross");
-  } else if (playerIndex == 2) {
-    hand = document.getElementById("PosLeft");
-  }
-  if (hand) {
-    while (hand.firstChild) {
-      hand.removeChild(hand.firstChild);
-    }
-    for (var i = 0; i < gameConfig_startCardsPerPlayer; i++) {
-      var card = document.createElement("div");
-      card.setAttribute("class", "otherCards");
-      $(".cardback:eq(0)").clone().show().appendTo(card);
-      hand.appendChild(card);
-    }
+  $('#loc'+playerIndex+'Hand').empty();
+  for (var i = 0; i < gameConfig_startCardsPerPlayer; i++) {
+    var card = document.createElement("div");
+    card.setAttribute("class", "otherCards");
+    $(".cardback:eq(0)").clone().show().appendTo(card);
+    $('#loc'+playerIndex+'Hand').appendChild(card);
   }
 }
 
@@ -182,21 +159,10 @@ function playCard() {
 }
 
 function othersPlayed(play, card) {
+
+  console.log("othersPlayed++++++++++++ play: "+play+" card:"+card);
+
   var area = document.getElementById(play);
-  console.log("othersPlayed++++++++++++");
-  switch (play) {
-    case "rightPlay":
-      console.log("othersPlayed++++++++++++ Remove Right");
-      $("#PlayerRight").find(".otherCards").first().remove();
-      break;
-    case "acrossPlay":
-      console.log("othersPlayed++++++++++++ Remove Across");
-      $("#PlayerAcross").find(".otherCards").first().remove();
-      break;
-    case "leftPlay":
-      console.log("othersPlayed++++++++++++ Remove Left");
-      $("#PosLeft").find(".otherCards").first().remove();
-      break;
-  }
+  $("#loc"+playerIndex+"Hand").find(".otherCards").first().remove();
   $("#" + card + "_img").attr("class", "myCards").clone().show().appendTo(area);
 }

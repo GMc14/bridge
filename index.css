@@ -124,72 +124,14 @@ td, th {
   text-align: center;
   border: 1px solid #8ff;
 }
-#rightName {
-  bottom:19%;
-  right: -12%;
-  transform:rotate(-90deg);
-}
-#acrossName {
-  right:0;
-  top:0;
-}
-#leftName {
-  top:19%;
-  left: -12%;
-  transform:rotate(90deg);
-}
 .stuff {
+  box-sizing: border-box;
   position: absolute;
   display: block;
   height: 8%;
   width: 50%;
   text-align:center;
   border: 1px solid #8f8;
-}
-#myStuff {
-  box-sizing: border-box;
-  bottom:5%;
-  left:25%;
-}
-#rightStuff {
-  box-sizing: border-box;
-  top: 46%;
-  right:-19%;
-  transform: rotate(-90deg);
-}
-#acrossStuff {
-  box-sizing: border-box;
-  top:5%;
-  left:25%;
-}
-#leftStuff {
-  box-sizing: border-box;
-  transform: rotate(90deg);
-  box-sizing: border-box;
-  top: 46%;
-  left:-19%;
-}
-#myPlay {
-  box-sizing: border-box;
-  bottom: 17%;
-  left: 32.5%;
-}
-#rightPlay {
-  box-sizing: border-box;
-  bottom: 38.45%;
-  right: 5%;
-  transform: rotate(-90deg);
-}
-#acrossPlay {
-  box-sizing: border-box;
-  top: 17%;
-  left: 32.5%;
-}
-#leftPlay {
-  box-sizing: border-box;
-  bottom: 38.45%;
-  left: 5%;
-  transform: rotate(90deg);
 }
 .winCount {
   position:absolute;
@@ -200,26 +142,25 @@ td, th {
   line-height: 100%;
   border: 1px solid #f8f;
 }
-#myWin {
+#myStuff {
+  bottom:5%;
+  left:25%;
+}
+#myName {
   bottom:2%;
   left:42.5%;
   width:15%;
   display:none;
 }
-#rightWin {
-  bottom:49%;
-  right:1%;
-  display:none;
+#myPlay {
+  box-sizing: border-box;
+  bottom: 17%;
+  left: 32.5%;
 }
-#acrossWin {
-  top:1%;
+#myWin {
+  bottom:2%;
   left:42.5%;
   width:15%;
-  display:none;
-}
-#leftWin {
-  bottom:49%;
-  left:1%;
   display:none;
 }
 #gameSetup {
@@ -291,7 +232,7 @@ td, th {
 .playerBtns:hover {
   box-shadow: 0px 0px 15px red;
 }
-.myPlayer {
+.myHand {
   display:block;
   position:absolute;
   height:15%;
@@ -306,30 +247,14 @@ td, th {
 p {
   font-size: xx-large;
 }
-.otherPlayers {
+.otherPlayerHand {
   position: absolute;
   display: block;
   height: 7vmax;
   width: 50%;
   text-align:center;
+  box-sizing: border-box;
   border: 1px dotted #c37;
-}
-#PlayerRight {
-  top: 46%;
-  right:-22%;
-  transform: rotate(-90deg);
-  box-sizing: border-box;
-}
-#PlayerAcross {
-  top:4%;
-  left:25%;
-  box-sizing: border-box;
-}
-#PosLeft {
-  top: 46%;
-  left:-22%;
-  transform: rotate(90deg);
-  box-sizing: border-box;
 }
 .cardback {
   height: 7vmax !important;

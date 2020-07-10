@@ -38,6 +38,8 @@
   <div id="gameBoard">
     <div id=topbar>
       <button class="gameButtons" id="leaveRoom" onclick="leaveRoom()" style="display:none">Leave</button><br>
+      <div id='bidOfRound' style="font-size:large"></div>
+      <div id="showCase"></div>
     </div>
     <div id="gameSetup">
       <div class="setupModule">
@@ -134,35 +136,14 @@
         <button id="restartGame" class="gameButtons">RESTART GAME</button>
       </div>
     </div>
+    <div class="myHand" id="myHand"></div>
     <div id="playArea">
-      <div id='bidOfRound' style="font-size:large"></div>
-
       <div id="myStuff" class="stuff"></div>      
-      <div id="rightStuff" class="stuff"></div>
-      <div id="acrossStuff" class="stuff"></div>
-      <div id="leftStuff" class="stuff"></div>
-      
-      <div id="myPlay" class="plays"></div>
-      <div id="acrossPlay" class="plays"></div>
-      <div id="rightPlay" class="plays"></div>
-      <div id="leftPlay" class="plays"></div>
-
-      
       <div id="myName" class="name">I am ...</div>
-      <div id="leftName" class="name"></div>
-      <div id="acrossName" class="name"></div>   
-      <div id="rightName" class="name"></div>
-
+      <div id="myPlay" class="plays"></div>
       <div id="myWin" class="winCount"><b>Team Wins: 0</b></div>
-      <div id="rightWin" class="winCount">0</div>
-      <div id="leftWin" class="winCount">0</div>
-      <div id="acrossWin" class="winCount">0</div>
     </div>
 
-    <div class="myPlayer" id="myPlayer"></div>
-    <div class="otherPlayers" id="PlayerRight"></div>
-    <div class="otherPlayers" id="PlayerAcross"></div>
-    <div class="otherPlayers" id="PosLeft"></div>
 
     <div id="chat" style="display:none">
       <div id="chatBox">
