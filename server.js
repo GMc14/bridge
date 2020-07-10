@@ -73,16 +73,16 @@ io.sockets.on('connection', function (socket) {
   socket.on('selPlayer', function (data) {
     io.sockets.adapter.rooms[data.roomID].inGame = 1;
     socket.nickname = data.nickname;
+    var playerIndex = data.playerIndex;
     var playerNum = data.playerNum;
     socket.player = playerNum;
     var pLeft = data.pLeft;
-    console.log(pLeft);
+    console.log("--------------selPlayer----------------pLeft:"+pLeft);
     io.sockets.to(data.roomID).emit('playerDataToClient', {
       nickname: socket.nickname,
-      player: playerNum,
+      playerIndex: playerIndex,
       pLeft: pLeft
     });
-    console.log("--------------selPlayer----------------pLeft:"+pLeft);
     if (pLeft == 0) {
       io.sockets.to(data.roomID).emit('startGame');
     }

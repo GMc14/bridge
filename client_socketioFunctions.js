@@ -98,25 +98,15 @@ $(function () {
     })
     socketio.on('playerDataToClient', function (data) {
         var nickname = data.nickname;
-        var player = data.player;
+        var playerIndex = data.playerIndex;
         pLeft = data.pLeft;
-        if (player == 'Player1') {
-            $("#Player1").remove();
-            $("#myPlayer").append($("<p></p>").text(nickname));
-            playerNickNames[0] = nickname;
-        } else if (player == 'Player2') {
-            $("#Player2").remove();
-            $("#PosLeft").append($("<p></p>").text(nickname));
-            playerNickNames[1] = nickname;
-        } else if (player == 'Player3') {
-            $("#Player3").remove();
-            $("#PlayerAcross").append($("<p></p>").text(nickname));
-            playerNickNames[2] = nickname;
-        } else {
-            $("#Player4").remove();
-            $("#PlayerRight").append($("<p></p>").text(nickname));
-            playerNickNames[3] = nickname;
-        }
+        
+        console.log("playerDataToClient---- >> playerIndex: "+playerIndex+"  >> nickname: "+nickname+"  >>  pLeft: "+pLeft);
+        $("#btnPlayer"+(playerIndex+1)).remove();
+        playerNickNames[playerIndex] = nickname;
+        var positions = ["#myPlayer","#PosLeft","#PlayerAcross","#PlayerRight"];
+        $(positions[playerIndex]).append($("<p></p>").text(nickname));
+
     });
     socketio.on('leftInGame', function (nickname) {
         alert(nickname + " left the room. Kicking everybody out... ");
@@ -423,9 +413,10 @@ function playerModule() {
 
 function playerSelect() {
     $(".playerBtns").on("click", function () {
-        playerNum = $(this).attr('id');
+        playerNum = $(this).val();
         nickname = String($("#nickname").val());
         playerIndex = Number($(this).attr("data-player-number"));
+        console.log("playerSelect >> playerNum: "+playerNum+"  >> nickname: "+nickname+"  >>  playerIndex: "+playerIndex);
         if (nickname == '' || playerNickNames.indexOf(nickname) > -1) {
             alert('Pick a unique Nickname!');
         } else {
@@ -439,6 +430,7 @@ function playerSelect() {
             socketio.emit('selPlayer', {
                 nickname: nickname,
                 playerNum: playerNum,
+                playerIndex: playerIndex,
                 roomID: roomID,
                 pLeft: pLeft
             });
