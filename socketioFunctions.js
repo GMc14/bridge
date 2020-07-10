@@ -3,16 +3,18 @@ var roomID;
 var nickname;
 var pLeft;
 var playerNum;
+var playerIndex;
 
 var game_playerCount = 3;
 var gameConfig_bidForTrump = false;
 var gameConfig_isBridge = false;
 var gameConfig_hasTeams = false;
-var gameConfig_numberOfRounds = 13;
+var gameConfig_numberOfRounds = 5;
 
 var roundNumber = 0;
 var playerNickNames = ['', '', '', ''];
 var playersArray = ["Player1", "Player2", "Player3"];
+var playerColors = ['#004499','#770011','#666600','#116600','#440099','#883300','#006666','#660066'];
 
 $(function () {
     $('#restartGame').on('click', function () {
@@ -244,8 +246,7 @@ $(function () {
 
         currentPlayer = nextPlayer(currentPlayer);
     });
-    socketio.on('winnerOfRound', function (trickWinner, trickCards) {
-        
+    socketio.on('winnerOfRound', function (trickWinner, trickCards) {   
         console.log("socketFunctions:->winnerOfRound");
         roundNumber++;
         lead = trickWinner;
@@ -257,7 +258,7 @@ $(function () {
                 break;
             case (game_playerCount == 4 && trickWinner == nextPlayer(nextPlayer(playerNum))):
                 addWin("acrossStuff", trickCards);
-                roundWins++;
+                tricksWon++;
                 break;
             case (trickWinner == prevPlayer(playerNum)):
                 addWin("rightStuff", trickCards);
@@ -265,7 +266,6 @@ $(function () {
             default:
                 break;
         }
-
         if (roundNumber == gameConfig_numberOfRounds) {
             calculateWinner();
         }
@@ -353,19 +353,17 @@ function playerModule() {
     playerSetup.appendChild(document.createElement("br"));
     playerSetup.appendChild(document.createElement("br"));
 
-
     for (var j = 1; j <= game_playerCount; j++) {
-
         var currPlayer = document.createElement("input");
         currPlayer.setAttribute("type", "button");
-        currPlayer.setAttribute("id", "Player"+j);
+        currPlayer.setAttribute("id", "btnPlayer"+j);
+        currPlayer.setAttribute("data-player-number", j);
         currPlayer.setAttribute("class", "playerBtns");
         currPlayer.setAttribute("value", "Player "+j);
 
         playerSetup.appendChild(document.createElement("br"));
         playerSetup.appendChild(currPlayer);
     }
-
     $(".setupModule:eq(0)").append(playerSetup);
     playerSelect();
 }
@@ -374,6 +372,7 @@ function playerSelect() {
     $(".playerBtns").on("click", function () {
         playerNum = $(this).attr('id');
         nickname = String($("#nickname").val());
+        playerIndex = dataset.playerNumber;
         if (nickname == '' || playerNickNames.indexOf(nickname) > -1) {
             alert('Pick a unique Nickname!');
         } else {
@@ -391,20 +390,8 @@ function playerSelect() {
                 pLeft: pLeft
             });
             $('#chat').show();
-            switch (playerNum) {
-                case 'Player1':
-                    playerColor = '#550099';
-                    break;
-                case 'Player2':
-                    playerColor = '#116600';
-                    break;
-                case 'Player3':
-                    playerColor = '#003399';
-                    break;
-                case 'Player4':
-                    playerColor = '#771100';
-                    break;
-            }
+            playerColor = playerColors[playerIndex];
+            
         }
     });
 }
@@ -421,17 +408,17 @@ function addWin(who, cards) {
 }
 
 function calculateWinner() {
-    var win = roundWins < handsNeeded ? 0 : 1;
+    var win = tricksWon < handsNeeded ? 0 : 1;
     if (win) {
         $('#winners').html('<b>WINNER:</b> YOU');
     } else {
         $('#winners').html('<b>WINNER:</b> NOT YOU');
     }
     $('#gameBid').html('<b>BID:</b> ' + currentBid + ' (' + currentBidder + ')');
-    $('#wins').html('<b>YOU WON:</b> ' + roundWins + ' hands');
+    $('#wins').html('<b>YOU WON:</b> ' + tricksWon + ' tricks');
     refreshTeamWins(win);
     dealer = nextPlayer(dealer);
-    currentPlayer = '', lead = '', leadSuit = '', trumpSuit = '', handsNeeded = '', roundWins = 0, roundNumber = 0;
+    currentPlayer = '', lead = '', leadSuit = '', trumpSuit = '', handsNeeded = '', tricksWon = 0, roundNumber = 0;
     $('#gameRecap').show();
 }
 

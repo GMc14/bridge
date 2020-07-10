@@ -110,6 +110,7 @@ td, th {
   width:35%;
   box-sizing: border-box;
   text-align: center;
+  border: 1px solid #ff8;
 }
 .plays > img {
   height: 7vmax; 
@@ -121,6 +122,7 @@ td, th {
   position:absolute;
   font-size: large;
   text-align: center;
+  border: 1px solid #8ff;
 }
 #rightName {
   bottom:19%;
@@ -142,6 +144,7 @@ td, th {
   height: 8%;
   width: 50%;
   text-align:center;
+  border: 1px solid #8f8;
 }
 #myStuff {
   box-sizing: border-box;
@@ -195,6 +198,7 @@ td, th {
   text-align:center;
   font-weight: bold;
   line-height: 100%;
+  border: 1px solid #f8f;
 }
 #myWin {
   bottom:2%;
@@ -293,6 +297,7 @@ td, th {
   height: 100%;*/
   text-align:center;
   box-sizing: border-box;
+  border: 1px solid #f88;
 }
 p {
   font-size: xx-large;
@@ -347,6 +352,7 @@ p {
   margin:0px -5px;
   border-radius:4px;
   box-sizing: border-box;
+  border: 1px solid #88f;
 }
 #chat {
   position:absolute;

@@ -4,7 +4,7 @@ var lead;
 var leadSuit;
 var trumpSuit;
 var handsNeeded;
-var roundWins = 0;
+var tricksWon = 0;
 var gameConfig_euchreBowers = true;
 
 function checkLegal(cardID) {
@@ -53,7 +53,7 @@ function resolveTrick() {
   if (isWinner) {
     console.log("GMcCards-rules.js-resolveTrick-#0300");
     addWin("myStuff", trickCards);
-    roundWins++;
+    tricksWon++;
     socketio.emit('winner', {
       player: playerNum,
       roomID: roomID,
