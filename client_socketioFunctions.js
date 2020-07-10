@@ -200,6 +200,8 @@ $(function () {
         }
     });
     socketio.on('deal', function (data) {
+        
+    console.log("--------------deal----------------");
         switch (playerNum) {
             case 'Player1':
                 //lightblue
@@ -232,6 +234,7 @@ $(function () {
         }
         sortHand();
         displayCards();
+        
         $(".setupModule").hide();
         if (gameConfig_bidForTrump) {
             currentBidder = nextPlayer(dealer);
@@ -340,6 +343,7 @@ function prevPlayer(currPlayer) {
 }
 
 function clearSetupModule() {
+    console.log("--------------clearSetupModule----------------");
     var setupModule = document.getElementsByClassName("setupModule")[0];
     while (setupModule.firstChild) {
         setupModule.removeChild(setupModule.firstChild);
@@ -377,6 +381,7 @@ function waitRoom(num) {
 }
 
 function playerModule() {
+    console.log("--------------playerModule----------------");
     clearSetupModule();
     var playerSetup = document.createElement("div");
     playerSetup.setAttribute("id", "playerSetup");

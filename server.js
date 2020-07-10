@@ -82,7 +82,7 @@ io.sockets.on('connection', function (socket) {
       player: playerNum,
       pLeft: pLeft
     });
-
+    console.log("--------------selPlayer----------------pLeft:"+pLeft);
     if (pLeft == 0) {
       io.sockets.to(data.roomID).emit('startGame');
     }

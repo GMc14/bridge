@@ -4,6 +4,7 @@ function Card(suit, rank) {
 }
 
 function startGame() {
+  console.log("--------------startGame----------------");
   if (playerNum == dealer) {
     var myHand = document.getElementById("myPlayer");
     while (myHand.firstChild) {
