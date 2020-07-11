@@ -3,13 +3,12 @@ var roomID;
 var xoob;
 //Meta
 var playerNickNames = ['', '', '', '','', '', '', ''];
-var playersArray = ["Player1", "Player2", "Player3", "Player4", "Player5", "Player6", "Player7" ,"Player8"];
 var playerColors = ['#004499','#770011','#666600','#116600','#440099','#883300','#006666','#660066'];
 var positions = ["#myHand","#loc1Hand","#loc2Hand","#loc3Hand"];
 
 //Game Config
 var gameConfig_playerCount = 3;
-var gameConfig_startCardsPerPlayer = 5;
+var gameConfig_startCardsPerPlayer = -1;//-1==Deal All
 var gameConfig_numberOfRounds = gameConfig_startCardsPerPlayer; //Plya all cards in hand
 
 var gameConfid_isCrew = true;
@@ -32,6 +31,7 @@ var gameConfig_isEuchre = false;
 var gameConfig_topDeckTrump = gameConfig_isEuchre;
 var gameConfig_euchreBowers = gameConfig_isEuchre;
 
+
 //Deck Setup
 var deck = [];
 var suits = new Array("C", "D", "H", "S");
@@ -44,9 +44,10 @@ var crewRanks = new Array(1, 2, 3, 4, 5, 6, 7, 8, 9);
 var ranks = standardRanks;
 if(gameConfig_isEuchre){
     ranks = euchreRanks;
+    gameConfig_startCardsPerPlayer = 5;
 } else if (gameConfid_isCrew) {
     ranks = crewRanks;
-} 
+}
 var cardback = "card_imgs/cardback.png";
 
 //Player values
@@ -167,31 +168,19 @@ $(function () {
         switch (playerNum) {
             case 'Player1':
                 //lightblue
-                Player1 = data.hands[0];
-                Player2 = data.hands[1];
-                Player3 = data.hands[2];
-                Player4 = data.hands[3];
+                myHandOfCards = data.hands[0];
                 break;
             case 'Player2':
                 //light orange
-                Player1 = data.hands[1];
-                Player2 = data.hands[2];
-                Player3 = data.hands[3];
-                Player4 = data.hands[0];
+                myHandOfCards = data.hands[1];
                 break;
             case 'Player3':
                 //darkblue
-                Player1 = data.hands[2];
-                Player2 = data.hands[3];
-                Player3 = data.hands[0];
-                Player4 = data.hands[1];
+                myHandOfCards = data.hands[2];
                 break;
             case 'Player4':
                 // beige
-                Player1 = data.hands[3];
-                Player2 = data.hands[0];
-                Player3 = data.hands[1];
-                Player4 = data.hands[2];
+                myHandOfCards = data.hands[3];
                 break;
         }
         sortHand();
@@ -258,6 +247,8 @@ $(function () {
         }
         if (roundNumber == gameConfig_numberOfRounds) {
             calculateWinner();
+        } else if (gameConfig_numberOfRounds == -1){
+            //TODO: check it any players still have card 
         }
     });
     socketio.on('message', function (data) {

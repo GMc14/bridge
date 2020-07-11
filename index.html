@@ -10,29 +10,6 @@
   <script src="client_deckFunctions.js" type="text/javascript"></script>
   <script src="client_rules.js" type="text/javascript"></script>
   <script src="client_bidFunctions.js" type="text/javascript"></script>
-  <script>
-    $(function () {
-      console.log("GMcCards-#0000");
-      var img_src = "/card_imgs/cardback.png";
-      var cardImg = document.createElement("img");
-      cardImg.setAttribute("src", img_src);
-      cardImg.setAttribute("class", "cardback");
-      $("body").append(cardImg);
-
-      for (var i = 0; i < suits.length; i++) {
-        for (var j = 0; j < ranks.length; j++) {
-          var cardID = suits[i] + ranks[j];
-          console.log("===" + cardID);
-          var img_src = "/card_imgs/" + cardID + ".png";
-          var cardImg = document.createElement("img");
-          cardImg.setAttribute("src", img_src);
-          cardImg.setAttribute("id", cardID + "_img");
-          $("body").append(cardImg);
-        }
-      }
-      console.log("GMcCards-#1000");
-    });
-  </script>
 </head>
 <body>
   <div id="gameBoard">

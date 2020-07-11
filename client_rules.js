@@ -9,8 +9,8 @@ function checkLegal(cardID) {
     console.log("GMcCards-rules.js-checkLegal-#0300");
     return true;
   } else {
-    for (var i = 0; i < Player1.length; i++) {
-      if (String(Player1[i].suit) == leadSuit) {
+    for (var i = 0; i < myHandOfCards.length; i++) {
+      if (String(myHandOfCards[i].suit) == leadSuit) {
         alert("Must Follow Suit!");
         console.log("GMcCards-rules.js-checkLegal-#0600");
         return false;

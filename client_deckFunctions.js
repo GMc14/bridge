@@ -15,7 +15,36 @@ function startGame() {
     console.log("--------------startGame-------not the dealer---------"+playerNum+" == "+dealer);
   }
 }
+function preRenderImgs(){
+  console.log("GMcCards-#0000");
+  var img_src = "/card_imgs/cardback.png";
+  var cardImg = document.createElement("img");
+  cardImg.setAttribute("src", img_src);
+  cardImg.setAttribute("class", "cardback");
+  $("body").append(cardImg);
 
+  for (var i = 0; i < suits.length; i++) {
+    for (var j = 0; j < ranks.length; j++) {
+      var cardID = suits[i] + ranks[j];
+      console.log("===" + cardID);
+      var img_src = "/card_imgs/" + cardID + ".png";
+      var cardImg = document.createElement("img");
+      cardImg.setAttribute("src", img_src);
+      cardImg.setAttribute("id", cardID + "_img");
+      $("body").append(cardImg);
+    }
+  }
+  for (var i = 0; i < bonusCards.length; i++) {
+    var cardID = bonusCards[i].charAt(0) + bonusCards[i].charAt(1);
+    console.log("===" + cardID);
+    var img_src = "/card_imgs/" + cardID + ".png";
+    var cardImg = document.createElement("img");
+    cardImg.setAttribute("src", img_src);
+    cardImg.setAttribute("id", cardID + "_img");
+    $("body").append(cardImg);
+  }
+  console.log("GMcCards-#1000");
+}
 function createDeck() {
   deck = [];
   for (var i = 0; i < suits.length; i++) {
@@ -26,6 +55,8 @@ function createDeck() {
   for (var i = 0; i < bonusCards.length; i++) {
     deck.push(new Card(bonusCards[i].charAt(0), bonusCards[i].charAt(1)));
   }
+
+  
 }
 
 function shuffle() {
@@ -48,22 +79,43 @@ function dealCards() {
   //TODO: vary by player count and cards dealt per player
   var hands = [];
   var handValues = [];
+  var deckSize = deck.length;
+
   for (var i = 0; i < gameConfig_playerCount; i++) {
     hands[i] = [];
     handValues[i] = 0;
-    for (var j = 0; j < gameConfig_startCardsPerPlayer; j++) {
+    var cardsToDeal = gameConfig_startCardsPerPlayer;
+    if(cardsToDeal == -1){
+      cardsToDeal = deckSize / gameConfig_playerCount;
+      if(deckSize % gameConfig_playerCount > i){
+        cardsToDeal += 1;
+      }
+    }
+
+    for (var j = 0; j < cardsToDeal; j++) {
       handValues[i] += cardValue(deck[deck.length - 1]);
       hands[i].push(deck.pop());
     }
-    if (gameConfig_isBridge && handValues[i] < 4) {
-      shuffle();
-      dealCards();
-      return;
+
+  }
+
+  if (gameConfig_isBridge) {
+    for (var i = 0; i < gameConfig_playerCount; i++) {
+      if (handValues[i] < 4) {
+        //needToRedeal
+        shuffle();
+        dealCards();
+        return;
+      }
     }
   }
   var trumpCard='';
-  if(gameConfig_topDeckTrump && deck.length > 0){
-    trumpCard = deck.pop();
+  if(gameConfig_topDeckTrump){
+    if(deck.length > 0) {
+      trumpCard = deck.pop();
+    } else {
+      alert("Empty Deck: no trump");
+    }
   }
   socketio.emit('dealCards', {
     hands: hands,
@@ -78,7 +130,7 @@ function cardValue(card) {
 }
 
 function sortHand() {
-  Player1.sort(function (a, b) {
+  myHandOfCards.sort(function (a, b) {
     var aSuit = a.suit;
     var bSuit = b.suit;
     var aRank = a.rank;
@@ -108,9 +160,9 @@ function displayCards() {
     displayOtherCards(j);
   }
   $("#myHand").empty();
-  for (var i = 0; i < Player1.length; i++) {
-    var cardRank = String(Player1[i].rank);
-    var cardSuit = String(Player1[i].suit);
+  for (var i = 0; i < myHandOfCards.length; i++) {
+    var cardRank = String(myHandOfCards[i].rank);
+    var cardSuit = String(myHandOfCards[i].suit);
     var cardID = cardSuit + cardRank;
     var card = document.createElement("div");
     var encodedI = i + 10;
@@ -122,9 +174,9 @@ function displayCards() {
   }
 }
 
-function displayOtherCards(playerIndex) {
+function displayOtherCards(playerIndex, handSize) {
   $('#loc'+playerIndex+'Hand').empty();
-  for (var i = 0; i < gameConfig_startCardsPerPlayer; i++) {
+  for (var i = 0; i < handSize; i++) {
     var card = document.createElement("div");
     card.setAttribute("class", "otherCards");
     $(".cardback:eq(0)").clone().show().appendTo(card);
