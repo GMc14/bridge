@@ -5,6 +5,7 @@ function Card(suit, rank) {
 function startGame() {
   if (playerNum == dealer) {
     console.log("--------------startGame-------I'm the dealer---------"+playerNum+" == "+dealer);
+    $("#gameControls").show();
     $("#myHand").empty();
     $(".otherPlayerHand").empty();
     createDeck();
@@ -158,6 +159,7 @@ function displayTrumpCard(trumpCard) {
   card.setAttribute("id", 'trump' + cardID);
   $("#" + cardID + "_img").clone().show().appendTo(card);
   card.addEventListener("click", playCard, true);
+  $("#showCase").show();
   $("#showCase").append(card);
 }
 

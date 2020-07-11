@@ -428,7 +428,7 @@ function addWin(who, cards) {
         function() {
             $($("#myStuff").children()[0]).attr("data-cards").split(',');
             console.log("stuff hover...");
-            var trickDetailsDiv = $("<div id='trickDetails'>Card Here</div>");
+            var trickDetailsDiv = $("<div id='trickDetails'></div>");
             $(this).children().each(function(){
                 console.log("Stuff Child:  "+$(this).attr("data-cards"));
                 if($(this).attr("data-cards")){
@@ -509,9 +509,9 @@ function constructPlayArea() {
 
         var positionRelativeToCenter = j - ((gameConfig_playerCount)/2);
         $(playerContainer).css({ 
-            "left": ((j-1)*70/(gameConfig_playerCount-1)+15)+"vw", 
+            "left": ((j-1)*70/(gameConfig_playerCount-1)+20)+"vw", 
             "top": "12vh", 
-            "transform": "rotate("+positionRelativeToCenter*10+"deg) translateY("+Math.abs(positionRelativeToCenter)*7+"px)" 
+            "transform": "rotate("+positionRelativeToCenter*12+"deg) translateY("+Math.abs(positionRelativeToCenter)*4+"vmax)" 
         });
 
         var pNumber = Number((clientNumber+j-1) % gameConfig_playerCount)+1;
