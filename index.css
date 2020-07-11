@@ -114,7 +114,7 @@ td, th {
   position: absolute;
   height:15vmin;
   width:25vmin;
-  top:18vmin;
+  top:15vmax;
   left:0vmin;
   box-sizing: border-box;
   text-align: center;
@@ -128,7 +128,7 @@ td, th {
   position:absolute;
   height:7vmin;
   width:12vw;
-  top:10vmin;
+  top:7vmax;
   left:14vmin;
   font-size: large;
   text-align: center;
@@ -140,7 +140,7 @@ td, th {
   display: block;
   height: 7vmin;
   width: 5vmin;
-  top:10vmin;
+  top:7vmax;
   left:4vmin;
   text-align:center;
   border: 1px solid #8f8;
@@ -149,7 +149,7 @@ td, th {
   position:absolute;
   height: 3vmin;
   width: 3vmin;
-  top:10vmin;
+  top:7vmax;
   left:0vmin;
   text-align:center;
   font-weight: bold;
@@ -157,21 +157,21 @@ td, th {
   border: 1px solid #f8f;
 }
 #myStuff {
-  top:90vh;
+  top:60vh;
   left:25vw;
 }
 #myName {
-  top:90vh;
+  top:60vh;
   left:42.5vw;
   width:15vw;
 }
 #myPlay {
   box-sizing: border-box;
-  top: 80vh;
+  top: 70vh;
   left: 32.5vh;
 }
 #myWin {
-  top: 95vh;
+  top: 65vh;
   left:42.5vw;
   width:15vw;
 }

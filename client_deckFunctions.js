@@ -45,7 +45,6 @@ function preRenderImgs(){
   }
   console.log("preRenderImgs-#1000");
 }
-preRenderImgs();
 
 function createDeck() {
   deck = [];
@@ -163,8 +162,7 @@ function displayTrumpCard(trumpCard) {
 }
 
 function displayCards() {
-  
-  console.log("--------------displayCards----------------");
+  console.log(">>>>>>>>>>>>>displayCards----------------");
   for (var j = 1; j < gameConfig_playerCount; j++) {
     displayOtherCards(j);
   }
@@ -181,10 +179,11 @@ function displayCards() {
     card.addEventListener("click", playCard, true);
     $("#myHand").append(card);
   }
-  console.log("--------------displayCards----------------");
+  console.log("--------------displayCards>>>>>>>>>>>>>");
 }
 
 function displayOtherCards(playerIndex, handSize) {
+  console.log(">>>>>>>>>>>>>displayCards----in: #loc"+playerIndex+"Hand------------playerIndex: "+playerIndex+"  >>  handSize: "+handSize);
   $('#loc'+playerIndex+'Hand').empty();
   for (var i = 0; i < handSize; i++) {
     var card = document.createElement("div");
