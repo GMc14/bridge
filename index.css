@@ -1,5 +1,6 @@
 html {
   overflow:hidden;
+  font-size: 1vmax;
 }
 body {
   height:100vh;
@@ -175,21 +176,21 @@ td, th {
   border: 1px solid #f8f;
 }
 #myStuff {
-  top:60vh;
+  top:55vh;
   left:25vw;
 }
 #myName {
-  top:60vh;
+  top:55vh;
   left:42.5vw;
   width:15vw;
 }
 #myPlay {
   box-sizing: border-box;
-  top: 70vh;
-  left: 32.5vw;
+  top: 45vh;
+  left: 55vw;
 }
 #myWin {
-  top: 65vh;
+  top: 55vh;
   left:42.5vw;
   width:15vw;
 }

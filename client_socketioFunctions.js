@@ -234,6 +234,11 @@ $(function () {
         }
 
         currentPlayer = nextPlayer(currentPlayer);
+        if(currentPlayer == playerNum){
+            $("#showCase").text("Your Turn");
+        } else {
+            $("#showCase").text(currentPlayer+"'s Turn");
+        }
     });
     socketio.on('winnerOfRound', function (trickWinner, trickCards) {   
         console.log("socketFunctions:->winnerOfRound");
@@ -372,8 +377,7 @@ function playerSelect() {
             $(".setupModule:eq(0)").html("<div class='loading'>Waiting for Teams</div>");
             var boldNames = document.createElement("b");
             boldNames.appendChild(document.createTextNode(playerNum + ': ' + nickname));
-            $('#topbar').append('<br/>');
-            $("#topbar").append(boldNames);
+            $("#myName").append(boldNames);
             remainingPlayers--;
             
             console.log("--------------playerBtns emit selPlayer...----------------");
