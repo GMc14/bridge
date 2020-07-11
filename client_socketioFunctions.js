@@ -162,9 +162,10 @@ $(function () {
             }
         }
     });
-    socketio.on('deal', function (data) {
+    socketio.on('dealToClients', function (data) {
      xoob = data;  
-    console.log("--------------deal---------------- "+JSON.stringify(data, null, 4));
+    console.log("--------------dealToClients---------------- "+JSON.stringify(data, null, 4));
+    console.log("--------------dealToClients---------------- playerNum: "+playerNum);
         switch (playerNum) {
             case 'Player1':
                 //lightblue
@@ -202,8 +203,6 @@ $(function () {
             }  else {
                 trumpSuit = gameConfig_permaTrumpSuit;
             }
-
-            handsNeeded = 3;
             currentPlayer = nextPlayer(dealer);
             lead = currentPlayer;
             if (playerNum == currentPlayer) {
@@ -211,6 +210,7 @@ $(function () {
             }
             $('#bidOfRound').show();
         }
+        console.log("--------------dealt...ToClients---------------- playerNum: "+playerNum);
     });
     socketio.on('cardPlayed', function (data) {
         var player = data.player;

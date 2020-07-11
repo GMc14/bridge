@@ -16,7 +16,7 @@ function startGame() {
   }
 }
 function preRenderImgs(){
-  console.log("GMcCards-#0000");
+  console.log("preRenderImgs-#0000");
   var img_src = "/card_imgs/cardback.png";
   var cardImg = document.createElement("img");
   cardImg.setAttribute("src", img_src);
@@ -43,7 +43,7 @@ function preRenderImgs(){
     cardImg.setAttribute("id", cardID + "_img");
     $("body").append(cardImg);
   }
-  console.log("GMcCards-#1000");
+  console.log("preRenderImgs-#1000");
 }
 function createDeck() {
   deck = [];
@@ -55,8 +55,7 @@ function createDeck() {
   for (var i = 0; i < bonusCards.length; i++) {
     deck.push(new Card(bonusCards[i].charAt(0), bonusCards[i].charAt(1)));
   }
-
-  
+  preRenderImgs();
 }
 
 function shuffle() {
@@ -103,6 +102,7 @@ function dealCards() {
     for (var i = 0; i < gameConfig_playerCount; i++) {
       if (handValues[i] < 4) {
         //needToRedeal
+        console.log(":( ------------------ needToRedeal");
         shuffle();
         dealCards();
         return;
@@ -122,6 +122,7 @@ function dealCards() {
     roomID: roomID,
     trumpCard: trumpCard
   });
+  console.log("Finished dealing");
 }
 
 function cardValue(card) {
@@ -156,7 +157,9 @@ function displayTrumpCard(trumpCard) {
 }
 
 function displayCards() {
-  for (var j = 0; j < gameConfig_playerCount; j++) {
+  
+  console.log("--------------displayCards----------------");
+  for (var j = 1; j < gameConfig_playerCount; j++) {
     displayOtherCards(j);
   }
   $("#myHand").empty();

@@ -89,7 +89,7 @@ io.sockets.on('connection', function (socket) {
 
   });
   socket.on('dealCards', function (data) {
-    io.sockets.to(data.roomID).emit('deal', {
+    io.sockets.to(data.roomID).emit('dealToClients', {
       hands: data.hands,
       trumpCard: data.trumpCard
     });
