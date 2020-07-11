@@ -87,11 +87,11 @@ function dealCards() {
     var cardsToDeal = gameConfig_startCardsPerPlayer;
     if(cardsToDeal == -1){
       cardsToDeal = deckSize / gameConfig_playerCount;
-      if(deckSize % gameConfig_playerCount > i){
+      if((deckSize % gameConfig_playerCount) > i){
         cardsToDeal += 1;
       }
     }
-
+    console.log("DealCards -------deckSize:"+deckSize+"   cardsToDeal:"+cardsToDeal+"   deck.length:"+deck.length+"   i:"+i);
     for (var j = 0; j < cardsToDeal; j++) {
       handValues[i] += cardValue(deck[deck.length - 1]);
       hands[i].push(deck.pop());

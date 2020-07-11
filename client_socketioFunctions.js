@@ -263,13 +263,21 @@ $(function () {
 });
 
 function nextPlayer(currPlayer) {
-    var i = playersArray.indexOf(currPlayer);
-    return playersArray[i == playersArray.length - 1 ? 0 : i + 1];
+    var currNumber = Number(currPlayer.slice(-1));
+    currNumber += 1;
+    if(currNumber>gameConfig_playerCount){
+        currNumber = 1;
+    }
+    return "Player"+currNumber;
 }
 
 function prevPlayer(currPlayer) {
-    var i = playersArray.indexOf(currPlayer);
-    return playersArray[i == 0 ? playersArray.length - 1 : i - 1];
+    var currNumber = Number(currPlayer.slice(-1));
+    currNumber -= 1;
+    if(currNumber<1){
+        currNumber = gameConfig_playerCount;
+    }
+    return "Player"+currNumber;
 }
 
 function clearSetupModule() {
