@@ -261,8 +261,10 @@ $(function () {
             $("#turnIndicator").text(lead +"  leads");
             $(".highlighted").removeClass("highlighted");
         }
-
-        addWin("loc"+trickWinner+"stuff", trickCards);
+        console.log("[][][][][][][] winner of round: "+trickWinner+" cards:" + trickCards);
+        var winnerIndex = inversePlayerIdMap[trickWinner];
+        console.log("[][][][][][][] put trick in... loc"+winnerIndex+"stuff");
+        addWin("loc"+winnerIndex+"stuff", trickCards);
         if (gameConfig_isBridge && gameConfig_playerCount == 4 && trickWinner == nextPlayer(nextPlayer(playerNum))){
             tricksWon++;
         }
@@ -413,8 +415,7 @@ function playerSelect() {
 }
 
 function addWin(who, cards) {
-    console.log("addWin "+$(".plays").length+"plays:   "+JSON.stringify($(".plays")));
-
+    console.log("[][][][][][][] addWin: "+who+" cards:" + cards);
     var card = document.createElement("div");
     card.setAttribute('class', 'otherCards');
     card.setAttribute('data-cards', cards);
@@ -423,7 +424,6 @@ function addWin(who, cards) {
     $(stuff).append(card);
     $(stuff).hover(
         function() {
-
             $($("#myStuff").children()[0]).attr("data-cards").split(',');
             console.log("stuff hover...");
             var trickDetailsDiv = $("<div id='trickDetails'>Card Here</div>");
@@ -439,7 +439,6 @@ function addWin(who, cards) {
                     $(trickDetailsDiv).append(trick);
                 }
             });
-
             $(this).attr("data-cards")
             $(this).append(trickDetailsDiv);
         }, function() {
@@ -508,9 +507,9 @@ function constructPlayArea() {
 
         var positionRelativeToCenter = j - ((gameConfig_playerCount)/2);
         $(playerContainer).css({ 
-            "left": ((j-1)*100/(gameConfig_playerCount-1)+15)+"vw", 
+            "left": ((j-1)*90/(gameConfig_playerCount-1)+15)+"vw", 
             "top": "12vh", 
-            "transform": "rotate("+positionRelativeToCenter*9+"deg) translateY("+Math.abs(positionRelativeToCenter)*7+"px)" 
+            "transform": "rotate("+positionRelativeToCenter*10+"deg) translateY("+Math.abs(positionRelativeToCenter)*7+"px)" 
         });
 
         var pNumber = Number((clientNumber+j-1) % gameConfig_playerCount)+1;
