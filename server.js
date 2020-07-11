@@ -113,6 +113,9 @@ io.sockets.on('connection', function (socket) {
   socket.on('restartGame', function () {
     io.sockets.to(socket.room).emit('restartGame');
   });
+  socket.on('drawTask', function (card) {
+    io.sockets.to(socket.room).emit('drawTask', card);
+  });
   socket.on('sendMessage', function (data) {
     io.sockets.to(socket.room).emit('message', data);
   });

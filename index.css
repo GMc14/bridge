@@ -104,6 +104,21 @@ td, th {
   box-sizing: border-box;
   border: 3px solid white;
 }
+#showCase {
+  position: absolute;
+  height:10vh;
+  width:20vw;
+  top:0vh;
+  left:40vw;
+  border: 2px double #8f1;
+}
+#gameControls{
+  left:0vw;
+  bottom:10vh;
+  height:10vh;
+  width:10vw;
+  border: 2px double #18f;
+}
 .locationContainer{
   position: absolute;
   width: 20vw;

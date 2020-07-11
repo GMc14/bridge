@@ -164,7 +164,7 @@ function displayTrumpCard(trumpCard) {
 function displayCards() {
   console.log(">>>>>>>>>>>>>displayCards----------------");
   for (var j = 1; j < gameConfig_playerCount; j++) {
-    displayOtherCards(j);
+    displayOtherCards(j, handSizes[j-1]);
   }
   $("#myHand").empty();
   for (var i = 0; i < myHandOfCards.length; i++) {
@@ -205,7 +205,7 @@ function playCard() {
       legal = checkLegal(cardID);
     }
     if (legal) {
-      Player1[Number(num) - 10].suit = "Z";
+      myHandOfCards[Number(num) - 10].suit = "Z";
       card = document.getElementById(num + cardID);
       cardsub = card;
       card.parentNode.removeChild(card);

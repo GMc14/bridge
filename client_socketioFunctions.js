@@ -35,6 +35,7 @@ var gameConfig_euchreBowers = gameConfig_isEuchre;
 //Deck Setup
 var deck = [];
 var taskDeck = [];
+var handSizes = [];
 var suits = new Array("C", "D", "H", "S");
 var suitColors= {"C":"Black", "S":"Black", "H":"Red", "D":"Red"}
 
@@ -68,6 +69,13 @@ var roundNumber = 0;
 var handsNeeded;
 
 $(function () {
+    $('#drawTask').on('click', function () {
+        if(taskDeck.length > 0){
+            socketio.emit('drawTask',taskDeck.pop());
+        } else {
+            alert("No Tasks Available");
+        }
+    });
     $('#restartGame').on('click', function () {
         socketio.emit('restartGame');
     });
@@ -129,6 +137,9 @@ $(function () {
 
         startGame();
     });
+    socketio.on('drawTask', function (card) {
+        displayTrumpCard(card);
+    });
     socketio.on('some1Bid', function (data) {
         passCount = 0;
         currentBidder = nextPlayer(currentBidder);
@@ -164,26 +175,15 @@ $(function () {
         }
     });
     socketio.on('dealToClients', function (data) {
-     xoob = data;  
-    console.log("--------------dealToClients---------------- "+JSON.stringify(data, null, 4));
-    console.log("--------------dealToClients---------------- playerNum: "+playerNum);
-        switch (playerNum) {
-            case 'Player1':
-                //lightblue
-                myHandOfCards = data.hands[0];
-                break;
-            case 'Player2':
-                //light orange
-                myHandOfCards = data.hands[1];
-                break;
-            case 'Player3':
-                //darkblue
-                myHandOfCards = data.hands[2];
-                break;
-            case 'Player4':
-                // beige
-                myHandOfCards = data.hands[3];
-                break;
+        xoob = data;  
+        console.log("--------------dealToClients---------------- "+JSON.stringify(data, null, 4));
+        console.log("--------------dealToClients---------------- playerNum: "+playerNum);
+
+        var myPIndex = Number(playerNum.slice(-1))-1;
+        myHandOfCards = data.hands[myPIndex];
+        
+        for(var i = 0; i < hands.length; i++) {
+            handSizes[i]=hands[i].length;
         }
         sortHand();
         displayCards();
