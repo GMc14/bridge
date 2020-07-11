@@ -4,7 +4,6 @@ var xoob;
 //Meta
 var playerNickNames = ['', '', '', '','', '', '', ''];
 var playerColors = ['#004499','#770011','#666600','#116600','#440099','#883300','#006666','#660066'];
-var positions = ["#myHand","#loc1Hand","#loc2Hand","#loc3Hand"];
 
 //Game Config
 var gameConfig_playerCount = 3;
@@ -115,8 +114,6 @@ $(function () {
         console.log("playerDataToClient---- >> playerIndex: "+playerIndex+"  >> nickname: "+nickname+"  >>  remainingPlayers: "+remainingPlayers);
         $("#btnPlayer"+playerIndex).remove();
         playerNickNames[playerIndex-1] = nickname;
-        $(positions[playerIndex-1]).append($("<p></p>").text(nickname));
-
     });
     socketio.on('leftInGame', function (nickname) {
         alert(nickname + " left the room. Kicking everybody out... ");
@@ -182,8 +179,8 @@ $(function () {
         var myPIndex = Number(playerNum.slice(-1))-1;
         myHandOfCards = data.hands[myPIndex];
         
-        for(var i = 0; i < hands.length; i++) {
-            handSizes[i]=hands[i].length;
+        for(var i = 0; i < data.hands.length; i++) {
+            handSizes[i]=data.hands[i].length;
         }
         sortHand();
         displayCards();
@@ -445,13 +442,12 @@ function scrollToBottom() {
 function constructPlayArea() {
     var clientNumber = Number(playerNum.slice(-1));
     for (var j = 1; j < gameConfig_playerCount; j++) {
-        var stuff = $('<div id="loc'+j+'stuff" class="stuff"></div>');
-        var plays = $('<div id="loc'+j+'play" class="plays"></div>');
-        var name = $('<div id="loc'+j+'name" class="name"></div>');
-        var winCounter = $('<div id="loc'+j+'wins" class="winCount">0</div>');
-        var playerHand = $('<div class="otherPlayerHand" id="loc'+j+'Hand" ></div>');
-
-        var playerContainer = $("<div id='loc"+j+"Container' class='locationContainer'></div>");
+        var stuff = $('<div alt="loc'+j+'stuff" id="loc'+j+'stuff" class="stuff"></div>');
+        var plays = $('<div alt="loc'+j+'play" id="loc'+j+'play" class="plays"></div>');
+        var name = $('<div alt="loc'+j+'name" id="loc'+j+'name" class="name"></div>');
+        var winCounter = $('<div alt="loc'+j+'wins" id="loc'+j+'wins" class="winCount">0</div>');
+        var playerHand = $('<div alt="loc'+j+'Hand" class="otherPlayerHand" id="loc'+j+'Hand" ></div>');
+        var playerContainer = $("<div alt='loc"+j+"Container' id='loc"+j+"Container' class='locationContainer'></div>");
         
         $(playerContainer).append(playerHand);
         $(playerContainer).append(stuff);
@@ -463,9 +459,9 @@ function constructPlayArea() {
 
         var positionRelativeToCenter = j - ((gameConfig_playerCount)/2);
         $(playerContainer).css({ 
-            "left": ((j-1)*100/(gameConfig_playerCount-1))+"vw", 
+            "left": ((j-1)*100/(gameConfig_playerCount-1)+8)+"vw", 
             "top": "12vh", 
-            "transform": "rotate("+positionRelativeToCenter*5+"deg) translateY("+Math.abs(positionRelativeToCenter)*7+"px)" 
+            "transform": "rotate("+positionRelativeToCenter*9+"deg) translateY("+Math.abs(positionRelativeToCenter)*7+"px)" 
         });
 
         var pNumber = Number((clientNumber+j-1) % gameConfig_playerCount)+1;

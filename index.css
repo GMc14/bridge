@@ -113,6 +113,7 @@ td, th {
   border: 2px double #8f1;
 }
 #gameControls{
+  position: absolute;
   left:0vw;
   bottom:10vh;
   height:10vh;
@@ -122,14 +123,14 @@ td, th {
 .locationContainer{
   position: absolute;
   width: 20vw;
-  height: 33vh;
+  height: 28vmax;
   border: 1px dashed #f68;
 }
 .plays {
   position: absolute;
-  height:15vmin;
+  height:14vmax;
   width:25vmin;
-  top:15vmax;
+  top:10vmax;
   left:0vmin;
   box-sizing: border-box;
   text-align: center;
@@ -141,10 +142,10 @@ td, th {
 }
 .name {
   position:absolute;
-  height:7vmin;
+  height:7vmax;
   width:12vw;
   top:7vmax;
-  left:14vmin;
+  left:8vmax;
   font-size: large;
   text-align: center;
   border: 1px solid #8ff;
@@ -153,17 +154,17 @@ td, th {
   box-sizing: border-box;
   position: absolute;
   display: block;
-  height: 7vmin;
-  width: 5vmin;
   top:7vmax;
-  left:4vmin;
+  left:3vmax;
+  height: 7vmax;
+  width: 5vmax;
   text-align:center;
   border: 1px solid #8f8;
 }
 .winCount {
   position:absolute;
-  height: 3vmin;
-  width: 3vmin;
+  height: 7vmax;
+  width: 3vmax;
   top:7vmax;
   left:0vmin;
   text-align:center;
@@ -183,7 +184,7 @@ td, th {
 #myPlay {
   box-sizing: border-box;
   top: 70vh;
-  left: 32.5vh;
+  left: 32.5vw;
 }
 #myWin {
   top: 65vh;
