@@ -135,7 +135,7 @@ td, th {
   position: absolute;
   width: 20vw;
   height: 28vmax;
-  border: 1px dashed #f68;
+  /* border: 1px dashed #f68; */
 }
 .plays {
   position: absolute;
@@ -145,7 +145,7 @@ td, th {
   left:0vmin;
   box-sizing: border-box;
   text-align: center;
-  border: 1px solid #ff8;
+  /* border: 1px solid #ff8; */
 }
 .plays > img {
   height: 7vmax; 
@@ -155,23 +155,23 @@ td, th {
   box-sizing: border-box;
   position:absolute;
   height:2.5vmax;
-  width:15vw;
+  width:20vw;
   top:7vmax;
-  left:5vmax;
+  left:0vmax;
   font-size: 1.5vmax;
   text-align: center;
-  border: 1px solid #8ff;
+  /* border: 1px solid #8ff; */
 }
 .stuff {
   box-sizing: border-box;
   position: absolute;
   display: block;
-  top:7vmax;
+  top:9.5vmax;
   left:0vmax;
   height: 5vmax;
   width: 5vmax;
   text-align:center;
-  border: 1px solid #8f8;
+  /* border: 1px solid #8f8; */
 }
 .winCount {
   box-sizing: border-box;
@@ -183,7 +183,8 @@ td, th {
   text-align:center;
   font-weight: bold;
   line-height: 100%;
-  border: 1px solid #f8f;
+  display: none;
+  /* border: 1px solid #f8f; */
 }
 #myPlay {
   box-sizing: border-box;
@@ -192,7 +193,7 @@ td, th {
 }
 #myStuff {
   top:56vh;
-  left:65vw;
+  left:60vw;
 }
 #myName {
   top:58.5vh;
@@ -202,7 +203,7 @@ td, th {
 
 #myWin {
   top: 58.5vh;
-  left:60vw;
+  left:65vw;
   width:5vw;
 }
 #gameSetup {
@@ -280,7 +281,7 @@ td, th {
   height: 100%;*/
   text-align:center;
   box-sizing: border-box;
-  border: 1px solid #f88;
+  /* border: 1px solid #f88; */
 }
 .otherPlayerHand {
   position: absolute;
@@ -289,7 +290,7 @@ td, th {
   width: 20vmax;
   text-align:center;
   box-sizing: border-box;
-  border: 1px dotted #c37;
+  /* border: 1px dotted #c37; */
 }
 .cardback {
   height: 7vmax !important;
