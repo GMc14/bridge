@@ -6,7 +6,7 @@ var playerNickNames = ['', '', '', '','', '', '', ''];
 var playerColors = ['#004499','#770011','#666600','#116600','#440099','#883300','#006666','#660066'];
 
 //Game Config
-var gameConfig_playerCount = 3;
+var gameConfig_playerCount = 4;
 var gameConfig_startCardsPerPlayer = -1;//-1==Deal All
 var gameConfig_numberOfRounds = gameConfig_startCardsPerPlayer; //Plya all cards in hand
 
@@ -253,8 +253,15 @@ $(function () {
         console.log("socketFunctions:->winnerOfRound");
         roundNumber++;
         lead = trickWinner;
-        $("#turnIndicator").text(trickWinner+" won the trick");
         currentPlayer = trickWinner;
+        if (playerNum == currentPlayer) {
+            $("#turnIndicator").text("Your lead!");
+            $("#myHand").addClass("highlighted");
+        } else {
+            $("#turnIndicator").text(lead +"  leads");
+            $(".highlighted").removeClass("highlighted");
+        }
+
         addWin("loc"+trickWinner+"stuff", trickCards);
         if (gameConfig_isBridge && gameConfig_playerCount == 4 && trickWinner == nextPlayer(nextPlayer(playerNum))){
             tricksWon++;
