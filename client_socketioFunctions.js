@@ -69,7 +69,8 @@ var handsNeeded;
 
 $(function () {
     $('#drawTask').on('click', function () {
-        if(taskDeck.length > 0){
+        if(taskDeck.length > 0) {
+            taskDeck = getShuffled(taskDeck);
             socketio.emit('drawTask',taskDeck.pop());
         } else {
             alert("No Tasks Available");

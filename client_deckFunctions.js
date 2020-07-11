@@ -9,7 +9,7 @@ function startGame() {
     $("#myHand").empty();
     $(".otherPlayerHand").empty();
     createDeck();
-    shuffle();
+    deck = getShuffled(deck);
     dealCards();
   } else {
     console.log("--------------startGame-------not the dealer---------"+playerNum+" == "+dealer);
@@ -63,9 +63,9 @@ function createDeck() {
 
 }
 
-function shuffle() {
-  var m = deck.length,
-    t, i, shuffled = deck;
+function getShuffled(inputDeck) {
+  var m = inputDeck.length,
+    t, i, shuffled = inputDeck;
   // While there are cards to shuffle
   while (m) {
     m--;
@@ -76,7 +76,7 @@ function shuffle() {
     shuffled[m] = shuffled[i];
     shuffled[i] = t;
   }
-  deck = shuffled;
+  return shuffled;
 }
 
 function dealCards() {
@@ -108,7 +108,8 @@ function dealCards() {
       if (handValues[i] < 4) {
         //needToRedeal
         console.log(":( ------------------ needToRedeal");
-        shuffle();
+        
+        deck = getShuffled(deck);
         dealCards();
         return;
       }
