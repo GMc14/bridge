@@ -423,11 +423,24 @@ function addWin(who, cards) {
     $(stuff).append(card);
     $(stuff).hover(
         function() {
+
+            $($("#myStuff").children()[0]).attr("data-cards").split(',');
             console.log("stuff hover...");
             var trickDetailsDiv = $("<div id='trickDetails'>Card Here</div>");
             $(this).children().each(function(){
                 console.log("Stuff Child:  "+$(this).attr("data-cards"));
+                if($(this).attr("data-cards")){
+                    var cardsToDraw = $(this).attr("data-cards").split(',');
+                    var trick = $("<div class='trick'></div>");
+                    for(var i = 0; i < cardsToDraw.length; i++){
+                        var img_src = "/card_imgs/" + cardsToDraw[i] + ".png";
+                        $(trick).append("<img class='wonTrickCard' src='"+img_src+"'/>");
+                    }
+                    $(trickDetailsDiv).append(trick);
+                }
             });
+
+            $(this).attr("data-cards")
             $(this).append(trickDetailsDiv);
         }, function() {
             console.log("stuff UNhover...");
