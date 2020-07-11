@@ -227,6 +227,7 @@ function othersPlayed(play, card) {
   console.log("othersPlayed++++++++++++ pNumber: "+pNumber+" playerIndex:"+playerIndex);
 
   $("#loc"+playerIndex+"Hand").find(".otherCards").first().remove();
+  var card = "D3"
   var card = $("#" + card + "_img").attr("class", "myCards").clone().show();
-  $("#loc"+playerIndex+"play").append();
+  $("#loc"+playerIndex+"play").append(card);
 }

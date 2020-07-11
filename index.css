@@ -129,9 +129,9 @@ td, th {
 }
 .plays {
   position: absolute;
-  height:14vmax;
+  height:10vmax;
   width:20vw;
-  top:14vmax;
+  top:12vmax;
   left:0vmin;
   box-sizing: border-box;
   text-align: center;
@@ -144,10 +144,10 @@ td, th {
 .name {
   box-sizing: border-box;
   position:absolute;
-  height:7vmax;
-  width:12vw;
+  height:2.5vmax;
+  width:15vw;
   top:7vmax;
-  left:8vmax;
+  left:5vmax;
   font-size: large;
   text-align: center;
   border: 1px solid #8ff;
@@ -157,8 +157,8 @@ td, th {
   position: absolute;
   display: block;
   top:7vmax;
-  left:3vmax;
-  height: 7vmax;
+  left:0vmax;
+  height: 5vmax;
   width: 5vmax;
   text-align:center;
   border: 1px solid #8f8;
@@ -166,10 +166,9 @@ td, th {
 .winCount {
   box-sizing: border-box;
   position:absolute;
-  height: 7vmax;
-  width: 3vmax;
+  height: 2.5vmax;
   top:7vmax;
-  left:0vmin;
+  left:5vmin;
   text-align:center;
   font-weight: bold;
   line-height: 100%;
