@@ -2,7 +2,6 @@ function Card(suit, rank) {
   this.suit = suit;
   this.rank = rank;
 }
-
 function startGame() {
   if (playerNum == dealer) {
     console.log("--------------startGame-------I'm the dealer---------"+playerNum+" == "+dealer);
@@ -220,10 +219,14 @@ function playCard() {
 }
 
 function othersPlayed(play, card) {
-
   console.log("othersPlayed++++++++++++ play: "+play+" card:"+card);
+  
+  var pNumber = Number(play.slice(-1));
+  var playerIndex = inversePlayerIdMap[pNumber];
+  
+  console.log("othersPlayed++++++++++++ pNumber: "+pNumber+" playerIndex:"+playerIndex);
 
-  var area = document.getElementById(play);
   $("#loc"+playerIndex+"Hand").find(".otherCards").first().remove();
-  $("#" + card + "_img").attr("class", "myCards").clone().show().appendTo(area);
+  var card = $("#" + card + "_img").attr("class", "myCards").clone().show();
+  $("#loc"+playerIndex+"play").append();
 }

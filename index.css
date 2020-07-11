@@ -177,22 +177,22 @@ td, th {
 }
 #myStuff {
   top:55vh;
-  left:25vw;
+  left:60vw;
 }
 #myName {
   top:55vh;
-  left:42.5vw;
+  left:40vw;
   width:15vw;
 }
 #myPlay {
   box-sizing: border-box;
-  top: 45vh;
-  left: 55vw;
+  top: 40vh;
+  left: 25vw;
 }
 #myWin {
   top: 55vh;
-  left:42.5vw;
-  width:15vw;
+  left:55vw;
+  width:5vw;
 }
 #gameSetup {
   display: table;

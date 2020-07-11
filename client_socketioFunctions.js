@@ -443,7 +443,8 @@ function scrollToBottom() {
     var divObj = $("#msgBox");
     divObj.scrollTop($(divObj)[0].scrollHeight);
 }
-
+var playerIdMap = [];
+var inversePlayerIdMap = [];
 function constructPlayArea() {
     var clientNumber = Number(playerNum.slice(-1));
     for (var j = 1; j < gameConfig_playerCount; j++) {
@@ -464,12 +465,14 @@ function constructPlayArea() {
 
         var positionRelativeToCenter = j - ((gameConfig_playerCount)/2);
         $(playerContainer).css({ 
-            "left": ((j-1)*100/(gameConfig_playerCount-1)+8)+"vw", 
+            "left": ((j-1)*100/(gameConfig_playerCount-1)+15)+"vw", 
             "top": "12vh", 
             "transform": "rotate("+positionRelativeToCenter*9+"deg) translateY("+Math.abs(positionRelativeToCenter)*7+"px)" 
         });
 
         var pNumber = Number((clientNumber+j-1) % gameConfig_playerCount)+1;
+        playerIdMap[j] = pNumber;
+        inversePlayerIdMap[pNumber] = j;
         $("#loc"+j+"name").html('Player'+pNumber+': ' + playerNickNames[pNumber-1]);
     }
 }
