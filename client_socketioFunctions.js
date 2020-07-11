@@ -409,7 +409,7 @@ function playerSelect() {
                 roomID: roomID,
                 remainingPlayers: remainingPlayers
             });
-            $('#chat').show();
+            //TODO: show chat if want to use it $('#chat').show();
             playerColor = playerColors[playerIndex-1];
             
         }
@@ -509,14 +509,14 @@ function constructPlayArea() {
 
         var positionRelativeToCenter = j - ((gameConfig_playerCount)/2);
         $(playerContainer).css({ 
-            "left": ((j-1)*70/(gameConfig_playerCount-1)+20)+"vw", 
+            "left": ((j-1)*70/(gameConfig_playerCount-1)+17.5)+"vw", 
             "top": "12vh", 
-            "transform": "rotate("+positionRelativeToCenter*12+"deg) translateY("+Math.abs(positionRelativeToCenter)*4+"vmax)" 
+            "transform": "rotate("+positionRelativeToCenter*15+"deg) translateY("+Math.abs(positionRelativeToCenter)*4+"vmax)" 
         });
 
         var pNumber = Number((clientNumber+j-1) % gameConfig_playerCount)+1;
-        playerIdMap[j] = pNumber;
-        inversePlayerIdMap[pNumber] = j;
+        playerIdMap[j] = 'Player'+pNumber;
+        inversePlayerIdMap['Player'+pNumber] = j;
         $("#loc"+j+"name").html('Player'+pNumber+': ' + playerNickNames[pNumber-1]);
     }
 }

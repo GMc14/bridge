@@ -176,7 +176,7 @@ td, th {
   height: 5vmax;
   width: 5vmax;
   text-align:center;
-  /* border: 1px solid #8f8; */
+  border: 1px solid #8f8;
 }
 .winCount {
   box-sizing: border-box;
@@ -313,8 +313,12 @@ td, th {
   border-radius:0.5vmax;
   transition-duration: 0.1s;
 }
+#trickDetails{
+  width:15vmax;
+}
 .wonTrickCard{
-  height:5vmax;
+  height:4vmax;
+  margin: 0px -0.8vmax;
   background-color:white;
   border-radius:0.2vmax;
 }
@@ -333,10 +337,10 @@ td, th {
   display:inline-block;
   background-color:white;
   height: 5vmax;
-  margin:0px -0.8vmax;
+  margin:0px -1vmax;
   border-radius:0.2vmax;
   box-sizing: border-box;
-  border: 0.2vmax solid #88f;
+  /* border: 0.2vmax solid #88f; */
 }
 #chat {
   position:absolute;
