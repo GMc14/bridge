@@ -157,25 +157,23 @@ td, th {
   border: 1px solid #f8f;
 }
 #myStuff {
-  bottom:5%;
-  left:25%;
+  top:90vh;
+  left:25vw;
 }
 #myName {
-  bottom:2%;
-  left:42.5%;
-  width:15%;
-  display:none;
+  top:90vh;
+  left:42.5vw;
+  width:15vw;
 }
 #myPlay {
   box-sizing: border-box;
-  bottom: 17%;
-  left: 32.5%;
+  top: 80vh;
+  left: 32.5vh;
 }
 #myWin {
-  bottom:2%;
-  left:42.5%;
-  width:15%;
-  display:none;
+  top: 95vh;
+  left:42.5vw;
+  width:15vw;
 }
 #gameSetup {
   display: table;

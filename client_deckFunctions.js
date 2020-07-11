@@ -86,7 +86,7 @@ function dealCards() {
     handValues[i] = 0;
     var cardsToDeal = gameConfig_startCardsPerPlayer;
     if(cardsToDeal == -1){
-      cardsToDeal = deckSize / gameConfig_playerCount;
+      cardsToDeal = Math.floor(deckSize / gameConfig_playerCount);
       if((deckSize % gameConfig_playerCount) > i){
         cardsToDeal += 1;
       }
