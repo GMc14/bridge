@@ -472,7 +472,7 @@ function constructPlayArea() {
             "transform": "rotate("+positionRelativeToCenter*4+"deg) translateY("+Math.abs(positionRelativeToCenter)*7+"px)" 
         });
 
-        var pNumber = Number((clientNumber+j)%gameConfig_playerCount)+1;
+        var pNumber = Number((clientNumber+j-1) % gameConfig_playerCount)+1;
         $("#loc"+j+"name").html('Player'+pNumber+': ' + playerNickNames[pNumber-1]);
     }
 }
