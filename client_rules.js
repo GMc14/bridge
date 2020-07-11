@@ -6,17 +6,17 @@ function checkLegal(cardID) {
   }
 
   if (cardID.charAt(0) == leadSuit) {
-    console.log("GMcCards-rules.js-checkLegal-#0300");
+    console.log("GMcCards-rules.js-checkLegal-matches the lead suit");
     return true;
   } else {
     for (var i = 0; i < myHandOfCards.length; i++) {
       if (String(myHandOfCards[i].suit) == leadSuit) {
-        alert("Must Follow Suit!");
-        console.log("GMcCards-rules.js-checkLegal-#0600");
+        alert("Must Follow Suit! "+suitNames[leadSuit]+" was lead.");
+        console.log("GMcCards-rules.js-checkLegal-got something els in hand");
         return false;
       }
     }
-    console.log("GMcCards-rules.js-checkLegal-#1000");
+    console.log("GMcCards-rules.js-checkLegal-Seems legit");
     return true;
   }
 }

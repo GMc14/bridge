@@ -218,10 +218,10 @@ function playCard() {
   }
 }
 
-function othersPlayed(play, card) {
-  console.log("othersPlayed++++++++++++ play: "+play+" card:"+card);
+function othersPlayed(player, card) {
+  console.log("othersPlayed++++++++++++ player: "+player+" card:"+card);
   
-  var pNumber = Number(play.slice(-1));
+  var pNumber = Number(player.slice(-1));
   var playerIndex = inversePlayerIdMap[pNumber];
   
   console.log("othersPlayed++++++++++++ pNumber: "+pNumber+" playerIndex:"+playerIndex);

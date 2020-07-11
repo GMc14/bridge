@@ -35,7 +35,9 @@ var gameConfig_euchreBowers = gameConfig_isEuchre;
 var deck = [];
 var taskDeck = [];
 var handSizes = [];
+
 var suits = new Array("C", "D", "H", "S");
+var suitNames = {"C":"Clubs", "D":"Diamonds", "H":"Hearts", "S":"Spades", "R":"Rockets"}
 var suitColors= {"C":"Black", "S":"Black", "H":"Red", "D":"Red"}
 
 var standardRanks = new Array(2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14);
@@ -211,7 +213,7 @@ $(function () {
                 $("#turnIndicator").text("Your lead!");
                 $("#myHand").addClass("highlighted");
             } else {
-                $("#turnIndicator").text(lead +"  leads");
+                $("#turnIndicator").text(getNicknameForPlayer(lead) +"  leads");
                 $(".highlighted").removeClass("highlighted");
             }
             $('#bidOfRound').show();
@@ -245,7 +247,7 @@ $(function () {
             $("#turnIndicator").text("Your Turn");
             $("#myHand").addClass("highlighted");
         } else {
-            $("#turnIndicator").text(currentPlayer+"'s Turn");
+            $("#turnIndicator").text(getNicknameForPlayer(currentPlayer)+"'s Turn");
             $(".highlighted").removeClass("highlighted");
         }
     });
@@ -258,7 +260,7 @@ $(function () {
             $("#turnIndicator").text("Your lead!");
             $("#myHand").addClass("highlighted");
         } else {
-            $("#turnIndicator").text(lead +"  leads");
+            $("#turnIndicator").text(getNicknameForPlayer(lead) +"  leads");
             $(".highlighted").removeClass("highlighted");
         }
         console.log("[][][][][][][] winner of round: "+trickWinner+" cards:" + trickCards);
@@ -507,7 +509,7 @@ function constructPlayArea() {
 
         var positionRelativeToCenter = j - ((gameConfig_playerCount)/2);
         $(playerContainer).css({ 
-            "left": ((j-1)*90/(gameConfig_playerCount-1)+15)+"vw", 
+            "left": ((j-1)*70/(gameConfig_playerCount-1)+15)+"vw", 
             "top": "12vh", 
             "transform": "rotate("+positionRelativeToCenter*10+"deg) translateY("+Math.abs(positionRelativeToCenter)*7+"px)" 
         });
@@ -529,4 +531,9 @@ function rotate($el, degrees) {
                'zoom' : 1
 
     });
+}
+
+function getNicknameForPlayer(player){
+    var myPIndex = Number(player.slice(-1))-1;
+    return playerNickNames[myPIndex];
 }
