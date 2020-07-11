@@ -129,8 +129,8 @@ td, th {
 .plays {
   position: absolute;
   height:14vmax;
-  width:25vmin;
-  top:10vmax;
+  width:20vw;
+  top:14vmax;
   left:0vmin;
   box-sizing: border-box;
   text-align: center;
@@ -141,6 +141,7 @@ td, th {
   width: 5vmax;
 }
 .name {
+  box-sizing: border-box;
   position:absolute;
   height:7vmax;
   width:12vw;
@@ -162,6 +163,7 @@ td, th {
   border: 1px solid #8f8;
 }
 .winCount {
+  box-sizing: border-box;
   position:absolute;
   height: 7vmax;
   width: 3vmax;
@@ -279,7 +281,7 @@ p {
   position: absolute;
   display: block;
   height: 7vmax;
-  width: 30vmax;
+  width: 20vmax;
   text-align:center;
   box-sizing: border-box;
   border: 1px dotted #c37;
@@ -307,8 +309,8 @@ p {
   display:inline-block;
   background-color:white;
   height: 5vmax;
-  margin:0px -1.5vmax;
-  border-radius:4px;
+  margin:0px -1.2vmax;
+  border-radius:0.2vmax;
   box-sizing: border-box;
   border: 1px solid #88f;
 }
