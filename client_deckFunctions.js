@@ -45,17 +45,23 @@ function preRenderImgs(){
   }
   console.log("preRenderImgs-#1000");
 }
+preRenderImgs();
+
 function createDeck() {
   deck = [];
+  taskDeck = [];
   for (var i = 0; i < suits.length; i++) {
     for (var j = 0; j < ranks.length; j++) {
+      if(gameConfid_isCrew){
+        taskDeck.push(new Card(suits[i], ranks[j]));
+      }
       deck.push(new Card(suits[i], ranks[j]));
     }
   }
   for (var i = 0; i < bonusCards.length; i++) {
     deck.push(new Card(bonusCards[i].charAt(0), bonusCards[i].charAt(1)));
   }
-  preRenderImgs();
+
 }
 
 function shuffle() {
@@ -175,6 +181,7 @@ function displayCards() {
     card.addEventListener("click", playCard, true);
     $("#myHand").append(card);
   }
+  console.log("--------------displayCards----------------");
 }
 
 function displayOtherCards(playerIndex, handSize) {

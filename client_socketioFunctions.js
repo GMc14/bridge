@@ -34,6 +34,7 @@ var gameConfig_euchreBowers = gameConfig_isEuchre;
 
 //Deck Setup
 var deck = [];
+var taskDeck = [];
 var suits = new Array("C", "D", "H", "S");
 var suitColors= {"C":"Black", "S":"Black", "H":"Red", "D":"Red"}
 
@@ -448,28 +449,23 @@ function constructPlayArea() {
         var plays = $('<div id="loc'+j+'play" class="plays"></div>');
         var name = $('<div id="loc'+j+'name" class="name"></div>');
         var winCounter = $('<div id="loc'+j+'wins" class="winCount">0</div>');
+        var playerHand = $('<div class="otherPlayerHand" id="loc'+j+'Hand" ></div>');
 
         var playerContainer = $("<div id='loc"+j+"Container' class='locationContainer'></div>");
+        
+        $(playerContainer).append(playerHand);
         $(playerContainer).append(stuff);
         $(playerContainer).append(plays);
         $(playerContainer).append(name);
         $(playerContainer).append(winCounter);
 
-        $("#playArea").append(playerContainer);
-        var playerHand = '<div class="otherPlayerHand" id="loc'+j+'Hand" ></div>';
-        $("#gameBoard").append(playerHand);
-
+        $("#gameBoard").append(playerContainer);
 
         var positionRelativeToCenter = j - ((gameConfig_playerCount)/2);
         $(playerContainer).css({ 
             "left": ((j-1)*100/(gameConfig_playerCount-1))+"vw", 
             "top": "12vh", 
-            "transform": "rotate("+positionRelativeToCenter*4+"deg) translateY("+Math.abs(positionRelativeToCenter)*7+"px)" 
-        });
-        $("#loc"+j+"Hand").css({ 
-            "left": ((j-1)*100/(gameConfig_playerCount-1))+"vw", 
-            "top": "5vh", 
-            "transform": "rotate("+positionRelativeToCenter*4+"deg) translateY("+Math.abs(positionRelativeToCenter)*7+"px)" 
+            "transform": "rotate("+positionRelativeToCenter*5+"deg) translateY("+Math.abs(positionRelativeToCenter)*7+"px)" 
         });
 
         var pNumber = Number((clientNumber+j-1) % gameConfig_playerCount)+1;
