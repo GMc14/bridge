@@ -185,6 +185,7 @@ $(function () {
         }
         sortHand();
         displayCards();
+        $("#showCase").empty();
         
         $(".setupModule").hide();
         if (gameConfig_bidForTrump) {
@@ -205,7 +206,9 @@ $(function () {
             currentPlayer = nextPlayer(dealer);
             lead = currentPlayer;
             if (playerNum == currentPlayer) {
-                alert("You lead");
+                $("#turnIndicator").text("Your lead!");
+            } else {
+                $("#turnIndicator").text(lead +"  leads");
             }
             $('#bidOfRound').show();
         }
@@ -235,9 +238,9 @@ $(function () {
 
         currentPlayer = nextPlayer(currentPlayer);
         if(currentPlayer == playerNum){
-            $("#showCase").text("Your Turn");
+            $("#turnIndicator").text("Your Turn");
         } else {
-            $("#showCase").text(currentPlayer+"'s Turn");
+            $("#turnIndicator").text(currentPlayer+"'s Turn");
         }
     });
     socketio.on('winnerOfRound', function (trickWinner, trickCards) {   
