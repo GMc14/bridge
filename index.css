@@ -54,7 +54,7 @@ body {
   display:block;
 }
 #pass {
-  font-size: large;
+  font-size: 1.5vmax;
   position:absolute;
   height:20%;
   width:20%;
@@ -177,7 +177,7 @@ td, th {
   box-sizing: border-box;
   position:absolute;
   height: 2.5vmax;
-  top:7vmax;
+  top:9.5vmax;
   width:15vw;
   left:5vmax;
   text-align:center;
@@ -185,23 +185,24 @@ td, th {
   line-height: 100%;
   border: 1px solid #f8f;
 }
-#myStuff {
-  top:56vh;
-  left:64vw;
-}
-#myName {
-  top:58.5vh;
-  left:44vw;
-  width:15vw;
-}
 #myPlay {
   box-sizing: border-box;
   top: 40vh;
   left: 25vw;
 }
+#myStuff {
+  top:56vh;
+  left:65vw;
+}
+#myName {
+  top:58.5vh;
+  left:45vw;
+  width:15vw;
+}
+
 #myWin {
   top: 58.5vh;
-  left:59vw;
+  left:60vw;
   width:5vw;
 }
 #gameSetup {
@@ -223,11 +224,8 @@ td, th {
   box-sizing: border-box;
   margin-left:auto;
   margin-right:auto;
-  font-size:large;
+  font-size:1.5vmax;
   text-align: center;
-}
-#gameRecap>p {
-  font-size: large;
 }
 #gameRecap>button {
   height:40%;
@@ -252,7 +250,7 @@ td, th {
   background-color: white;
   color: black;
   text-align:center;
-  font-size:medium;
+  font-size:1.2vmax;
   margin: 0px 0px 0px 10px;
   border-radius: 4px;
   transition-duration:0.2s;
@@ -265,7 +263,6 @@ td, th {
   background-color:white;
   color:black;
   text-align: center;
-  font-size: large;
   margin: 5px;
   border-radius:4px;
   transition-duration:0.1s;
@@ -284,9 +281,6 @@ td, th {
   text-align:center;
   box-sizing: border-box;
   border: 1px solid #f88;
-}
-p {
-  font-size: xx-large;
 }
 .otherPlayerHand {
   position: absolute;
@@ -312,6 +306,14 @@ p {
   margin:0px 2px;
   border-radius:6px;
   transition-duration: 0.1s;
+}
+.highlighted {
+  box-shadow:
+    inset 0 0 1vmin #fff,      /* inner */
+    inset 0.6vmin 0 2vmin #3d6,   /* inner left short */
+    inset -0.6vmin 0 2vmin #3d6,  /* inner right short */
+    inset 0.6vmin 0 3vmin #7EB2A8,  /* inner left broad */
+    inset -0.6vmin 0 3vmin #7EB2A8; /* inner right broad */
 }
 .myCards:hover {
   box-shadow: 0px 0px 15px red;
@@ -341,7 +343,6 @@ p {
   height:100%;
   width:100%;
   color:black;
-  font-size: small;
 }
 #boxTop {
   pointer-events: auto;
@@ -353,6 +354,7 @@ p {
   text-align:right;
   color:white;
   font-size: 100%;
+  border: 0.5vmax double #ff3;
 }
 #boxBottom {
   pointer-events: auto;
@@ -365,7 +367,6 @@ p {
 }
 #msgBox{
   pointer-events: auto;
-  font-size: small;
   padding:5px;
   box-sizing: border-box;
   position:absolute;
@@ -397,10 +398,8 @@ p {
   padding:2%;
   box-sizing: border-box;
 }
-
-
 .loading {
-  font-size: 20px;
+  font-size: 2.5vmax;
 }
 .loading:after {
   overflow: hidden;

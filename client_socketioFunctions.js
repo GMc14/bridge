@@ -163,6 +163,8 @@ $(function () {
             $('#bidArea').hide();
             if (playerNum == currentPlayer) {
                 alert("You lead");
+                $("#turnIndicator").text("Your Turn");
+                $("#myHand").addClass("highlighted");
             }
             $('#bidOfRound').show();
         } else {
@@ -186,7 +188,7 @@ $(function () {
         sortHand();
         displayCards();
         $("#showCase").empty();
-        
+
         $(".setupModule").hide();
         if (gameConfig_bidForTrump) {
             currentBidder = nextPlayer(dealer);
@@ -207,8 +209,10 @@ $(function () {
             lead = currentPlayer;
             if (playerNum == currentPlayer) {
                 $("#turnIndicator").text("Your lead!");
+                $("#myHand").addClass("highlighted");
             } else {
                 $("#turnIndicator").text(lead +"  leads");
+                $(".highlighted").removeClass("highlighted");
             }
             $('#bidOfRound').show();
         }
@@ -239,16 +243,19 @@ $(function () {
         currentPlayer = nextPlayer(currentPlayer);
         if(currentPlayer == playerNum){
             $("#turnIndicator").text("Your Turn");
+            $("#myHand").addClass("highlighted");
         } else {
             $("#turnIndicator").text(currentPlayer+"'s Turn");
+            $(".highlighted").removeClass("highlighted");
         }
     });
     socketio.on('winnerOfRound', function (trickWinner, trickCards) {   
         console.log("socketFunctions:->winnerOfRound");
         roundNumber++;
         lead = trickWinner;
+        $("#turnIndicator").text(trickWinner+" won the trick");
         currentPlayer = trickWinner;
-        addWin("loc"+trickWinner+"Stuff", trickCards);
+        addWin("loc"+trickWinner+"stuff", trickCards);
         if (gameConfig_isBridge && gameConfig_playerCount == 4 && trickWinner == nextPlayer(nextPlayer(playerNum))){
             tricksWon++;
         }
@@ -399,14 +406,27 @@ function playerSelect() {
 }
 
 function addWin(who, cards) {
-
     console.log("addWin "+$(".plays").length+"plays:   "+JSON.stringify($(".plays")));
-    var stuff = $('#' + who);
+
     var card = document.createElement("div");
     card.setAttribute('class', 'otherCards');
     card.setAttribute('data-cards', cards);
     $(".cardback:eq(0)").clone().show().appendTo(card);
-    stuff.append(card);
+    var stuff = $('#' + who);
+    $(stuff).append(card);
+    $(stuff).hover(
+        function() {
+            console.log("stuff hover...");
+            var trickDetailsDiv = $("<div id='trickDetails'>Card Here</div>");
+            $(this).children().each(function(){
+                console.log("Stuff Child:  "+$(this).attr("data-cards"));
+            });
+            $(this).append(trickDetailsDiv);
+        }, function() {
+            console.log("stuff UNhover...");
+          $("#trickDetails").remove();
+        }
+      );
 }
 
 function calculateWinner() {
