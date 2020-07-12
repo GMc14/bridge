@@ -80,13 +80,15 @@ var suitColors= {"C":"Black", "S":"Black", "H":"Red", "D":"Red"}
 var standardRanks = new Array(2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14);
 var euchreRanks = new Array(9, 10, 11, 12, 13, 14);
 var crewRanks = new Array(1, 2, 3, 4, 5, 6, 7, 8, 9);
-
+var crewStartCard = 'R4';
+var startPlayerCard = '';
 var ranks = standardRanks;
 if(gameConfig_isEuchre){
     ranks = euchreRanks;
     gameConfig_startCardsPerPlayer = 5;
 } else if (gameConfid_isCrew) {
     ranks = crewRanks;
+    startPlayerCard = crewStartCard;
 }
 var cardback = "card_imgs/cardback.png";
 
@@ -251,8 +253,29 @@ $(function () {
             }  else {
                 trumpSuit = gameConfig_permaTrumpSuit;
             }
-            currentPlayer = nextPlayer(dealer);
+            
+            if(startPlayerCard) {
+                
+                console.log("------- startPlayerCard how could this go wrong?: "+startPlayerCard);
+                for(var i = 0; i < data.hands.length; i++) {
+                    for(var j = 0; j < data.hands[i].length; j++) {
+                        console.log("------- startPlayerCard i: "+i+"  j:" + j);
+                        if(data.hands[i][j].suit == startPlayerCard.charAt(0) &&  data.hands[i][j].rank == startPlayerCard.charAt(1)){
+                            
+                            currentPlayer="Player"+Number(i+1);
+                            
+                            console.log("------- FOUND ONE: "+i+" | "+ currentPlayer);
+                            j=data.hands[i].length;
+                            i=data.hands.length;
+                            break;
+                        }    
+                    }
+                }
+            } else {
+                currentPlayer = nextPlayer(dealer);
+            }
             lead = currentPlayer;
+            
             if (playerNum == currentPlayer) {
                 $("#turnIndicator").text("Your lead!");
                 $("#myHand").addClass("highlighted");
@@ -469,6 +492,7 @@ function playerSelect() {
 function addWinText(who, wins) {
     $("#"+who).text(wins);
 }
+var hovering = false;
 function addWin(who, cards) {
     console.log("[][][][][][][] addWin: "+who+" cards:" + cards);
     var card = document.createElement("div");
@@ -479,27 +503,30 @@ function addWin(who, cards) {
     $(stuff).append(card);
     $(stuff).hover(
         function() {
-            $($(this).children()[0]).attr("data-cards").split(',');
-            console.log("stuff hover...");
-            var trickDetailsDiv = $("<div id='trickDetails'></div>");
-            $(this).children().each(function(){
-                console.log("Stuff Child:  "+$(this).attr("data-cards"));
-                if($(this).attr("data-cards")){
-                    var cardsToDraw = $(this).attr("data-cards").split(',');
-                    var trick = $("<div class='trick'></div>");
-                    for(var i = 0; i < cardsToDraw.length; i++){
-                        var img_src = "/card_imgs/" + cardsToDraw[i] + ".png";
-                        $(trick).append("<img class='wonTrickCard' src='"+img_src+"'/>");
+            if(!hovering){
+                hovering = true;
+                $($(this).children()[0]).attr("data-cards").split(',');
+                console.log("stuff hover...");
+                var trickDetailsDiv = $("<div id='trickDetails'></div>");
+                $(this).children().each(function(){
+                    console.log("Stuff Child:  "+$(this).attr("data-cards"));
+                    if($(this).attr("data-cards")){
+                        var cardsToDraw = $(this).attr("data-cards").split(',');
+                        var trick = $("<div class='trick'></div>");
+                        for(var i = 0; i < cardsToDraw.length; i++){
+                            var img_src = "/card_imgs/" + cardsToDraw[i] + ".png";
+                            $(trick).append("<img class='wonTrickCard' src='"+img_src+"'/>");
+                        }
+                        $(trickDetailsDiv).append(trick);
                     }
-                    $(trickDetailsDiv).append(trick);
-                    $(trickDetailsDiv).append("<br />");
-                }
-            });
-            $(this).attr("data-cards")
-            $(this).append(trickDetailsDiv);
+                });
+                $(this).attr("data-cards")
+                $(this).append(trickDetailsDiv);
+            }
         }, function() {
             console.log("stuff UNhover...");
           $("#trickDetails").remove();
+          hovering=false;
         }
       );
 }

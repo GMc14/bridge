@@ -182,7 +182,8 @@ td, th {
 .winCount {
   box-sizing: border-box;
   position:absolute;
-  height: 1.5vmax;
+  height: 2vmax;
+  padding: 0.5vmax;
   width: 5vmax;
   top:9.5vmax;
   left:0vmax;
@@ -192,7 +193,7 @@ td, th {
   line-height: 100%;
   /* border: 1px solid #f8f; */
   text-shadow: 0 0 1vmax #000, 0px 0px 2vmax #003, 0 0 4vmax #001;
-  background-image: linear-gradient(RGBA(0,0,0,1), RGBA(0,0,0,0));
+  background-image: radial-gradient(RGBA(0,0,0,1), RGBA(0,0,0,0.66), RGBA(0,0,0,0));
 }
 #myPlay {
   box-sizing: border-box;
@@ -318,11 +319,14 @@ td, th {
   margin-top: -12vmax;
   width:15vmax;
 }
+.trick{
+  margin-top: -3vmax;
+}
 .wonTrickCard{
   height:5vmax;
   margin: 0px -0.8vmax;
   background-color:white;
-  box-shadow: 0.7vmax 0.1vmax 0.7vmax -0.3vmax rgba(0,0,0,0.66);
+  box-shadow: -0.7vmax 0.1vmax 0.7vmax -0.3vmax rgba(0,0,0,0.66);
   border-radius:0.2vmax;
 }
 .highlighted {
@@ -343,7 +347,7 @@ td, th {
   margin:0px -1vmax;
   border-radius:0.2vmax;
   box-sizing: border-box;
-  box-shadow: 0.9vmax 0.15vmax 0.9vmax -0.45vmax rgba(0,0,0,0.66);
+  box-shadow: -0.9vmax 0.15vmax 0.9vmax -0.45vmax rgba(0,0,0,0.66);
   /* border: 0.2vmax solid #88f; */
 }
 .stuff > .otherCards > img {
