@@ -343,7 +343,7 @@ td, th {
 .myCards:hover {
   box-shadow: 0px 0px 1.5vmax red;
 }
-.otherCards > img  {
+.otherCards, .otherCards > img  {
   display:inline-block;
   background-color:white;
   height: 5vmax;
@@ -358,7 +358,7 @@ td, th {
 }
 #showCase > .otherCards {
   margin:0px 0.5vmax;
-  box-shadow: 0vmax 0vmax 1vmax 1vmax rgba(117, 241, 78,0.5);
+  box-shadow: 0vmax 0vmax 0vmax 0vmax #000;
 }
 #chat {
   position:absolute;
