@@ -15,12 +15,49 @@ var gameConfig_permaTrumpSuit = gameConfid_isCrew?"R":'';
 var crewBonusCards = new Array("R1","R2","R3",'R4');
 var bonusCards = gameConfid_isCrew?crewBonusCards:[];
 var crewMissions=[
-    "1T", //1 Task
-    "2T",
-    "2T,2O", //2 Ordered Tasks
-    "3T",
-    "1Z", //One player receives no tricks (Captain decides)
-    "3T2O,?C"
+    "_->_", 
+    "_->_ & _->_",
+    "_->_ then _->_", 
+    "_->_ & _->_ & _->_",
+    "_ must not win any tricks", //One player receives no tricks (Captain decides)
+    "(_->_ then _->_) & _->_ & noone can communicate high/low/only (just show the card)",
+    "(_->_ & _->_) then _->_",
+    "_->_ then _->_ then _->_",
+    "Someone->with a '1'",
+    "_->_&_->_&_->_&_->_",
+    "_->_then(_->_&_->_&_->_) & _can't communicate",
+    "12***requires passing",
+    "13 don't understand win with each rocket, seems trivial",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
 ]
 var gameConfig_isBridge = false;
 var gameConfig_bidForTrump = gameConfig_isBridge;

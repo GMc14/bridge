@@ -223,10 +223,8 @@ function playCard() {
 function othersPlayed(player, card) {
   console.log("othersPlayed++++++++++++ player: "+player+" card:"+card);
   
-  var pNumber = Number(player.slice(-1));
-  var playerIndex = inversePlayerIdMap[pNumber];
-  
-  console.log("othersPlayed++++++++++++ pNumber: "+pNumber+" playerIndex:"+playerIndex);
+  var playerIndex = inversePlayerIdMap[player];
+  console.log("othersPlayed++++++++++++ playerIndex:"+playerIndex);
 
   $("#loc"+playerIndex+"Hand").find(".otherCards").first().remove();
   var card = $("#" + card + "_img").attr("class", "myCards").clone().show();

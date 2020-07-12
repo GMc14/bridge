@@ -30,6 +30,7 @@ function resolveTrick() {
   trickCards.push(card1ID);
   $(".plays").each(function(){
     var cardImgId = $(this).find("img").attr("id"); 
+    console.log("GMcCards-rules.js-********* iterating plays1: "+cardImgId +"       : "+JSON.stringify(trickCards) );
     if (cardImgId) {
       var card2ID = cardImgId.slice(0, -4);
       trickCards.push(card2ID);
@@ -39,7 +40,9 @@ function resolveTrick() {
     } else {
       console.log("noslice: "+cardImgId);
     }
+    console.log("GMcCards-rules.js-********* iterating plays2: "+cardImgId +"       : "+JSON.stringify(trickCards) );
   });
+  trickCards = [...new Set(trickCards)];
   console.log("GMcCards-rules.js-resolveTrick-#0200======="+isWinner+"  cards:"+ JSON.stringify(trickCards));
   if (isWinner) {
     console.log("GMcCards-rules.js-resolveTrick-#0300");
