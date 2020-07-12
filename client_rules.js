@@ -25,7 +25,7 @@ function resolveTrick() {
   console.log("GMcCards-rules.js-resolveTrick-#0000");
   var myCard = $("#myPlay");
   var trickCards = [];
-  var isWinner = true;
+  var iaAmTheWinner = true;
   var card1ID = myCard.find("img").attr("id").slice(0, -4);
   trickCards.push(card1ID);
   $(".plays").each(function(){
@@ -35,7 +35,7 @@ function resolveTrick() {
       var card2ID = cardImgId.slice(0, -4);
       trickCards.push(card2ID);
       if(!compareCard(card1ID, card2ID)){
-        isWinner=false;
+        iaAmTheWinner=false;
       }
     } else {
       console.log("noslice: "+cardImgId);
@@ -43,9 +43,9 @@ function resolveTrick() {
     console.log("GMcCards-rules.js-********* iterating plays2: "+cardImgId +"       : "+JSON.stringify(trickCards) );
   });
   trickCards = [...new Set(trickCards)];
-  console.log("GMcCards-rules.js-resolveTrick-#0200======="+isWinner+"  cards:"+ JSON.stringify(trickCards));
-  if (isWinner) {
-    console.log("GMcCards-rules.js-resolveTrick-#0300");
+  console.log("GMcCards-rules.js-resolveTrick-#0200======="+iaAmTheWinner+"  cards:"+ JSON.stringify(trickCards));
+  if (iaAmTheWinner) {
+    console.log("GMcCards-rules.js-iaAmTheWinner!!!!!!!!!!!!!!!!!!!!!!!!!!");
     addWin("myStuff", trickCards);
     tricksWon++;
     socketio.emit('winner', {

@@ -288,8 +288,7 @@ $(function () {
             $(".highlighted").removeClass("highlighted");
         }
     });
-    socketio.on('winnerOfRound', function (trickWinner, trickCards) {   
-        console.log("socketFunctions:->winnerOfRound");
+    socketio.on('winnerOfRound', function (trickWinner, trickCards) {
         roundNumber++;
         lead = trickWinner;
         currentPlayer = trickWinner;
