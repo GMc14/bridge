@@ -516,16 +516,15 @@ function refreshTeamWins(win) {
     console.log("refreshTeamWins rewrite this with locations instead of 'left/right/across'");
     switch (win) {
         case 0:
-            var numWins = $('#leftWin').html();
-            numWins = Number(numWins) + 1;
-            $('#leftWin').html(numWins);
-            $('#rightWin').html(numWins);
+            // var numWins = $('#leftWin').html();
+            // numWins = Number(numWins) + 1;
+            // $('#leftWin').html(numWins);
+            // $('#rightWin').html(numWins);
             break;
         case 1:
-            var numWins = $('#acrossWin').html();
-            numWins = Number(numWins) + 1;
-            $('#myWin').html('Team Wins: ' + numWins);
-            $('#acrossWin').html(numWins);
+            // var numWins = $('#acrossWin').html();
+            // numWins = Number(numWins) + 1;
+            // $('#myWin').html(numWins);
             break;
     }
 }

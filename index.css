@@ -106,8 +106,8 @@ td, th {
   height: 65vh;
   width: 70vw;
   box-sizing: border-box;
-  border: 0.8vmax solid white;
-  display:none;
+  /* border: 0.8vmax solid white; */
+  /* display:none; */
 }
 #turnIndicator {
   text-align: center;
@@ -184,13 +184,15 @@ td, th {
   position:absolute;
   height: 2.5vmax;
   width: 5vmax;
-  top:9.5vmax;
+  top:12vmax;
   left:0vmax;
   z-index: 999;
+  background-image: linear-gradient(RGBA(0,0,0,0), RGBA(0,0,0,1));
   text-align:center;
   font-weight: bold;
   line-height: 100%;
   border: 1px solid #f8f;
+  text-shadow: 0 0 1vmax #000, 0px 0px 2vmax #003, 0 0 4vmax #001;
 }
 #myPlay {
   box-sizing: border-box;
@@ -209,8 +211,7 @@ td, th {
 
 #myWin {
   top: 58.5vh;
-  left:65vw;
-  width:5vw;
+  left:60vw;
 }
 #gameSetup {
   display: table;
