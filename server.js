@@ -116,6 +116,9 @@ io.sockets.on('connection', function (socket) {
   socket.on('drawTask', function (card) {
     io.sockets.to(socket.room).emit('drawTask', card);
   });
+  socket.on('hideTasks', function (card) {
+    io.sockets.to(socket.room).emit('hideTasks');
+  });
   socket.on('sendMessage', function (data) {
     io.sockets.to(socket.room).emit('message', data);
   });

@@ -177,22 +177,22 @@ td, th {
   width: 5vmax;
   z-index: 666;
   text-align:center;
-  border: 1px solid #8f8;
+  /* border: 1px solid #8f8; */
 }
 .winCount {
   box-sizing: border-box;
   position:absolute;
-  height: 2.5vmax;
+  height: 1.5vmax;
   width: 5vmax;
-  top:12vmax;
+  top:9.5vmax;
   left:0vmax;
   z-index: 999;
-  background-image: linear-gradient(RGBA(0,0,0,0), RGBA(0,0,0,1));
   text-align:center;
   font-weight: bold;
   line-height: 100%;
-  border: 1px solid #f8f;
+  /* border: 1px solid #f8f; */
   text-shadow: 0 0 1vmax #000, 0px 0px 2vmax #003, 0 0 4vmax #001;
+  background-image: linear-gradient(RGBA(0,0,0,1), RGBA(0,0,0,0));
 }
 #myPlay {
   box-sizing: border-box;
@@ -208,9 +208,8 @@ td, th {
   left:45vw;
   width:15vw;
 }
-
 #myWin {
-  top: 58.5vh;
+  top: 56vh;
   left:60vw;
 }
 #gameSetup {
@@ -320,9 +319,10 @@ td, th {
   width:15vmax;
 }
 .wonTrickCard{
-  height:4vmax;
+  height:5vmax;
   margin: 0px -0.8vmax;
   background-color:white;
+  box-shadow: 0.7vmax 0.1vmax 0.7vmax -0.3vmax rgba(0,0,0,0.66);
   border-radius:0.2vmax;
 }
 .highlighted {
@@ -343,10 +343,14 @@ td, th {
   margin:0px -1vmax;
   border-radius:0.2vmax;
   box-sizing: border-box;
+  box-shadow: 0.9vmax 0.15vmax 0.9vmax -0.45vmax rgba(0,0,0,0.66);
   /* border: 0.2vmax solid #88f; */
 }
 .stuff > .otherCards > img {
   height:4vmax;
+}
+#showCase > .otherCards > img {
+  margin:0px 0.5vmax;
 }
 #chat {
   position:absolute;

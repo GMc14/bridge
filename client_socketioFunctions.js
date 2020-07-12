@@ -115,6 +115,9 @@ $(function () {
             alert("No Tasks Available");
         }
     });
+    $('#hideTasks').on('click', function () {
+        socketio.emit('hideTasks');
+    });
     $('#restartGame').on('click', function () {
         socketio.emit('restartGame');
     });
@@ -176,6 +179,10 @@ $(function () {
     });
     socketio.on('drawTask', function (card) {
         displayTrumpCard(card);
+    });
+    socketio.on('hideTasks', function (card) {
+        $("#showCase").empty();
+        $("#showCase").hide();
     });
     socketio.on('some1Bid', function (data) {
         passCount = 0;
