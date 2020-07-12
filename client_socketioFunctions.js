@@ -301,8 +301,16 @@ $(function () {
         }
         console.log("[][][][][][][] winner of round: "+trickWinner+" cards:" + trickCards);
         var winnerIndex = inversePlayerIdMap[trickWinner];
-        console.log("[][][][][][][] put trick in... loc"+winnerIndex+"stuff");
-        addWin("loc"+winnerIndex+"stuff", trickCards);
+        if(winnerIndex) {
+            console.log("[][][][][][][] put trick in... loc"+winnerIndex+"stuff");
+            addWin("loc"+winnerIndex+"stuff", trickCards);
+            var winsId = "loc"+winnerIndex+"wins";
+            var currentWins = Number($("#"+winsId).text());
+            console.log("OOOOOOOOOOOOOOOOOOOOO}}}}}}}}}}}}  currentWins: "+currentWins);
+            addWinText(winsId, currentWins+1);
+        } else {
+            console.log("[][][][][][][] no bueno winner mustBeMe");
+        }
         if (gameConfig_isBridge && gameConfig_playerCount == 4 && trickWinner == nextPlayer(nextPlayer(playerNum))){
             tricksWon++;
         }
@@ -451,7 +459,9 @@ function playerSelect() {
         }
     });
 }
-
+function addWinText(who, wins) {
+    $("#"+who).text(wins);
+}
 function addWin(who, cards) {
     console.log("[][][][][][][] addWin: "+who+" cards:" + cards);
     var card = document.createElement("div");
@@ -462,7 +472,7 @@ function addWin(who, cards) {
     $(stuff).append(card);
     $(stuff).hover(
         function() {
-            $($("#myStuff").children()[0]).attr("data-cards").split(',');
+            $($(this).children()[0]).attr("data-cards").split(',');
             console.log("stuff hover...");
             var trickDetailsDiv = $("<div id='trickDetails'></div>");
             $(this).children().each(function(){
@@ -475,6 +485,7 @@ function addWin(who, cards) {
                         $(trick).append("<img class='wonTrickCard' src='"+img_src+"'/>");
                     }
                     $(trickDetailsDiv).append(trick);
+                    $(trickDetailsDiv).append("<br />");
                 }
             });
             $(this).attr("data-cards")

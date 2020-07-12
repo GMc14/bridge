@@ -48,6 +48,7 @@ function resolveTrick() {
     console.log("GMcCards-rules.js-iaAmTheWinner!!!!!!!!!!!!!!!!!!!!!!!!!!");
     addWin("myStuff", trickCards);
     tricksWon++;
+    addWinText("myWin", tricksWon);
     socketio.emit('winner', {
       player: playerNum,
       roomID: roomID,

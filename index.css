@@ -107,6 +107,7 @@ td, th {
   width: 70vw;
   box-sizing: border-box;
   border: 0.8vmax solid white;
+  display:none;
 }
 #turnIndicator {
   text-align: center;
@@ -139,7 +140,6 @@ td, th {
 .locationContainer{
   position: absolute;
   width: 20vw;
-  height: 28vmax;
   /* border: 1px dashed #f68; */
 }
 .plays {
@@ -175,6 +175,7 @@ td, th {
   left:0vmax;
   height: 5vmax;
   width: 5vmax;
+  z-index: 666;
   text-align:center;
   border: 1px solid #8f8;
 }
@@ -182,14 +183,14 @@ td, th {
   box-sizing: border-box;
   position:absolute;
   height: 2.5vmax;
+  width: 5vmax;
   top:9.5vmax;
-  width:15vw;
-  left:5vmax;
+  left:0vmax;
+  z-index: 999;
   text-align:center;
   font-weight: bold;
   line-height: 100%;
-  display: none;
-  /* border: 1px solid #f8f; */
+  border: 1px solid #f8f;
 }
 #myPlay {
   box-sizing: border-box;
@@ -314,6 +315,7 @@ td, th {
   transition-duration: 0.1s;
 }
 #trickDetails{
+  margin-top: -12vmax;
   width:15vmax;
 }
 .wonTrickCard{
@@ -341,6 +343,9 @@ td, th {
   border-radius:0.2vmax;
   box-sizing: border-box;
   /* border: 0.2vmax solid #88f; */
+}
+.stuff > .otherCards > img {
+  height:4vmax;
 }
 #chat {
   position:absolute;
