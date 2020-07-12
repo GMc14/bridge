@@ -1,6 +1,8 @@
+*{
+  font-size: 1.5vmax;
+}
 html {
   overflow:hidden;
-  font-size: 1vmax;
 }
 body {
   height:100vh;
