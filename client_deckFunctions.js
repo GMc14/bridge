@@ -161,6 +161,12 @@ function displayTrumpCard(trumpCard) {
   card.addEventListener("click", playCard, true);
   $("#showCase").show();
   $("#showCase").append(card);
+  $(card).onClick(function(){
+    console.log(">>>>>>>>>>>>>Card clicked----------------");
+    if (playerNum == dealer) {
+
+    }
+  });
 }
 
 function displayCards() {
@@ -196,12 +202,16 @@ function displayOtherCards(playerIndex, handSize) {
 }
 
 function playCard() {
+  console.log("--------------playCard >>>>>>>>>>>>>"+currentPlayer+" =? "+playerNum );
   if (currentPlayer == playerNum) {
     if (playerNum == lead) {
       $(".plays").empty();
     }
     var num = $(this).attr('id').substr(0, 2);
     var cardID = $(this).attr('id').substr(2);
+    
+    console.log("--------------playCard! "+num+" : "+cardID);
+
     var legal = true;
     if (playerNum != lead) {
       legal = checkLegal(cardID);
