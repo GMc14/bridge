@@ -164,7 +164,7 @@ function displayTrumpCard(trumpCard) {
   $(card).onClick(function(){
     console.log(">>>>>>>>>>>>>Card clicked----------------");
     if (playerNum == dealer) {
-
+        
     }
   });
 }

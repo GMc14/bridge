@@ -175,6 +175,7 @@ $(function () {
         $('.stuff').empty();
         $('.plays').empty();
         $('#bidOfRound').hide();
+        $('.winCount').text(0);
         $('td').css('background-color', 'transparent');
 
         startGame();
@@ -255,7 +256,6 @@ $(function () {
             }
             
             if(startPlayerCard) {
-                
                 console.log("------- startPlayerCard how could this go wrong?: "+startPlayerCard);
                 for(var i = 0; i < data.hands.length; i++) {
                     for(var j = 0; j < data.hands[i].length; j++) {
