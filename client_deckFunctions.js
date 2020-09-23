@@ -281,8 +281,8 @@ function playCard() {
 }
 
 function isATrumpCard(card){
-  console.log("^^^^^^^^^^^^ isATrumpCard: " + card + " in:" + JSON.stringify(currentTrumpCards));
-  return jQuery.inArray(card, currentTrumpCards) !== -1;
+  console.log("^^^^^^^^^^^^ isATrumpCard: " + card + " in:" + JSON.stringify(currentTrumpCards)+"  found at: "+jQuery.inArray(card, currentTrumpCards)+" includes?:"+currentTrumpCards.includes(card));
+  return currentTrumpCards.includes(card);
 }
 
 function othersPlayed(player, card) {
