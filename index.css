@@ -31,7 +31,8 @@ body {
 }
 .trumpDrops{
   font-size: 1vmax;
-  opacity: 0.8;
+  opacity: 0.9;
+  transform: translateY(90px);
 }
 
 #roomID {
