@@ -223,6 +223,12 @@ $(function () {
             }
         }
     });
+    socketio.on('cycleClientOrderIcon', function (data) {
+        setTrumpCardOrderIcon(data.cardID,data.icon);
+    });
+    socketio.on('cycleClientOrderAssignee', function (data) {
+        setTrumpCardAssignee(data.cardID,data.player);
+    });
     socketio.on('dealToClients', function (data) {
         xoob = data;  
         console.log("--------------dealToClients---------------- "+JSON.stringify(data, null, 4));

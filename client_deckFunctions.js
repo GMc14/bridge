@@ -149,6 +149,12 @@ function sortHand() {
     }
   });
 }
+function setTrumpCardOrderIcon(cardID, icon) {
+  $("#trump"+cardID).find('.trumpTop > img').attr("src","/token_imgs/"+icon+".png");
+}
+function setTrumpCardAssignee(cardID, player) {
+  $("#trump"+cardID).find('.trumpBottom').text(player);
+}
 
 function displayTrumpCard(trumpCard) {
   var cardRank = String(trumpCard.rank);
@@ -158,13 +164,29 @@ function displayTrumpCard(trumpCard) {
   card.setAttribute("class", "trumpCard otherCards");
   card.setAttribute("id", 'trump' + cardID);
   $("#" + cardID + "_img").clone().show().appendTo(card);
-  card.addEventListener("click", playCard, true);
+  //card.addEventListener("click", playCard, true);
   $("#showCase").show();
   $("#showCase").append(card);
-  $(card).onClick(function(){
-    console.log(">>>>>>>>>>>>>Card clicked----------------");
+  $(card).append("<div class='trumpTop'><img src=''/></div>");
+  $(card).append("<div class='trumpBottom'></div>");
+  $(".trumpTop").onClick(function(){
+    console.log(">>>>>>>>>>>>>Card trumpTop clicked----------------");
+    //Change order icon
     if (playerNum == dealer) {
-        
+        socketio.emit('cycleOrderIcon', {
+          cardID: cardID,
+          icon: '1'
+      });
+    }
+  });
+  $(".trumpBottom").onClick(function(){
+    console.log(">>>>>>>>>>>>>Card trumpBottom clicked----------------");
+    //Change order assignee
+    if (playerNum == dealer) {
+        socketio.emit('cycleAssignee', {
+          cardID: cardID,
+          player: 'Adam'
+      });
     }
   });
 }

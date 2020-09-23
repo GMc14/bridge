@@ -23,6 +23,16 @@ body {
 #roomID {
   font-size:4vmax;
 }
+.trumpTop{
+  width:100%;
+  height:50%;
+  background-color: rgba(200, 250, 114, 0.66);
+}
+.trumpBottom{
+  width:100%;
+  height:50%;
+  background-color: rgba(250, 200, 114, 0.66);
+}
 #bidOfRound {
   position:absolute;
   height:10%;

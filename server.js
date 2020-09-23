@@ -88,6 +88,18 @@ io.sockets.on('connection', function (socket) {
     }
 
   });
+  socket.on('cycleOrderIcon', function (data) {
+    io.sockets.to(data.roomID).emit('cycleClientOrderIcon', {
+      cardID: data.cardID,
+      icon: data.icon
+    });
+  });  
+  socket.on('cycleAssignee', function (data) {
+    io.sockets.to(data.roomID).emit('cycleClientOrderAssignee', {
+      hands: data.cardID,
+      player: data.player
+    });
+  });
   socket.on('dealCards', function (data) {
     io.sockets.to(data.roomID).emit('dealToClients', {
       hands: data.hands,
