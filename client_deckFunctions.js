@@ -18,6 +18,7 @@ function startGame() {
     console.log("--------------startGame-------not the dealer---------" + playerNum + " == " + dealer);
   }
   currentTrumpCards=[];
+  $(".isTrump").removeClass("isTrump");
 }
 
 function preRenderImgs() {
