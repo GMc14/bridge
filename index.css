@@ -24,14 +24,20 @@ body {
   font-size:4vmax;
 }
 .trumpTop{
-  width:100%;
-  height:50%;
+  width: 3.333vmax;
+  height: 2.5vmax;
   background-color: rgba(200, 250, 114, 0.66);
+  top: 0px;
+  left: -3px;
+  position: absolute;
 }
 .trumpBottom{
-  width:100%;
-  height:50%;
-  background-color: rgba(250, 200, 114, 0.66);
+  width: 3.333vmax;
+  height: 2.5vmax;
+  background-color: rgba(230, 200, 114, 0.66);
+  top: 2.5vmax;
+  left: -3px;
+  position: absolute;
 }
 #bidOfRound {
   position:absolute;
@@ -369,6 +375,7 @@ td, th {
 #showCase > .otherCards {
   margin:0px 0.5vmax;
   box-shadow: 0vmax 0vmax 0vmax 0vmax #000;
+  position: relative;
 }
 #chat {
   position:absolute;

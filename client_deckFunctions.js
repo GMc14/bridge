@@ -169,7 +169,7 @@ function displayTrumpCard(trumpCard) {
   $("#showCase").append(card);
   $(card).append("<div class='trumpTop'><img src=''/></div>");
   $(card).append("<div class='trumpBottom'></div>");
-  $(".trumpTop").onClick(function(){
+  $(".trumpTop").click(function(){
     console.log(">>>>>>>>>>>>>Card trumpTop clicked----------------");
     //Change order icon
     if (playerNum == dealer) {
@@ -179,7 +179,7 @@ function displayTrumpCard(trumpCard) {
       });
     }
   });
-  $(".trumpBottom").onClick(function(){
+  $(".trumpBottom").click(function(){
     console.log(">>>>>>>>>>>>>Card trumpBottom clicked----------------");
     //Change order assignee
     if (playerNum == dealer) {
