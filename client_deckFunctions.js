@@ -173,6 +173,7 @@ function displayTrumpCard(trumpCard) {
     console.log(">>>>>>>>>>>>>Card trumpTop clicked----------------");
     //Change order icon
     if (playerNum == dealer) {
+      console.log(">>>>>>>>>>>>>Card trumpTop EMit----------------");
         socketio.emit('cycleOrderIcon', {
           cardID: cardID,
           icon: '1'
@@ -183,6 +184,7 @@ function displayTrumpCard(trumpCard) {
     console.log(">>>>>>>>>>>>>Card trumpBottom clicked----------------");
     //Change order assignee
     if (playerNum == dealer) {
+      console.log(">>>>>>>>>>>>>Card trumpBottom EMit----------------");
         socketio.emit('cycleAssignee', {
           cardID: cardID,
           player: 'Adam'
