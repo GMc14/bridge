@@ -3,6 +3,7 @@ function Card(suit, rank) {
   this.rank = rank;
 }
 
+var currentTrumpCards = [];
 function startGame() {
   if (playerNum == dealer) {
     console.log("--------------startGame-------I'm the dealer---------" + playerNum + " == " + dealer);
@@ -16,6 +17,7 @@ function startGame() {
   } else {
     console.log("--------------startGame-------not the dealer---------" + playerNum + " == " + dealer);
   }
+  currentTrumpCards=[];
 }
 
 function preRenderImgs() {
@@ -168,7 +170,6 @@ function setTrumpCardAssignee(cardID, player) {
 var tokenOptions = ['x', '1', '2', '3', '4', '5', 'i', 'ii', 'iii', 'iiii', 'O', '0'];
 
 var playerOptions = ['', 'G', 'A', 'E'];
-var currentTrumpCards = [];
 
 function displayTrumpCard(trumpCard) {
   var cardRank = String(trumpCard.rank);
@@ -179,7 +180,9 @@ function displayTrumpCard(trumpCard) {
   var card = document.createElement("div");
   card.setAttribute("class", "trumpCard otherCards");
   card.setAttribute("id", 'trump' + cardID);
-  $("#" + cardID + "_img").clone().show().appendTo(card);
+  var cardObj = $("#" + cardID + "_img").clone().show();
+  $(cardObj).addClass('isTrump');
+  $(cardObj).appendTo(card);
 
   $("#" + cardID + "_img").addClass('isTrump');
   //card.addEventListener("click", playCard, true);

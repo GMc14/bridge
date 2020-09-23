@@ -125,10 +125,10 @@ $(function () {
         $("#tokenLegend").toggle();
     });
     $("#tokenLegend").click(function () {
-    //     console.log("hide THINGSSSS");
         $("#tokenLegend").hide();
     });
     $("#tokenLegend").hide();
+    console.log("auto join room...");
     joinRoom();
     $('#drawTask').on('click', function () {
         if (taskDeck.length > 0) {
