@@ -55,9 +55,10 @@ body {
   font-size: 0px;
   top: 5.2vmax;
   left: -1vmax;
+ }
+.token > img {
   filter: drop-shadow(0.15vmax 0.15vmax 0 rgba(248, 255, 206, 0.5)) drop-shadow(-0.15vmax 0.15vmax 0 rgba(248, 255, 206, 0.5)) drop-shadow(0.15vmax -0.15vmax 0 rgba(248, 255, 206, 0.5)) drop-shadow(-0.15vmax -0.15vmax 0 rgba(248, 255, 206, 0.5));
 }
-
 .assignments {
   position: absolute;
   top: 8.4vmax;
