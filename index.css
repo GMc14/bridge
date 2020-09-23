@@ -20,6 +20,11 @@ body {
   background-color: #131313;
   background-size: 20px 20px;
 }
+.trumpDrops{
+  font-size: 1vmax;
+  opacity: 0.5;
+}
+
 #roomID {
   font-size:4vmax;
 }

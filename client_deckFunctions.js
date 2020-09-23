@@ -159,9 +159,9 @@ function setTrumpCardOrderIcon(cardID, icon) {
 function setTrumpCardAssignee(cardID, player) {
   $("#trump" + cardID).find('.trumpBottom > span').text(player);
 }
-var tokenOptions = ['blank', '1', '2', '3', '4', '5', 'i', 'ii', 'iii', 'iiii', 'O'];
+var tokenOptions = [' ', '1', '2', '3', '4', '5', 'i', 'ii', 'iii', 'iiii', 'O'];
 
-var playerOptions = ['', 'Graham', 'Adam', 'Mom'];
+var playerOptions = ['', 'GMc', 'Adam', 'Mom'];
 
 function displayTrumpCard(trumpCard) {
   var cardRank = String(trumpCard.rank);
@@ -174,11 +174,12 @@ function displayTrumpCard(trumpCard) {
   //card.addEventListener("click", playCard, true);
   $("#showCase").show();
   $("#showCase").append(card);
-  $(card).append("<div class='trumpTop'><select id='drpIcon"+cardID+"' name='dropdownIcon' size=1><img class='token' src=''/></div>");
-  $(card).append("<div class='trumpBottom'><select id='drpPlyr"+cardID+"' name='dropdownAssignee' size=1><span></span></div>");
+  $(card).append("<div class='trumpTop' id='trumpTop"+cardID+"'><img class='token' src=''/></div>");
+  $(card).append("<div class='trumpBottom' id='trumpBottom"+cardID+"'><span></span></div>");
 
   if (playerNum == dealer) {
-
+    $("#trumpTop"+cardID).append("<select class='trumpDrops' id='drpIcon"+cardID+"' name='dropdownIcon' size=1>"); 
+    $("#trumpBottom"+cardID).append("<select class='trumpDrops' id='drpPlyr"+cardID+"' name='dropdownIcon' size=1>");
     $.each(tokenOptions, function(){
       $("#drpIcon"+cardID).append('<option value="'+this+'">'+this+'</option>');
     });
