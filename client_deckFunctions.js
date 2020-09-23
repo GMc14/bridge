@@ -1,13 +1,15 @@
+
 function Card(suit, rank) {
   this.suit = suit;
   this.rank = rank;
 }
-
+$("#tokenLegend").hide();
 function startGame() {
   if (playerNum == dealer) {
     console.log("--------------startGame-------I'm the dealer---------" + playerNum + " == " + dealer);
     $("#gameControls").show();
     $("#myHand").empty();
+    $("#tokenLegend").hide();
     $(".otherPlayerHand").empty();
     createDeck();
     deck = getShuffled(deck);
@@ -160,7 +162,17 @@ function setTrumpCardAssignee(cardID, player) {
   console.log(">>>>>>>>>>>>> setTrumpCardAssignee " + cardID+"  :  "+player);
   $("#trump" + cardID).find('.trumpBottom > span').text(player);
 }
-var tokenOptions = ['x', '1', '2', '3', '4', '5', 'i', 'ii', 'iii', 'iiii', 'O'];
+
+
+
+$("#tokenQmark").click(function(){
+  $("#tokenLegend").show();
+});
+$("#tokenLegend").click(function(){
+  $("#tokenLegend").hide();
+});
+
+var tokenOptions = ['x', '1', '2', '3', '4', '5', 'i', 'ii', 'iii', 'iiii', 'O','0'];
 
 var playerOptions = ['', 'G', 'A', 'E'];
 

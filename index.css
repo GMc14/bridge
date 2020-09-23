@@ -20,6 +20,15 @@ body {
   background-color: #131313;
   background-size: 20px 20px;
 }
+#tokenQmark{
+  height: 2vmax;
+}
+#tokenLegend{
+  position: fixed;
+  left:2vmax;
+  top:2vmax;
+  z-index:99999999999;
+}
 .trumpDrops{
   font-size: 1vmax;
   opacity: 0.8;
