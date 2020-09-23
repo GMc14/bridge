@@ -224,12 +224,12 @@ $(function () {
         }
     });
     socketio.on('cycleClientOrderIcon', function (data) {
-        console.log("--------------cycleClientOrderIcon---------------- data.icon: "+data.icon);
-        setTrumpCardOrderIcon(data.cardID,data.icon);
+        console.log("--------------cycleClientOrderIcon----------------data.cardID "+data.cardID+",  data.icon: "+data.icon);
+        setTrumpCardOrderIcon(data.cardID, data.icon);
     });
     socketio.on('cycleClientOrderAssignee', function (data) {
-        console.log("--------------cycleClientOrderAssignee---------------- data.icon: "+data.player);
-        setTrumpCardAssignee(data.cardID,data.player);
+        console.log("--------------cycleClientOrderAssignee----------------data.cardID "+data.cardID+",  data.player: "+data.player);
+        setTrumpCardAssignee(data.cardID, data.player);
     });
     socketio.on('dealToClients', function (data) {
         xoob = data;  

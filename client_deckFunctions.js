@@ -2,9 +2,10 @@ function Card(suit, rank) {
   this.suit = suit;
   this.rank = rank;
 }
+
 function startGame() {
   if (playerNum == dealer) {
-    console.log("--------------startGame-------I'm the dealer---------"+playerNum+" == "+dealer);
+    console.log("--------------startGame-------I'm the dealer---------" + playerNum + " == " + dealer);
     $("#gameControls").show();
     $("#myHand").empty();
     $(".otherPlayerHand").empty();
@@ -12,10 +13,11 @@ function startGame() {
     deck = getShuffled(deck);
     dealCards();
   } else {
-    console.log("--------------startGame-------not the dealer---------"+playerNum+" == "+dealer);
+    console.log("--------------startGame-------not the dealer---------" + playerNum + " == " + dealer);
   }
 }
-function preRenderImgs(){
+
+function preRenderImgs() {
   console.log("preRenderImgs-#0000");
   var img_src = "/card_imgs/cardback.png";
   var cardImg = document.createElement("img");
@@ -51,7 +53,7 @@ function createDeck() {
   taskDeck = [];
   for (var i = 0; i < suits.length; i++) {
     for (var j = 0; j < ranks.length; j++) {
-      if(gameConfid_isCrew){
+      if (gameConfid_isCrew) {
         taskDeck.push(new Card(suits[i], ranks[j]));
       }
       deck.push(new Card(suits[i], ranks[j]));
@@ -89,13 +91,13 @@ function dealCards() {
     hands[i] = [];
     handValues[i] = 0;
     var cardsToDeal = gameConfig_startCardsPerPlayer;
-    if(cardsToDeal == -1){
+    if (cardsToDeal == -1) {
       cardsToDeal = Math.floor(deckSize / gameConfig_playerCount);
-      if((deckSize % gameConfig_playerCount) > i){
+      if ((deckSize % gameConfig_playerCount) > i) {
         cardsToDeal += 1;
       }
     }
-    console.log("DealCards -------deckSize:"+deckSize+"   cardsToDeal:"+cardsToDeal+"   deck.length:"+deck.length+"   i:"+i);
+    console.log("DealCards -------deckSize:" + deckSize + "   cardsToDeal:" + cardsToDeal + "   deck.length:" + deck.length + "   i:" + i);
     for (var j = 0; j < cardsToDeal; j++) {
       handValues[i] += cardValue(deck[deck.length - 1]);
       hands[i].push(deck.pop());
@@ -108,16 +110,16 @@ function dealCards() {
       if (handValues[i] < 4) {
         //needToRedeal
         console.log(":( ------------------ needToRedeal");
-        
+
         deck = getShuffled(deck);
         dealCards();
         return;
       }
     }
   }
-  var trumpCard='';
-  if(gameConfig_topDeckTrump){
-    if(deck.length > 0) {
+  var trumpCard = '';
+  if (gameConfig_topDeckTrump) {
+    if (deck.length > 0) {
       trumpCard = deck.pop();
     } else {
       alert("Empty Deck: no trump");
@@ -149,12 +151,17 @@ function sortHand() {
     }
   });
 }
+
 function setTrumpCardOrderIcon(cardID, icon) {
-  $("#trump"+cardID).find('.trumpTop > img').attr("src","/token_imgs/"+icon+".png");
+  $("#trump" + cardID).find('.trumpTop > img').attr("src", "/token_imgs/" + icon + ".png");
 }
+
 function setTrumpCardAssignee(cardID, player) {
-  $("#trump"+cardID).find('.trumpBottom').text(player);
+  $("#trump" + cardID).find('.trumpBottom > span').text(player);
 }
+var tokenOptions = ['blank', '1', '2', '3', '4', '5', 'i', 'ii', 'iii', 'iiii', 'O'];
+
+var playerOptions = ['', 'Graham', 'Adam', 'Mom'];
 
 function displayTrumpCard(trumpCard) {
   var cardRank = String(trumpCard.rank);
@@ -167,38 +174,42 @@ function displayTrumpCard(trumpCard) {
   //card.addEventListener("click", playCard, true);
   $("#showCase").show();
   $("#showCase").append(card);
-  $(card).append("<div class='trumpTop'><img src=''/></div>");
-  $(card).append("<div class='trumpBottom'></div>");
-  $(".trumpTop").click(function(){
-    console.log(">>>>>>>>>>>>>Card trumpTop clicked----------------");
-    //Change order icon
-    if (playerNum == dealer) {
-      console.log(">>>>>>>>>>>>>Card trumpTop EMit----------------");
-        socketio.emit('cycleOrderIcon', {
-          cardID: cardID,
-          roomID: roomID,
-          icon: '1'
+  $(card).append("<div class='trumpTop'><select id='drpIcon"+cardID+"' name='dropdownIcon' size=1><img class='token' src=''/></div>");
+  $(card).append("<div class='trumpBottom'><select id='drpPlyr"+cardID+"' name='dropdownAssignee' size=1><span></span></div>");
+
+  if (playerNum == dealer) {
+
+    $.each(tokenOptions, function(){
+      $("#drpIcon"+cardID).append('<option value="'+this+'">'+this+'</option>');
+    });
+    $.each(playerOptions, function(){
+      $("#drpPlyr"+cardID).append('<option value="'+this+'">'+this+'</option>');
+    });
+    $("#drpIcon"+cardID).change(function () {
+
+      console.log(">>>>>>>>>>>>> cycleOrderIcon selected ---------------- " + $(this).val());
+      socketio.emit('cycleOrderIcon', {
+        cardID: cardID,
+        roomID: roomID,
+        icon: $(this).val()
       });
-    }
-  });
-  $(".trumpBottom").click(function(){
-    console.log(">>>>>>>>>>>>>Card trumpBottom clicked----------------");
-    //Change order assignee
-    if (playerNum == dealer) {
-      console.log(">>>>>>>>>>>>>Card trumpBottom EMit----------------");
-        socketio.emit('cycleAssignee', {
-          cardID: cardID,
-          roomID: roomID,
-          player: 'Adam'
+    });
+    $("#drpPlyr"+cardID).change(function () {
+
+      console.log(">>>>>>>>>>>>>cycleAssignee selected ---------------- " + $(this).val());
+      socketio.emit('cycleAssignee', {
+        cardID: cardID,
+        roomID: roomID,
+        player: $(this).val()
       });
-    }
-  });
+    });
+  }
 }
 
 function displayCards() {
   console.log(">>>>>>>>>>>>>displayCards----------------");
   for (var j = 1; j < gameConfig_playerCount; j++) {
-    displayOtherCards(j, handSizes[j-1]);
+    displayOtherCards(j, handSizes[j - 1]);
   }
   $("#myHand").empty();
   for (var i = 0; i < myHandOfCards.length; i++) {
@@ -217,26 +228,26 @@ function displayCards() {
 }
 
 function displayOtherCards(playerIndex, handSize) {
-  console.log(">>>>>>>>>>>>>displayCards----in: #loc"+playerIndex+"Hand------------playerIndex: "+playerIndex+"  >>  handSize: "+handSize);
-  $('#loc'+playerIndex+'Hand').empty();
+  console.log(">>>>>>>>>>>>>displayCards----in: #loc" + playerIndex + "Hand------------playerIndex: " + playerIndex + "  >>  handSize: " + handSize);
+  $('#loc' + playerIndex + 'Hand').empty();
   for (var i = 0; i < handSize; i++) {
     var card = document.createElement("div");
     card.setAttribute("class", "otherCards");
     $(".cardback:eq(0)").clone().show().appendTo(card);
-    $('#loc'+playerIndex+'Hand').append(card);
+    $('#loc' + playerIndex + 'Hand').append(card);
   }
 }
 
 function playCard() {
-  console.log("--------------playCard >>>>>>>>>>>>>"+currentPlayer+" =? "+playerNum );
+  console.log("--------------playCard >>>>>>>>>>>>>" + currentPlayer + " =? " + playerNum);
   if (currentPlayer == playerNum) {
     if (playerNum == lead) {
       $(".plays").empty();
     }
     var num = $(this).attr('id').substr(0, 2);
     var cardID = $(this).attr('id').substr(2);
-    
-    console.log("--------------playCard! "+num+" : "+cardID);
+
+    console.log("--------------playCard! " + num + " : " + cardID);
 
     var legal = true;
     if (playerNum != lead) {
@@ -257,12 +268,12 @@ function playCard() {
 }
 
 function othersPlayed(player, card) {
-  console.log("othersPlayed++++++++++++ player: "+player+" card:"+card);
-  
-  var playerIndex = inversePlayerIdMap[player];
-  console.log("othersPlayed++++++++++++ playerIndex:"+playerIndex);
+  console.log("othersPlayed++++++++++++ player: " + player + " card:" + card);
 
-  $("#loc"+playerIndex+"Hand").find(".otherCards").first().remove();
+  var playerIndex = inversePlayerIdMap[player];
+  console.log("othersPlayed++++++++++++ playerIndex:" + playerIndex);
+
+  $("#loc" + playerIndex + "Hand").find(".otherCards").first().remove();
   var card = $("#" + card + "_img").attr("class", "myCards").clone().show();
-  $("#loc"+playerIndex+"play").append(card);
+  $("#loc" + playerIndex + "play").append(card);
 }

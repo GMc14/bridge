@@ -32,6 +32,9 @@ body {
   position: absolute;
   z-index:999999;
 }
+.token{
+  width: 1.5vmax;
+}
 .trumpBottom{
   width: 3.333vmax;
   height: 2.5vmax;
