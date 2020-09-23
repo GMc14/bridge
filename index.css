@@ -31,19 +31,20 @@ body {
 .trumpTop{
   width: 3.333vmax;
   height: 2.5vmax;
-  background-color: rgba(200, 250, 114, 0.66);
+  background-color: rgba(225, 255, 225, 0.33);
   top: 0px;
   left: -1vmax;
   position: absolute;
   z-index:999999;
 }
 .token{
-  width: 1.5vmax;
+  width: 1.2vmax;
+  font-size: 0px;
 }
 .trumpBottom{
   width: 3.333vmax;
   height: 2.5vmax;
-  background-color: rgba(230, 200, 114, 0.66);
+  background-color: rgba(255, 225, 225, 0.33);
   top: 2.5vmax;
   left: -1vmax;
   position: absolute;

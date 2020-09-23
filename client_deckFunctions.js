@@ -157,11 +157,12 @@ function setTrumpCardOrderIcon(cardID, icon) {
 }
 
 function setTrumpCardAssignee(cardID, player) {
+  console.log(">>>>>>>>>>>>> setTrumpCardAssignee " + cardID+"  :  "+player);
   $("#trump" + cardID).find('.trumpBottom > span').text(player);
 }
-var tokenOptions = [' ', '1', '2', '3', '4', '5', 'i', 'ii', 'iii', 'iiii', 'O'];
+var tokenOptions = ['x', '1', '2', '3', '4', '5', 'i', 'ii', 'iii', 'iiii', 'O'];
 
-var playerOptions = ['', 'GMc', 'Adam', 'Mom'];
+var playerOptions = ['', 'G', 'A', 'E'];
 
 function displayTrumpCard(trumpCard) {
   var cardRank = String(trumpCard.rank);
