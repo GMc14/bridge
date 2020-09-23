@@ -169,12 +169,12 @@ function setTrumpCardAssignee(cardID, player) {
 var tokenOptions = ['x', '1', '2', '3', '4', '5', 'i', 'ii', 'iii', 'iiii', 'O','0'];
 
 var playerOptions = ['', 'G', 'A', 'E'];
-
+var currentTrumpCards = [];
 function displayTrumpCard(trumpCard) {
   var cardRank = String(trumpCard.rank);
   var cardSuit = String(trumpCard.suit);
   var cardID = cardSuit + cardRank;
-
+  currentTrumpCards.push(cardId);
 
   var card = document.createElement("div");
   card.setAttribute("class", "trumpCard otherCards");
@@ -219,6 +219,7 @@ function displayTrumpCard(trumpCard) {
 }
 
 function displayCards() {
+  currentTrumpCards=[];
   console.log(">>>>>>>>>>>>>displayCards----------------");
   for (var j = 1; j < gameConfig_playerCount; j++) {
     displayOtherCards(j, handSizes[j - 1]);
@@ -279,6 +280,11 @@ function playCard() {
   }
 }
 
+function isATrumpCard(card){
+  console.log("^^^^^^^^^^^^ isATrumpCard: " + card + " in:" + JSON.stringify(currentTrumpCards));
+  return jQuery.inArray(card, currentTrumpCards) !== -1;
+}
+
 function othersPlayed(player, card) {
   console.log("othersPlayed++++++++++++ player: " + player + " card:" + card);
 
@@ -286,6 +292,12 @@ function othersPlayed(player, card) {
   console.log("othersPlayed++++++++++++ playerIndex:" + playerIndex);
 
   $("#loc" + playerIndex + "Hand").find(".otherCards").first().remove();
+
+  if(isATrumpCard(card)){
+    $("#" + card + "_img").addClass('isTrump');
+  }
   var card = $("#" + card + "_img").attr("class", "myCards").clone().show();
+  
+
   $("#loc" + playerIndex + "play").append(card);
 }

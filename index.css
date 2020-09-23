@@ -32,7 +32,7 @@ body {
   z-index: 999999;
   font-size: 0px;
   top: 5.2vmax;
-  left: -1vmax;
+  left: 0vmax;
  }
 .token > img {
   filter: drop-shadow(0.15vmax 0.15vmax 0 rgba(248, 255, 206, 0.5)) drop-shadow(-0.15vmax 0.15vmax 0 rgba(248, 255, 206, 0.5)) drop-shadow(0.15vmax -0.15vmax 0 rgba(248, 255, 206, 0.5)) drop-shadow(-0.15vmax -0.15vmax 0 rgba(248, 255, 206, 0.5));
@@ -41,15 +41,15 @@ body {
 
 .isTrump {
   box-shadow: inset 0 0 1vmin #fff, /* inner */
-  inset 0.6vmin 0 2vmin rgba(50, 212, 11,0.5), /* inner left short */
-  inset -0.6vmin 0 2vmin rgba(50, 212, 11,0.5), /* inner right short */
-  inset 0.6vmin 0 3vmin rgba(50, 212, 11,0.5), /* inner left broad */
-  inset -0.6vmin 0 3vmin rgba(50, 212, 11,0.5);
+  inset 0.6vmin 0 2vmin rgba(212, 212, 11,0.6), /* inner left short */
+  inset -0.6vmin 0 2vmin rgba(212, 212, 11,0.6), /* inner right short */
+  inset 0.6vmin 0 3vmin rgba(212, 212, 11,0.6), /* inner left broad */
+  inset -0.6vmin 0 3vmin rgba(212, 212, 11,0.6);
 }
 .assignments {
   position: absolute;
   top: 7.4vmax;
-  left: -1vmax;
+  left: 0vmax;
   text-shadow: 0 0 3px #FF0000, 0 0 15px #0000FF;
 }
 .trumpDrops {
