@@ -155,12 +155,12 @@ function sortHand() {
 }
 
 function setTrumpCardOrderIcon(cardID, icon) {
-  $("#trump" + cardID).find('.trumpTop > img').attr("src", "/token_imgs/" + icon + ".png");
+  $("#token" + cardID).attr("src", "/token_imgs/" + icon + ".png");
 }
 
 function setTrumpCardAssignee(cardID, player) {
   console.log(">>>>>>>>>>>>> setTrumpCardAssignee " + cardID+"  :  "+player);
-  $("#trump" + cardID).find('.trumpBottom > span').text(player);
+  $("#assignment" + cardID).text(player);
 }
 
 
@@ -181,12 +181,12 @@ function displayTrumpCard(trumpCard) {
   //card.addEventListener("click", playCard, true);
   $("#showCase").show();
   $("#showCase").append(card);
-  $(card).append("<div class='trumpTop' id='trumpTop"+cardID+"'><img class='token' src=''/></div>");
-  $(card).append("<div class='trumpBottom' id='trumpBottom"+cardID+"'><span class='assignments'></span></div>");
+  $(card).append("<img id='token"+cardID+"' class='token' src=''/>");
+  $(card).append("<span id='assignment"+cardID+"' class='assignments'></span>");
 
   if (playerNum == dealer) {
-    $("#trumpTop"+cardID).append("<select class='trumpDrops' id='drpIcon"+cardID+"' name='dropdownIcon' size=1>"); 
-    $("#trumpBottom"+cardID).append("<select class='trumpDrops' id='drpPlyr"+cardID+"' name='dropdownIcon' size=1>");
+    $(card).append("<select class='trumpDrops' id='drpIcon"+cardID+"' name='dropdownIcon' size=1>"); 
+    $(card).append("<select class='trumpDrops' id='drpPlyr"+cardID+"' name='dropdownIcon' size=1>");
     $.each(tokenOptions, function(){
       $("#drpIcon"+cardID).append('<option value="'+this+'">'+this+'</option>');
     });

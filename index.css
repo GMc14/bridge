@@ -1,140 +1,150 @@
-*{
+* {
   font-size: 1.5vmax;
 }
+
 html {
-  overflow:hidden;
+  overflow: hidden;
 }
+
 body {
-  height:100vh;
-  width:100vw;
-  margin:0;
+  height: 100vh;
+  width: 100vw;
+  margin: 0;
   font-family: "Trebuchet MS", Helvetica, sans-serif;
   color: white;
-  background:
-    linear-gradient(27deg, #151515 5px, transparent 5px) 0 5px,
-    linear-gradient(207deg, #151515 5px, transparent 5px) 10px 0px,
-    linear-gradient(27deg, #222 5px, transparent 5px) 0px 10px,
-    linear-gradient(207deg, #222 5px, transparent 5px) 10px 5px,
-    linear-gradient(90deg, #1b1b1b 10px, transparent 10px),
-    linear-gradient(#1d1d1d 25%, #1a1a1a 25%, #1a1a1a 50%, transparent 50%, transparent 75%, #242424 75%, #242424);
+  background: linear-gradient(27deg, #151515 5px, transparent 5px) 0 5px, linear-gradient(207deg, #151515 5px, transparent 5px) 10px 0px, linear-gradient(27deg, #222 5px, transparent 5px) 0px 10px, linear-gradient(207deg, #222 5px, transparent 5px) 10px 5px, linear-gradient(90deg, #1b1b1b 10px, transparent 10px), linear-gradient(#1d1d1d 25%, #1a1a1a 25%, #1a1a1a 50%, transparent 50%, transparent 75%, #242424 75%, #242424);
   background-color: #131313;
   background-size: 20px 20px;
 }
-#tokenQmark{
+
+#tokenQmark {
   height: 2vmax;
 }
-#tokenLegend{
+
+#tokenLegend {
   position: fixed;
-  left:2vmax;
-  top:2vmax;
-  z-index:99999999999;
+  left: 2vmax;
+  top: 2vmax;
+  z-index: 99999999999;
 }
-.trumpDrops{
+
+.trumpDrops {
   font-size: 1vmax;
   opacity: 0.9;
-  transform: translateY(90px);
+  z-index: 999999;
+  position: absolute;
+  left: -1vmax;
+}
+
+.icnDrop {
+  top: 7.2vmax;
+}
+
+.plyrDrop {
+  top: 10.2vmax;
 }
 
 #roomID {
-  font-size:4vmax;
+  font-size: 4vmax;
 }
-.trumpTop{
-  width: 3.333vmax;
-  height: 2.5vmax;
+
+.token {
+  position: absolute;
+  z-index: 999999;
+  width: 2vmax;
+  font-size: 0px;
   top: 5.2vmax;
   left: -1vmax;
-  position: absolute;
-  z-index:999999;
+  filter: drop-shadow(0.15vmax 0.15vmax 0 rgba(248, 255, 206, 0.5)) drop-shadow(-0.15vmax 0.15vmax 0 rgba(248, 255, 206, 0.5)) drop-shadow(0.15vmax -0.15vmax 0 rgba(248, 255, 206, 0.5)) drop-shadow(-0.15vmax -0.15vmax 0 rgba(248, 255, 206, 0.5));
 }
-.token{
-  width: 2vmax;
-  font-size: 0px;filter: 
-  drop-shadow(0.15vmax 0.15vmax 0 rgba(248, 255, 206,0.5))
-  drop-shadow(-0.15vmax 0.15vmax 0 rgba(248, 255, 206,0.5))
-  drop-shadow(0.15vmax -0.15vmax 0 rgba(248, 255, 206,0.5))
-  drop-shadow(-0.15vmax -0.15vmax 0 rgba(248, 255, 206,0.5));
-}
+
 .assignments {
+  position: absolute;
+  top: 8.4vmax;
+  left: -1vmax;
   text-shadow: 0 0 3px #FF0000, 0 0 15px #0000FF;
 }
-.trumpBottom{
-  width: 3.333vmax;
-  height: 2.5vmax;
-  top: 7vmax;
-  left: -1vmax;
-  position: absolute;
-  z-index:999999;
-}
+
 #bidOfRound {
-  position:absolute;
-  height:10%;
-  width:10%;
+  position: absolute;
+  height: 10%;
+  width: 10%;
   text-align: center;
   top: 45%;
-  right:45%;
+  right: 45%;
 }
+
 .bidCell:hover {
   border: 2px solid greenyellow;
 }
+
 #legend_container {
-  position:absolute;
-  height:40%;
-  width:20%;
-  top:30%;
-  left:3%;
-  color:white;
+  position: absolute;
+  height: 40%;
+  width: 20%;
+  top: 30%;
+  left: 3%;
+  color: white;
   text-align: center;
-  opacity:0.8;
+  opacity: 0.8;
 }
+
 #legend {
-  position:relative;
-  top:50%;
+  position: relative;
+  top: 50%;
   -webkit-transform: translateY(-50%);
   -ms-transform: translateY(-50%);
   transform: translateY(-50%);
 }
+
 #legend>span {
-  position:static;
-  padding:5px;
-  margin:5px;
+  position: static;
+  padding: 5px;
+  margin: 5px;
   border-radius: 6px;
-  display:block;
+  display: block;
 }
+
 #pass {
   font-size: 1.5vmax;
-  position:absolute;
-  height:20%;
-  width:20%;
-  top:40%;
-  right:3%;
+  position: absolute;
+  height: 20%;
+  width: 20%;
+  top: 40%;
+  right: 3%;
 }
+
 table {
   margin-left: auto;
-  margin-right:auto;
+  margin-right: auto;
   table-layout: fixed;
   font-family: arial, sans-serif;
   border-collapse: collapse;
-  background-color:white;
+  background-color: white;
   opacity: 0.8;
-  color:black;
+  color: black;
 }
+
 td, th {
-  height:25px;
-  width:25px;
-  text-align:center;
+  height: 25px;
+  width: 25px;
+  text-align: center;
   border: 1px solid black;
   padding: 5px;
 }
+
 .logo {
   max-width: 100%;
-  max-height:100%;
+  max-height: 100%;
 }
+
 #topbar {
   display: block;
-  text-align:right;
+  text-align: right;
   font-weight: bold;
-  padding:0.5vmax
+  padding: 0.5vmax
 }
+
 #gameBoard {
   position: relative;
   margin: 0;
@@ -142,6 +152,7 @@ td, th {
   width: 100%;
   box-sizing: border-box;
 }
+
 #playArea {
   display: none;
   position: absolute;
@@ -153,337 +164,384 @@ td, th {
   /* border: 0.8vmax solid white; */
   /* display:none; */
 }
+
 #turnIndicator {
   text-align: center;
   position: absolute;
-  height:10vh;
-  width:20vw;
-  top:0vh;
-  left:60vw;
+  height: 10vh;
+  width: 20vw;
+  top: 0vh;
+  left: 60vw;
   /* border: 2px double #f18; */
 }
+
 #showCase {
   text-align: center;
   position: absolute;
-  height:10vh;
-  width:20vw;
-  top:0vh;
-  left:40vw;
+  height: 10vh;
+  width: 40vw;
+  top: 0vh;
+  left: 30vw;
   border: 2px double #8f1;
   display: none;
 }
-#gameControls{
+
+#gameControls {
   position: absolute;
-  left:0vw;
-  bottom:10vh;
-  height:10vh;
-  width:10vw;
+  left: 0vw;
+  bottom: 10vh;
+  height: 10vh;
+  width: 10vw;
   border: 2px double #18f;
   display: none;
 }
-.locationContainer{
+
+.locationContainer {
   position: absolute;
   width: 20vw;
   /* border: 1px dashed #f68; */
 }
+
 .plays {
   position: absolute;
-  height:10vmax;
-  width:20vw;
-  top:12vmax;
-  left:0vmin;
+  height: 10vmax;
+  width: 20vw;
+  top: 12vmax;
+  left: 0vmin;
   box-sizing: border-box;
   text-align: center;
   /* border: 1px solid #ff8; */
 }
-.plays > img {
-  height: 7vmax; 
+
+.plays>img {
+  height: 7vmax;
   width: 5vmax;
 }
+
 .name {
   box-sizing: border-box;
-  position:absolute;
-  height:2.5vmax;
-  width:20vw;
-  top:7vmax;
-  left:0vmax;
+  position: absolute;
+  height: 2.5vmax;
+  width: 20vw;
+  top: 7vmax;
+  left: 0vmax;
   font-size: 1.5vmax;
   text-align: center;
   /* border: 1px solid #8ff; */
 }
+
 .stuff {
   box-sizing: border-box;
   position: absolute;
   display: block;
-  top:9.5vmax;
-  left:0vmax;
+  top: 9.5vmax;
+  left: 0vmax;
   height: 5vmax;
   width: 5vmax;
   z-index: 666;
-  text-align:center;
+  text-align: center;
   /* border: 1px solid #8f8; */
 }
+
 .winCount {
   box-sizing: border-box;
-  position:absolute;
+  position: absolute;
   height: 2vmax;
   padding: 0.5vmax;
   width: 5vmax;
-  top:9.5vmax;
-  left:0vmax;
+  top: 9.5vmax;
+  left: 0vmax;
   z-index: 999;
-  text-align:center;
+  text-align: center;
   font-weight: bold;
   line-height: 100%;
   /* border: 1px solid #f8f; */
   text-shadow: 0 0 1vmax #000, 0px 0px 2vmax #003, 0 0 4vmax #001;
-  background-image: radial-gradient(RGBA(0,0,0,1), RGBA(0,0,0,0.33), RGBA(0,0,0,0));
+  background-image: radial-gradient(RGBA(0, 0, 0, 1), RGBA(0, 0, 0, 0.33), RGBA(0, 0, 0, 0));
 }
+
 #myPlay {
   box-sizing: border-box;
   top: 40vh;
   left: 25vw;
 }
+
 #myStuff {
-  top:56vh;
-  left:60vw;
+  top: 56vh;
+  left: 60vw;
 }
+
 #myName {
-  top:58.5vh;
-  left:45vw;
-  width:15vw;
+  top: 58.5vh;
+  left: 45vw;
+  width: 15vw;
 }
+
 #myWin {
   top: 56vh;
-  left:60vw;
+  left: 60vw;
 }
+
 #gameSetup {
   display: table;
   position: absolute;
   top: 27.5%;
-  left:30%;
-  height:40%;
-  width:40%;
+  left: 30%;
+  height: 40%;
+  width: 40%;
   box-sizing: border-box;
-  text-align:center;
-}
-#gameRecap {
-  height:100%;
-  width: 50%;
-  background-color:white;
-  color:black;
-  border: 2px solid black;
-  box-sizing: border-box;
-  margin-left:auto;
-  margin-right:auto;
-  font-size:1.5vmax;
   text-align: center;
 }
-#gameRecap>button {
-  height:40%;
-  width:50%;
-  text-align:center;
-  background-color:black;
-  color:white;
+
+#gameRecap {
+  height: 100%;
+  width: 50%;
+  background-color: white;
+  color: black;
+  border: 2px solid black;
+  box-sizing: border-box;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 1.5vmax;
+  text-align: center;
 }
+
+#gameRecap>button {
+  height: 40%;
+  width: 50%;
+  text-align: center;
+  background-color: black;
+  color: white;
+}
+
 #gameRecap>button:hover {
   background-color: #ffccfa;
   color: black;
 }
+
 .setupModule {
   display: table-cell;
   vertical-align: middle;
 }
+
 #roomID {
-  text-align:center;
-  margin:3vmax;
+  text-align: center;
+  margin: 3vmax;
 }
+
 .gameButtons {
   background-color: white;
   color: black;
-  text-align:center;
-  font-size:1.2vmax;
+  text-align: center;
+  font-size: 1.2vmax;
   margin: 0px 0px 0px 1vmax;
   border-radius: 0.5vmax;
-  transition-duration:0.2s;
+  transition-duration: 0.2s;
 }
-.gameButtons:hover{
+
+.gameButtons:hover {
   background-color: #435078;
   color: white;
 }
+
 .playerBtns {
-  background-color:white;
-  color:black;
+  background-color: white;
+  color: black;
   text-align: center;
   margin: 0.5vmax;
-  border-radius:0.5vmax;
-  transition-duration:0.1s;
+  border-radius: 0.5vmax;
+  transition-duration: 0.1s;
 }
+
 .playerBtns:hover {
   box-shadow: 0px 0px 1.5vmax red;
 }
+
 .myHand {
-  display:block;
-  position:absolute;
-  height:15%;
-  width:100%;
+  display: block;
+  position: absolute;
+  height: 15%;
+  width: 100%;
   bottom: 2%;
   /*margin:auto;
   height: 100%;*/
-  text-align:center;
+  text-align: center;
   box-sizing: border-box;
   /* border: 0.2vmax solid #f88; */
 }
+
 .otherPlayerHand {
   position: absolute;
   display: block;
   height: 7vmax;
   width: 20vmax;
-  text-align:center;
+  text-align: center;
   box-sizing: border-box;
   /* border: 0.2vmax dotted #c37; */
 }
+
 .cardback {
   height: 7vmax !important;
   width: 5vmax !important;
-  border-radius:4px;
+  border-radius: 4px;
 }
-.myCards > img {
+
+.myCards>img {
   height: 7vmax !important;
   width: 5vmax !important;
 }
+
 .myCards {
-  display:inline-block;
-  background-color:white;
-  margin:0px 0.2vmax;
-  border-radius:0.5vmax;
+  display: inline-block;
+  background-color: white;
+  margin: 0px 0.2vmax;
+  border-radius: 0.5vmax;
   transition-duration: 0.1s;
 }
-#trickDetails{
+
+#trickDetails {
   margin-top: -12vmax;
-  width:15vmax;
-  z-index:99999;
+  width: 15vmax;
+  z-index: 99999;
 }
-.trick{
+
+.trick {
   margin-top: -3vmax;
 }
-.wonTrickCard{
-  height:5vmax;
+
+.wonTrickCard {
+  height: 5vmax;
   margin: 0px -0.8vmax;
-  background-color:white;
-  box-shadow: -0.7vmax 0.1vmax 0.7vmax -0.3vmax rgba(0,0,0,0.66);
-  border-radius:0.2vmax;
+  background-color: white;
+  box-shadow: -0.7vmax 0.1vmax 0.7vmax -0.3vmax rgba(0, 0, 0, 0.66);
+  border-radius: 0.2vmax;
 }
+
 .highlighted {
-  box-shadow:
-    inset 0 0 1vmin #fff,      /* inner */
-    inset 0.6vmin 0 2vmin #3d6,   /* inner left short */
-    inset -0.6vmin 0 2vmin #3d6,  /* inner right short */
-    inset 0.6vmin 0 3vmin #7EB2A8,  /* inner left broad */
-    inset -0.6vmin 0 3vmin #7EB2A8; /* inner right broad */
+  box-shadow: inset 0 0 1vmin #fff, /* inner */
+  inset 0.6vmin 0 2vmin #3d6, /* inner left short */
+  inset -0.6vmin 0 2vmin #3d6, /* inner right short */
+  inset 0.6vmin 0 3vmin #7EB2A8, /* inner left broad */
+  inset -0.6vmin 0 3vmin #7EB2A8;
+  /* inner right broad */
 }
+
 .myCards:hover {
   box-shadow: 0px 0px 1.5vmax red;
 }
-.otherCards, .otherCards > img  {
-  display:inline-block;
-  background-color:white;
+
+.otherCards, .otherCards>img {
+  display: inline-block;
+  background-color: white;
   height: 5vmax;
-  margin:0px -1vmax;
-  border-radius:0.2vmax;
+  margin: 0px -1vmax;
+  border-radius: 0.2vmax;
   box-sizing: border-box;
-  box-shadow: -0.9vmax 0.15vmax 0.9vmax -0.45vmax rgba(0,0,0,0.66);
+  box-shadow: -0.9vmax 0.15vmax 0.9vmax -0.45vmax rgba(0, 0, 0, 0.66);
   /* border: 0.2vmax solid #88f; */
 }
-.stuff > .otherCards > img {
-  height:4vmax;
+
+.stuff>.otherCards>img {
+  height: 4vmax;
 }
-#showCase > .otherCards {
-  margin:0px 0.5vmax;
+
+#showCase>.otherCards {
+  margin: 0px 0.5vmax;
   box-shadow: 0vmax 0vmax 0vmax 0vmax #000;
   position: relative;
 }
+
 #chat {
-  position:absolute;
-  bottom:0%;
-  right:0;
-  height:60%;
-  width:25%;
-  padding:0;
+  position: absolute;
+  bottom: 0%;
+  right: 0;
+  height: 60%;
+  width: 25%;
+  padding: 0;
   pointer-events: none;
-  display:none;
+  display: none;
 }
+
 #chatBox {
-  position:static;
+  position: static;
   display: flex;
   flex-direction: column-reverse;
-  height:100%;
-  width:100%;
-  color:black;
+  height: 100%;
+  width: 100%;
+  color: black;
 }
+
 #boxTop {
   pointer-events: auto;
-  position:relative;
-  background-color:#435078;
-  height:7%;
-  width:100%;
-  text-align:right;
-  color:white;
+  position: relative;
+  background-color: #435078;
+  height: 7%;
+  width: 100%;
+  text-align: right;
+  color: white;
   font-size: 100%;
   border: 0.5vmax double #ff3;
 }
+
 #boxBottom {
   pointer-events: auto;
-  display:none;
-  position:relative;
+  display: none;
+  position: relative;
   border: 0.2vmax solid black;
   background-color: white;
-  height:93%;
-  width:100%;
+  height: 93%;
+  width: 100%;
 }
-#msgBox{
+
+#msgBox {
   pointer-events: auto;
-  padding:1vmax;
+  padding: 1vmax;
   box-sizing: border-box;
-  position:absolute;
-  top:0;
-  height:80%;
-  display:block;
-  width:100%;
+  position: absolute;
+  top: 0;
+  height: 80%;
+  display: block;
+  width: 100%;
   overflow: scroll;
   overflow-x: hidden;
 }
+
 #txtBox {
   pointer-events: auto;
-  position:absolute;
-  bottom:0;
-  height:20%;
-  display:block;
-  width:100%;
-  text-align:center;
+  position: absolute;
+  bottom: 0;
+  height: 20%;
+  display: block;
+  width: 100%;
+  text-align: center;
 }
+
 #textArea {
   pointer-events: auto;
-  height:100%;
-  width:96%
+  height: 100%;
+  width: 96%
 }
+
 #boxTop>.closeBtn {
   pointer-events: auto;
-  display:inline-block;
-  height:100%;
-  padding:2%;
+  display: inline-block;
+  height: 100%;
+  padding: 2%;
   box-sizing: border-box;
 }
+
 .loading {
   font-size: 2.5vmax;
 }
+
 .loading:after {
   overflow: hidden;
   display: inline-block;
   vertical-align: bottom;
-  -webkit-animation: ellipsis steps(4,end) 900ms infinite;
-  animation: ellipsis steps(4,end) 900ms infinite;
-  content: "\2026"; /* ascii code for the ellipsis character */
+  -webkit-animation: ellipsis steps(4, end) 900ms infinite;
+  animation: ellipsis steps(4, end) 900ms infinite;
+  content: "\2026";
+  /* ascii code for the ellipsis character */
   width: 0px;
 }
 
