@@ -124,11 +124,12 @@ $(function () {
         console.log("show THINGSSSS");
         $("#tokenLegend").toggle();
     });
-    // $("#tokenLegend").click(function () {
+    $("#tokenLegend").click(function () {
     //     console.log("hide THINGSSSS");
         $("#tokenLegend").hide();
     });
     $("#tokenLegend").hide();
+    joinRoom();
     $('#drawTask').on('click', function () {
         if (taskDeck.length > 0) {
             taskDeck = getShuffled(taskDeck);
