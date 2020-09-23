@@ -174,10 +174,14 @@ function displayTrumpCard(trumpCard) {
   var cardRank = String(trumpCard.rank);
   var cardSuit = String(trumpCard.suit);
   var cardID = cardSuit + cardRank;
+
+
   var card = document.createElement("div");
   card.setAttribute("class", "trumpCard otherCards");
   card.setAttribute("id", 'trump' + cardID);
   $("#" + cardID + "_img").clone().show().appendTo(card);
+  
+  $("#" + cardID + "_img").addClass('isTrump');
   //card.addEventListener("click", playCard, true);
   $("#showCase").show();
   $("#showCase").append(card);

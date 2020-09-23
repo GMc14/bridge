@@ -27,7 +27,31 @@ body {
   top: 2vmax;
   z-index: 99999999999;
 }
+.token {
+  position: absolute;
+  z-index: 999999;
+  font-size: 0px;
+  top: 5.2vmax;
+  left: -1vmax;
+ }
+.token > img {
+  filter: drop-shadow(0.15vmax 0.15vmax 0 rgba(248, 255, 206, 0.5)) drop-shadow(-0.15vmax 0.15vmax 0 rgba(248, 255, 206, 0.5)) drop-shadow(0.15vmax -0.15vmax 0 rgba(248, 255, 206, 0.5)) drop-shadow(-0.15vmax -0.15vmax 0 rgba(248, 255, 206, 0.5));
+  width: 2vmax;
+}
 
+.isTrump {
+  box-shadow: inset 0 0 1vmin #fff, /* inner */
+  inset 0.6vmin 0 2vmin rgba(50, 212, 11,0.5), /* inner left short */
+  inset -0.6vmin 0 2vmin rgba(50, 212, 11,0.5), /* inner right short */
+  inset 0.6vmin 0 3vmin rgba(50, 212, 11,0.5), /* inner left broad */
+  inset -0.6vmin 0 3vmin rgba(50, 212, 11,0.5);
+}
+.assignments {
+  position: absolute;
+  top: 7.4vmax;
+  left: -1vmax;
+  text-shadow: 0 0 3px #FF0000, 0 0 15px #0000FF;
+}
 .trumpDrops {
   font-size: 1vmax;
   opacity: 0.9;
@@ -37,7 +61,7 @@ body {
 }
 
 .icnDrop {
-  top: 7.2vmax;
+  top: 9vmax;
 }
 
 .plyrDrop {
@@ -48,23 +72,7 @@ body {
   font-size: 4vmax;
 }
 
-.token {
-  position: absolute;
-  z-index: 999999;
-  width: 2vmax;
-  font-size: 0px;
-  top: 5.2vmax;
-  left: -1vmax;
- }
-.token > img {
-  filter: drop-shadow(0.15vmax 0.15vmax 0 rgba(248, 255, 206, 0.5)) drop-shadow(-0.15vmax 0.15vmax 0 rgba(248, 255, 206, 0.5)) drop-shadow(0.15vmax -0.15vmax 0 rgba(248, 255, 206, 0.5)) drop-shadow(-0.15vmax -0.15vmax 0 rgba(248, 255, 206, 0.5));
-}
-.assignments {
-  position: absolute;
-  top: 8.4vmax;
-  left: -1vmax;
-  text-shadow: 0 0 3px #FF0000, 0 0 15px #0000FF;
-}
+
 
 #bidOfRound {
   position: absolute;
