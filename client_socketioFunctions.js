@@ -628,7 +628,7 @@ function constructPlayArea() {
 
         var positionRelativeToCenter = j - ((gameConfig_playerCount) / 2);
         $(playerContainer).css({
-            "left": ((j - 1) * 80 / (gameConfig_playerCount - 1) + 19.5) + "vw",
+            "left": ((j - 1) * 90 / (gameConfig_playerCount - 1) + 15.5) + "vw",
             "top": "12vh",
             "transform": "rotate(" + positionRelativeToCenter * 15 + "deg) translateY(" + Math.abs(positionRelativeToCenter) * 4 + "vmax)"
         });
