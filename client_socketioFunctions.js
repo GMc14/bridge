@@ -2,22 +2,22 @@ var socketio = io.connect();
 var roomID;
 var xoob;
 //Meta
-var playerNickNames = ['', '', '', '','', '', '', ''];
-var playerColors = ['#004499','#770011','#666600','#116600','#440099','#883300','#006666','#660066'];
+var playerNickNames = ['', '', '', '', '', '', '', ''];
+var playerColors = ['#004499', '#770011', '#666600', '#116600', '#440099', '#883300', '#006666', '#660066'];
 
 //Game Config
 var gameConfig_playerCount = 3;
-var gameConfig_startCardsPerPlayer = -1;//-1==Deal All
+var gameConfig_startCardsPerPlayer = -1; //-1==Deal All
 var gameConfig_numberOfRounds = gameConfig_startCardsPerPlayer; //Plya all cards in hand
 
 var gameConfid_isCrew = true;
-var gameConfig_permaTrumpSuit = gameConfid_isCrew?"R":'';
-var crewBonusCards = new Array("R1","R2","R3",'R4');
-var bonusCards = gameConfid_isCrew?crewBonusCards:[];
-var crewMissions=[
-    "_->_", 
+var gameConfig_permaTrumpSuit = gameConfid_isCrew ? "R" : '';
+var crewBonusCards = new Array("R1", "R2", "R3", 'R4');
+var bonusCards = gameConfid_isCrew ? crewBonusCards : [];
+var crewMissions = [
+    "_->_",
     "_->_ & _->_",
-    "_->_ then _->_", 
+    "_->_ then _->_",
     "_->_ & _->_ & _->_",
     "_ must not win any tricks", //One player receives no tricks (Captain decides)
     "(_->_ then _->_) & _->_ & noone can communicate high/low/only (just show the card)",
@@ -74,8 +74,19 @@ var taskDeck = [];
 var handSizes = [];
 
 var suits = new Array("C", "D", "H", "S");
-var suitNames = {"C":"Clubs", "D":"Diamonds", "H":"Hearts", "S":"Spades", "R":"Rockets"}
-var suitColors= {"C":"Black", "S":"Black", "H":"Red", "D":"Red"}
+var suitNames = {
+    "C": "Clubs",
+    "D": "Diamonds",
+    "H": "Hearts",
+    "S": "Spades",
+    "R": "Rockets"
+}
+var suitColors = {
+    "C": "Black",
+    "S": "Black",
+    "H": "Red",
+    "D": "Red"
+}
 
 var standardRanks = new Array(2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14);
 var euchreRanks = new Array(9, 10, 11, 12, 13, 14);
@@ -83,7 +94,7 @@ var crewRanks = new Array(1, 2, 3, 4, 5, 6, 7, 8, 9);
 var crewStartCard = 'R4';
 var startPlayerCard = '';
 var ranks = standardRanks;
-if(gameConfig_isEuchre){
+if (gameConfig_isEuchre) {
     ranks = euchreRanks;
     gameConfig_startCardsPerPlayer = 5;
 } else if (gameConfid_isCrew) {
@@ -109,10 +120,21 @@ var roundNumber = 0;
 var handsNeeded;
 
 $(function () {
+    $("#tokenQmark").click(function () {
+        console.log("show THINGSSSS");
+        $("#tokenLegend").show();
+    });
+    $("#tokenLegend").click(function () {
+        console.log("hide THINGSSSS");
+        $("#tokenLegend").hide();
+    });
+    $("#tokenLegend").hide();
+
+    console.log("DO THINGSSSS");
     $('#drawTask').on('click', function () {
-        if(taskDeck.length > 0) {
+        if (taskDeck.length > 0) {
             taskDeck = getShuffled(taskDeck);
-            socketio.emit('drawTask',taskDeck.pop());
+            socketio.emit('drawTask', taskDeck.pop());
         } else {
             alert("No Tasks Available");
         }
@@ -155,10 +177,10 @@ $(function () {
         var nickname = data.nickname;
         var playerIndex = data.playerIndex;
         remainingPlayers = data.remainingPlayers;
-        
-        console.log("playerDataToClient---- >> playerIndex: "+playerIndex+"  >> nickname: "+nickname+"  >>  remainingPlayers: "+remainingPlayers);
-        $("#btnPlayer"+playerIndex).remove();
-        playerNickNames[playerIndex-1] = nickname;
+
+        console.log("playerDataToClient---- >> playerIndex: " + playerIndex + "  >> nickname: " + nickname + "  >>  remainingPlayers: " + remainingPlayers);
+        $("#btnPlayer" + playerIndex).remove();
+        playerNickNames[playerIndex - 1] = nickname;
     });
     socketio.on('leftInGame', function (nickname) {
         alert(nickname + " left the room. Kicking everybody out... ");
@@ -224,23 +246,29 @@ $(function () {
         }
     });
     socketio.on('cycleClientOrderIcon', function (data) {
-        console.log("--------------cycleClientOrderIcon----------------data.cardID "+data.cardID+",  data.icon: "+data.icon);
+        console.log("--------------cycleClientOrderIcon----------------data.cardID " + data.cardID + ",  data.icon: " + data.icon);
         setTrumpCardOrderIcon(data.cardID, data.icon);
     });
     socketio.on('cycleClientOrderAssignee', function (data) {
-        console.log("--------------cycleClientOrderAssignee----------------data.cardID "+data.cardID+",  data.player: "+data.player);
+        console.log("--------------cycleClientOrderAssignee----------------data.cardID " + data.cardID + ",  data.player: " + data.player);
         setTrumpCardAssignee(data.cardID, data.player);
     });
     socketio.on('dealToClients', function (data) {
-        xoob = data;  
-        console.log("--------------dealToClients---------------- "+JSON.stringify(data, null, 4));
-        console.log("--------------dealToClients---------------- playerNum: "+playerNum);
-
-        var myPIndex = Number(playerNum.slice(-1))-1;
+        xoob = data;
+        console.log("--------------dealToClients---------------- " + JSON.stringify(data, null, 4));
+        console.log("--------------dealToClients---------------- playerNum: " + playerNum);
+        $("#tokenQmark").click(function () {
+            $("#tokenLegend").show();
+        });
+        $("#tokenLegend").click(function () {
+            $("#tokenLegend").hide();
+        });
+        $("#tokenLegend").hide();
+        var myPIndex = Number(playerNum.slice(-1)) - 1;
         myHandOfCards = data.hands[myPIndex];
-        
-        for(var i = 0; i < data.hands.length; i++) {
-            handSizes[i]=data.hands[i].length;
+
+        for (var i = 0; i < data.hands.length; i++) {
+            handSizes[i] = data.hands[i].length;
         }
         sortHand();
         displayCards();
@@ -255,74 +283,74 @@ $(function () {
                 alert("Your Turn to Bid");
             }
         } else {
-            if(data.trumpCard){
-                console.log("------- Trump Card: "+data.trumpCard);
+            if (data.trumpCard) {
+                console.log("------- Trump Card: " + data.trumpCard);
                 displayTrumpCard(data.trumpCard)
                 trumpSuit = data.trumpCard.suit;
-            }  else {
+            } else {
                 trumpSuit = gameConfig_permaTrumpSuit;
             }
-            
-            if(startPlayerCard) {
-                console.log("------- startPlayerCard how could this go wrong?: "+startPlayerCard);
-                for(var i = 0; i < data.hands.length; i++) {
-                    for(var j = 0; j < data.hands[i].length; j++) {
-                        console.log("------- startPlayerCard i: "+i+"  j:" + j);
-                        if(data.hands[i][j].suit == startPlayerCard.charAt(0) &&  data.hands[i][j].rank == startPlayerCard.charAt(1)){
-                            
-                            currentPlayer="Player"+Number(i+1);
-                            
-                            console.log("------- FOUND ONE: "+i+" | "+ currentPlayer);
-                            j=data.hands[i].length;
-                            i=data.hands.length;
+
+            if (startPlayerCard) {
+                console.log("------- startPlayerCard how could this go wrong?: " + startPlayerCard);
+                for (var i = 0; i < data.hands.length; i++) {
+                    for (var j = 0; j < data.hands[i].length; j++) {
+                        console.log("------- startPlayerCard i: " + i + "  j:" + j);
+                        if (data.hands[i][j].suit == startPlayerCard.charAt(0) && data.hands[i][j].rank == startPlayerCard.charAt(1)) {
+
+                            currentPlayer = "Player" + Number(i + 1);
+
+                            console.log("------- FOUND ONE: " + i + " | " + currentPlayer);
+                            j = data.hands[i].length;
+                            i = data.hands.length;
                             break;
-                        }    
+                        }
                     }
                 }
             } else {
                 currentPlayer = nextPlayer(dealer);
             }
             lead = currentPlayer;
-            
+
             if (playerNum == currentPlayer) {
                 $("#turnIndicator").text("Your lead!");
                 $("#myHand").addClass("highlighted");
             } else {
-                $("#turnIndicator").text(getNicknameForPlayer(lead) +"  leads");
+                $("#turnIndicator").text(getNicknameForPlayer(lead) + "  leads");
                 $(".highlighted").removeClass("highlighted");
             }
             $('#bidOfRound').show();
         }
-        console.log("--------------dealt...ToClients---------------- playerNum: "+playerNum);
+        console.log("--------------dealt...ToClients---------------- playerNum: " + playerNum);
     });
     socketio.on('cardPlayed', function (data) {
         var player = data.player;
         var card = data.card;
-        console.log("socketFunctions -> cardPayed card: "+card+"  >>  player: "+player+"  >> nextPlayer: "+nextPlayer(playerNum)+"  >>  prevPlayer: "+prevPlayer(playerNum));
+        console.log("socketFunctions -> cardPayed card: " + card + "  >>  player: " + player + "  >> nextPlayer: " + nextPlayer(playerNum) + "  >>  prevPlayer: " + prevPlayer(playerNum));
         if (playerNum != lead && player == lead) {
-            console.log("ssocketFunctions -> cardPLayed EMPTY"+playerNum+"  :  "+player+"  |  "+lead);
+            console.log("ssocketFunctions -> cardPLayed EMPTY" + playerNum + "  :  " + player + "  |  " + lead);
             $(".plays").empty();
         } else {
-            console.log("ssocketFunctions -> cardPLayed "+playerNum+"  :  "+player+"  |  "+lead);
+            console.log("ssocketFunctions -> cardPLayed " + playerNum + "  :  " + player + "  |  " + lead);
         }
 
         othersPlayed(player, card);
         if (currentPlayer == lead) {
             leadSuit = card.charAt(0);
-            if(gameConfig_euchreBowers && card.substr(1) == "11" && suitColors[leadSuit] == suitColors[trumpSuit]){
+            if (gameConfig_euchreBowers && card.substr(1) == "11" && suitColors[leadSuit] == suitColors[trumpSuit]) {
                 leadSuit = trumpSuit;
-            } 
+            }
         }
         if (nextPlayer(currentPlayer) == lead) {
             resolveTrick();
         }
 
         currentPlayer = nextPlayer(currentPlayer);
-        if(currentPlayer == playerNum){
+        if (currentPlayer == playerNum) {
             $("#turnIndicator").text("Your Turn");
             $("#myHand").addClass("highlighted");
         } else {
-            $("#turnIndicator").text(getNicknameForPlayer(currentPlayer)+"'s Turn");
+            $("#turnIndicator").text(getNicknameForPlayer(currentPlayer) + "'s Turn");
             $(".highlighted").removeClass("highlighted");
         }
     });
@@ -334,27 +362,27 @@ $(function () {
             $("#turnIndicator").text("Your lead!");
             $("#myHand").addClass("highlighted");
         } else {
-            $("#turnIndicator").text(getNicknameForPlayer(lead) +"  leads");
+            $("#turnIndicator").text(getNicknameForPlayer(lead) + "  leads");
             $(".highlighted").removeClass("highlighted");
         }
-        console.log("[][][][][][][] winner of round: "+trickWinner+" cards:" + trickCards);
+        console.log("[][][][][][][] winner of round: " + trickWinner + " cards:" + trickCards);
         var winnerIndex = inversePlayerIdMap[trickWinner];
-        if(winnerIndex) {
-            console.log("[][][][][][][] put trick in... loc"+winnerIndex+"stuff");
-            addWin("loc"+winnerIndex+"stuff", trickCards);
-            var winsId = "loc"+winnerIndex+"wins";
-            var currentWins = Number($("#"+winsId).text());
-            console.log("OOOOOOOOOOOOOOOOOOOOO}}}}}}}}}}}}  currentWins: "+currentWins);
-            addWinText(winsId, currentWins+1);
+        if (winnerIndex) {
+            console.log("[][][][][][][] put trick in... loc" + winnerIndex + "stuff");
+            addWin("loc" + winnerIndex + "stuff", trickCards);
+            var winsId = "loc" + winnerIndex + "wins";
+            var currentWins = Number($("#" + winsId).text());
+            console.log("OOOOOOOOOOOOOOOOOOOOO}}}}}}}}}}}}  currentWins: " + currentWins);
+            addWinText(winsId, currentWins + 1);
         } else {
             console.log("[][][][][][][] no bueno winner mustBeMe");
         }
-        if (gameConfig_isBridge && gameConfig_playerCount == 4 && trickWinner == nextPlayer(nextPlayer(playerNum))){
+        if (gameConfig_isBridge && gameConfig_playerCount == 4 && trickWinner == nextPlayer(nextPlayer(playerNum))) {
             tricksWon++;
         }
         if (roundNumber == gameConfig_numberOfRounds) {
             calculateWinner();
-        } else if (gameConfig_numberOfRounds == -1){
+        } else if (gameConfig_numberOfRounds == -1) {
             //TODO: check it any players still have card 
         }
     });
@@ -372,19 +400,19 @@ $(function () {
 function nextPlayer(currPlayer) {
     var currNumber = Number(currPlayer.slice(-1));
     currNumber += 1;
-    if(currNumber>gameConfig_playerCount){
+    if (currNumber > gameConfig_playerCount) {
         currNumber = 1;
     }
-    return "Player"+currNumber;
+    return "Player" + currNumber;
 }
 
 function prevPlayer(currPlayer) {
     var currNumber = Number(currPlayer.slice(-1));
     currNumber -= 1;
-    if(currNumber<1){
+    if (currNumber < 1) {
         currNumber = gameConfig_playerCount;
     }
-    return "Player"+currNumber;
+    return "Player" + currNumber;
 }
 
 function clearSetupModule() {
@@ -437,14 +465,14 @@ function playerModule() {
     var span1 = document.createElement("span");
     span1.appendChild(document.createTextNode("NICKNAME:"));
 
-    var teamInfo='';
-    if(gameConfig_isBridge|| gameConfig_hasTeams){
+    var teamInfo = '';
+    if (gameConfig_isBridge || gameConfig_hasTeams) {
         teamInfo = "(TEAMS: 1 & 3 and 2 & 4)"
     }
     var span2 = document.createElement("span");
-    span2.appendChild(document.createTextNode("SELECT PLAYER: "+teamInfo));
+    span2.appendChild(document.createTextNode("SELECT PLAYER: " + teamInfo));
     playerSetup.appendChild(span2);
-    
+
     playerSetup.appendChild(span1);
     playerSetup.appendChild(document.createElement("br"));
     playerSetup.appendChild(nickname);
@@ -454,10 +482,10 @@ function playerModule() {
     for (var j = 1; j <= gameConfig_playerCount; j++) {
         var currPlayer = document.createElement("input");
         currPlayer.setAttribute("type", "button");
-        currPlayer.setAttribute("id", "btnPlayer"+j);
+        currPlayer.setAttribute("id", "btnPlayer" + j);
         currPlayer.setAttribute("data-player-number", j);
         currPlayer.setAttribute("class", "playerBtns");
-        currPlayer.setAttribute("value", "Player"+j);
+        currPlayer.setAttribute("value", "Player" + j);
 
         playerSetup.appendChild(document.createElement("br"));
         playerSetup.appendChild(currPlayer);
@@ -472,7 +500,7 @@ function playerSelect() {
         playerNum = $(this).val();
         nickname = String($("#nickname").val());
         playerIndex = Number($(this).attr("data-player-number"));
-        console.log("playerSelect >> playerNum: "+playerNum+"  >> nickname: "+nickname+"  >>  playerIndex: "+playerIndex);
+        console.log("playerSelect >> playerNum: " + playerNum + "  >> nickname: " + nickname + "  >>  playerIndex: " + playerIndex);
         if (nickname == '' || playerNickNames.indexOf(nickname) > -1) {
             alert('Pick a unique Nickname!');
         } else {
@@ -482,7 +510,7 @@ function playerSelect() {
             boldNames.appendChild(document.createTextNode(playerNum + ': ' + nickname));
             $("#myName").append(boldNames);
             remainingPlayers--;
-            
+
             console.log("--------------playerBtns emit selPlayer...----------------");
             socketio.emit('selPlayer', {
                 nickname: nickname,
@@ -492,17 +520,19 @@ function playerSelect() {
                 remainingPlayers: remainingPlayers
             });
             //TODO: show chat if want to use it $('#chat').show();
-            playerColor = playerColors[playerIndex-1];
-            
+            playerColor = playerColors[playerIndex - 1];
+
         }
     });
 }
+
 function addWinText(who, wins) {
-    $("#"+who).text(wins);
+    $("#" + who).text(wins);
 }
 var hovering = false;
+
 function addWin(who, cards) {
-    console.log("[][][][][][][] addWin: "+who+" cards:" + cards);
+    console.log("[][][][][][][] addWin: " + who + " cards:" + cards);
     var card = document.createElement("div");
     card.setAttribute('class', 'otherCards');
     card.setAttribute('data-cards', cards);
@@ -510,20 +540,20 @@ function addWin(who, cards) {
     var stuff = $('#' + who);
     $(stuff).append(card);
     $(stuff).hover(
-        function() {
-            if(!hovering){
+        function () {
+            if (!hovering) {
                 hovering = true;
                 $($(this).children()[0]).attr("data-cards").split(',');
                 console.log("stuff hover...");
                 var trickDetailsDiv = $("<div id='trickDetails'></div>");
-                $(this).children().each(function(){
-                    console.log("Stuff Child:  "+$(this).attr("data-cards"));
-                    if($(this).attr("data-cards")){
+                $(this).children().each(function () {
+                    console.log("Stuff Child:  " + $(this).attr("data-cards"));
+                    if ($(this).attr("data-cards")) {
                         var cardsToDraw = $(this).attr("data-cards").split(',');
                         var trick = $("<div class='trick'></div>");
-                        for(var i = 0; i < cardsToDraw.length; i++){
+                        for (var i = 0; i < cardsToDraw.length; i++) {
                             var img_src = "/card_imgs/" + cardsToDraw[i] + ".png";
-                            $(trick).append("<img class='wonTrickCard' src='"+img_src+"'/>");
+                            $(trick).append("<img class='wonTrickCard' src='" + img_src + "'/>");
                         }
                         $(trickDetailsDiv).append(trick);
                     }
@@ -531,12 +561,13 @@ function addWin(who, cards) {
                 $(this).attr("data-cards")
                 $(this).append(trickDetailsDiv);
             }
-        }, function() {
+        },
+        function () {
             console.log("stuff UNhover...");
-          $("#trickDetails").remove();
-          hovering=false;
+            $("#trickDetails").remove();
+            hovering = false;
         }
-      );
+    );
 }
 
 function calculateWinner() {
@@ -577,16 +608,17 @@ function scrollToBottom() {
 }
 var playerIdMap = [];
 var inversePlayerIdMap = [];
+
 function constructPlayArea() {
     var clientNumber = Number(playerNum.slice(-1));
     for (var j = 1; j < gameConfig_playerCount; j++) {
-        var stuff = $('<div alt="loc'+j+'stuff" id="loc'+j+'stuff" class="stuff"></div>');
-        var plays = $('<div alt="loc'+j+'play" id="loc'+j+'play" class="plays"></div>');
-        var name = $('<div alt="loc'+j+'name" id="loc'+j+'name" class="name"></div>');
-        var winCounter = $('<div alt="loc'+j+'wins" id="loc'+j+'wins" class="winCount">0</div>');
-        var playerHand = $('<div alt="loc'+j+'Hand" class="otherPlayerHand" id="loc'+j+'Hand" ></div>');
-        var playerContainer = $("<div alt='loc"+j+"Container' id='loc"+j+"Container' class='locationContainer'></div>");
-        
+        var stuff = $('<div alt="loc' + j + 'stuff" id="loc' + j + 'stuff" class="stuff"></div>');
+        var plays = $('<div alt="loc' + j + 'play" id="loc' + j + 'play" class="plays"></div>');
+        var name = $('<div alt="loc' + j + 'name" id="loc' + j + 'name" class="name"></div>');
+        var winCounter = $('<div alt="loc' + j + 'wins" id="loc' + j + 'wins" class="winCount">0</div>');
+        var playerHand = $('<div alt="loc' + j + 'Hand" class="otherPlayerHand" id="loc' + j + 'Hand" ></div>');
+        var playerContainer = $("<div alt='loc" + j + "Container' id='loc" + j + "Container' class='locationContainer'></div>");
+
         $(playerContainer).append(playerHand);
         $(playerContainer).append(stuff);
         $(playerContainer).append(plays);
@@ -595,33 +627,33 @@ function constructPlayArea() {
 
         $("#gameBoard").append(playerContainer);
 
-        var positionRelativeToCenter = j - ((gameConfig_playerCount)/2);
-        $(playerContainer).css({ 
-            "left": ((j-1)*80/(gameConfig_playerCount-1)+19.5)+"vw", 
-            "top": "12vh", 
-            "transform": "rotate("+positionRelativeToCenter*15+"deg) translateY("+Math.abs(positionRelativeToCenter)*4+"vmax)" 
+        var positionRelativeToCenter = j - ((gameConfig_playerCount) / 2);
+        $(playerContainer).css({
+            "left": ((j - 1) * 80 / (gameConfig_playerCount - 1) + 19.5) + "vw",
+            "top": "12vh",
+            "transform": "rotate(" + positionRelativeToCenter * 15 + "deg) translateY(" + Math.abs(positionRelativeToCenter) * 4 + "vmax)"
         });
 
-        var pNumber = Number((clientNumber+j-1) % gameConfig_playerCount)+1;
-        playerIdMap[j] = 'Player'+pNumber;
-        inversePlayerIdMap['Player'+pNumber] = j;
-        $("#loc"+j+"name").html('Player'+pNumber+': ' + playerNickNames[pNumber-1]);
+        var pNumber = Number((clientNumber + j - 1) % gameConfig_playerCount) + 1;
+        playerIdMap[j] = 'Player' + pNumber;
+        inversePlayerIdMap['Player' + pNumber] = j;
+        $("#loc" + j + "name").html('Player' + pNumber + ': ' + playerNickNames[pNumber - 1]);
     }
 }
 
 function rotate($el, degrees) {
     $el.css({
-  '-webkit-transform' : 'rotate('+degrees+'deg)',
-     '-moz-transform' : 'rotate('+degrees+'deg)',  
-      '-ms-transform' : 'rotate('+degrees+'deg)',  
-       '-o-transform' : 'rotate('+degrees+'deg)',  
-          'transform' : 'rotate('+degrees+'deg)',  
-               'zoom' : 1
+        '-webkit-transform': 'rotate(' + degrees + 'deg)',
+        '-moz-transform': 'rotate(' + degrees + 'deg)',
+        '-ms-transform': 'rotate(' + degrees + 'deg)',
+        '-o-transform': 'rotate(' + degrees + 'deg)',
+        'transform': 'rotate(' + degrees + 'deg)',
+        'zoom': 1
 
     });
 }
 
-function getNicknameForPlayer(player){
-    var myPIndex = Number(player.slice(-1))-1;
+function getNicknameForPlayer(player) {
+    var myPIndex = Number(player.slice(-1)) - 1;
     return playerNickNames[myPIndex];
 }

@@ -3,7 +3,7 @@ function Card(suit, rank) {
   this.suit = suit;
   this.rank = rank;
 }
-$("#tokenLegend").hide();
+
 function startGame() {
   if (playerNum == dealer) {
     console.log("--------------startGame-------I'm the dealer---------" + playerNum + " == " + dealer);
@@ -165,12 +165,6 @@ function setTrumpCardAssignee(cardID, player) {
 
 
 
-$("#tokenQmark").click(function(){
-  $("#tokenLegend").show();
-});
-$("#tokenLegend").click(function(){
-  $("#tokenLegend").hide();
-});
 
 var tokenOptions = ['x', '1', '2', '3', '4', '5', 'i', 'ii', 'iii', 'iiii', 'O','0'];
 

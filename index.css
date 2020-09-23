@@ -46,18 +46,15 @@ body {
   z-index:999999;
 }
 .token{
-  width: 1.2vmax;
+  width: 2vmax;
   font-size: 0px;filter: 
-  drop-shadow(0.5vmax 0.5vmax 0 rgb(248, 255, 206))
-  drop-shadow(-0.5vmax 0.5vmax 0 rgb(248, 255, 206))
-  drop-shadow(0.5vmax -0.5vmax 0 rgb(248, 255, 206))
-  drop-shadow(-0.5vmax -0.5vmax 0 rgb(248, 255, 206));
+  drop-shadow(0.15vmax 0.15vmax 0 rgba(248, 255, 206,0.5))
+  drop-shadow(-0.15vmax 0.15vmax 0 rgba(248, 255, 206,0.5))
+  drop-shadow(0.15vmax -0.15vmax 0 rgba(248, 255, 206,0.5))
+  drop-shadow(-0.15vmax -0.15vmax 0 rgba(248, 255, 206,0.5));
 }
 .assignments {
-  drop-shadow(0.5vmax 0.5vmax 0 rgb(240, 50, 60))
-  drop-shadow(-0.5vmax 0.5vmax 0 rgb(240, 50, 60))
-  drop-shadow(0.5vmax -0.5vmax 0 rgb(240, 50, 60))
-  drop-shadow(-0.5vmax -0.5vmax 0 rgb(240, 50, 60));
+  text-shadow: 0 0 3px #FF0000, 0 0 15px #0000FF;
 }
 .trumpBottom{
   width: 3.333vmax;
