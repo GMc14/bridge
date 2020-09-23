@@ -1,4 +1,3 @@
-
 function Card(suit, rank) {
   this.suit = suit;
   this.rank = rank;
@@ -159,17 +158,18 @@ function setTrumpCardOrderIcon(cardID, icon) {
 }
 
 function setTrumpCardAssignee(cardID, player) {
-  console.log(">>>>>>>>>>>>> setTrumpCardAssignee " + cardID+"  :  "+player);
+  console.log(">>>>>>>>>>>>> setTrumpCardAssignee " + cardID + "  :  " + player);
   $("#assignment" + cardID).text(player);
 }
 
 
 
 
-var tokenOptions = ['x', '1', '2', '3', '4', '5', 'i', 'ii', 'iii', 'iiii', 'O','0'];
+var tokenOptions = ['x', '1', '2', '3', '4', '5', 'i', 'ii', 'iii', 'iiii', 'O', '0'];
 
 var playerOptions = ['', 'G', 'A', 'E'];
 var currentTrumpCards = [];
+
 function displayTrumpCard(trumpCard) {
   var cardRank = String(trumpCard.rank);
   var cardSuit = String(trumpCard.suit);
@@ -180,35 +180,35 @@ function displayTrumpCard(trumpCard) {
   card.setAttribute("class", "trumpCard otherCards");
   card.setAttribute("id", 'trump' + cardID);
   $("#" + cardID + "_img").clone().show().appendTo(card);
-  
+
   $("#" + cardID + "_img").addClass('isTrump');
   //card.addEventListener("click", playCard, true);
   $("#showCase").show();
   $("#showCase").append(card);
-  $(card).append("<div id='token"+cardID+"' class='token'><img  src=''/></div>");
-  $(card).append("<span id='assignment"+cardID+"' class='assignments'></span>");
+  $(card).append("<div id='token" + cardID + "' class='token'><img  src=''/></div>");
+  $(card).append("<span id='assignment" + cardID + "' class='assignments'></span>");
 
   if (playerNum == dealer) {
-    $(card).append("<select class='trumpDrops icnDrop' id='drpIcon"+cardID+"' name='dropdownIcon' size=1>"); 
-    $(card).append("<select class='trumpDrops plyrDrop' id='drpPlyr"+cardID+"' name='dropdownIcon' size=1>");
-    $.each(tokenOptions, function(){
-      $("#drpIcon"+cardID).append('<option value="'+this+'">'+this+'</option>');
+    $(card).append("<select class='trumpDrops icnDrop' id='drpIcon" + cardID + "' name='dropdownIcon' size=1>");
+    $(card).append("<select class='trumpDrops plyrDrop' id='drpPlyr" + cardID + "' name='dropdownIcon' size=1>");
+    $.each(tokenOptions, function () {
+      $("#drpIcon" + cardID).append('<option value="' + this + '">' + this + '</option>');
     });
-    $.each(playerOptions, function(){
-      $("#drpPlyr"+cardID).append('<option value="'+this+'">'+this+'</option>');
+    $.each(playerOptions, function () {
+      $("#drpPlyr" + cardID).append('<option value="' + this + '">' + this + '</option>');
     });
-    $("#drpIcon"+cardID).change(function () {
+    $("#drpIcon" + cardID).change(function () {
 
-      console.log(">>>>>>>>>>>>> cycleOrderIcon selected ---------------- cardID:"+cardID+";;" + $(this).val());
+      console.log(">>>>>>>>>>>>> cycleOrderIcon selected ---------------- cardID:" + cardID + ";;" + $(this).val());
       socketio.emit('cycleOrderIcon', {
         cardID: cardID,
         roomID: roomID,
         icon: $(this).val()
       });
     });
-    $("#drpPlyr"+cardID).change(function () {
+    $("#drpPlyr" + cardID).change(function () {
 
-      console.log(">>>>>>>>>>>>>cycleAssignee selected ---------------- cardID:"+cardID+";;" + $(this).val());
+      console.log(">>>>>>>>>>>>>cycleAssignee selected ---------------- cardID:" + cardID + ";;" + $(this).val());
       socketio.emit('cycleAssignee', {
         cardID: cardID,
         roomID: roomID,
@@ -219,7 +219,7 @@ function displayTrumpCard(trumpCard) {
 }
 
 function displayCards() {
-  currentTrumpCards=[];
+  currentTrumpCards = [];
   console.log(">>>>>>>>>>>>>displayCards----------------");
   for (var j = 1; j < gameConfig_playerCount; j++) {
     displayOtherCards(j, handSizes[j - 1]);
@@ -280,8 +280,8 @@ function playCard() {
   }
 }
 
-function isATrumpCard(card){
-  console.log("^^^^^^^^^^^^ isATrumpCard: " + card + " in:" + JSON.stringify(currentTrumpCards)+"  found at: "+jQuery.inArray(card, currentTrumpCards)+" includes?:"+currentTrumpCards.includes(card));
+function isATrumpCard(card) {
+  console.log("^^^^^^^^^^^^ isATrumpCard: " + card + " in:" + JSON.stringify(currentTrumpCards) + "  found at: " + jQuery.inArray(card, currentTrumpCards) + " includes?:" + currentTrumpCards.includes(card));
   return currentTrumpCards.includes(card);
 }
 
@@ -293,11 +293,10 @@ function othersPlayed(player, card) {
 
   $("#loc" + playerIndex + "Hand").find(".otherCards").first().remove();
 
-  if(isATrumpCard(card)){
-    $("#" + card + "_img").addClass('isTrump');
-  }
-  var card = $("#" + card + "_img").attr("class", "myCards").clone().show();
-  
+  var cardObj = $("#" + card + "_img").attr("class", "myCards").clone().show();
 
-  $("#loc" + playerIndex + "play").append(card);
+  if (isATrumpCard(card)) {
+    $(cardObj).addClass('isTrump');
+  }
+  $("#loc" + playerIndex + "play").append(cardObj);
 }

@@ -122,15 +122,13 @@ var handsNeeded;
 $(function () {
     $("#tokenQmark").click(function () {
         console.log("show THINGSSSS");
-        $("#tokenLegend").show();
+        $("#tokenLegend").toggle();
     });
-    $("#tokenLegend").click(function () {
-        console.log("hide THINGSSSS");
+    // $("#tokenLegend").click(function () {
+    //     console.log("hide THINGSSSS");
         $("#tokenLegend").hide();
     });
     $("#tokenLegend").hide();
-
-    console.log("DO THINGSSSS");
     $('#drawTask').on('click', function () {
         if (taskDeck.length > 0) {
             taskDeck = getShuffled(taskDeck);
