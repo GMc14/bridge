@@ -96,7 +96,7 @@ io.sockets.on('connection', function (socket) {
   });  
   socket.on('cycleAssignee', function (data) {
     io.sockets.to(data.roomID).emit('cycleClientOrderAssignee', {
-      hands: data.cardID,
+      cardID: data.cardID,
       player: data.player
     });
   });

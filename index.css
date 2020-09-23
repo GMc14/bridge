@@ -22,7 +22,7 @@ body {
 }
 .trumpDrops{
   font-size: 1vmax;
-  opacity: 0.5;
+  opacity: 0.8;
 }
 
 #roomID {
@@ -31,7 +31,6 @@ body {
 .trumpTop{
   width: 3.333vmax;
   height: 2.5vmax;
-  background-color: rgba(225, 255, 225, 0.33);
   top: 0px;
   left: -1vmax;
   position: absolute;
@@ -44,7 +43,6 @@ body {
 .trumpBottom{
   width: 3.333vmax;
   height: 2.5vmax;
-  background-color: rgba(255, 225, 225, 0.33);
   top: 2.5vmax;
   left: -1vmax;
   position: absolute;

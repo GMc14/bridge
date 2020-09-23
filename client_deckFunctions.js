@@ -189,7 +189,7 @@ function displayTrumpCard(trumpCard) {
     });
     $("#drpIcon"+cardID).change(function () {
 
-      console.log(">>>>>>>>>>>>> cycleOrderIcon selected ---------------- " + $(this).val());
+      console.log(">>>>>>>>>>>>> cycleOrderIcon selected ---------------- cardID:"+cardID+";;" + $(this).val());
       socketio.emit('cycleOrderIcon', {
         cardID: cardID,
         roomID: roomID,
@@ -198,7 +198,7 @@ function displayTrumpCard(trumpCard) {
     });
     $("#drpPlyr"+cardID).change(function () {
 
-      console.log(">>>>>>>>>>>>>cycleAssignee selected ---------------- " + $(this).val());
+      console.log(">>>>>>>>>>>>>cycleAssignee selected ---------------- cardID:"+cardID+";;" + $(this).val());
       socketio.emit('cycleAssignee', {
         cardID: cardID,
         roomID: roomID,
