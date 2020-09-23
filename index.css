@@ -40,19 +40,29 @@ body {
 .trumpTop{
   width: 3.333vmax;
   height: 2.5vmax;
-  top: 0px;
+  top: 5vmax;
   left: -1vmax;
   position: absolute;
   z-index:999999;
 }
 .token{
   width: 1.2vmax;
-  font-size: 0px;
+  font-size: 0px;filter: 
+  drop-shadow(0.5vmax 0.5vmax 0 rgb(248, 255, 206))
+  drop-shadow(-0.5vmax 0.5vmax 0 rgb(248, 255, 206))
+  drop-shadow(0.5vmax -0.5vmax 0 rgb(248, 255, 206))
+  drop-shadow(-0.5vmax -0.5vmax 0 rgb(248, 255, 206));
+}
+.assignments {
+  drop-shadow(0.5vmax 0.5vmax 0 rgb(240, 50, 60))
+  drop-shadow(-0.5vmax 0.5vmax 0 rgb(240, 50, 60))
+  drop-shadow(0.5vmax -0.5vmax 0 rgb(240, 50, 60))
+  drop-shadow(-0.5vmax -0.5vmax 0 rgb(240, 50, 60));
 }
 .trumpBottom{
   width: 3.333vmax;
   height: 2.5vmax;
-  top: 2.5vmax;
+  top: 6.5vmax;
   left: -1vmax;
   position: absolute;
   z-index:999999;

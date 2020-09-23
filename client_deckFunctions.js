@@ -188,7 +188,7 @@ function displayTrumpCard(trumpCard) {
   $("#showCase").show();
   $("#showCase").append(card);
   $(card).append("<div class='trumpTop' id='trumpTop"+cardID+"'><img class='token' src=''/></div>");
-  $(card).append("<div class='trumpBottom' id='trumpBottom"+cardID+"'><span></span></div>");
+  $(card).append("<div class='trumpBottom' id='trumpBottom"+cardID+"'><span class='assignments'></span></div>");
 
   if (playerNum == dealer) {
     $("#trumpTop"+cardID).append("<select class='trumpDrops' id='drpIcon"+cardID+"' name='dropdownIcon' size=1>"); 
