@@ -185,7 +185,7 @@ function displayTrumpCard(trumpCard) {
   $(card).append("<div class='trumpBottom' id='trumpBottom"+cardID+"'><span class='assignments'></span></div>");
 
   if (playerNum == dealer) {
-    $("#trumpTop"+cardID).append("<select class='trumpDrops' id='drpIcon"+cardID+"' name='dropdownIcon' size=1>"); 
+    $("#trumpTop"+cardID).prepend("<select class='trumpDrops' id='drpIcon"+cardID+"' name='dropdownIcon' size=1>"); 
     $("#trumpBottom"+cardID).append("<select class='trumpDrops' id='drpPlyr"+cardID+"' name='dropdownIcon' size=1>");
     $.each(tokenOptions, function(){
       $("#drpIcon"+cardID).append('<option value="'+this+'">'+this+'</option>');
