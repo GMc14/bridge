@@ -174,7 +174,7 @@ function displayTrumpCard(trumpCard) {
   var cardRank = String(trumpCard.rank);
   var cardSuit = String(trumpCard.suit);
   var cardID = cardSuit + cardRank;
-  currentTrumpCards.push(cardId);
+  currentTrumpCards.push(cardID);
 
   var card = document.createElement("div");
   card.setAttribute("class", "trumpCard otherCards");
