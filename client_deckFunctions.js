@@ -176,6 +176,7 @@ function displayTrumpCard(trumpCard) {
       console.log(">>>>>>>>>>>>>Card trumpTop EMit----------------");
         socketio.emit('cycleOrderIcon', {
           cardID: cardID,
+          roomID: roomID,
           icon: '1'
       });
     }
@@ -187,6 +188,7 @@ function displayTrumpCard(trumpCard) {
       console.log(">>>>>>>>>>>>>Card trumpBottom EMit----------------");
         socketio.emit('cycleAssignee', {
           cardID: cardID,
+          roomID: roomID,
           player: 'Adam'
       });
     }
