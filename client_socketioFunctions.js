@@ -73,12 +73,12 @@ var deck = [];
 var taskDeck = [];
 var handSizes = [];
 
-var suits = new Array("C", "D", "H", "S");
+var suits = new Array("C", "D", "S", "H");
 var suitNames = {
     "C": "Clubs",
     "D": "Diamonds",
-    "H": "Hearts",
     "S": "Spades",
+    "H": "Hearts",
     "R": "Rockets"
 }
 var suitColors = {
@@ -142,6 +142,7 @@ $(function () {
         socketio.emit('hideTasks');
     });
     $('#restartGame').on('click', function () {
+        console.log("[][][][][][][][][][]Need to ClearTrumpHighlights here?[][][][][][][][][][][]");
         socketio.emit('restartGame');
     });
     $("#roomForm").on('submit', function (e) {
@@ -198,6 +199,9 @@ $(function () {
         $('#bidOfRound').hide();
         $('.winCount').text(0);
         $('td').css('background-color', 'transparent');
+        tricksWon = 0;
+        currentTrumpCards = [];
+        $(".isTrump").removeClass("isTrump");
 
         startGame();
     });
