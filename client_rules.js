@@ -1,27 +1,28 @@
 function confirmLegal(cardID) {
-  if (!checkLegal) {
+  if (!isFollowingSuit(cardID)) {
     for (var i = 0; i < myHandOfCards.length; i++) {
       if (String(myHandOfCards[i].suit) == leadSuit) {
         alert("Must Follow Suit! " + suitNames[leadSuit] + " was lead.");
-        console.log("GMcCards-rules.js-checkLegal-got something els in hand");
+        console.log("GMcCards-rules.js-confirmLegal-got something els in hand");
         return false;
       }
     }
   }
+  return true;
 }
 
-function checkLegal(cardID) {
-  console.log("GMcCards-rules.js-checkLegal-#0000");
+function isFollowingSuit(cardID) {
+  console.log("GMcCards-rules.js-isFollowingSuit-#0000");
   var cardSuit = cardID.charAt(0);
   if (gameConfig_euchreBowers && cardID.substr(1) == "11" && suitColors[cardSuit] == suitColors[leadSuit]) {
     cardSuit = leadSuit;
   }
   if (cardID.charAt(0) == leadSuit) {
-    console.log("GMcCards-rules.js-checkLegal-matches the lead suit");
+    console.log("GMcCards-rules.js-isFollowingSuit-matches the lead suit");
     return true;
   } else {
-    console.log("GMcCards-rules.js-checkLegal-Seems legit");
-    return true;
+    console.log("GMcCards-rules.js-isFollowingSuit-Seems legit");
+    return false;
   }
 }
 
