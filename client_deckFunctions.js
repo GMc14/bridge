@@ -245,7 +245,18 @@ function displayCards() {
   }
   console.log("--------------displayCards>>>>>>>>>>>>>");
 }
-
+function highlightPlayable() {
+  for (var i = 0; i < myHandOfCards.length; i++) {
+      if (String(myHandOfCards[i].suit) == leadSuit) {
+          var cardRank = String(myHandOfCards[i].rank);
+          var cardSuit = String(myHandOfCards[i].suit);
+          var cardID = cardSuit + cardRank;
+          var encodedI = i + 10;
+          // card.setAttribute("id", encodedI + cardID);
+          $("#" + encodedI + cardID).addClass("highlighted");
+      }
+  }
+}
 function displayOtherCards(playerIndex, handSize) {
   console.log(">>>>>>>>>>>>>displayCards----in: #loc" + playerIndex + "Hand------------playerIndex: " + playerIndex + "  >>  handSize: " + handSize);
   $('#loc' + playerIndex + 'Hand').empty();

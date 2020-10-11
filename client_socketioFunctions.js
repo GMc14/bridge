@@ -119,18 +119,7 @@ var tricksWon = 0;
 var roundNumber = 0;
 var handsNeeded;
 
-function highlightPlayable(){
-    for (var i = 0; i < myHandOfCards.length; i++) {
-      if (String(myHandOfCards[i].suit) == leadSuit) {
-        var cardRank = String(myHandOfCards[i].rank);
-        var cardSuit = String(myHandOfCards[i].suit);
-        var cardID = cardSuit + cardRank;
-        var encodedI = i + 10;
-        // card.setAttribute("id", encodedI + cardID);
-        $("#"+encodedI + cardID).addClass("highlighted");
-      }
-    }
-  }
+
 
 $(function () {
     $("#tokenQmark").click(function () {
@@ -365,7 +354,7 @@ $(function () {
         if (currentPlayer == playerNum) {
             $("#turnIndicator").text("Your Turn");
             $("#myHand").addClass("highlighted");
-           highlightPlable();
+            highlightPlayable();
         } else {
             $("#turnIndicator").text(getNicknameForPlayer(currentPlayer) + "'s Turn");
             $(".highlighted").removeClass("highlighted");
