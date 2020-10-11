@@ -436,7 +436,10 @@ div#myHand.highlighted {
   /* inner right broad */
 }
 
-
+.assignments {
+  z-index: 999999999;
+  background: #1d1d1d;
+}
 
 .myCards:hover {
   box-shadow: 0px 0px 1.5vmax red;
