@@ -424,7 +424,7 @@ td, th {
 }
 
 .highlighted {
-  box-shadow: 0 0 2vmin rgb(36, 223, 76);
+  box-shadow: 0 0 2vmin rgb(36, 223, 76), inset 0 0 1vmin rgb(36, 223, 76);
 }
 
 div#myHand.highlighted {

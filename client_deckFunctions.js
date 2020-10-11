@@ -172,7 +172,7 @@ function setTrumpCardAssignee(cardID, player) {
 
 var tokenOptions = ['x', '1', '2', '3', '4', '5', 'i', 'ii', 'iii', 'iiii', 'O', '0'];
 
-var playerOptions = ['', 'G', 'A', 'E'];
+var playerOptions = ['', 'GM', 'AM', 'EM',"AP"];
 
 function displayTrumpCard(trumpCard) {
   var cardRank = String(trumpCard.rank);
