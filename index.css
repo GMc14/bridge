@@ -40,7 +40,7 @@ body {
 }
 
 .isTrump {
-    box-shadow: inset 0 0 1.5vmax #ff3;
+    box-shadow: inset 0 0 0.5vmax #Fd0, inset 0 0 2.5vmax #ff3;
 }
 .assignments {
   position: absolute;
@@ -368,6 +368,7 @@ td, th {
   height: 15%;
   width: 100%;
   bottom: 2%;
+  padding:1.5vmax;
   /*margin:auto;
   height: 100%;*/
   text-align: center;
@@ -423,13 +424,13 @@ td, th {
 }
 
 .highlighted {
-  box-shadow: 0 0 2vmin #3d6;
+  box-shadow: 0 0 2vmin rgb(36, 223, 76);
 }
 
 div#myHand.highlighted {
   box-shadow: inset 0 0 1vmin #fff, /* inner */
-  inset 0.6vmin 0 2vmin #3d6, /* inner left short */
-  inset -0.6vmin 0 2vmin #3d6, /* inner right short */
+  inset 0.6vmin 0 2vmin rgb(51, 221, 213), /* inner left short */
+  inset -0.6vmin 0 2vmin rgb(51, 221, 213), /* inner right short */
   inset 0.6vmin 0 3vmin #7EB2A8, /* inner left broad */
   inset -0.6vmin 0 3vmin #7EB2A8;
   /* inner right broad */
