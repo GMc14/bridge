@@ -146,8 +146,8 @@ function cardValue(card) {
 
 function sortHand() {
   myHandOfCards.sort(function (a, b) {
-    var aSuit = a.suit;
-    var bSuit = b.suit;
+    var aSuit = a.suit.replace("S","E");
+    var bSuit = b.suit.replace("S","E"); //Move spades between D-iamonds and H-earts
     var aRank = a.rank;
     var bRank = b.rank;
     if (aSuit == bSuit) {
@@ -270,7 +270,7 @@ function playCard() {
 
     var legal = true;
     if (playerNum != lead) {
-      legal = checkLegal(cardID);
+      legal = confirmLegal(cardID);
     }
     if (legal) {
       myHandOfCards[Number(num) - 10].suit = "Z";

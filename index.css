@@ -40,11 +40,12 @@ body {
 }
 
 .isTrump {
-  box-shadow: inset 0 0 1vmin #fff, /* inner */
-  inset 0.6vmin 0 1vmin rgba(212, 212, 11,0.7), /* inner left short */
-  inset -0.6vmin 0 1vmin rgba(0, 11, 212,0.7), /* inner right short */
-  inset 0.3vmin 0 3vmin rgba(212, 0, 11,0.7), /* inner left broad */
-  inset -0.3vmin 0 3vmin rgba(0, 212, 11,0.7);
+    box-shadow: inset 0 0 1vmin #fff, /* inner */
+    inset 0.6vmin 0 2vmin #3d6, /* inner left short */
+    inset -0.6vmin 0 2vmin #3d6, /* inner right short */
+    inset 0.6vmin 0 3vmin rgba(212, 212, 11,0.6), /* inner left broad */
+    inset -0.6vmin 0 3vmin rgba(212, 212, 11,0.6);
+    /* inner right broad */
 }
 .assignments {
   position: absolute;
