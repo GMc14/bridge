@@ -439,16 +439,16 @@ div#myHand.highlighted {
 }
 
 .AM{
-  text-shadow: inset 0 -1px 5px #DDFF33, inset -2px 0 10px #DDFF33, 0 3px 15px #DDFF33, 4px 0 25px #DDFF33;
-  color: #FF3300;
+  text-shadow: 0 -1px 5px #CCDD33, -2px 0 10px #CCDD33, 0 3px 15px #CCDD33, 4px 0 25px #CCDD33;
+  color: #BB2200;
 }
 .AP{
   text-shadow: 0 -1px 5px #FF66dd, -2px 0 10px #FF66dd, 0 3px 15px #FF66dd, 4px 0 25px #FF66dd;
   color: #00cc99;
 }
 .EM{
-  text-shadow: 0 -1px 5px #005500, -2px 0 10px #005500, 0 3px 15px #005500, 4px 0 25px #005500;
-  color: #6666DD;
+  text-shadow: 0 -1px 5px #009933, -2px 0 10px #009933, 0 3px 15px #009933, 4px 0 25px #009933;
+  color: #9966FF;
 }
 .GM{
   text-shadow: 0 -1px 5px #003399, -2px 0 10px #003399, 0 3px 15px #003399, 4px 0 25px #003399;
