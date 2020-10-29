@@ -31,8 +31,8 @@ body {
   position: absolute;
   z-index: 999999;
   font-size: 0px;
-  top: 5.2vmax;
-  left: -0.4vmax;
+  top: 1vmax;
+  left: 3vmax;
  }
 .token > img {
   filter: drop-shadow(0.15vmax 0.15vmax 0 rgba(248, 255, 206, 0.5)) drop-shadow(-0.15vmax 0.15vmax 0 rgba(248, 255, 206, 0.5)) drop-shadow(0.15vmax -0.15vmax 0 rgba(248, 255, 206, 0.5)) drop-shadow(-0.15vmax -0.15vmax 0 rgba(248, 255, 206, 0.5));
@@ -41,12 +41,6 @@ body {
 
 .isTrump {
     box-shadow: inset 0 0 0.5vmax #Fd0, inset 0 0 2.5vmax #ff3;
-}
-.assignments {
-  position: absolute;
-  top: 7.4vmax;
-  left: 0.1vmax;
-  text-shadow: 0 0 3px #FF0000, 0 0 15px #0000FF;
 }
 .trumpDrops {
   font-size: 1vmax;
@@ -439,6 +433,10 @@ div#myHand.highlighted {
 .assignments {
   z-index: 999999999;
   background: #1d1d1d;
+  position: absolute;
+  top: 1vmax;
+  left: 4vmax;
+  text-shadow: 0 0 3px #FF0000, 0 0 15px #0000FF;
 }
 
 .myCards:hover {
@@ -465,8 +463,8 @@ div#myHand.highlighted {
   margin: 0.1vmax 0.5vmax;
   box-shadow: 0vmax 0vmax 0vmax 0vmax #000;
   position: relative;
-  width:3vmax;
   display:block;
+  background-color: transparent;
 }
 
 #chat {
