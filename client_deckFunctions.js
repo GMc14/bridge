@@ -167,9 +167,6 @@ function setTrumpCardAssignee(cardID, player) {
   $("#assignment" + cardID).text(player);
 }
 
-
-
-
 var tokenOptions = ['x', '1', '2', '3', '4', '5', 'i', 'ii', 'iii', 'iiii', 'O', '0'];
 
 var playerOptions = ['', 'GM', 'AM', 'EM',"AP"];
