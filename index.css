@@ -436,7 +436,19 @@ div#myHand.highlighted {
   position: absolute;
   top: 2.9vmax;
   left: 6.5vw;
-  text-shadow: 0 0 3px #FF0000, 0 0 15px #0000FF;
+}
+
+.AM{
+  text-shadow: 0 0 3px #FF3300, 0 0 15px #DDFF33;
+}
+.AP{
+  text-shadow: 0 0 3px #00cc99, 0 0 15px #FF66dd;
+}
+.EM{
+  text-shadow: 0 0 3px #6666DD, 0 0 15px #005500;
+}
+.GM{
+  text-shadow: 0 0 3px #FF8800, 0 0 15px #003399;
 }
 
 .myCards:hover {

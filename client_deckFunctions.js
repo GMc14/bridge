@@ -165,6 +165,7 @@ function setTrumpCardOrderIcon(cardID, icon) {
 function setTrumpCardAssignee(cardID, player) {
   console.log(">>>>>>>>>>>>> setTrumpCardAssignee " + cardID + "  :  " + player);
   $("#assignment" + cardID).text(player);
+  $("#assignment" + cardID).addClass(player);
 }
 
 var tokenOptions = ['x', '1', '2', '3', '4', '5', 'i', 'ii', 'iii', 'iiii', 'O', '0'];
