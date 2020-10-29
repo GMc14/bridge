@@ -439,17 +439,20 @@ div#myHand.highlighted {
 }
 
 .AM{
-  text-shadow: inset 0 -1px 5px #FF3300, inset -2px 0 10px #FF3300, 0 3px 15px #DDFF33, 4px 0 25px #DDFF33;
+  text-shadow: inset 0 -1px 5px #DDFF33, inset -2px 0 10px #DDFF33, 0 3px 15px #DDFF33, 4px 0 25px #DDFF33;
+  color: #FF3300;
 }
 .AP{
   text-shadow: 0 -1px 5px #FF66dd, -2px 0 10px #FF66dd, 0 3px 15px #FF66dd, 4px 0 25px #FF66dd;
-  background: #00cc99;
+  color: #00cc99;
 }
 .EM{
-  text-shadow: 0 -1px 5px #6666DD, -2px 0 10px #6666DD, 0 3px 15px #005500, 4px 0 25px #005500;
+  text-shadow: 0 -1px 5px #005500, -2px 0 10px #005500, 0 3px 15px #005500, 4px 0 25px #005500;
+  color: #6666DD;
 }
 .GM{
-  text-shadow: 0 -1px 5px #FF8800, -2px 0 10px #FF8800, 0 3px 15px #003399, 4px 0 25px #003399;
+  text-shadow: 0 -1px 5px #003399, -2px 0 10px #003399, 0 3px 15px #003399, 4px 0 25px #003399;
+  color: #FF8800;
 }
 
 .myCards:hover {
