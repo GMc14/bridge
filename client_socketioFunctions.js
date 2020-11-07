@@ -6,7 +6,7 @@ var playerNickNames = ['', '', '', '', '', '', '', ''];
 var playerColors = ['#004499', '#770011', '#666600', '#116600', '#440099', '#883300', '#006666', '#660066'];
 
 //Game Config
-var gameConfig_playerCount = 4;
+var gameConfig_playerCount = 3;
 var gameConfig_startCardsPerPlayer = -1; //-1==Deal All
 var gameConfig_numberOfRounds = gameConfig_startCardsPerPlayer; //Plya all cards in hand
 
