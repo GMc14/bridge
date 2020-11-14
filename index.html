@@ -24,8 +24,9 @@
     <div id="gameSetup">
       <div class="setupModule">
         <span>CREATE/JOIN:</span><br>
-        <form id="roomForm">
-          <input id="roomID" type="text" value="ggg" placeholder="1-4 Character Room Code" maxlength="4">
+        <form id="joinRoomForm">
+          <input id="roomID" type="text" title="4 Character Room Code" placeholder="4 Character Room Code" maxlength="4" pattern="[a-zA-Z0-9]+">
+          <input type="submit" value="Go">
         </form>
       </div>
       <div id=bidArea style="display:none">

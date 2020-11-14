@@ -119,8 +119,6 @@ var tricksWon = 0;
 var roundNumber = 0;
 var handsNeeded;
 
-
-
 $(function () {
     $("#tokenQmark").click(function () {
         console.log("show THINGSSSS");
@@ -130,8 +128,7 @@ $(function () {
         $("#tokenLegend").hide();
     });
     $("#tokenLegend").hide();
-    console.log("auto join room...");
-    joinRoom();
+
     $('#drawTask').on('click', function () {
         if (taskDeck.length > 0) {
             taskDeck = getShuffled(taskDeck);
@@ -147,7 +144,9 @@ $(function () {
         console.log("[][][][][][][][][][]Need to ClearTrumpHighlights here?[][][][][][][][][][][]");
         socketio.emit('restartGame');
     });
-    $("#roomForm").on('submit', function (e) {
+    // console.log("auto join room...");
+    // joinRoom();
+    $("#joinRoomForm").on('submit', function (e) {
         e.preventDefault();
         joinRoom();
     });
@@ -165,15 +164,18 @@ $(function () {
         }
     });
     socketio.on('wait4Players', function (numPlayers) {
-        if (numPlayers < gameConfig_playerCount) {
-            waitRoom(numPlayers);
-        } else {
+        // if (numPlayers < gameConfig_playerCount) {
+        //     waitRoom(numPlayers);
+        // } else {
             playerModule();
-        }
+        // }
     });
     socketio.on('fullRoom', function (data) {
         clearSetupModule();
         $(".setupModule:eq(0)").html("Room is Full. Try Again Later");
+    })
+    socketio.on('setPlayerCountOnClient', function (playerCount) {
+        gameConfig_playerCount = playerCount;
     })
     socketio.on('playerDataToClient', function (data) {
         var nickname = data.nickname;
@@ -428,21 +430,24 @@ function clearSetupModule() {
         setupModule.removeChild(setupModule.firstChild);
     }
 }
+let codeCandidates = "234689ABCEFJKMNPQRTVWXY"
 
 function joinRoom() {
     roomID = $("#roomID").val();
     remainingPlayers = gameConfig_playerCount;
-    if (roomID == '') {
-        alert('RoomID must be 1-4 characters long');
-    } else {
-        socketio.emit('create', roomID);
-        clearSetupModule();
-        var roomText = document.createElement("span");
-        roomText.setAttribute("id", "roomText");
-        roomText.appendChild(document.createTextNode("Room Code: " + roomID));
-        $("#topbar").prepend(roomText);
-        $("#leaveRoom").show();
+
+    while (roomID.length < 4) {
+        roomID.concat(codeCandidates.charAt(Math.floor(Math.random() * codeCandidates.length)));
     }
+    roomID = roomID.toUpperCase()
+    socketio.emit('create', roomID);
+    clearSetupModule();
+    var roomText = document.createElement("span");
+    roomText.setAttribute("id", "roomText");
+    roomText.appendChild(document.createTextNode("Room Code: " + roomID));
+    $("#topbar").prepend(roomText);
+    $("#leaveRoom").show();
+
 }
 
 function leaveRoom() {
@@ -454,13 +459,17 @@ function leaveRoom() {
     window.location.reload();
 }
 
-function waitRoom(num) {
-    clearSetupModule();
-    $(".setupModule:eq(0)").html("<div class='loading'>Current Players in Room: " + num + " <br> Waiting for Players</div>");
-}
-
+// function waitRoom(num) {
+//     clearSetupModule();
+//     $(".setupModule:eq(0)").html("<div class='loading'>Current Players in Room: " + num + " <br> Waiting for Players</div>");
+// }
+var playerModuleIsShowing = false;
 function playerModule() {
     console.log("--------------playerModule----------------");
+    if(playerModuleIsShowing){
+        return;
+    }
+    playerModuleIsShowing = true;
     clearSetupModule();
     var playerSetup = document.createElement("div");
     playerSetup.setAttribute("id", "playerSetup");

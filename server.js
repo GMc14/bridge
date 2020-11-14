@@ -44,14 +44,14 @@ var server = http.createServer(function (req, res) {
   });
 
 }).listen(PORT);
-console.log("server running on Port 1234");
+console.log("server running on Port "+PORT);
 
 var io = socketio.listen(server);
 io.sockets.on('connection', function (socket) {
   socket.on('create', function (room) {
     var thisRoom = io.sockets.adapter.rooms[room];
     var numInRoom = thisRoom === undefined ? 0 : thisRoom.length;
-    if (numInRoom >= 4) {
+    if (numInRoom >= gameConfig_playerCount) {
       io.sockets.to(socket.id).emit('fullRoom', numInRoom);
     } else {
       socket.join(room);
@@ -69,6 +69,7 @@ io.sockets.on('connection', function (socket) {
       var nickname = socket.nickname === undefined ? 'Someone' : socket.nickname;
       io.sockets.to(room).emit('leftInGame', nickname);
     }
+    io.sockets.to(room).emit('setPlayerCountOnClient', thisRoom.length);
   });
   socket.on('selPlayer', function (data) {
     io.sockets.adapter.rooms[data.roomID].inGame = 1;
