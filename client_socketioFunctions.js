@@ -338,6 +338,9 @@ $(function () {
                 $("#turnIndicator").text(getNicknameForPlayer(lead) + "  leads");
                 $(".highlighted").removeClass("highlighted");
             }
+            $(".leader").removeClass("leader");
+            $('#loc' + lead).addClass("leader");
+            $(".highlighted").removeClass("highlighted");
             $('#bidOfRound').show();
         }
         console.log("--------------dealt...ToClients---------------- playerNum: " + playerNum);
@@ -365,25 +368,27 @@ $(function () {
         }
 
         currentPlayer = nextPlayer(currentPlayer);
+        
+        $(".highlighted").removeClass("highlighted");
         if (currentPlayer == playerNum) {
             $("#turnIndicator").text("Your Turn");
             $("#myHand").addClass("highlighted");
             highlightPlayable();
         } else {
             $("#turnIndicator").text(getNicknameForPlayer(currentPlayer) + "'s Turn");
-            $(".highlighted").removeClass("highlighted");
         }
     });
     socketio.on('winnerOfRound', function (trickWinner, trickCards) {
         roundNumber++;
         lead = trickWinner;
         currentPlayer = trickWinner;
+        $(".highlighted").removeClass("highlighted");
+
         if (playerNum == currentPlayer) {
             $("#turnIndicator").text("Your lead!");
             $("#myHand").addClass("highlighted");
         } else {
             $("#turnIndicator").text(getNicknameForPlayer(lead) + "  leads");
-            $(".highlighted").removeClass("highlighted");
         }
         console.log("[][][][][][][] winner of round: " + trickWinner + " cards:" + trickCards);
         var winnerIndex = inversePlayerIdMap[trickWinner];

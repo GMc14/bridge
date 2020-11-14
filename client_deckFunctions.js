@@ -7,11 +7,14 @@ var currentTrumpCards = [];
 function startGame() {
   
   $("#myHand").show();
+  console.log("--------------startGame-------isGameMaster?--------" + isGameMaster);
+  if(isGameMaster){
+    $("#gameControls").show();
+    $("#tokenLegend").hide();
+  }
   if (playerNum == dealer) {
     console.log("--------------startGame-------I'm the dealer---------" + playerNum + " == " + dealer);
-    $("#gameControls").show();
     $("#myHand").empty();
-    $("#tokenLegend").hide();
     $(".otherPlayerHand").empty();
     createDeck();
     deck = getShuffled(deck);
@@ -70,7 +73,6 @@ function createDeck() {
   for (var i = 0; i < bonusCards.length; i++) {
     deck.push(new Card(bonusCards[i].charAt(0), bonusCards[i].charAt(1)));
   }
-
 }
 
 function getShuffled(inputDeck) {
@@ -197,7 +199,7 @@ function displayTrumpCard(trumpCard) {
   $(card).append("<div id='token" + cardID + "' class='token'><img  src=''/></div>");
   $(card).append("<span id='assignment" + cardID + "' class='assignments'></span>");
 
-  if (playerNum == dealer) {
+  if (isGameMaster) {
     $(card).append("<select class='trumpDrops icnDrop' id='drpIcon" + cardID + "' name='dropdownIcon' size=1>");
     $(card).append("<select class='trumpDrops plyrDrop' id='drpPlyr" + cardID + "' name='dropdownIcon' size=1>");
     $.each(tokenOptions, function () {
