@@ -191,7 +191,7 @@ $(function () {
         var playerIndex = data.playerIndex;
         remainingPlayers = data.remainingPlayers;
         console.log("playerDataToClient---- >> playerIndex: " + playerIndex + "  >> nickname: " + nickname + "  >>  remainingPlayers: " + remainingPlayers);
-        $("#btnPlayer" + playerIndex).val();
+        $("#btnPlayer" + playerIndex).val(nickname);
         $("#btnPlayer" + playerIndex).prop('disabled', true);
         playerNickNames[playerIndex - 1] = nickname;
     });
@@ -202,6 +202,8 @@ $(function () {
     socketio.on('startGame', function () {
         $("#playArea").show();
         console.log("client_socket :: startGame");
+        preRenderImgs();
+        clearSetupModule();
         constructPlayArea();
         startGame();
     });

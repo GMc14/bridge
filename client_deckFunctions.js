@@ -5,6 +5,7 @@ function Card(suit, rank) {
 
 var currentTrumpCards = [];
 function startGame() {
+  
   if (playerNum == dealer) {
     console.log("--------------startGame-------I'm the dealer---------" + playerNum + " == " + dealer);
     $("#gameControls").show();
@@ -169,7 +170,7 @@ function setTrumpCardAssignee(cardID, player) {
 }
 
 var tokenOptions = ['x', '1', '2', '3', '4', '5', 'i', 'ii', 'iii', 'iiii', 'O', '0'];
-
+//TODO: allow selecting specific cards
 var playerOptions = ['', 'GM', 'AM', 'EM',"AP"];
 
 function displayTrumpCard(trumpCard) {

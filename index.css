@@ -16,7 +16,12 @@ body {
   background-color: #131313;
   background-size: 20px 20px;
 }
-
+div {
+  border-style: dotted;
+  border-color: rgba(255, 255, 128, 0.13);
+  border: rgba(255, 255, 128, 0.13);
+  border-width: 2px;
+}
 #tokenQmark {
   height: 2vmax;
 }
