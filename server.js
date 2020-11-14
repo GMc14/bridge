@@ -129,6 +129,9 @@ io.sockets.on('connection', function (socket) {
     console.log("server:->winner");
     io.sockets.to(data.roomID).emit('winnerOfRound', data.player, data.trickCards);
   });
+  socket.on('assignShoassignShortNamertName', function (data) {
+    io.sockets.to(socket.room).emit('assignShortNameToClients', data);
+  });
   socket.on('bid', function (data) {
     io.sockets.to(socket.room).emit('some1Bid', data);
   });

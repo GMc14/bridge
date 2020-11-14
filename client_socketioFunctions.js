@@ -136,18 +136,21 @@ $(function () {
         } else {
             alert("No Tasks Available");
         }
-    });    
+    });
     $('#chooseTask').on('click', function () {
-        $.each(taskDeck, function(index, value){
-            var cardObj = $("#" + value + "_img").clone().show();
-            $(cardObj).data('task-index',index);
+        $.each(taskDeck, function (index, trumpCard) {
+            var cardRank = String(trumpCard.rank);
+            var cardSuit = String(trumpCard.suit);
+            var cardID = cardSuit + cardRank;
+            var cardObj = $("#" + cardID + "_img").clone().show();
+            $(cardObj).data('task-index', index);
             $(cardObj).addClass('potentialTask');
             $("#taskOptions").append(cardObj);
         });
-        $(".potentialTask").click(function(){
+        $(".potentialTask").click(function () {
             var selectedCardIndex = $(this).attr("data-task-index");
             socketio.emit('drawTask', taskDeck[selectedCardIndex]);
-            taskDeck.splice(selectedCardIndex,1);
+            taskDeck.splice(selectedCardIndex, 1);
             $("#taskOptions").empty();
         });
     });
@@ -287,6 +290,12 @@ $(function () {
         console.log("--------------cycleClientOrderAssignee----------------data.cardID " + data.cardID + ",  data.player: " + data.player);
         setTrumpCardAssignee(data.cardID, data.player);
     });
+    socketio.on('assignShortNameToClients', function (data) {
+        console.log("--------------cycleClientOrderAssignee----------------data.cardID " + data.cardID + ",  data.player: " + data.player);
+        setPlayerShortName(data.playerNumber, data.shortName);
+    });
+
+    
     socketio.on('dealToClients', function (data) {
         xoob = data;
         console.log("--------------dealToClients---------------- " + JSON.stringify(data, null, 4));
@@ -345,7 +354,7 @@ $(function () {
                 currentPlayer = nextPlayer(dealer);
             }
             lead = currentPlayer;
-
+            $(".highlighted").removeClass("highlighted");
             if (playerNum == currentPlayer) {
                 $("#turnIndicator").text("Your lead!");
                 $("#myHand").addClass("highlighted");
@@ -353,11 +362,11 @@ $(function () {
                 $("#turnIndicator").text(getNicknameForPlayer(lead) + "  leads");
                 $(".highlighted").removeClass("highlighted");
             }
-            $(".leader").removeClass("leader");
             var leaderNum = inversePlayerIdMap[lead];
-            $('#loc' + leaderNum+'name').addClass("leader");
-            console.log("--------------markingLeader---------------- #loc" + leaderNum+'name');
-            $(".highlighted").removeClass("highlighted");
+            console.log("--------------markingLeader---------------- #loc" + leaderNum + 'name');
+            $(".leader").removeClass("leader");
+            $('#loc' + leaderNum + 'name').addClass("leader");
+
             $('#bidOfRound').show();
         }
         console.log("--------------dealt...ToClients---------------- playerNum: " + playerNum);
@@ -385,7 +394,7 @@ $(function () {
         }
 
         currentPlayer = nextPlayer(currentPlayer);
-        
+
         $(".highlighted").removeClass("highlighted");
         if (currentPlayer == playerNum) {
             $("#turnIndicator").text("Your Turn");
@@ -538,7 +547,7 @@ function playerModule() {
 
 
     var previousNickName = $.cookie("nickname");
-    if(previousNickName){
+    if (previousNickName) {
         $(nicknameInput).val(previousNickName);
     }
 
@@ -571,7 +580,7 @@ function playerModule() {
             boldNames.appendChild(document.createTextNode(playerNum + ': ' + nickname));
             $("#myName").append(boldNames);
             remainingPlayers--;
-            $.cookie("nickname",nickname);
+            $.cookie("nickname", nickname);
             console.log("--------------playerBtns emit selPlayer...----------------");
             socketio.emit('selPlayer', {
                 nickname: nickname,
@@ -679,6 +688,7 @@ var inversePlayerIdMap = [];
 function constructPlayArea() {
     var clientNumber = Number(playerNum.slice(-1));
     for (var j = 1; j < gameConfig_playerCount; j++) {
+
         var stuff = $('<div alt="loc' + j + 'stuff" id="loc' + j + 'stuff" class="stuff"></div>');
         var plays = $('<div alt="loc' + j + 'play" id="loc' + j + 'play" class="plays"></div>');
         var name = $('<div alt="loc' + j + 'name" id="loc' + j + 'name" class="name"></div>');
@@ -689,6 +699,7 @@ function constructPlayArea() {
         $(playerContainer).append(playerHand);
         $(playerContainer).append(stuff);
         $(playerContainer).append(plays);
+        $(playerContainer).append("<select class='trumpDrops plyrDrop' id='drpPlyrName" + j + "' name='dropdownIcon' size=1>");
         $(playerContainer).append(name);
         $(playerContainer).append(winCounter);
 
@@ -705,6 +716,15 @@ function constructPlayArea() {
         playerIdMap[j] = 'Player' + pNumber;
         inversePlayerIdMap['Player' + pNumber] = j;
         $("#loc" + j + "name").html('Player' + pNumber + ': ' + playerNickNames[pNumber - 1]);
+
+        $("#drpPlyrName" + j).change(function () {
+            console.log(">>>>>>>>>>>>>cycleAssignee selected ---------------- cardID:" + j + ";;" + $(this).val());
+            socketio.emit('assignShortName', {
+                playerNumber: pNumber,
+                roomID: roomID,
+                shortName: $(this).val()
+            });
+        });
     }
 }
 

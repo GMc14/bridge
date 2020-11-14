@@ -194,6 +194,13 @@ function setTrumpCardAssignee(cardID, player) {
   $("#assignment" + cardID).addClass(player);
 }
 
+function setPlayerShortName(playerNumber, shortName){
+  $.each(playerOptions,function(index,value){
+    $("#loc"+inversePlayerIdMap['Player'+playerNumber]+"name").removeClass(value);
+  });
+  $("#loc"+inversePlayerIdMap['Player'+playerNumber]+"name").addClass(player);
+}
+
 var tokenOptions = ['x', '1', '2', '3', '4', '5', 'i', 'ii', 'iii', 'iiii', 'O', '0'];
 //TODO: allow selecting specific cards
 var playerOptions = ['', 'GM', 'AM', 'EM',"AP"];
@@ -211,9 +218,6 @@ function displayTrumpCard(trumpCard) {
   var cardObj = $("#" + cardID + "_img").clone().show();
   $(cardObj).addClass('isTrump');
   $(cardObj).appendTo(card);
-  $(".trumpCard").click(function(){
-    alert("clicked "+cardID);
-  });
 
   $("#" + cardID + "_img").addClass('isTrump');
   //card.addEventListener("click", playCard, true);
