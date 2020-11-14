@@ -339,9 +339,9 @@ td, th {
   border-radius: 0.5vmax;
   transition-duration: 0.2s;
 }
-.gameButtons:disabled, .gameButtons[disabled]  {
-  background-color: #666;
-  color: #ccc;
+.playerBtns:disabled, .playerBtns[disabled]  {
+  background-color: #999;
+  color: #333;
 }
 .gameButtons:hover {
   background-color: #435078;

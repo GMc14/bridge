@@ -164,12 +164,12 @@ $(function () {
         }
     });
     socketio.on('wait4Players', function (numPlayers) {
-        
+
         console.log("--------wait4Players-----------");
         // if (numPlayers < gameConfig_playerCount) {
         //     waitRoom(numPlayers);
         // } else {
-            playerModule();
+        playerModule();
         // }
     });
     socketio.on('fullRoom', function (data) {
@@ -182,7 +182,7 @@ $(function () {
         $("#startGameButton").prop('disabled', false);
         isGameMaster = true;
     })
-    
+
     socketio.on('setPlayerCountOnClient', function (playerCount) {
         gameConfig_playerCount = playerCount;
     })
@@ -444,7 +444,7 @@ function clearSetupModule() {
 let codeCandidates = "234689ABCEFJKMNPQRTVWXY"
 
 function joinRoom() {
-    
+
     console.log("--------joinRoom-----------");
     roomID = $("#roomID").val();
     remainingPlayers = gameConfig_playerCount;
@@ -477,9 +477,10 @@ function leaveRoom() {
 //     $(".setupModule:eq(0)").html("<div class='loading'>Current Players in Room: " + num + " <br> Waiting for Players</div>");
 // }
 var playerModuleIsShowing = false;
+
 function playerModule() {
     console.log("--------------playerModule----------------");
-    if(playerModuleIsShowing){
+    if (playerModuleIsShowing) {
         return;
     }
     playerModuleIsShowing = true;
@@ -491,6 +492,7 @@ function playerModule() {
     nickname.setAttribute("type", "text");
     nickname.setAttribute("id", "nickname");
     var span1 = document.createElement("span");
+    span1.setAttribute("id", "nicknameLabel");
     span1.appendChild(document.createTextNode("NICKNAME:"));
 
     var teamInfo = '';
@@ -498,14 +500,15 @@ function playerModule() {
         teamInfo = "(TEAMS: 1 & 3 and 2 & 4)"
     }
     var span2 = document.createElement("span");
+    span2.setAttribute("id", "playerSelectLabel");
     span2.appendChild(document.createTextNode("SELECT PLAYER: " + teamInfo));
-    playerSetup.appendChild(span2);
 
-    playerSetup.appendChild(span1);
-    playerSetup.appendChild(document.createElement("br"));
-    playerSetup.appendChild(nickname);
-    playerSetup.appendChild(document.createElement("br"));
-    playerSetup.appendChild(document.createElement("br"));
+    $(playerSetup).append(span2);
+    $(playerSetup).append(span1);
+    $(playerSetup).append("<br />");
+    $(playerSetup).append(nickname);
+    $(playerSetup).append("<br />");
+    $(playerSetup).append("<br />");
 
     for (var j = 1; j <= gameConfig_playerCount; j++) {
         var currPlayer = document.createElement("input");
@@ -515,19 +518,12 @@ function playerModule() {
         currPlayer.setAttribute("class", "playerBtns");
         currPlayer.setAttribute("value", "Player" + j);
 
-        playerSetup.appendChild(document.createElement("br"));
-        playerSetup.appendChild(currPlayer);
+        $(playerSetup).append("<br />");
+        $(playerSetup).append(currPlayer);
     }
-    $(playerSetup).append('<button id="startGameButton" class="gameButtons">Start Game</button>') 
+    $(playerSetup).append("<br />");
+    $(playerSetup).append('<button id="startGameButton" class="playerBtns">Start Game</button>')
     $(".setupModule:eq(0)").append(playerSetup);
-    $("#startGameButton").on("click",function(){
-        socketio.emit('startGameOnServer');
-    });
-    $("#startGameButton").prop('disabled', true);
-    playerSelect();
-}
-
-function playerSelect() {
     $(".playerBtns").on("click", function () {
         console.log("--------------playerBtns Click----------------");
         playerNum = $(this).val();
@@ -537,8 +533,8 @@ function playerSelect() {
         if (nickname == '' || playerNickNames.indexOf(nickname) > -1) {
             alert('Pick a unique Nickname!');
         } else {
-           // $("#playerSetup").hide();
-           // $(".setupModule:eq(0)").html("<div class='loading'>Waiting for Teams</div>");
+            // $("#playerSetup").hide();
+            // $(".setupModule:eq(0)").html("<div class='loading'>Waiting for Teams</div>");
             var boldNames = document.createElement("b");
             boldNames.appendChild(document.createTextNode(playerNum + ': ' + nickname));
             $("#myName").append(boldNames);
@@ -554,9 +550,15 @@ function playerSelect() {
             });
             //TODO: show chat if want to use it $('#chat').show();
             playerColor = playerColors[playerIndex - 1];
-
+            $("#playerSelectLabel").hide();
+            $("#nicknameLabel").hide();
+            $("#nickname").hide();
         }
     });
+    $("#startGameButton").on("click", function () {
+        socketio.emit('startGameOnServer');
+    });
+    $("#startGameButton").prop('disabled', true);
 }
 
 function addWinText(who, wins) {

@@ -59,8 +59,6 @@ io.sockets.on('connection', function (socket) {
       socket.room = room;
       numInRoom++;
       io.sockets.to(room).emit('wait4Players', numInRoom);
-
-      
       thisRoom = io.sockets.adapter.rooms[room];
       console.log("room: "+JSON.stringify(room));
       console.log("thisRoom: "+JSON.stringify(thisRoom));
