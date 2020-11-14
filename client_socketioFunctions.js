@@ -537,7 +537,7 @@ function playerModule() {
         $(playerSetup).append(currPlayer);
     }
     $(playerSetup).append("<br />");
-    $(playerSetup).append('<button id="startGameButton" class="playerBtns">Start Game</button>')
+    $(playerSetup).append('<button id="startGameButton" class="startBtn">Start Game</button>')
     $(".setupModule:eq(0)").append(playerSetup);
     $(".playerBtns").on("click", function () {
         console.log("--------------playerBtns Click----------------");
