@@ -6,6 +6,7 @@ function Card(suit, rank) {
 var currentTrumpCards = [];
 function startGame() {
   
+  $("#myHand").show();
   if (playerNum == dealer) {
     console.log("--------------startGame-------I'm the dealer---------" + playerNum + " == " + dealer);
     $("#gameControls").show();

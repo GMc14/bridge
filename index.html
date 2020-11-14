@@ -15,7 +15,7 @@
   <div id="gameBoard">
     <div id=topbar>
       <button class="gameButtons" id="leaveRoom" onclick="leaveRoom()" style="display:none">Leave</button><br>
-      <div id='bidOfRound' style="font-size:large"></div>
+      <div id='bidOfRound' style="display:none; font-size:large;"></div>
       <div id="showCase"></div>
       <img id="tokenQmark" src="token_imgs/q.png"/>
       <img id="tokenLegend" style="display: none;"src="token_imgs/legend.png"/>
@@ -115,7 +115,7 @@
         <!--<button id="restartGame" class="gameButtons">RESTART GAME</button>-->
       </div>
     </div>
-    <div class="myHand" id="myHand"></div>
+    <div class="myHand" id="myHand" style="display:none"></div>
     <div id="playArea">
       <div id="myStuff" class="stuff"></div>      
       <div id="myName" class="name"></div>
