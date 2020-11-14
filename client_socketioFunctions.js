@@ -291,7 +291,7 @@ $(function () {
         setTrumpCardAssignee(data.cardID, data.player);
     });
     socketio.on('assignShortNameToClients', function (data) {
-        console.log("--------------cycleClientOrderAssignee----------------data.cardID " + data.cardID + ",  data.player: " + data.player);
+        console.log("--------------assignShortNameToClients----------------data.cardID " + data.cardID + ",  data.player: " + data.player);
         setPlayerShortName(data.playerNumber, data.shortName);
     });
 
@@ -720,11 +720,12 @@ function constructPlayArea() {
             $("#drpPlyrName" + j).append('<option value="' + this + '">' + this + '</option>');
         });
         $("#drpPlyrName" + j).change(function () {
-            console.log(">>>>>>>>>>>>>cycleAssignee selected ---------------- cardID:" + j + ";;" + $(this).val());
+            var shortName = $(this).val();
+            console.log(">>>>>>>>>>>>>myDrpPlyrName selected ---------------- cardID:" + playerNumber + " : " + shortName);
             socketio.emit('assignShortName', {
                 playerNumber: pNumber,
                 roomID: roomID,
-                shortName: $(this).val()
+                shortName: shortName
             });
         });
     }
@@ -732,11 +733,13 @@ function constructPlayArea() {
         $("#myDrpPlyrName").append('<option value="' + this + '">' + this + '</option>');
     });
     $("#myDrpPlyrName").change(function () {
-        console.log(">>>>>>>>>>>>>cycleAssignee selected ---------------- cardID:" + j + ";;" + $(this).val());
+        var playerNumber = playerNum.replace('Player', '');
+        var shortName = $(this).val();
+        console.log(">>>>>>>>>>>>>myDrpPlyrName selected ---------------- cardID:" + playerNumber + " : " + shortName);
         socketio.emit('assignShortName', {
-            playerNumber: playerNum.replace('Player', ''),
+            playerNumber: playerNumber,
             roomID: roomID,
-            shortName: $(this).val()
+            shortName: shortName
         });
     });
 }

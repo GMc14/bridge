@@ -62,6 +62,7 @@ div {
 }
 .plyrDrop {
   top: 2.9vmax;
+  font-size: 1vmax;
 }
 
 #roomID {
@@ -283,6 +284,11 @@ td, th {
   left: 60vw;
 }
 
+#myDrpPlyrName{
+  top: 58.5vh;
+  left: 42vw;
+}
+
 #myName {
   top: 58.5vh;
   left: 45vw;
@@ -445,8 +451,8 @@ div#myHand.highlighted {
   inset 0.6vmin 0 3vmin #7EB2A8, /* inner left broad */
   inset -0.6vmin 0 3vmin #7EB2A8;
   /* inner right broad */
-	-webkit-animation: heartbeat 0.7s 2.5s ;
-	        animation: heartbeat 0.7s 2.5s ;
+	-webkit-animation: heartbeat 0.8s 4s;
+	        animation: heartbeat 0.8s 4s;
 }
 
 .assignments {
@@ -631,20 +637,20 @@ div#myHand.highlighted {
             animation-timing-function: ease-out;
   }
   10% {
-    -webkit-transform: scale(0.91);
-            transform: scale(0.91);
+    -webkit-transform: scale(1.03);
+            transform: scale(1.03);
     -webkit-animation-timing-function: ease-in;
             animation-timing-function: ease-in;
   }
   17% {
-    -webkit-transform: scale(0.98);
-            transform: scale(0.98);
+    -webkit-transform: scale(0.99);
+            transform: scale(0.99);
     -webkit-animation-timing-function: ease-out;
             animation-timing-function: ease-out;
   }
   33% {
-    -webkit-transform: scale(0.87);
-            transform: scale(0.87);
+    -webkit-transform: scale(1.02);
+            transform: scale(1.02);
     -webkit-animation-timing-function: ease-in;
             animation-timing-function: ease-in;
   }
@@ -665,20 +671,20 @@ div#myHand.highlighted {
             animation-timing-function: ease-out;
   }
   10% {
-    -webkit-transform: scale(0.91);
-            transform: scale(0.91);
+    -webkit-transform: scale(1.03);
+            transform: scale(1.03);
     -webkit-animation-timing-function: ease-in;
             animation-timing-function: ease-in;
   }
   17% {
-    -webkit-transform: scale(0.98);
-            transform: scale(0.98);
+    -webkit-transform: scale(0.99);
+            transform: scale(0.99);
     -webkit-animation-timing-function: ease-out;
             animation-timing-function: ease-out;
   }
   33% {
-    -webkit-transform: scale(0.87);
-            transform: scale(0.87);
+    -webkit-transform: scale(1.02);
+            transform: scale(1.02);
     -webkit-animation-timing-function: ease-in;
             animation-timing-function: ease-in;
   }
