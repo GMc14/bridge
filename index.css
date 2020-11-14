@@ -283,6 +283,10 @@ td, th {
   top: 56vh;
   left: 60vw;
 }
+.potentialTask{
+  width:3vmin;
+  background: #fff;
+}
 
 #myDrpPlyrName{
   position: absolute;

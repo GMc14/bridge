@@ -149,6 +149,7 @@ $(function () {
         });
         $(".potentialTask").click(function () {
             var selectedCardIndex = $(this).attr("data-task-index");
+            console.log("emitting "+JSON.stringify(taskDeck[selectedCardIndex]) +" base on "+selectedCardIndex);
             socketio.emit('drawTask', taskDeck[selectedCardIndex]);
             taskDeck.splice(selectedCardIndex, 1);
             $("#taskOptions").empty();
@@ -240,6 +241,7 @@ $(function () {
         startGame();
     });
     socketio.on('drawTask', function (card) {
+        console.log("--------------drawTask----------------card" + JSON.stringify(card));
         displayTrumpCard(card);
     });
     socketio.on('hideTasks', function (card) {
