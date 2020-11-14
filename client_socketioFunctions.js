@@ -177,6 +177,11 @@ $(function () {
         clearSetupModule();
         $(".setupModule:eq(0)").html("Room is Full. Try Again Later");
     })
+    socketio.on('makeGameMaster', function (data) {
+        console.log("--------makeGameMaster-----------");
+        
+    })
+    
     socketio.on('setPlayerCountOnClient', function (playerCount) {
         gameConfig_playerCount = playerCount;
     })
@@ -184,9 +189,9 @@ $(function () {
         var nickname = data.nickname;
         var playerIndex = data.playerIndex;
         remainingPlayers = data.remainingPlayers;
-
         console.log("playerDataToClient---- >> playerIndex: " + playerIndex + "  >> nickname: " + nickname + "  >>  remainingPlayers: " + remainingPlayers);
-        $("#btnPlayer" + playerIndex).remove();
+        $("#btnPlayer" + playerIndex).val();
+        $("#btnPlayer" + playerIndex).prop('disabled', true);
         playerNickNames[playerIndex - 1] = nickname;
     });
     socketio.on('leftInGame', function (nickname) {
@@ -510,7 +515,11 @@ function playerModule() {
         playerSetup.appendChild(document.createElement("br"));
         playerSetup.appendChild(currPlayer);
     }
+    $(playerSetup).append('<button id="startGameButton" class="gameButtons">Start Game</button>') 
     $(".setupModule:eq(0)").append(playerSetup);
+    $("#startGameButton").on("click",function(){
+        socketio.emit('startGameOnServer');
+    });
     playerSelect();
 }
 
@@ -524,8 +533,8 @@ function playerSelect() {
         if (nickname == '' || playerNickNames.indexOf(nickname) > -1) {
             alert('Pick a unique Nickname!');
         } else {
-            $("#playerSetup").hide();
-            $(".setupModule:eq(0)").html("<div class='loading'>Waiting for Teams</div>");
+           // $("#playerSetup").hide();
+           // $(".setupModule:eq(0)").html("<div class='loading'>Waiting for Teams</div>");
             var boldNames = document.createElement("b");
             boldNames.appendChild(document.createTextNode(playerNum + ': ' + nickname));
             $("#myName").append(boldNames);
