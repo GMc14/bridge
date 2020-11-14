@@ -202,7 +202,7 @@ function setPlayerShortName(forPlayerNumber, shortName){
   $.each(playerOptions,function(index,value){
     $(_idSelector).removeClass(value);
   });
-  $(_idSelector).addClass(player);
+  $(_idSelector).addClass(shortName);
 }
 
 var tokenOptions = ['x', '1', '2', '3', '4', '5', 'i', 'ii', 'iii', 'iiii', 'O', '0'];

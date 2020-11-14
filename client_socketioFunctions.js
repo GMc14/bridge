@@ -143,12 +143,12 @@ $(function () {
             var cardSuit = String(trumpCard.suit);
             var cardID = cardSuit + cardRank;
             var cardObj = $("#" + cardID + "_img").clone().show();
-            $(cardObj).data('task-index', index);
+            $(cardObj).attr('task-index', index);
             $(cardObj).addClass('potentialTask');
             $("#taskOptions").append(cardObj);
         });
         $(".potentialTask").click(function () {
-            var selectedCardIndex = $(this).attr("data-task-index");
+            var selectedCardIndex = $(this).attr("task-index");
             console.log("emitting " + JSON.stringify(taskDeck[selectedCardIndex]) + " base on " + selectedCardIndex);
             socketio.emit('drawTask', taskDeck[selectedCardIndex]);
             taskDeck.splice(selectedCardIndex, 1);
@@ -188,11 +188,11 @@ $(function () {
 
     function updateComms(status) {
         if (status == 1) {
-            $("#myCommunication").html(mic_none);
+            $("#myCommunication").html('mic_none');
         } else if (status == 2) {
-            $("#myCommunication").html(mic_off);
+            $("#myCommunication").html('mic_off');
         } else {
-            $("#myCommunication").html(mic);
+            $("#myCommunication").html('mic');
         }
     }
     socketio.on('wait4Players', function (numPlayers) {
