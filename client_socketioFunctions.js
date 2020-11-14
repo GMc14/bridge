@@ -489,9 +489,9 @@ function playerModule() {
     var playerSetup = document.createElement("div");
     playerSetup.setAttribute("id", "playerSetup");
 
-    var nickname = document.createElement("input");
-    nickname.setAttribute("type", "text");
-    nickname.setAttribute("id", "nickname");
+    var nicknameInput = document.createElement("input");
+    nicknameInput.setAttribute("type", "text");
+    nicknameInput.setAttribute("id", "nickname");
     var span1 = document.createElement("span");
     span1.setAttribute("id", "nicknameLabel");
     span1.appendChild(document.createTextNode("NICKNAME:"));
@@ -504,12 +504,21 @@ function playerModule() {
     span2.setAttribute("id", "playerSelectLabel");
     span2.appendChild(document.createTextNode("SELECT PLAYER: " + teamInfo));
 
+
+
+
     $(playerSetup).append(span2);
     $(playerSetup).append(span1);
     $(playerSetup).append("<br />");
-    $(playerSetup).append(nickname);
+    $(playerSetup).append(nicknameInput);
     $(playerSetup).append("<br />");
     $(playerSetup).append("<br />");
+
+
+    var previousNickName = $.cookie("nickname");
+    if(previousNickName){
+        $(nicknameInput).val(previousNickName);
+    }
 
     for (var j = 1; j <= gameConfig_playerCount; j++) {
         var currPlayer = document.createElement("input");
@@ -540,7 +549,7 @@ function playerModule() {
             boldNames.appendChild(document.createTextNode(playerNum + ': ' + nickname));
             $("#myName").append(boldNames);
             remainingPlayers--;
-
+            $.cookie("nickname",nickname);
             console.log("--------------playerBtns emit selPlayer...----------------");
             socketio.emit('selPlayer', {
                 nickname: nickname,

@@ -100,7 +100,7 @@ io.sockets.on('connection', function (socket) {
     var startGamePlayerCount = io.sockets.adapter.rooms[socket.room].length;
     console.log("---startGameOnServer---- startGamePlayerCount"+startGamePlayerCount);
     io.sockets.to(socket.room).emit('setPlayerCountOnClient', startGamePlayerCount);
-    io.sockets.to(socket.room).emit('startGame',startGamePlayerCount);  
+    io.sockets.to(socket.room).emit('startGame', startGamePlayerCount);  
   });
   socket.on('cycleOrderIcon', function (data) {
     io.sockets.to(data.roomID).emit('cycleClientOrderIcon', {
