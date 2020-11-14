@@ -164,6 +164,8 @@ $(function () {
         }
     });
     socketio.on('wait4Players', function (numPlayers) {
+        
+        console.log("--------wait4Players-----------");
         // if (numPlayers < gameConfig_playerCount) {
         //     waitRoom(numPlayers);
         // } else {
@@ -171,6 +173,7 @@ $(function () {
         // }
     });
     socketio.on('fullRoom', function (data) {
+        console.log("--------fullRoom-----------");
         clearSetupModule();
         $(".setupModule:eq(0)").html("Room is Full. Try Again Later");
     })
@@ -433,6 +436,8 @@ function clearSetupModule() {
 let codeCandidates = "234689ABCEFJKMNPQRTVWXY"
 
 function joinRoom() {
+    
+    console.log("--------joinRoom-----------");
     roomID = $("#roomID").val();
     remainingPlayers = gameConfig_playerCount;
 

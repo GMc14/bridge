@@ -1,3 +1,4 @@
+let maximumRoomSize = 10;
 var http = require("http"),
   socketio = require("socket.io"),
   fs = require("fs"),
@@ -51,7 +52,7 @@ io.sockets.on('connection', function (socket) {
   socket.on('create', function (room) {
     var thisRoom = io.sockets.adapter.rooms[room];
     var numInRoom = thisRoom === undefined ? 0 : thisRoom.length;
-    if (numInRoom >= gameConfig_playerCount) {
+    if (numInRoom >= maximumRoomSize) {
       io.sockets.to(socket.id).emit('fullRoom', numInRoom);
     } else {
       socket.join(room);
