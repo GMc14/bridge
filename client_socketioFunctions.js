@@ -179,7 +179,7 @@ $(function () {
     })
     socketio.on('makeGameMaster', function (data) {
         console.log("--------makeGameMaster-----------");
-        
+        $("#startGameButton").prop('disabled', false);
     })
     
     socketio.on('setPlayerCountOnClient', function (playerCount) {
@@ -520,6 +520,7 @@ function playerModule() {
     $("#startGameButton").on("click",function(){
         socketio.emit('startGameOnServer');
     });
+    $("#startGameButton").prop('disabled', true);
     playerSelect();
 }
 

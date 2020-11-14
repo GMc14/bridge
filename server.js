@@ -59,8 +59,8 @@ io.sockets.on('connection', function (socket) {
       socket.room = room;
       numInRoom++;
       io.sockets.to(room).emit('wait4Players', numInRoom);
-      if(!io.sockets.adapter.rooms[data.roomID].gameMaster){
-        io.sockets.adapter.rooms[data.roomID].gameMaster = socket.id;
+      if(!thisRoom.gameMaster){
+        thisRoom.gameMaster = socket.id;
         io.sockets.to(socket.id).emit('makeGameMaster');
       }
     }
