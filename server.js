@@ -62,6 +62,8 @@ io.sockets.on('connection', function (socket) {
       thisRoom = io.sockets.adapter.rooms[room];
       console.log("room: "+JSON.stringify(room));
       console.log("thisRoom: "+JSON.stringify(thisRoom));
+     
+      console.log("io.sockets: "+JSON.stringify(io.sockets)); 
       if(thisRoom && !thisRoom.gameMaster){
         thisRoom.gameMaster = socket.id;
         io.sockets.to(socket.id).emit('makeGameMaster');
@@ -94,7 +96,11 @@ io.sockets.on('connection', function (socket) {
     });
   });
   socket.on('startGameOnServer',function(data){
-      io.sockets.to(socket.room).emit('startGame');  
+    console.log("---startGameOnServer----");
+    var startGamePlayerCount = io.sockets.adapter.rooms[socket.room].length;
+    console.log("---startGameOnServer---- startGamePlayerCount"+startGamePlayerCount);
+    io.sockets.to(socket.room).emit('setPlayerCountOnClient', startGamePlayerCount);
+    io.sockets.to(socket.room).emit('startGame',startGamePlayerCount);  
   });
   socket.on('cycleOrderIcon', function (data) {
     io.sockets.to(data.roomID).emit('cycleClientOrderIcon', {

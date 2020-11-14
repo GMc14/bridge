@@ -199,7 +199,8 @@ $(function () {
         alert(nickname + " left the room. Kicking everybody out... ");
         window.location.reload();
     });
-    socketio.on('startGame', function () {
+    socketio.on('startGame', function (playerCount) {
+        gameConfig_playerCount = playerCount;
         $("#playArea").show();
         console.log("client_socket :: startGame");
         preRenderImgs();
