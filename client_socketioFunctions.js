@@ -450,7 +450,7 @@ function joinRoom() {
     remainingPlayers = gameConfig_playerCount;
 
     while (roomID.length < 4) {
-        roomID.concat(codeCandidates.charAt(Math.floor(Math.random() * codeCandidates.length)));
+        roomID = roomID.concat(codeCandidates.charAt(Math.floor(Math.random() * codeCandidates.length)));
     }
     roomID = roomID.toUpperCase()
     socketio.emit('create', roomID);
