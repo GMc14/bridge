@@ -295,7 +295,7 @@ $(function () {
         setPlayerShortName(data.playerNumber, data.shortName);
     });
 
-    
+
     socketio.on('dealToClients', function (data) {
         xoob = data;
         console.log("--------------dealToClients---------------- " + JSON.stringify(data, null, 4));
@@ -716,7 +716,9 @@ function constructPlayArea() {
         playerIdMap[j] = 'Player' + pNumber;
         inversePlayerIdMap['Player' + pNumber] = j;
         $("#loc" + j + "name").html('Player' + pNumber + ': ' + playerNickNames[pNumber - 1]);
-
+        $.each(playerOptions, function () {
+            $("#drpPlyrName" + j).append('<option value="' + this + '">' + this + '</option>');
+        });
         $("#drpPlyrName" + j).change(function () {
             console.log(">>>>>>>>>>>>>cycleAssignee selected ---------------- cardID:" + j + ";;" + $(this).val());
             socketio.emit('assignShortName', {
@@ -726,6 +728,17 @@ function constructPlayArea() {
             });
         });
     }
+    $.each(playerOptions, function () {
+        $("#myDrpPlyrName").append('<option value="' + this + '">' + this + '</option>');
+    });
+    $("#myDrpPlyrName").change(function () {
+        console.log(">>>>>>>>>>>>>cycleAssignee selected ---------------- cardID:" + j + ";;" + $(this).val());
+        socketio.emit('assignShortName', {
+            playerNumber: playerNum.replace('Player', ''),
+            roomID: roomID,
+            shortName: $(this).val()
+        });
+    });
 }
 
 function rotate($el, degrees) {

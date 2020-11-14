@@ -194,11 +194,15 @@ function setTrumpCardAssignee(cardID, player) {
   $("#assignment" + cardID).addClass(player);
 }
 
-function setPlayerShortName(playerNumber, shortName){
+function setPlayerShortName(forPlayerNumber, shortName){
+  var _idSelector = "#loc"+inversePlayerIdMap['Player'+forPlayerNumber]+"name";
+  if(forPlayerNumber == playerNum){
+    _idSelector = "#myName";
+  }
   $.each(playerOptions,function(index,value){
-    $("#loc"+inversePlayerIdMap['Player'+playerNumber]+"name").removeClass(value);
+    $(_id).removeClass(value);
   });
-  $("#loc"+inversePlayerIdMap['Player'+playerNumber]+"name").addClass(player);
+  $(_id).addClass(player);
 }
 
 var tokenOptions = ['x', '1', '2', '3', '4', '5', 'i', 'ii', 'iii', 'iiii', 'O', '0'];
