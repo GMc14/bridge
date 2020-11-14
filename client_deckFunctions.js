@@ -80,19 +80,18 @@ function createDeck(taskOnly = false) {
   }
 }
 function getSorted(inputDeck) {
-  var m = inputDeck.length,
-    t, i, shuffled = inputDeck;
-  // While there are cards to shuffle
-  while (m) {
-    m--;
-    //Pick a remaining element
-    i = Math.floor(Math.random() * m);
-    // Swap with last remaining element
-    t = shuffled[m];
-    shuffled[m] = shuffled[i];
-    shuffled[i] = t;
-  }
-  return shuffled;
+  inputDeck.sort(function (a, b) {
+    var aSuit = a.suit.replace("S","E");
+    var bSuit = b.suit.replace("S","E"); //Move spades between D-iamonds and H-earts
+    var aRank = a.rank;
+    var bRank = b.rank;
+    if (aSuit == bSuit) {
+      return (aRank < bRank) ? -1 : (aRank > bRank) ? 1 : 0;
+    } else {
+      return aSuit < bSuit ? -1 : 1;
+    }
+  });
+  return inputDeck;
 }
 function getShuffled(inputDeck) {
   var m = inputDeck.length,
