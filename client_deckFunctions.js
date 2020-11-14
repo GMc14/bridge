@@ -5,20 +5,21 @@ function Card(suit, rank) {
 
 var currentTrumpCards = [];
 function startGame() {
-  
   $("#myHand").show();
   console.log("--------------startGame-------isGameMaster?--------" + isGameMaster);
+  $("#myHand").empty();
+  $(".otherPlayerHand").empty();
   if(isGameMaster){
     $("#gameControls").show();
-    $("#tokenLegend").hide();
-  }
-  if (playerNum == dealer) {
-    console.log("--------------startGame-------I'm the dealer---------" + playerNum + " == " + dealer);
-    $("#myHand").empty();
-    $(".otherPlayerHand").empty();
+    $("#tokenLegend").hide();    
     createDeck();
     deck = getShuffled(deck);
     dealCards();
+  }
+  if (playerNum == dealer) {
+    console.log("--------------startGame-------I'm the dealer---------" + playerNum + " == " + dealer);
+
+
   } else {
     console.log("--------------startGame-------not the dealer---------" + playerNum + " == " + dealer);
   }

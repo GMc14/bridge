@@ -339,7 +339,8 @@ $(function () {
                 $(".highlighted").removeClass("highlighted");
             }
             $(".leader").removeClass("leader");
-            $('#loc' + lead).addClass("leader");
+            $('#loc' + lead+'name').addClass("leader");
+            console.log("--------------markingLeader---------------- #loc" + lead+'name');
             $(".highlighted").removeClass("highlighted");
             $('#bidOfRound').show();
         }
