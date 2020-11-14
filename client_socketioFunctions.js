@@ -102,7 +102,7 @@ if (gameConfig_isEuchre) {
     startPlayerCard = crewStartCard;
 }
 var cardback = "card_imgs/cardback.png";
-
+var commanderName;
 //Player values
 var nickname;
 var remainingPlayers;
@@ -190,7 +190,7 @@ $(function () {
         }
     });
     $("#myCommunication").click(function () {
-        updateComms(new Date().getTime() % 2);
+        updateComms(new Date().getTime() % 3);
     });
 
     function updateComms(status) {
@@ -385,6 +385,7 @@ $(function () {
                 $(".highlighted").removeClass("highlighted");
             }
             var leaderNum = inversePlayerIdMap[lead];
+            commanderName = getNicknameForPlayer(lead);
             console.log("--------------markingLeader---------------- #loc" + leaderNum + 'name');
             $(".leader").removeClass("leader");
             $('#loc' + leaderNum + 'name').addClass("leader");
@@ -418,13 +419,18 @@ $(function () {
         currentPlayer = nextPlayer(currentPlayer);
 
         $(".highlighted").removeClass("highlighted");
+        var playerOnTurnName;
+ 
         if (currentPlayer == playerNum) {
-            $("#turnIndicator").text("Your Turn");
+
             $("#myHand").addClass("highlighted");
             highlightPlayable();
+            playerOnTurnName="You!";
         } else {
-            $("#turnIndicator").text(getNicknameForPlayer(currentPlayer) + "'s Turn");
+            playerOnTurnName = getNicknameForPlayer(currentPlayer);
         }
+
+        $("#turnIndicator").html("<b>Commander</b>: "+commanderName + "    <b>On Duty</b>: "+ playerOnTurnName);
     });
     socketio.on('winnerOfRound', function (trickWinner, trickCards) {
         roundNumber++;

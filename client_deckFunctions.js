@@ -196,9 +196,9 @@ function setTrumpCardAssignee(cardID, player) {
 
 function setPlayerShortName(forPlayerNumber, shortName){
   var _idSelector = "#loc"+inversePlayerIdMap['Player'+forPlayerNumber]+"name";
-  
-  console.log("Is it me? "+forPlayerNumber+"  vs. "+playerNum);
-  if(forPlayerNumber == playerNum){
+  var tempPlayerNum = playerNum.replace('Player', '');
+  console.log("Is it me? "+forPlayerNumber+"  vs. "+tempPlayerNum);
+  if(forPlayerNumber == tempPlayerNum){
     console.log("That's Me");
     _idSelector = "#myName";
   }
