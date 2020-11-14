@@ -313,7 +313,7 @@ $(function () {
         setTrumpCardAssignee(data.cardID, data.player);
     });
     socketio.on('assignShortNameToClients', function (data) {
-        console.log("--------------assignShortNameToClients----------------data.cardID " + data.cardID + ",  data.player: " + data.player);
+        console.log("--------------assignShortNameToClients----------------data.playerNumber " + data.playerNumber + ",  data.shortName: " + data.shortName);
         setPlayerShortName(data.playerNumber, data.shortName);
     });
 
@@ -710,6 +710,7 @@ var inversePlayerIdMap = [];
 function constructPlayArea() {
     var clientNumber = Number(playerNum.slice(-1));
     for (var j = 1; j < gameConfig_playerCount; j++) {
+        var pNumber = Number((clientNumber + j - 1) % gameConfig_playerCount) + 1;
 
         var stuff = $('<div alt="loc' + j + 'stuff" id="loc' + j + 'stuff" class="stuff"></div>');
         var plays = $('<div alt="loc' + j + 'play" id="loc' + j + 'play" class="plays"></div>');
@@ -721,7 +722,7 @@ function constructPlayArea() {
         $(playerContainer).append(playerHand);
         $(playerContainer).append(stuff);
         $(playerContainer).append(plays);
-        $(playerContainer).append("<select class='trumpDrops plyrDrop' id='drpPlyrName" + j + "' name='dropdownIcon' size=1>");
+        $(playerContainer).append("<select class='trumpDrops plyrDrop plyrDropName' pNum='"+pNumber+"' id='drpPlyrName" + j + "' name='dropdownIcon' size=1>");
         $(playerContainer).append(name);
         $(playerContainer).append(winCounter);
 
@@ -733,8 +734,6 @@ function constructPlayArea() {
             "top": "12vh",
             "transform": "rotate(" + positionRelativeToCenter * 15 + "deg) translateY(" + Math.abs(positionRelativeToCenter) * 4 + "vmax)"
         });
-
-        var pNumber = Number((clientNumber + j - 1) % gameConfig_playerCount) + 1;
         playerIdMap[j] = 'Player' + pNumber;
         inversePlayerIdMap['Player' + pNumber] = j;
         $("#loc" + j + "name").html('Player' + pNumber + ': ' + playerNickNames[pNumber - 1]);
@@ -743,9 +742,10 @@ function constructPlayArea() {
         });
         $("#drpPlyrName" + j).change(function () {
             var shortName = $(this).val();
-            console.log(">>>>>>>>>>>>>myDrpPlyrName selected ---------------- cardID:" + pNumber + " : " + shortName);
+            var tempPNumber = $(this).attr("pNum");
+            console.log(">>>>>>>>>>>>>drpPlyrName selected ---------------- cardID:" + tempPNumber + " : " + shortName);
             socketio.emit('assignShortName', {
-                playerNumber: pNumber,
+                playerNumber: tempPNumber,
                 roomID: roomID,
                 shortName: shortName
             });

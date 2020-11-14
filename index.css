@@ -16,9 +16,9 @@ body {
   background-color: #131313;
   background-size: 20px 20px;
 }
-div {
+/* div {
   border: 2px dotted rgba(255, 255, 128, 0.8) !important;
-}
+} */
 #tokenQmark {
   height: 2vmax;
 }
@@ -59,6 +59,7 @@ div {
   top: 1.7vmax;
   cursor: pointer;
   left: 0.4vmax;
+  font-size: 1.2vmax;
 }
 .plyrDrop {
   top: 2.9vmax;
@@ -291,7 +292,8 @@ td, th {
   left: 60vw;
 }
 .potentialTask{
-  width:3vmin;
+  width:4vmax;
+  margin:1px;
   background: #fff;
 }
 
@@ -299,9 +301,14 @@ td, th {
   position: absolute;
   top: 58.5vh;
   left: 30vw;
+  font-size: 2vmax;
+  cursor: pointer;
+  font-weight: bold;
   z-index: 99999999;
 }
-
+.plyrDropName{
+  display:none;
+}
 #myDrpPlyrName{
   position: absolute;
   top: 58.5vh;

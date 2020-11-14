@@ -11,6 +11,7 @@ function startGame() {
   $(".otherPlayerHand").empty();
   if(isGameMaster){
     $("#gameControls").show();
+    $(".plyrDropName").show();
     $("#tokenLegend").hide();    
     createDeck();
     deck = getShuffled(deck);
@@ -195,7 +196,10 @@ function setTrumpCardAssignee(cardID, player) {
 
 function setPlayerShortName(forPlayerNumber, shortName){
   var _idSelector = "#loc"+inversePlayerIdMap['Player'+forPlayerNumber]+"name";
+  
+  console.log("Is it me? "+forPlayerNumber+"  vs. "+playerNum);
   if(forPlayerNumber == playerNum){
+    console.log("That's Me");
     _idSelector = "#myName";
   }
   $.each(playerOptions,function(index,value){
