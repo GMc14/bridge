@@ -17,10 +17,7 @@ body {
   background-size: 20px 20px;
 }
 div {
-  border-style: dotted;
-  border-color: rgba(255, 255, 128, 0.13);
-  border: rgba(255, 255, 128, 0.13);
-  border-width: 2px;
+  border: 2px dotted rgba(255, 255, 128, 0.8) !important;
 }
 #tokenQmark {
   height: 2vmax;
@@ -342,7 +339,10 @@ td, th {
   border-radius: 0.5vmax;
   transition-duration: 0.2s;
 }
-
+.gameButtons:disabled, .gameButtons[disabled]  {
+  background-color: #666;
+  color: #ccc;
+}
 .gameButtons:hover {
   background-color: #435078;
   color: white;
@@ -445,19 +445,19 @@ div#myHand.highlighted {
 
 .AM{
   text-shadow: 0 -1px 5px #BB2200, -2px 0 10px #BB2200, 0 3px 15px #CCDD33, 4px 0 25px #CCDD33;
-  color: #FFF;
+  color:rgba(255,255,255,0.7);
 }
 .AP{
-  text-shadow: 0 -1px 5px #00cc99, -2px 0 10px #00cc99, 0 3px 15px #FF66dd, 4px 0 25px #FF66dd;
-  color: #FFF;
+  text-shadow: 0 -1px 5px #00bb99, -2px 0 10px #00bb99, 0 3px 15px #FF66dd, 4px 0 25px #FF66dd;
+  color:rgba(255,255,255,0.7);
 }
 .EM{
   text-shadow: 0 -1px 5px #4400AA, -2px 0 10px #4400AA, 0 3px 15px #009933, 4px 0 25px #009933;
-  color: #FFF;
+  color:rgba(255,255,255,0.7);
 }
 .GM{
-  text-shadow: 0 -1px 5px #FF8800, -2px 0 10px #FF8800, 0 3px 15px #003399, 4px 0 25px #003399;
-  color: #FFF;
+  text-shadow: 0 -1px 5px #FF8800, -2px 0 10px #FF8800, 0 3px 15px #002299, 4px 0 25px #002299;
+  color:rgba(255,255,255,0.7);
 }
 
 .myCards:hover {
