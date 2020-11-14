@@ -59,7 +59,12 @@ io.sockets.on('connection', function (socket) {
       socket.room = room;
       numInRoom++;
       io.sockets.to(room).emit('wait4Players', numInRoom);
-      if(!thisRoom.gameMaster){
+
+      
+      thisRoom = io.sockets.adapter.rooms[room];
+      console.log("room: "+JSON.stringify(room));
+      console.log("thisRoom: "+JSON.stringify(thisRoom));
+      if(thisRoom && !thisRoom.gameMaster){
         thisRoom.gameMaster = socket.id;
         io.sockets.to(socket.id).emit('makeGameMaster');
       }
@@ -91,7 +96,7 @@ io.sockets.on('connection', function (socket) {
     });
   });
   socket.on('startGameOnServer',function(data){
-      io.sockets.to(data.roomID).emit('startGame');  
+      io.sockets.to(socket.room).emit('startGame');  
   });
   socket.on('cycleOrderIcon', function (data) {
     io.sockets.to(data.roomID).emit('cycleClientOrderIcon', {
