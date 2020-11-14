@@ -285,6 +285,7 @@ td, th {
 }
 
 #myDrpPlyrName{
+  position: absolute;
   top: 58.5vh;
   left: 42vw;
 }

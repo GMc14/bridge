@@ -721,7 +721,7 @@ function constructPlayArea() {
         });
         $("#drpPlyrName" + j).change(function () {
             var shortName = $(this).val();
-            console.log(">>>>>>>>>>>>>myDrpPlyrName selected ---------------- cardID:" + playerNumber + " : " + shortName);
+            console.log(">>>>>>>>>>>>>myDrpPlyrName selected ---------------- cardID:" + pNumber + " : " + shortName);
             socketio.emit('assignShortName', {
                 playerNumber: pNumber,
                 roomID: roomID,
