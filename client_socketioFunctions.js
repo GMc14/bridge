@@ -9,7 +9,7 @@ var playerColors = ['#004499', '#770011', '#666600', '#116600', '#440099', '#883
 var gameConfig_playerCount = 4;
 var gameConfig_startCardsPerPlayer = -1; //-1==Deal All
 var gameConfig_numberOfRounds = gameConfig_startCardsPerPlayer; //Plya all cards in hand
-
+var isGameMaster = false;
 var gameConfid_isCrew = true;
 var gameConfig_permaTrumpSuit = gameConfid_isCrew ? "R" : '';
 var crewBonusCards = new Array("R1", "R2", "R3", 'R4');
@@ -180,6 +180,7 @@ $(function () {
     socketio.on('makeGameMaster', function (data) {
         console.log("--------makeGameMaster-----------");
         $("#startGameButton").prop('disabled', false);
+        isGameMaster = true;
     })
     
     socketio.on('setPlayerCountOnClient', function (playerCount) {
