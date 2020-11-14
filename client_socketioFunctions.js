@@ -119,9 +119,9 @@ var tricksWon = 0;
 var roundNumber = 0;
 var handsNeeded;
 
-function updateTurnIndicator(playerOnTurnName, isMe=false, isLead=false){
-    $("#turnIndicator").html("<b>Commander</b>: "+commanderName + "    <b>"+(isLead?"To Lead":"On Duty")+"</b>: "+ playerOnTurnName);
-    if(isMe){
+function updateTurnIndicator(playerOnTurnName, isMe = false, isLead = false) {
+    $("#turnIndicator").html("<b>Commander</b>: " + commanderName + "    <b>" + (isLead ? "To Lead" : "On Duty") + "</b>: " + playerOnTurnName);
+    if (isMe) {
         $("#myHand").addClass("highlighted");
         highlightPlayable();
     }
@@ -225,7 +225,6 @@ $(function () {
     })
     socketio.on('makeGameMaster', function (data) {
         console.log("--------makeGameMaster-----------");
-        $("#startGameButton").prop('disabled', false);
         isGameMaster = true;
     })
 
@@ -427,7 +426,7 @@ $(function () {
         } else {
             updateTurnIndicator(getNicknameForPlayer(currentPlayer), false, false);
         }
-        
+
     });
     socketio.on('winnerOfRound', function (trickWinner, trickCards) {
         roundNumber++;
@@ -519,6 +518,11 @@ function joinRoom() {
 
 }
 
+function leaveSeat(){
+    socketio.emit('leaveSeat', roomID);
+}
+
+
 function leaveRoom() {
     socketio.emit('leave', roomID);
     $("#leaveRoom").hide();
@@ -533,6 +537,25 @@ function leaveRoom() {
 //     $(".setupModule:eq(0)").html("<div class='loading'>Current Players in Room: " + num + " <br> Waiting for Players</div>");
 // }
 var playerModuleIsShowing = false;
+
+function isOkayToStartTheGame() {
+    var lowestOpen = 999;
+    var highestReadied = 0;
+    $('.playerBtns').each(function () {
+        var number = Number($(this).data("player-number"));
+        var isReadied = $(this).prop("disabled");
+        console.log("P#:" + number);
+        if (isReadied && number > highestReadied) {
+            highestReadied = number;
+        }
+        if (!isReadied && number < lowestOpen) {
+            lowestOpen = number;
+        }
+    });
+    var isOkay = lowestOpen > highestReadied;
+    console.log("LO: " + lowestOpen + "   HR: " + highestReadied + "  okay? " + isOkay);
+    return isOkay;
+}
 
 function playerModule() {
     console.log("--------------playerModule----------------");
@@ -559,9 +582,6 @@ function playerModule() {
     span2.setAttribute("id", "playerSelectLabel");
     span2.appendChild(document.createTextNode("SELECT PLAYER: " + teamInfo));
 
-
-
-
     $(playerSetup).append(span2);
     $(playerSetup).append(span1);
     $(playerSetup).append("<br />");
@@ -587,7 +607,16 @@ function playerModule() {
         $(playerSetup).append(currPlayer);
     }
     $(playerSetup).append("<br />");
-    $(playerSetup).append('<button id="startGameButton" class="startBtn">Start Game</button>')
+    if (isGameMaster) {
+        $(playerSetup).append('<button id="startGameButton" class="startBtn">Start Game</button>');
+        $("#startGameButton").on("click", function () {
+            if (isOkayToStartTheGame()) {
+                socketio.emit('startGameOnServer');
+            } else {
+                alert("Problematic Open Seats");
+            }
+        });
+    }
     $(".setupModule:eq(0)").append(playerSetup);
     $(".playerBtns").on("click", function () {
         console.log("--------------playerBtns Click----------------");
@@ -600,6 +629,8 @@ function playerModule() {
         } else {
             // $("#playerSetup").hide();
             // $(".setupModule:eq(0)").html("<div class='loading'>Waiting for Teams</div>");
+            
+
             var boldNames = document.createElement("b");
             boldNames.appendChild(document.createTextNode(playerNum + ': ' + nickname));
             $("#myName").append(boldNames);
@@ -615,15 +646,10 @@ function playerModule() {
             });
             //TODO: show chat if want to use it $('#chat').show();
             playerColor = playerColors[playerIndex - 1];
-            $("#playerSelectLabel").hide();
-            $("#nicknameLabel").hide();
-            $("#nickname").hide();
+            $(".playerBtns").prop('disabled', true);
+            $("#nickname").prop('disabled', true);
         }
     });
-    $("#startGameButton").on("click", function () {
-        socketio.emit('startGameOnServer');
-    });
-    $("#startGameButton").prop('disabled', true);
 }
 
 function addWinText(who, wins) {
@@ -724,7 +750,7 @@ function constructPlayArea() {
         $(playerContainer).append(playerHand);
         $(playerContainer).append(stuff);
         $(playerContainer).append(plays);
-        $(playerContainer).append("<select class='trumpDrops plyrDrop plyrDropName' pNum='"+pNumber+"' id='drpPlyrName" + j + "' name='dropdownIcon' size=1>");
+        $(playerContainer).append("<select class='trumpDrops plyrDrop plyrDropName' pNum='" + pNumber + "' id='drpPlyrName" + j + "' name='dropdownIcon' size=1>");
         $(playerContainer).append(name);
         $(playerContainer).append(winCounter);
 

@@ -305,7 +305,6 @@ td, th {
 }
 
 #myCommunication{
-  display:none;
   position: absolute;
   top: 58.5vh;
   left: 38vw;
@@ -533,10 +532,9 @@ div#myHand.highlighted {
 
 .assignments {
   z-index: 999999999;
-  background: #1d1d1d;
   position: absolute;
   top: 2.9vmax;
-  left: 6.5vw;
+  left: 6.75vw;
 }
 
 .AM{
