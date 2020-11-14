@@ -136,8 +136,23 @@ $(function () {
         } else {
             alert("No Tasks Available");
         }
+    });    
+    $('#chooseTask').on('click', function () {
+        $.each(taskDeck, function(index, value){
+            var cardObj = $("#" + value + "_img").clone().show();
+            $(cardObj).data('task-index',index);
+            $(cardObj).addClass('potentialTask');
+            $("#taskOptions").append(cardObj);
+        });
+        $(".potentialTask").click(function(){
+            var selectedCardIndex = $(this).attr("data-task-index");
+            socketio.emit('drawTask', taskDeck[selectedCardIndex]);
+            taskDeck.splice(selectedCardIndex,1);
+            $("#taskOptions").empty();
+        });
     });
     $('#hideTasks').on('click', function () {
+        createDeck(true);
         socketio.emit('hideTasks');
     });
     $('#restartGame').on('click', function () {
@@ -339,8 +354,9 @@ $(function () {
                 $(".highlighted").removeClass("highlighted");
             }
             $(".leader").removeClass("leader");
-            $('#loc' + lead+'name').addClass("leader");
-            console.log("--------------markingLeader---------------- #loc" + lead+'name');
+            var leaderNum = inversePlayerIdMap[lead];
+            $('#loc' + leaderNum+'name').addClass("leader");
+            console.log("--------------markingLeader---------------- #loc" + leaderNum+'name');
             $(".highlighted").removeClass("highlighted");
             $('#bidOfRound').show();
         }

@@ -56,7 +56,8 @@ div {
   top: 0.4vmax;
 }
 .doneBut{
-  top: 1.2vmax;
+  top: 1.6vmax;
+  cursor: pointer;
 }
 .plyrDrop {
   top: 2.9vmax;

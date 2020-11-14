@@ -5,8 +5,8 @@ function Card(suit, rank) {
 
 var currentTrumpCards = [];
 function startGame() {
-  $("#myHand").show();
   console.log("--------------startGame-------isGameMaster?--------" + isGameMaster);
+  $("#myHand").show();
   $("#myHand").empty();
   $(".otherPlayerHand").empty();
   if(isGameMaster){
@@ -60,7 +60,7 @@ function preRenderImgs() {
   console.log("preRenderImgs-#1000");
 }
 
-function createDeck() {
+function createDeck(taskOnly = false) {
   deck = [];
   taskDeck = [];
   for (var i = 0; i < suits.length; i++) {
@@ -68,14 +68,32 @@ function createDeck() {
       if (gameConfid_isCrew) {
         taskDeck.push(new Card(suits[i], ranks[j]));
       }
-      deck.push(new Card(suits[i], ranks[j]));
+      if(!taskOnly){
+        deck.push(new Card(suits[i], ranks[j]));
+      }
     }
   }
-  for (var i = 0; i < bonusCards.length; i++) {
-    deck.push(new Card(bonusCards[i].charAt(0), bonusCards[i].charAt(1)));
+  if(!taskOnly){
+    for (var i = 0; i < bonusCards.length; i++) {
+      deck.push(new Card(bonusCards[i].charAt(0), bonusCards[i].charAt(1)));
+    }
   }
 }
-
+function getSorted(inputDeck) {
+  var m = inputDeck.length,
+    t, i, shuffled = inputDeck;
+  // While there are cards to shuffle
+  while (m) {
+    m--;
+    //Pick a remaining element
+    i = Math.floor(Math.random() * m);
+    // Swap with last remaining element
+    t = shuffled[m];
+    shuffled[m] = shuffled[i];
+    shuffled[i] = t;
+  }
+  return shuffled;
+}
 function getShuffled(inputDeck) {
   var m = inputDeck.length,
     t, i, shuffled = inputDeck;
@@ -180,6 +198,7 @@ var tokenOptions = ['x', '1', '2', '3', '4', '5', 'i', 'ii', 'iii', 'iiii', 'O',
 //TODO: allow selecting specific cards
 var playerOptions = ['', 'GM', 'AM', 'EM',"AP"];
 
+
 function displayTrumpCard(trumpCard) {
   var cardRank = String(trumpCard.rank);
   var cardSuit = String(trumpCard.suit);
@@ -192,6 +211,9 @@ function displayTrumpCard(trumpCard) {
   var cardObj = $("#" + cardID + "_img").clone().show();
   $(cardObj).addClass('isTrump');
   $(cardObj).appendTo(card);
+  $(".trumpCard").click(function(){
+    alert("clicked "+cardID);
+  });
 
   $("#" + cardID + "_img").addClass('isTrump');
   //card.addEventListener("click", playCard, true);
