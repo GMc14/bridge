@@ -168,8 +168,8 @@ function setTrumpCardOrderIcon(cardID, icon) {
 
 function setTrumpCardAssignee(cardID, player) {
   console.log(">>>>>>>>>>>>> setTrumpCardAssignee " + cardID + "  :  " + player);
-  $.each(playerOptions,function(){
-    $("#assignment" + cardID).removeClass(this);
+  $.each(playerOptions,function(index,value){
+    $("#assignment" + cardID).removeClass(value);
   });
   $("#assignment" + cardID).text(player);
   $("#assignment" + cardID).addClass(player);
@@ -201,12 +201,21 @@ function displayTrumpCard(trumpCard) {
 
   if (isGameMaster) {
     $(card).append("<select class='trumpDrops icnDrop' id='drpIcon" + cardID + "' name='dropdownIcon' size=1>");
+    $(card).append("<i class='material-icons trumpDrops doneBut' id='doneIcon" + cardID + "'>done</i>");
     $(card).append("<select class='trumpDrops plyrDrop' id='drpPlyr" + cardID + "' name='dropdownIcon' size=1>");
     $.each(tokenOptions, function () {
       $("#drpIcon" + cardID).append('<option value="' + this + '">' + this + '</option>');
     });
     $.each(playerOptions, function () {
       $("#drpPlyr" + cardID).append('<option value="' + this + '">' + this + '</option>');
+    });
+    $("#doneIcon" + cardID).click(function () {
+      console.log(">>>>>>>>>>>>> doneIcon selected ---------------- cardID:" + cardID + ";;");
+      socketio.emit('cycleOrderIcon', {
+        cardID: cardID,
+        roomID: roomID,
+        icon: '0'
+      });
     });
     $("#drpIcon" + cardID).change(function () {
 
