@@ -119,6 +119,13 @@ var tricksWon = 0;
 var roundNumber = 0;
 var handsNeeded;
 
+function updateTurnIndicator(playerOnTurnName, isMe=false, isLead=false){
+    $("#turnIndicator").html("<b>Commander</b>: "+commanderName + "    <b>"+(isLead?"To Lead":"On Duty")+"</b>: "+ playerOnTurnName);
+    if(isMe){
+        $("#myHand").addClass("highlighted");
+        highlightPlayable();
+    }
+}
 $(function () {
     $("#tokenQmark").click(function () {
         console.log("show THINGSSSS");
@@ -292,9 +299,7 @@ $(function () {
             lead = currentPlayer;
             $('#bidArea').hide();
             if (playerNum == currentPlayer) {
-                alert("You lead");
-                $("#turnIndicator").text("Your Turn");
-                $("#myHand").addClass("highlighted");
+                updateTurnIndicator("You", true, true);
             }
             $('#bidOfRound').show();
         } else {
@@ -378,11 +383,9 @@ $(function () {
             lead = currentPlayer;
             $(".highlighted").removeClass("highlighted");
             if (playerNum == currentPlayer) {
-                $("#turnIndicator").text("Your lead!");
-                $("#myHand").addClass("highlighted");
+                updateTurnIndicator("You", true, true);
             } else {
-                $("#turnIndicator").text(getNicknameForPlayer(lead) + "  leads");
-                $(".highlighted").removeClass("highlighted");
+                updateTurnIndicator(getNicknameForPlayer(lead), false, true);
             }
             var leaderNum = inversePlayerIdMap[lead];
             commanderName = getNicknameForPlayer(lead);
@@ -419,18 +422,12 @@ $(function () {
         currentPlayer = nextPlayer(currentPlayer);
 
         $(".highlighted").removeClass("highlighted");
-        var playerOnTurnName;
- 
         if (currentPlayer == playerNum) {
-
-            $("#myHand").addClass("highlighted");
-            highlightPlayable();
-            playerOnTurnName="You!";
+            updateTurnIndicator("You!", true, false);
         } else {
-            playerOnTurnName = getNicknameForPlayer(currentPlayer);
+            updateTurnIndicator(getNicknameForPlayer(currentPlayer), false, false);
         }
-
-        $("#turnIndicator").html("<b>Commander</b>: "+commanderName + "    <b>On Duty</b>: "+ playerOnTurnName);
+        
     });
     socketio.on('winnerOfRound', function (trickWinner, trickCards) {
         roundNumber++;
@@ -439,10 +436,9 @@ $(function () {
         $(".highlighted").removeClass("highlighted");
 
         if (playerNum == currentPlayer) {
-            $("#turnIndicator").text("Your lead!");
-            $("#myHand").addClass("highlighted");
+            updateTurnIndicator("You", true, true);
         } else {
-            $("#turnIndicator").text(getNicknameForPlayer(lead) + "  leads");
+            updateTurnIndicator(getNicknameForPlayer(lead), false, true);
         }
         console.log("[][][][][][][] winner of round: " + trickWinner + " cards:" + trickCards);
         var winnerIndex = inversePlayerIdMap[trickWinner];
