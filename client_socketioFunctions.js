@@ -149,7 +149,7 @@ $(function () {
         });
         $(".potentialTask").click(function () {
             var selectedCardIndex = $(this).attr("data-task-index");
-            console.log("emitting "+JSON.stringify(taskDeck[selectedCardIndex]) +" base on "+selectedCardIndex);
+            console.log("emitting " + JSON.stringify(taskDeck[selectedCardIndex]) + " base on " + selectedCardIndex);
             socketio.emit('drawTask', taskDeck[selectedCardIndex]);
             taskDeck.splice(selectedCardIndex, 1);
             $("#taskOptions").empty();
@@ -182,6 +182,19 @@ $(function () {
             $(this).val('');
         }
     });
+    $("#myCommunication").click(function () {
+        updateComms(new Date().getTime() % 2);
+    });
+
+    function updateComms(status) {
+        if (status == 1) {
+            $("#myCommunication").html(mic_none);
+        } else if (status == 2) {
+            $("#myCommunication").html(mic_off);
+        } else {
+            $("#myCommunication").html(mic);
+        }
+    }
     socketio.on('wait4Players', function (numPlayers) {
 
         console.log("--------wait4Players-----------");

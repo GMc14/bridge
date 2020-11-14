@@ -288,6 +288,12 @@ td, th {
   background: #fff;
 }
 
+#myCommunication{
+  position: absolute;
+  top: 58.5vh;
+  left: 30vw;
+}
+
 #myDrpPlyrName{
   position: absolute;
   top: 58.5vh;
@@ -640,30 +646,42 @@ div#myHand.highlighted {
             transform-origin: center center;
     -webkit-animation-timing-function: ease-out;
             animation-timing-function: ease-out;
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+    -webkit-transform-origin: 50% 100%;
+            transform-origin: 50% 100%;
   }
   10% {
     -webkit-transform: scale(1.03);
             transform: scale(1.03);
     -webkit-animation-timing-function: ease-in;
             animation-timing-function: ease-in;
+    -webkit-transform: rotate(1deg);
+            transform: rotate(1deg);
   }
   17% {
     -webkit-transform: scale(0.99);
             transform: scale(0.99);
     -webkit-animation-timing-function: ease-out;
             animation-timing-function: ease-out;
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
   }
   33% {
     -webkit-transform: scale(1.02);
             transform: scale(1.02);
     -webkit-animation-timing-function: ease-in;
             animation-timing-function: ease-in;
+    -webkit-transform: rotate(-1deg);
+            transform: rotate(-1deg);
   }
   45% {
     -webkit-transform: scale(1);
             transform: scale(1);
     -webkit-animation-timing-function: ease-out;
             animation-timing-function: ease-out;
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
   }
 }
 @keyframes heartbeat {
@@ -674,29 +692,41 @@ div#myHand.highlighted {
             transform-origin: center center;
     -webkit-animation-timing-function: ease-out;
             animation-timing-function: ease-out;
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+    -webkit-transform-origin: 50% 100%;
+            transform-origin: 50% 100%;
   }
   10% {
     -webkit-transform: scale(1.03);
             transform: scale(1.03);
     -webkit-animation-timing-function: ease-in;
             animation-timing-function: ease-in;
+    -webkit-transform: rotate(1deg);
+            transform: rotate(1deg);
   }
   17% {
     -webkit-transform: scale(0.99);
             transform: scale(0.99);
     -webkit-animation-timing-function: ease-out;
             animation-timing-function: ease-out;
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
   }
   33% {
     -webkit-transform: scale(1.02);
             transform: scale(1.02);
     -webkit-animation-timing-function: ease-in;
             animation-timing-function: ease-in;
+    -webkit-transform: rotate(-1deg);
+            transform: rotate(-1deg);
   }
   45% {
     -webkit-transform: scale(1);
             transform: scale(1);
     -webkit-animation-timing-function: ease-out;
             animation-timing-function: ease-out;
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
   }
 }
