@@ -63,7 +63,6 @@ io.sockets.on('connection', function (socket) {
       console.log("room: "+JSON.stringify(room));
       console.log("thisRoom: "+JSON.stringify(thisRoom));
      
-      console.log("io.sockets: "+JSON.stringify(io.sockets)); 
       if(thisRoom && !thisRoom.gameMaster){
         thisRoom.gameMaster = socket.id;
         io.sockets.to(socket.id).emit('makeGameMaster');
