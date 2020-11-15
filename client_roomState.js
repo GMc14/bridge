@@ -38,7 +38,7 @@ function playerModule() {
   $(".playerBtns").on("click", function () {
     console.log("--------------playerBtns Click----------------");
     playerNum = $(this).val();
-    nickname = String($("#nickname").val());
+    nickname = String($("#nicknameInput").val());
     playerIndex = Number($(this).attr("data-player-number"));
     console.log("playerSelect >> playerNum: " + playerNum + "  >> nickname: " + nickname + "  >>  playerIndex: " + playerIndex);
     if (nickname == '' || playerNickNames.indexOf(nickname) > -1) {
@@ -56,7 +56,7 @@ function playerModule() {
       //TODO: show chat if want to use it $('#chat').show();
       playerColor = playerColors[playerIndex - 1];
       $(".playerBtns").prop('disabled', true);
-      $("#nickname").prop('disabled', true);
+      $("#nicknameInput").prop('disabled', true);
     }
   });
 }
