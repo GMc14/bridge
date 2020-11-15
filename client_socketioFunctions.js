@@ -203,17 +203,21 @@ $(function () {
         $(".playerBtns").prop('disabled', false);
         $.each(roomState.players, function () {
             var nickname = this.nickname;
-            var seatIndex = roomState.seats.indexOf(this.id);
+            if (nickname.length <= 0) {
+                nickname = this.id;
+            }
+            var seatIndex = roomState.seats.indexOf(this.id)+1;
             console.log("--------seatIndex-----------" + seatIndex +"  for:"+this.id);
             console.log("--------roomState.seats-----------" + JSON.stringify(roomState.seats));
-            if (seatIndex = -1) {
-                if (nickname.length <= 0) {
-                    nickname = this.id;
-                }
+            if (seatIndex < 1) {
+                
+                console.log("--------seatIndex Add em to the queue-----------" + seatIndex +"  for:"+this.id);
+
                 standingPlayersHTMLString = standingPlayersHTMLString.concat(nickname);
                 standingPlayersHTMLString = standingPlayersHTMLString.concat("<br />");
             } else {
-                addSeatToTable(seatIndex);
+                console.log("--------seat "+nickname+" at the table-----------" + seatIndex +"  for:"+this.id);
+                addSeatToTable(seatIndex+1);
                 $("#btnPlayer" + seatIndex).val(nickname);
                 $("#btnPlayer" + seatIndex).prop('disabled', true);
                 playerNickNames[seatIndex - 1] = nickname;
