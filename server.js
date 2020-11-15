@@ -78,8 +78,11 @@ function leave(room, playerId) {
 }
 
 function setNickname(socket, playerId, nickname) {
-  for (var i = 0, iLen = room.players.length; i < iLen; i++) {
-    if (arr[i].b == value) return arr[i];
+  var room = io.sockets.adapter.rooms[socket.room];
+  for (var i = 0; i < room.players.length; i++) {
+    if (room.players[i].id == playerId){
+      room.players[i].nickname = nickname;
+    }
   }
 }
 
