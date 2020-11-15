@@ -204,11 +204,10 @@ $(function () {
             var nickname = this.nickname;
             var seatIndex = roomState.seats.indexOf(this.id);
             if (seatIndex = -1) {
-                var nameToUse = this.nickName;
-                if (nameToUse.length <= 0) {
-                    nameToUse = this.id;
+                if (nickname.length <= 0) {
+                    nickname = this.id;
                 }
-                standingPlayersHTMLString = standingPlayersHTMLString.concat(nameToUse);
+                standingPlayersHTMLString = standingPlayersHTMLString.concat(nickname);
                 standingPlayersHTMLString = standingPlayersHTMLString.concat("<br />");
             } else {
                 addSeatToTable(seatIndex);
