@@ -199,14 +199,16 @@ $(function () {
 
         playerModule();
         var standingPlayersHTMLString = "Waiting for... <br />";
+        $(".playerBtns").prop('disabled', false);
         $.each(roomState.players, function () {
             var nickname = this.nickname;
             var seatIndex = roomState.seats.indexOf(this.id);
             if (seatIndex = -1) {
-                if (this.nickName > 0) {
-                    this.nickName = this.id;
+                var nameToUse = this.nickName;
+                if (nameToUse.length <= 0) {
+                    nameToUse = this.id;
                 }
-                standingPlayersHTMLString = standingPlayersHTMLString.concat(this.nickName);
+                standingPlayersHTMLString = standingPlayersHTMLString.concat(nameToUse);
                 standingPlayersHTMLString = standingPlayersHTMLString.concat("<br />");
             } else {
                 addSeatToTable(seatIndex);
@@ -509,6 +511,7 @@ function leaveRoom() {
     // clearSetupModule();
     // roomModule();
     window.location.reload();
+    
 }
 
 function isOkayToStartTheGame() {
