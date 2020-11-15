@@ -341,7 +341,8 @@ function playCard() {
       $("#myPlay").append(cardsub);
       socketio.emit('playCard', {
         roomID: roomID,
-        card: cardID
+        card: cardID,
+        player: currentPlayer
       });
     }
   }

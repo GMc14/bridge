@@ -246,7 +246,9 @@ td, th {
   height: 7vmax;
   width: 5vmax;
 }
-
+b {
+color:rgba(20,40,120,1);
+}
 .name {
   box-sizing: border-box;
   position: absolute;

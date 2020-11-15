@@ -382,19 +382,18 @@ $(function () {
                 currentPlayer = nextPlayer(dealer);
             }
             lead = currentPlayer;
+            var leaderNum = inversePlayerIdMap[lead];
+            commanderName = getNicknameForPlayer(lead);
             $(".highlighted").removeClass("highlighted");
             if (playerNum == currentPlayer) {
                 updateTurnIndicator("You", true, true);
             } else {
                 updateTurnIndicator(getNicknameForPlayer(lead), false, true);
             }
-            var leaderNum = inversePlayerIdMap[lead];
-            commanderName = getNicknameForPlayer(lead);
             console.log("--------------commanderName---------------- #loc" + commanderName + '   lead'+lead);
             console.log("--------------markingLeader---------------- #loc" + leaderNum + 'name');
             $(".leader").removeClass("leader");
             $('#loc' + leaderNum + 'name').addClass("leader");
-
             $('#bidOfRound').show();
         }
         console.log("--------------dealt...ToClients---------------- playerNum: " + playerNum);
@@ -692,7 +691,7 @@ function getNicknameForPlayer(player) {
 }
 
 function updateTurnIndicator(playerOnTurnName, isMe = false, isLead = false) {
-    $("#turnIndicator").html("<b>Commander</b>: " + commanderName + "    <b>" + (isLead ? "To Lead" : "On Duty") + "</b>: " + playerOnTurnName);
+    $("#turnIndicator").html("<b>Commander</b>: " + commanderName + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>" + (isLead ? "To Lead" : "On Duty") + "</b>: " + playerOnTurnName);
     if (isMe) {
         $("#myHand").addClass("highlighted");
         highlightPlayable();
