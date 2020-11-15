@@ -38,6 +38,45 @@ var server = http.createServer(function (req, res) {
 console.log("server running on Port " + PORT);
 var io = socketio.listen(server);
 
+function enter(room, playerId){
+  if(!room.gameMaster) {
+    room.gameMaster = playerId;
+  }
+  room.players[playerId]={seat:-1};
+}
+
+function leave(room, playerId){
+  if(!room.gameMaster) {
+    console.log("Todo: Assign New GameMaster");
+  }
+  room.standing.remove(playerId);
+  room.seated.remove(playerId);
+}
+
+function sit(room, playerId, seatIndex){
+  room.standing.remove(playerId);
+  room.seated.add(playerId);
+}
+
+function stand(room, playerId){
+  room.standing.add(playerId);
+  room.seated.remove(playerId);
+}
+
+
+const getCircularReplacer = () => {
+  const seen = new WeakSet();
+  return (key, value) => {
+    if (typeof value === "object" && value !== null) {
+      if (seen.has(value)) {
+        return;
+      }
+      seen.add(value);
+    }
+    return value;
+  };
+};
+
 io.sockets.on('connection', function (socket) {
   //Room State
   socket.on('enterRoom', function (room) {
@@ -52,9 +91,11 @@ io.sockets.on('connection', function (socket) {
       thisRoom = io.sockets.adapter.rooms[room];
       console.log("room: " + JSON.stringify(room));
       console.log("thisRoom: " + JSON.stringify(thisRoom));
-
+      console.log("socket: " + JSON.stringify(circularReference, getCircularReplacer()))
+      ;
       if (thisRoom && !thisRoom.gameMaster) {
-        thisRoom.gameMaster = socket.id;
+        //This is a new Room
+        initRoom(thisRoom, socket.id);
         console.log("gameMaster assigned: " + thisRoom.gameMaster);
         io.sockets.to(socket.id).emit('makeGameMaster');
       }
@@ -90,7 +131,7 @@ io.sockets.on('connection', function (socket) {
   socket.on('playerUnseated', function (data) {
     console.log("playerUnseated... data: " + JSON.stringify(data));
     console.log("playerUnseated... socket.room: " + JSON.stringify(socket.room));
-
+    io.sockets.to(socket.room).emit('syncTableState', thisRoom.gameMaster);
   });
   socket.on('startGameOnServer', function () {
     console.log("---startGameOnServer----");
