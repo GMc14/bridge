@@ -42,7 +42,7 @@ function applySeatButtonClickListener(){
     if (nickname == '' || playerNickNames.indexOf(nickname) > -1) {
       alert('Pick a unique Nickname!');
     } else {
-      $("#myName").append("<b>" + playerNum + ": " + nickname + "</b>");
+      $("#myName").append(playerNum + ": " + nickname);
       $.cookie("nickname", nickname);
       console.log("--------------playerBtns emit playerSit...----------------");
       socketio.emit('playerSit', {

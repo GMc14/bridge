@@ -691,7 +691,8 @@ function getNicknameForPlayer(player) {
 }
 
 function updateTurnIndicator(playerOnTurnName, isMe = false, isLead = false) {
-    $("#turnIndicator").html("<b>Commander</b>: " + commanderName + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>" + (isLead ? "To Lead" : "On Duty") + "</b>: " + playerOnTurnName);
+    var spaces = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+    $("#turnIndicator").html("<b>Commander:</b> " + commanderName + spaces+"<b>" + (isLead ? "To Lead" : "On Duty") + ":</b> " + playerOnTurnName);
     if (isMe) {
         $("#myHand").addClass("highlighted");
         highlightPlayable();
