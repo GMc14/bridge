@@ -98,12 +98,14 @@ io.sockets.on('connection', function (socket) {
   socket.on('enterRoom', function (roomID) {
     var thisRoom = io.sockets.adapter.rooms[roomID];
     if (thisRoom && thisRoom.length < maximumRoomSize) {
+      console.log("thisRoom all good");
       //console.log("socket: " + JSON.stringify(socket, getCircularReplacer()));
       socket.join(roomID);
       socket.room = roomID;
       enter(thisRoom, socket);
     } else {
-      io.sockets.to(socket.id).emit('fullRoom', thisRoom.length);
+      console.log("thisRoom? "+thisRoom);
+      //io.sockets.to(socket.id).emit('fullRoom', thisRoom.length);
     }
   });
   socket.on('leaveRoom', function (room) {
