@@ -69,7 +69,7 @@ function addSeatToTable(seatNumber) {
     seatButton.setAttribute("id", "btnPlayer" + seatNumber);
     seatButton.setAttribute("data-player-number", seatNumber);
     seatButton.setAttribute("class", "playerBtns");
-    seatButton.setAttribute("value", "Seat" + seatNumber);
+    seatButton.setAttribute("value", "Player" + seatNumber);
     $("#seatingArea").append(seatButton);
   }
 }
