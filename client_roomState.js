@@ -15,11 +15,11 @@ function playerModule() {
   $(".setupModule:eq(0)").append("<div id='playerSetup'></div>");
   $("#playerSetup").append($("<span id='playerSelectLabel'>SELECT SEAT:" + teamInfo + "</span>"));
   $("#playerSetup").append($("<span id='nicknameLabel'>NICKNAME:</span>"));
-  $("#playerSetup").append($("<input id='nickname' type='text'></input>"));
+  $("#playerSetup").append($("<input id='nicknameInput' type='text'></input>"));
 
   var previousNickName = $.cookie("nickname");
   if (previousNickName) {
-    $(nicknameInput).val(previousNickName);
+    $("#nicknameInput").val(previousNickName);
   }
 
   for (var j = 1; j <= gameConfig_playerCount; j++) {
