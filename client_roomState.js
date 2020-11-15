@@ -65,12 +65,12 @@ function playerModule() {
 function addSeatToTable(seatNumber) {
   console.log("--------------addSeatToTable ----------------: "+seatNumber);
   if ($("#btnPlayer"+seatNumber).length < 1) {
-    var currPlayer = document.createElement("input");
-    currPlayer.setAttribute("type", "button");
-    currPlayer.setAttribute("id", "btnPlayer" + seatNumber);
-    currPlayer.setAttribute("data-player-number", seatNumber);
-    currPlayer.setAttribute("class", "playerBtns");
-    currPlayer.setAttribute("value", "Seat" + seatNumber);
-    $("#playerSetup").append(currPlayer);
+    var seatButton = document.createElement("input");
+    seatButton.setAttribute("type", "button");
+    seatButton.setAttribute("id", "btnPlayer" + seatNumber);
+    seatButton.setAttribute("data-player-number", seatNumber);
+    seatButton.setAttribute("class", "playerBtns");
+    seatButton.setAttribute("value", "Seat" + seatNumber);
+    $("#playerSetup").append(seatButton);
   }
 }

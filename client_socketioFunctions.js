@@ -196,9 +196,23 @@ $(function () {
     socketio.on('updateRoom', function (room) {
         console.log("--------updateRoom-----------"+JSON.stringify(room));
         clearSetupModule();
-        $(".setupModule:eq(0)").html("Room is Full. Try Again Later");
+        
+        $.each(room.players,function(){
 
+            var nickname = data.nickname;
+            var playerIndex = data.playerIndex;
 
+            var seatIndex = room.seats.indexOf(playerId);
+            if(seatIndex>-1){
+              room.seats.splice(seatIndex, 1);
+            } else {
+                addSeatToTable(seatIndex);
+                $("#btnPlayer" + seatIndex).val(nickname);
+                $("#btnPlayer" + seatIndex).prop('disabled', true);
+                playerNickNames[seatIndex - 1] = nickname;
+            }
+        });
+        
         var playerCount = room["players"].length;
         console.log("--------updateRoom-----------");
         gameConfig_playerCount = playerCount;
@@ -216,14 +230,6 @@ $(function () {
     socketio.on('makeGameMaster', function () {
         console.log("--------makeGameMaster-----------");
         isGameMaster = true;
-    });
-    socketio.on('playerDataToClient', function (data) {
-        var nickname = data.nickname;
-        var playerIndex = data.playerIndex;
-        console.log("playerDataToClient---- >> playerIndex: " + playerIndex + "  >> nickname: " + nickname);
-        $("#btnPlayer" + playerIndex).val(nickname);
-        $("#btnPlayer" + playerIndex).prop('disabled', true);
-        playerNickNames[playerIndex - 1] = nickname;
     });
     socketio.on('leftInGame', function (nickname) {
         alert(nickname + " left the room. Kicking everybody out... ");

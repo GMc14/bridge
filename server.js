@@ -47,7 +47,7 @@ function enter(room, socket) {
   if (!room.seats) {
     room.seats = new Array("");
   } else {
-    room.seats.append("");
+    room.seats.push("");
   }
   if (!room.players) {
     room.players = new Array({
@@ -55,7 +55,7 @@ function enter(room, socket) {
       nickname: ""
     });
   } else {
-    room.players.append({
+    room.players.push({
       id: playerId,
       nickname: ""
     });
@@ -74,9 +74,9 @@ function leave(room, playerId) {
   //??sockets.remove(playerId);
 }
 
-function sit(room, playerId, seatIndex) {
-  room.seats.splice(seatIndex, 0, playerId);
-  io.sockets.to(socket.room).emit('updateRoom', room);
+function sit(socket, seatIndex, playerId, nickname) {
+  io.sockets.adapter.rooms[socket.room].seats.splice(seatIndex, 0, playerId);
+  io.sockets.to(socket.room).emit('updateRoom', io.sockets.adapter.rooms[socket.room]);
 }
 
 function stand(room, playerId) {
@@ -108,25 +108,24 @@ io.sockets.on('connection', function (socket) {
     socket.leave(roomID);
     var thisRoom = io.sockets.adapter.rooms[roomID];
     if (thisRoom) {
-      if (thisRoom.inGame == 1) {
         var nickname = socket.nickname === undefined ? 'Someone' : socket.nickname;
         io.sockets.to(roomID).emit('leftInGame', nickname);
-      }
     }
     io.sockets.to(roomID).emit('updateRoom', io.sockets.adapter.rooms[roomID]);
   });
   socket.on('playerSit', function (data) {
+    var thisRoom = io.sockets.adapter.rooms[socket.room];
     console.log("playerSeated... data: " + JSON.stringify(data));
     console.log("playerSeated... socket.room: " + JSON.stringify(socket.room));
-    io.sockets.adapter.rooms[data.roomID].inGame = 1;
-    var playerIndex = data.playerIndex;
-    socket.nickname = data.nickname;
-    socket.player = data.playerNum;
-    console.log("--------------playerSeated------  >>  playerIndex: " + playerIndex + " socket.player: " + socket.player + " socket.nickname: " + socket.nickname);
-    io.sockets.to(data.roomID).emit('playerDataToClient', {
-      nickname: socket.nickname,
-      playerIndex: playerIndex
-    });
+    console.log("playerSeated... thisRoom: " + JSON.stringify(thisRoom));
+    console.log("playerSeated... socket.id: " + JSON.stringify(socket.id));
+
+    if (socket.id == data.playerId || socket.id == thisRoom.gameMaster) {
+      setNickname(socket, data.playerId, data.nickname);
+      sit(socket, data.seatIndex, data.playerId, data.nickname);
+    } else {
+      console.log("unauthorized sit");
+    }
   });
   socket.on('playerStand', function (player) {
     console.log("playerUnseated... data: " + JSON.stringify(data));
