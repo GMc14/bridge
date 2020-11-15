@@ -86,8 +86,8 @@ function setNickname(socket, playerId, nickname) {
   }
 }
 
-function sit(socket, seatIndex, playerId, nickname) {
-  io.sockets.adapter.rooms[socket.room].seats.splice(seatIndex, 0, playerId);
+function sit(socket, seatIndex, playerId) {
+  io.sockets.adapter.rooms[socket.room].seats[seatIndex]=playerId;
   io.sockets.to(socket.room).emit('updateRoom', io.sockets.adapter.rooms[socket.room]);
 }
 

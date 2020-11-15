@@ -203,6 +203,8 @@ $(function () {
         $.each(roomState.players, function () {
             var nickname = this.nickname;
             var seatIndex = roomState.seats.indexOf(this.id);
+            console.log("--------seatIndex-----------" + seatIndex +"  for:"+this.id);
+            console.log("--------roomState.seats-----------" + JSON.stringify(roomState.seats));
             if (seatIndex = -1) {
                 if (nickname.length <= 0) {
                     nickname = this.id;
