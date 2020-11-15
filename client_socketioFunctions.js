@@ -104,7 +104,6 @@ var cardback = "card_imgs/cardback.png";
 var commanderName;
 //Player values
 var nickname;
-var playersInRoom;
 var playerNum;
 var playerIndex;
 
@@ -196,15 +195,17 @@ $(function () {
     socketio.on('updateRoom', function (room) {
         console.log("--------updateRoom-----------"+JSON.stringify(room));
         clearSetupModule();
-        
+        playerModule();
+        var standingPlayersHTMLString = "Waiting for... <br />";
         $.each(room.players,function(){
-
-            var nickname = data.nickname;
-            var playerIndex = data.playerIndex;
-
+            var nickname = this.nickname;
             var seatIndex = room.seats.indexOf(playerId);
             if(seatIndex>-1){
-              room.seats.splice(seatIndex, 1);
+                if(this.nickName > 0){
+                    this.nickName = this.id;
+                }
+                standingPlayersHTMLString = standingPlayersHTMLString.concat(this.nickName);
+                standingPlayersHTMLString = standingPlayersHTMLString.concat("<br />"); 
             } else {
                 addSeatToTable(seatIndex);
                 $("#btnPlayer" + seatIndex).val(nickname);
@@ -212,15 +213,8 @@ $(function () {
                 playerNickNames[seatIndex - 1] = nickname;
             }
         });
-        
-        var playerCount = room["players"].length;
-        console.log("--------updateRoom-----------");
+        $("#playersInRoom").html(standingPlayersHTMLString);
         gameConfig_playerCount = playerCount;
-        setPlayerCount(playerCount);
-        playerModule();
-        for (var j = 1; j <= gameConfig_playerCount; j++) {
-            addSeatToTable(j);
-        }
     });
     socketio.on('fullRoom', function () {
         console.log("--------fullRoom-----------");
@@ -514,11 +508,6 @@ function leaveRoom() {
     window.location.reload();
 }
 
-function setPlayerCount(num) {
-    playersInRoom = num;
-    $("#playersInRoom").text("Players in Room: " + playersInRoom);
-}
-
 function isOkayToStartTheGame() {
     var lowestOpen = 999;
     var highestReadied = 0;
@@ -701,9 +690,8 @@ function updateComms(status) {
 }
 var path =window.location.pathname;
 console.log("window.location.pathname: "+path);
-if(path.length==4){
-    
-    console.log("AutoJoiner: "+path);             
-    $("#roomID").val(path);
-    joinRoom();
-}
+// if(path.length==4){
+//     console.log("AutoJoiner: "+path);             
+//     $("#roomID").val(path);
+//     joinRoom();
+// }

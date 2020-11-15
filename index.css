@@ -314,7 +314,12 @@ td, th {
   font-weight: bold;
   z-index: 99999999;
 }
-#playersInRoom{
+#playersInRoom{  
+  position: absolute;
+  top: 28.5vh;
+  left: 28vw;
+  width:20vw;
+  height:20vh;
   background: rgba(21,211,123,0.9);
 }
 
