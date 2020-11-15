@@ -198,6 +198,7 @@ $(function () {
         gameConfig_playerCount = roomState.players.length;
 
         playerModule();
+        console.log("--------updateRoom ------roomState.players-----" + JSON.stringify(roomState.players));
         var standingPlayersHTMLString = "Waiting for... <br />";
         $(".playerBtns").prop('disabled', false);
         $.each(roomState.players, function () {
