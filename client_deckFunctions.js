@@ -307,14 +307,14 @@ function highlightPlayable() {
   }
 }
 
-function displayOtherCards(playerIndex, handSize) {
-  console.log(">>>>>>>>>>>>>displayCards----in: #loc" + playerIndex + "Hand------------playerIndex: " + playerIndex + "  >>  handSize: " + handSize);
-  $('#loc' + playerIndex + 'Hand').empty();
+function displayOtherCards(seatIndex, handSize) {
+  console.log(">>>>>>>>>>>>>displayCards----in: #loc" + seatIndex + "Hand------------seatIndex: " + seatIndex + "  >>  handSize: " + handSize);
+  $('#loc' + seatIndex + 'Hand').empty();
   for (var i = 0; i < handSize; i++) {
     var card = document.createElement("div");
     card.setAttribute("class", "otherCards");
     $(".cardback:eq(0)").clone().show().appendTo(card);
-    $('#loc' + playerIndex + 'Hand').append(card);
+    $('#loc' + seatIndex + 'Hand').append(card);
   }
 }
 
@@ -355,15 +355,15 @@ function isATrumpCard(card) {
 function othersPlayed(player, card) {
   console.log("othersPlayed++++++++++++ player: " + player + " card:" + card);
 
-  var playerIndex = inversePlayerIdMap[player];
-  console.log("othersPlayed++++++++++++ playerIndex:" + playerIndex);
+  var seatIndex = inversePlayerIdMap[player];
+  console.log("othersPlayed++++++++++++ seatIndex:" + seatIndex);
 
-  $("#loc" + playerIndex + "Hand").find(".otherCards").first().remove();
+  $("#loc" + seatIndex + "Hand").find(".otherCards").first().remove();
 
   var cardObj = $("#" + card + "_img").attr("class", "myCards").clone().show();
 
   if (isATrumpCard(card)) {
     $(cardObj).addClass('isTrump');
   }
-  $("#loc" + playerIndex + "play").append(cardObj);
+  $("#loc" + seatIndex + "play").append(cardObj);
 }

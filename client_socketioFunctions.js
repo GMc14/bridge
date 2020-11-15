@@ -71,7 +71,7 @@ var gameConfig_euchreBowers = gameConfig_isEuchre;
 var deck = [];
 var taskDeck = [];
 var handSizes = [];
-
+var roomState;
 var suits = new Array("C", "D", "S", "H");
 var suitNames = {
     "C": "Clubs",
@@ -105,8 +105,8 @@ var commanderName;
 //Player values
 var nickname;
 var playerNum;
-var playerIndex;
-
+var seatIndex;
+var clientPlayerId;
 //Play values
 var dealer = "Player1";
 var currentPlayer;
@@ -193,14 +193,15 @@ $(function () {
         updateComms(new Date().getTime() % 3);
     });
     socketio.on('updateRoom', function (room) {
-        console.log("--------updateRoom-----------" + JSON.stringify(room));
-        gameConfig_playerCount = room.players.length;
+        roomState = room;
+        console.log("--------updateRoom-----------" + JSON.stringify(roomState));
+        gameConfig_playerCount = roomState.players.length;
         clearSetupModule();
         playerModule();
         var standingPlayersHTMLString = "Waiting for... <br />";
-        $.each(room.players, function () {
+        $.each(roomState.players, function () {
             var nickname = this.nickname;
-            var seatIndex = room.seats.indexOf(this.id);
+            var seatIndex = roomState.seats.indexOf(this.id);
             if (seatIndex = -1) {
                 if (this.nickName > 0) {
                     this.nickName = this.id;
@@ -215,6 +216,9 @@ $(function () {
             }
         });
         $("#playersInRoom").html(standingPlayersHTMLString);
+    });
+    socketio.on('setPlayerId', function (playerId) {
+        clientPlayerId = playerId;
     });
     socketio.on('fullRoom', function () {
         console.log("--------fullRoom-----------");

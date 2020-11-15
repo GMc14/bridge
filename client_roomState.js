@@ -40,22 +40,21 @@ function playerModule() {
     console.log("--------------playerBtns Click----------------");
     playerNum = $(this).val();
     nickname = String($("#nicknameInput").val());
-    playerIndex = Number($(this).attr("data-player-number"));
-    console.log("playerSelect >> playerNum: " + playerNum + "  >> nickname: " + nickname + "  >>  playerIndex: " + playerIndex);
+    seatIndex = Number($(this).attr("data-player-number"));
+    console.log("playerSelect >> playerNum: " + playerNum + "  >> nickname: " + nickname + "  >>  seatIndex: " + seatIndex);
     if (nickname == '' || playerNickNames.indexOf(nickname) > -1) {
       alert('Pick a unique Nickname!');
     } else {
       $("#myName").append("<b>" + playerNum + ": " + nickname + "</b>");
       $.cookie("nickname", nickname);
-      console.log("--------------playerBtns emit playerSeated...----------------");
-      socketio.emit('playerSeated', {
+      console.log("--------------playerBtns emit playerSit...----------------");
+      socketio.emit('playerSit', {
         nickname: nickname,
-        playerNum: playerNum,
-        playerIndex: playerIndex,
-        roomID: roomID
+        seatIndex: seatIndex,
+        playerId: clientPlayerId
       });
       //TODO: show chat if want to use it $('#chat').show();
-      playerColor = playerColors[playerIndex - 1];
+      playerColor = playerColors[seatIndex - 1];
       $(".playerBtns").prop('disabled', true);
       $("#nicknameInput").prop('disabled', true);
     }

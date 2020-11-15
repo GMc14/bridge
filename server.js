@@ -40,7 +40,9 @@ var io = socketio.listen(server);
 
 function enter(room, socket) {
   var playerId = socket.id;
+  
   console.log("room: " + JSON.stringify(room));
+  io.sockets.to(playerId).emit('setPlayerId',playerId);
   if (!room.gameMaster) {
     room.gameMaster = playerId;
     io.sockets.to(playerId).emit('makeGameMaster');
@@ -122,10 +124,10 @@ io.sockets.on('connection', function (socket) {
   });
   socket.on('playerSit', function (data) {
     var thisRoom = io.sockets.adapter.rooms[socket.room];
-    console.log("playerSeated... data: " + JSON.stringify(data));
-    console.log("playerSeated... socket.room: " + JSON.stringify(socket.room));
-    console.log("playerSeated... thisRoom: " + JSON.stringify(thisRoom));
-    console.log("playerSeated... socket.id: " + JSON.stringify(socket.id));
+    console.log("playerSit... data: " + JSON.stringify(data));
+    console.log("playerSit... socket.room: " + JSON.stringify(socket.room));
+    console.log("playerSit... thisRoom: " + JSON.stringify(thisRoom));
+    console.log("playerSit... socket.id: " + JSON.stringify(socket.id));
 
     if (socket.id == data.playerId || socket.id == thisRoom.gameMaster) {
       setNickname(socket, data.playerId, data.nickname);
