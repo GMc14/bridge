@@ -199,7 +199,7 @@ $(function () {
         var standingPlayersHTMLString = "Waiting for... <br />";
         $.each(room.players,function(){
             var nickname = this.nickname;
-            var seatIndex = room.seats.indexOf(playerId);
+            var seatIndex = room.seats.indexOf(this.id);
             if(seatIndex>-1){
                 if(this.nickName > 0){
                     this.nickName = this.id;
@@ -218,8 +218,7 @@ $(function () {
     });
     socketio.on('fullRoom', function () {
         console.log("--------fullRoom-----------");
-        clearSetupModule();
-        $(".setupModule:eq(0)").html("Room is Full. Try Again Later");
+        alert("Room is Full. Try Again Later");
     });
     socketio.on('makeGameMaster', function () {
         console.log("--------makeGameMaster-----------");

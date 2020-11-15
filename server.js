@@ -43,6 +43,7 @@ function enter(room, socket) {
   console.log("room: " + JSON.stringify(room));
   if (!room.gameMaster) {
     room.gameMaster = playerId;
+    io.sockets.to(playerId).emit('makeGameMaster');
   }
   if (!room.seats) {
     room.seats = new Array("");
@@ -74,6 +75,12 @@ function leave(room, playerId) {
   //??sockets.remove(playerId);
 }
 
+function setNickname(socket, playerId, nickname) {
+  for (var i = 0, iLen = room.players.length; i < iLen; i++) {
+    if (arr[i].b == value) return arr[i];
+  }
+}
+
 function sit(socket, seatIndex, playerId, nickname) {
   io.sockets.adapter.rooms[socket.room].seats.splice(seatIndex, 0, playerId);
   io.sockets.to(socket.room).emit('updateRoom', io.sockets.adapter.rooms[socket.room]);
@@ -81,7 +88,7 @@ function sit(socket, seatIndex, playerId, nickname) {
 
 function stand(room, playerId) {
   var seatIndex = room.seats.indexOf(playerId);
-  if(seatIndex>-1){
+  if (seatIndex > -1) {
     room.seats.splice(seatIndex, 1);
   }
   io.sockets.to(socket.room).emit('updateRoom', room);
@@ -95,12 +102,12 @@ io.sockets.on('connection', function (socket) {
       console.log("thisRoom all good: " + thisRoom);
       //console.log("socket: " + JSON.stringify(socket, getCircularReplacer()));
       socket.join(roomID);
-      thisRoom = io.sockets.adapter.rooms[roomID]; 
-      console.log("thisRoom all good: " + thisRoom);//should exist now
+      thisRoom = io.sockets.adapter.rooms[roomID];
+      console.log("thisRoom all good: " + thisRoom); //should exist now
       socket.room = roomID;
       enter(thisRoom, socket);
     } else {
-      console.log("thisRoom? "+thisRoom);
+      console.log("thisRoom? " + thisRoom);
       //io.sockets.to(socket.id).emit('fullRoom', thisRoom.length);
     }
   });
@@ -108,8 +115,8 @@ io.sockets.on('connection', function (socket) {
     socket.leave(roomID);
     var thisRoom = io.sockets.adapter.rooms[roomID];
     if (thisRoom) {
-        var nickname = socket.nickname === undefined ? 'Someone' : socket.nickname;
-        io.sockets.to(roomID).emit('leftInGame', nickname);
+      var nickname = socket.nickname === undefined ? 'Someone' : socket.nickname;
+      io.sockets.to(roomID).emit('leftInGame', nickname);
     }
     io.sockets.to(roomID).emit('updateRoom', io.sockets.adapter.rooms[roomID]);
   });
