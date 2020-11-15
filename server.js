@@ -45,16 +45,19 @@ function enter(room, socket) {
     room.gameMaster = playerId;
   }
   if (!room.seats) {
-    room.seats = new Array({
-      occupant: ""
-    });
-  }
-  if (!room.standing) {
-    room.standing = new Array(playerId);
+    room.seats = new Array("");
+  } else {
+    room.seats.append("");
   }
   if (!room.players) {
     room.players = new Array({
-      id: playerId
+      id: playerId,
+      nickname: ""
+    });
+  } else {
+    room.players.append({
+      id: playerId,
+      nickname: ""
     });
   }
   console.log("@@@ enter room @@@: " + JSON.stringify(room));
@@ -62,35 +65,27 @@ function enter(room, socket) {
 }
 
 function leave(room, playerId) {
+  console.log("Todo: Implement Game Leaving Logic");
   if (!room.gameMaster) {
     console.log("Todo: Assign New GameMaster");
   }
-  room.standing.remove(playerId);
-  room.seated.remove(playerId);
+  //??room.seated.remove(playerId);
+  //??room.players.remove(playerId);
+  //??sockets.remove(playerId);
 }
 
 function sit(room, playerId, seatIndex) {
-  room.standing.remove(playerId);
-  room.seated.add(playerId);
+  room.seats.splice(seatIndex, 0, playerId);
+  io.sockets.to(socket.room).emit('updateRoom', room);
 }
 
 function stand(room, playerId) {
-  //room.standing.add(playerId);
-  //room.seated.remove(playerId);
+  var seatIndex = room.seats.indexOf(playerId);
+  if(seatIndex>-1){
+    room.seats.splice(seatIndex, 1);
+  }
+  io.sockets.to(socket.room).emit('updateRoom', room);
 }
-
-const getCircularReplacer = () => {
-  const seen = new WeakSet();
-  return (key, value) => {
-    if (typeof value === "object" && value !== null) {
-      if (seen.has(value)) {
-        return;
-      }
-      seen.add(value);
-    }
-    return value;
-  };
-};
 
 io.sockets.on('connection', function (socket) {
   //Room State
