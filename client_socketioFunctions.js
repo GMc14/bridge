@@ -193,7 +193,11 @@ $(function () {
     $("#myCommunication").click(function () {
         updateComms(new Date().getTime() % 3);
     });
-
+    socketio.on('updateRoom', function (room) {
+        console.log("--------fullRoom-----------"+JSON.stringify(room));
+        clearSetupModule();
+        $(".setupModule:eq(0)").html("Room is Full. Try Again Later");
+    });
     socketio.on('fullRoom', function () {
         console.log("--------fullRoom-----------");
         clearSetupModule();

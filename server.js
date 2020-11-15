@@ -42,7 +42,17 @@ function enter(room, playerId){
   if(!room.gameMaster) {
     room.gameMaster = playerId;
   }
-  room.players[playerId]={seat:-1};
+  if(!room.seats){
+    room.seats = new Array({occupant:""});
+  }
+  if(!room.standing){
+    room.standing = new Array(playerId);
+  }
+  if(!room.players){
+    room.players = new Array({id:playerId});
+  }
+  console.log("@@@ enter room @@@: " + JSON.stringify(room));
+  io.sockets.to(socket.id).emit('updateRoom', room);
 }
 
 function leave(room, playerId){
@@ -91,14 +101,8 @@ io.sockets.on('connection', function (socket) {
       thisRoom = io.sockets.adapter.rooms[room];
       console.log("room: " + JSON.stringify(room));
       console.log("thisRoom: " + JSON.stringify(thisRoom));
-      console.log("socket: " + JSON.stringify(circularReference, getCircularReplacer()))
-      ;
-      if (thisRoom && !thisRoom.gameMaster) {
-        //This is a new Room
-        initRoom(thisRoom, socket.id);
-        console.log("gameMaster assigned: " + thisRoom.gameMaster);
-        io.sockets.to(socket.id).emit('makeGameMaster');
-      }
+      console.log("socket: " + JSON.stringify(circularReference, getCircularReplacer()));
+      enter(thisRoom, socket.id);
       io.sockets.to(room).emit('setPlayerCountOnClient', numInRoom);
     }
   });
