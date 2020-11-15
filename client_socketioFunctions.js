@@ -194,11 +194,6 @@ $(function () {
         updateComms(new Date().getTime() % 3);
     });
 
-    socketio.on('playerCountToClient', function (numPlayers) {
-        console.log("--------playerCountToClient-----------");
-        setPlayerCount(numPlayers);
-        playerModule();
-    });
     socketio.on('fullRoom', function () {
         console.log("--------fullRoom-----------");
         clearSetupModule();
@@ -209,7 +204,10 @@ $(function () {
         isGameMaster = true;
     });
     socketio.on('setPlayerCountOnClient', function (playerCount) {
+        console.log("--------setPlayerCountOnClient-----------");
         gameConfig_playerCount = playerCount;
+        setPlayerCount(playerCount);
+        playerModule();
         for (var j = 1; j <= gameConfig_playerCount; j++) {
             addSeatToTable(j);
         }
@@ -692,6 +690,8 @@ function updateComms(status) {
 var path =window.location.pathname;
 console.log("window.location.pathname: "+path);
 if(path.length==4){
+    
+    console.log("AutoJoiner: "+path);             
     $("#roomID").val(path);
     joinRoom();
 }

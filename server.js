@@ -49,7 +49,7 @@ io.sockets.on('connection', function (socket) {
       socket.join(room);
       socket.room = room;
       numInRoom++;
-      io.sockets.to(room).emit('playerCountToClient', numInRoom);
+      io.sockets.to(room).emit('setPlayerCountOnClient', numInRoom);
       thisRoom = io.sockets.adapter.rooms[room];
       console.log("room: " + JSON.stringify(room));
       console.log("thisRoom: " + JSON.stringify(thisRoom));
@@ -64,7 +64,7 @@ io.sockets.on('connection', function (socket) {
     socket.leave(room);
     var thisRoom = io.sockets.adapter.rooms[room];
     var numInRoom = thisRoom === undefined ? 0 : thisRoom.length;
-    io.sockets.to(room).emit('playerCountToClient', numInRoom);
+    io.sockets.to(room).emit('setPlayerCountOnClient', numInRoom);
     if (thisRoom) {
       if (thisRoom.inGame == 1) {
         var nickname = socket.nickname === undefined ? 'Someone' : socket.nickname;
