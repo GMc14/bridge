@@ -194,6 +194,7 @@ $(function () {
     });
     socketio.on('updateRoom', function (room) {
         console.log("--------updateRoom-----------"+JSON.stringify(room));
+        gameConfig_playerCount = room.players.length;
         clearSetupModule();
         playerModule();
         var standingPlayersHTMLString = "Waiting for... <br />";
@@ -214,7 +215,6 @@ $(function () {
             }
         });
         $("#playersInRoom").html(standingPlayersHTMLString);
-        gameConfig_playerCount = playerCount;
     });
     socketio.on('fullRoom', function () {
         console.log("--------fullRoom-----------");
