@@ -227,8 +227,9 @@ td, th {
   /* border: 1px dashed #f68; */
 }
 .leader {
-  border: 2px double #8f1;
-  background: rgba(4, 255, 128, 0.2);
+  /* border: 2px double #8f1; */
+  background: rgba(4, 55, 20, 0.07);
+  text-decoration: underline;
 }
 .plays {
   position: absolute;
@@ -317,7 +318,7 @@ td, th {
 #playersInRoom{  
   width:20vw;
   height:20vh;
-  background: rgba(21,211,123,0.1);
+  /* background: rgba(21,211,123,0.1); */
 }
 
 .noComms{
@@ -387,7 +388,7 @@ td, th {
   display: table;
   position: absolute;
   top: 27.5%;
-  left: 30%;
+  left: 5%;
   height: 40%;
   width: 40%;
   box-sizing: border-box;

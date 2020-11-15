@@ -252,6 +252,7 @@ $(function () {
         console.log("client_socket :: startGame");
         preRenderImgs();
         clearSetupModule();
+        $("#playersInRoom").hide();
         $("#startGameButton").hide();
         constructPlayArea();
         startGame();
@@ -389,6 +390,7 @@ $(function () {
             }
             var leaderNum = inversePlayerIdMap[lead];
             commanderName = getNicknameForPlayer(lead);
+            console.log("--------------commanderName---------------- #loc" + commanderName + '   lead'+lead);
             console.log("--------------markingLeader---------------- #loc" + leaderNum + 'name');
             $(".leader").removeClass("leader");
             $('#loc' + leaderNum + 'name').addClass("leader");
