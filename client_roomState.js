@@ -1,12 +1,11 @@
-function playerModule() {
-  console.log("--------------playerModule----------------");
+function initPlayerModule() {
+  console.log("--------------initPlayerModule----------------");
   if (playerModuleIsShowing) {
     console.log("-------------- Been Hee Before ----------------");
     return;
   }
   playerModuleIsShowing = true;
   clearSetupModule();
-
   var teamInfo = '';
   if (gameConfig_isBridge || gameConfig_hasTeams) {
     teamInfo = "(TEAMS: 1 & 3 and 2 & 4)"
@@ -16,13 +15,10 @@ function playerModule() {
   $("#playerSetup").append($("<span class='seatSelectionLabel' id='nicknameLabel'>NICKNAME:</span>"));
   $("#playerSetup").append($("<input id='nicknameInput' type='text'></input>"));
   $("#playerSetup").append($("<span class='seatSelectionLabel' id='playerSelectLabel'>SELECT SEAT:" + teamInfo + "</span>"));
+  $("#playerSetup").append($("<div id='seatingArea'></div>"));
   var previousNickName = $.cookie("nickname");
   if (previousNickName) {
     $("#nicknameInput").val(previousNickName);
-  }
-
-  for (var j = 1; j <= gameConfig_playerCount; j++) {
-    addSeatToTable(j);
   }
   if (isGameMaster) {
     console.log("--------------<({[isGameMaster]})>----------------");
@@ -35,7 +31,8 @@ function playerModule() {
       }
     });
   }
-
+}
+function applySeatButtonClickListener(){
   $(".playerBtns").on("click", function () {
     console.log("--------------playerBtns Click----------------");
     playerNum = $(this).val();
@@ -60,7 +57,6 @@ function playerModule() {
     }
   });
 }
-
 function addSeatToTable(seatNumber) {
   if(seatNumber < 0){
     console.log("--------------addSeatToTable ----------------: invalid seat: "+seatNumber);
@@ -74,6 +70,6 @@ function addSeatToTable(seatNumber) {
     seatButton.setAttribute("data-player-number", seatNumber);
     seatButton.setAttribute("class", "playerBtns");
     seatButton.setAttribute("value", "Seat" + seatNumber);
-    $("#playerSetup").append(seatButton);
+    $("#seatingArea").append(seatButton);
   }
 }

@@ -197,10 +197,18 @@ $(function () {
         console.log("--------updateRoom-----------" + JSON.stringify(roomState));
         gameConfig_playerCount = roomState.players.length;
 
-        playerModule();
+        initPlayerModule();
         console.log("--------updateRoom ------roomState.players-----" + JSON.stringify(roomState.players));
         var standingPlayersHTMLString = "Waiting for... <br />";
-        $(".playerBtns").prop('disabled', false);
+        $("#seatingArea").empty();
+        //$(".playerBtns").prop('disabled', false);
+        
+        var counter = 1;
+        $.each(roomState.players, function () {
+            addSeatToTable(counter);
+            counter = counter+1;
+        });
+        applySeatButtonClickListener();
         $.each(roomState.players, function () {
             var nickname = this.nickname;
             if (nickname.length <= 0) {
@@ -212,12 +220,10 @@ $(function () {
             if (seatIndex < 1) {
                 
                 console.log("--------seatIndex Add em to the queue-----------" + seatIndex +"  for:"+this.id);
-
                 standingPlayersHTMLString = standingPlayersHTMLString.concat(nickname);
                 standingPlayersHTMLString = standingPlayersHTMLString.concat("<br />");
             } else {
                 console.log("--------seat "+nickname+" at the table-----------" + seatIndex +"  for:"+this.id);
-                addSeatToTable(seatIndex+1);
                 $("#btnPlayer" + seatIndex).val(nickname);
                 $("#btnPlayer" + seatIndex).prop('disabled', true);
                 playerNickNames[seatIndex - 1] = nickname;
