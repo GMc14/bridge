@@ -200,12 +200,12 @@ $(function () {
         setPlayerCount(numPlayers);
         playerModule();
     });
-    socketio.on('fullRoom', function (data) {
+    socketio.on('fullRoom', function () {
         console.log("--------fullRoom-----------");
         clearSetupModule();
         $(".setupModule:eq(0)").html("Room is Full. Try Again Later");
     });
-    socketio.on('makeGameMaster', function (data) {
+    socketio.on('makeGameMaster', function () {
         console.log("--------makeGameMaster-----------");
         isGameMaster = true;
     });
@@ -251,7 +251,7 @@ $(function () {
         console.log("--------------drawTask----------------card" + JSON.stringify(card));
         displayTrumpCard(card);
     });
-    socketio.on('hideTasks', function (card) {
+    socketio.on('hideTasks', function () {
         $("#showCase").empty();
         $("#showCase").hide();
     });
@@ -407,7 +407,9 @@ $(function () {
         }
 
     });
-    socketio.on('winnerOfRound', function (trickWinner, trickCards) {
+    socketio.on('winnerOfRound', function (data) {
+        var trickWinner = data.player;
+        var trickCards=  data.trickCards;
         roundNumber++;
         lead = trickWinner;
         currentPlayer = trickWinner;
@@ -505,7 +507,7 @@ function leaveRoom() {
 
 function setPlayerCount(num) {
     playersInRoom = num;
-     $("#playersInRoom").text("Players in Room: " + playersInRoom);
+    $("#playersInRoom").text("Players in Room: " + playersInRoom);
 }
 
 function isOkayToStartTheGame() {
@@ -674,7 +676,6 @@ function rotate($el, degrees) {
         '-o-transform': 'rotate(' + degrees + 'deg)',
         'transform': 'rotate(' + degrees + 'deg)',
         'zoom': 1
-
     });
 }
 

@@ -5,17 +5,17 @@ function Card(suit, rank) {
 
 var currentTrumpCards = [];
 var tokenOptions = ['x', '1', '2', '3', '4', '5', 'i', 'ii', 'iii', 'iiii', 'O', '0'];
-var playerOptions = ['', 'GM', 'AM', 'EM',"AP"];
+var playerOptions = ['', 'GM', 'AM', 'EM', "AP"];
 
 function startGame() {
   console.log("--------------startGame-------isGameMaster?--------" + isGameMaster);
   $("#myHand").show();
   $("#myHand").empty();
   $(".otherPlayerHand").empty();
-  if(isGameMaster){
+  if (isGameMaster) {
     $("#gameControls").show();
     $(".plyrDropName").show();
-    $("#tokenLegend").hide();    
+    $("#tokenLegend").hide();
     createDeck();
     deck = getShuffled(deck);
     dealCards();
@@ -29,7 +29,7 @@ function startGame() {
   }
 
   console.log("[][][][][][][][][][]ClearTrumpHighlights[][][][][][][][][][][]");
-  currentTrumpCards=[];
+  currentTrumpCards = [];
   $(".isTrump").removeClass("isTrump");
 }
 
@@ -72,12 +72,12 @@ function createDeck(taskOnly = false) {
       if (gameConfid_isCrew) {
         taskDeck.push(new Card(suits[i], ranks[j]));
       }
-      if(!taskOnly){
+      if (!taskOnly) {
         deck.push(new Card(suits[i], ranks[j]));
       }
     }
   }
-  if(!taskOnly){
+  if (!taskOnly) {
     for (var i = 0; i < bonusCards.length; i++) {
       deck.push(new Card(bonusCards[i].charAt(0), bonusCards[i].charAt(1)));
     }
@@ -86,8 +86,8 @@ function createDeck(taskOnly = false) {
 
 function getSorted(inputDeck) {
   inputDeck.sort(function (a, b) {
-    var aSuit = a.suit.replace("S","E");
-    var bSuit = b.suit.replace("S","E"); //Move spades between D-iamonds and H-earts
+    var aSuit = a.suit.replace("S", "E");
+    var bSuit = b.suit.replace("S", "E"); //Move spades between D-iamonds and H-earts
     var aRank = a.rank;
     var bRank = b.rank;
     if (aSuit == bSuit) {
@@ -174,8 +174,8 @@ function cardValue(card) {
 
 function sortHand() {
   myHandOfCards.sort(function (a, b) {
-    var aSuit = a.suit.replace("S","E");
-    var bSuit = b.suit.replace("S","E"); //Move spades between D-iamonds and H-earts
+    var aSuit = a.suit.replace("S", "E");
+    var bSuit = b.suit.replace("S", "E"); //Move spades between D-iamonds and H-earts
     var aRank = a.rank;
     var bRank = b.rank;
     if (aSuit == bSuit) {
@@ -192,22 +192,22 @@ function setTrumpCardOrderIcon(cardID, icon) {
 
 function setTrumpCardAssignee(cardID, player) {
   console.log(">>>>>>>>>>>>> setTrumpCardAssignee " + cardID + "  :  " + player);
-  $.each(playerOptions,function(index,value){
+  $.each(playerOptions, function (index, value) {
     $("#assignment" + cardID).removeClass(value);
   });
   $("#assignment" + cardID).text(player);
   $("#assignment" + cardID).addClass(player);
 }
 
-function setPlayerShortName(forPlayerNumber, shortName){
-  var _idSelector = "#loc"+inversePlayerIdMap['Player'+forPlayerNumber]+"name";
+function setPlayerShortName(forPlayerNumber, shortName) {
+  var _idSelector = "#loc" + inversePlayerIdMap['Player' + forPlayerNumber] + "name";
   var tempPlayerNum = playerNum.replace('Player', '');
-  console.log("Is it me? "+forPlayerNumber+"  vs. "+tempPlayerNum);
-  if(forPlayerNumber == tempPlayerNum){
+  console.log("Is it me? " + forPlayerNumber + "  vs. " + tempPlayerNum);
+  if (forPlayerNumber == tempPlayerNum) {
     console.log("That's Me");
     _idSelector = "#myName";
   }
-  $.each(playerOptions,function(index,value){
+  $.each(playerOptions, function (index, value) {
     $(_idSelector).removeClass(value);
   });
   $(_idSelector).addClass(shortName);
@@ -296,14 +296,14 @@ function displayCards() {
 
 function highlightPlayable() {
   for (var i = 0; i < myHandOfCards.length; i++) {
-      if (String(myHandOfCards[i].suit) == leadSuit) {
-          var cardRank = String(myHandOfCards[i].rank);
-          var cardSuit = String(myHandOfCards[i].suit);
-          var cardID = cardSuit + cardRank;
-          var encodedI = i + 10;
-          // card.setAttribute("id", encodedI + cardID);
-          $("#" + encodedI + cardID).addClass("highlighted");
-      }
+    if (String(myHandOfCards[i].suit) == leadSuit) {
+      var cardRank = String(myHandOfCards[i].rank);
+      var cardSuit = String(myHandOfCards[i].suit);
+      var cardID = cardSuit + cardRank;
+      var encodedI = i + 10;
+      // card.setAttribute("id", encodedI + cardID);
+      $("#" + encodedI + cardID).addClass("highlighted");
+    }
   }
 }
 

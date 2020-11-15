@@ -4,19 +4,14 @@ var http = require("http"),
   fs = require("fs"),
   path = require("path"),
   PORT = process.env.PORT || 1234;
-
 var server = http.createServer(function (req, res) {
-
   var filePath = req.url;
-
   if (filePath == '/') {
     filePath = './index.html';
   }
-
   filePath = "./" + filePath;
   var extname = path.extname(filePath);
   var contentType = 'text/html';
-
   switch (extname) {
     case '.js':
       contentType = 'text/javascript';
@@ -25,11 +20,8 @@ var server = http.createServer(function (req, res) {
       contentType = 'text/css';
       break;
   }
-
   fs.exists(filePath, function (exists) {
-
     if (exists) {
-
       fs.readFile(filePath, function (err, data) {
         if (err) {
           return res.writeHead(500);
@@ -41,15 +33,13 @@ var server = http.createServer(function (req, res) {
         }
       });
     }
-
   });
-
 }).listen(PORT);
 console.log("server running on Port " + PORT);
-
 var io = socketio.listen(server);
+
 io.sockets.on('connection', function (socket) {
-//Room State
+  //Room State
   socket.on('create', function (room) {
     var thisRoom = io.sockets.adapter.rooms[room];
     var numInRoom = thisRoom === undefined ? 0 : thisRoom.length;
@@ -83,14 +73,16 @@ io.sockets.on('connection', function (socket) {
       io.sockets.to(room).emit('setPlayerCountOnClient', thisRoom.length);
     }
   });
-  socket.on('selPlayer', function (data) {
+  socket.on('playerSeated', function (data) {
+    console.log("playerSeated... data: " + JSON.stringify(data));
+    console.log("playerSeated... socket.room: " + JSON.stringify(socket.room));
     io.sockets.adapter.rooms[data.roomID].inGame = 1;
     socket.nickname = data.nickname;
     var playerIndex = data.playerIndex;
     var playerNum = data.playerNum;
     socket.player = playerNum;
     var remainingPlayers = data.remainingPlayers;
-    console.log("--------------selPlayer----------------remainingPlayers: " + remainingPlayers + "  >>  playerIndex: " + playerIndex);
+    console.log("--------------playerSeated----------------remainingPlayers: " + remainingPlayers + "  >>  playerIndex: " + playerIndex);
     io.sockets.to(data.roomID).emit('playerDataToClient', {
       nickname: socket.nickname,
       playerIndex: playerIndex,
@@ -98,7 +90,7 @@ io.sockets.on('connection', function (socket) {
     });
   });
   socket.on('startGameOnServer', function (data) {
-    
+
     console.log("---startGameOnServer----");
     var startGamePlayerCount = io.sockets.adapter.rooms[socket.room].length;
     console.log("---startGameOnServer---- startGamePlayerCount" + startGamePlayerCount);
@@ -108,52 +100,40 @@ io.sockets.on('connection', function (socket) {
   socket.on('sendMessage', function (data) {
     io.sockets.to(socket.room).emit('message', data);
   });
-//Pregame
-socket.on('assignShortName', function (data) {
-  io.sockets.to(socket.room).emit('assignShortNameToClients', data);
-});
-socket.on('cycleOrderIcon', function (data) {
-  io.sockets.to(data.roomID).emit('cycleClientOrderIcon', {
-    cardID: data.cardID,
-    icon: data.icon
+  //Pregame
+  socket.on('assignShortName', function (data) {
+    io.sockets.to(socket.room).emit('assignShortNameToClients', data);
   });
-});
-socket.on('cycleAssignee', function (data) {
-  io.sockets.to(data.roomID).emit('cycleClientOrderAssignee', {
-    cardID: data.cardID,
-    player: data.player
+  socket.on('cycleOrderIcon', function (data) {
+    io.sockets.to(data.roomID).emit('cycleClientOrderIcon', data);
   });
-});
-socket.on('drawTask', function (card) {
-  io.sockets.to(socket.room).emit('drawTask', card);
-});
-socket.on('hideTasks', function (card) {
-  io.sockets.to(socket.room).emit('hideTasks');
-});
-socket.on('restartGame', function () {
-  io.sockets.to(socket.room).emit('restartGame');
-});
-//Game Play
-socket.on('dealCards', function (data) {
-  io.sockets.to(data.roomID).emit('dealToClients', {
-    hands: data.hands,
-    trumpCard: data.trumpCard
+  socket.on('cycleAssignee', function (data) {
+    io.sockets.to(data.roomID).emit('cycleClientOrderAssignee', data);
   });
-});
-socket.on('bid', function (data) {
-  io.sockets.to(socket.room).emit('some1Bid', data);
-});
-socket.on('pass', function () {
-  io.sockets.to(socket.room).emit('some1Passed');
-});
-socket.on('playCard', function (data) {
-  io.sockets.to(data.roomID).emit('cardPlayed', {
-    player: socket.player,
-    card: data.card
+  socket.on('drawTask', function (card) {
+    console.log("drawTask... socket.room: " + JSON.stringify(socket.room));
+    io.sockets.to(socket.room).emit('drawTask', card);
   });
-});
-socket.on('winner', function (data) {
-  console.log("server:->winner");
-  io.sockets.to(data.roomID).emit('winnerOfRound', data.player, data.trickCards);
-});
+  socket.on('hideTasks', function () {
+    io.sockets.to(socket.room).emit('hideTasks');
+  });
+  socket.on('restartGame', function () {
+    io.sockets.to(socket.room).emit('restartGame');
+  });
+  //Game Play
+  socket.on('dealCards', function (data) {
+    io.sockets.to(data.roomID).emit('dealToClients', data);
+  });
+  socket.on('bid', function (data) {
+    io.sockets.to(socket.room).emit('some1Bid', data);
+  });
+  socket.on('pass', function () {
+    io.sockets.to(socket.room).emit('some1Passed');
+  });
+  socket.on('playCard', function (data) {
+    io.sockets.to(data.roomID).emit('cardPlayed', data);
+  });
+  socket.on('winner', function (data) {
+    io.sockets.to(data.roomID).emit('winnerOfRound', data);
+  });
 });

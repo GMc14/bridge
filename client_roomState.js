@@ -30,7 +30,6 @@ function playerModule() {
   $(playerSetup).append("<br />");
   $(playerSetup).append("<br />");
 
-
   var previousNickName = $.cookie("nickname");
   if (previousNickName) {
       $(nicknameInput).val(previousNickName);
@@ -42,7 +41,7 @@ function playerModule() {
       currPlayer.setAttribute("id", "btnPlayer" + j);
       currPlayer.setAttribute("data-player-number", j);
       currPlayer.setAttribute("class", "playerBtns");
-      currPlayer.setAttribute("value", "Player" + j);
+      currPlayer.setAttribute("value", "Seat" + j);
 
       $(playerSetup).append("<br />");
       $(playerSetup).append(currPlayer);
@@ -77,8 +76,8 @@ function playerModule() {
           $("#myName").append(boldNames);
           remainingPlayers--;
           $.cookie("nickname", nickname);
-          console.log("--------------playerBtns emit selPlayer...----------------");
-          socketio.emit('selPlayer', {
+          console.log("--------------playerBtns emit playerSeated...----------------");
+          socketio.emit('playerSeated', {
               nickname: nickname,
               playerNum: playerNum,
               playerIndex: playerIndex,
