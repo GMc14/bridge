@@ -25,7 +25,8 @@ function playerModule() {
     addSeatToTable(j);
   }
   if (isGameMaster) {
-    $(".setupModule:eq(0)").append('<button id="startGameButton" class="startBtn">Start Game</button>');
+    console.log("--------------<({[isGameMaster]})>----------------");
+    $("#startGameButton").show();
     $("#startGameButton").on("click", function () {
       if (isOkayToStartTheGame()) {
         socketio.emit('startGameOnServer');

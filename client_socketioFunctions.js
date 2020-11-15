@@ -230,6 +230,7 @@ $(function () {
         console.log("client_socket :: startGame");
         preRenderImgs();
         clearSetupModule();
+        $("#startGameButton").hide();
         constructPlayArea();
         startGame();
     });

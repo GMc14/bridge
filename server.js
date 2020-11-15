@@ -49,15 +49,16 @@ io.sockets.on('connection', function (socket) {
       socket.join(room);
       socket.room = room;
       numInRoom++;
-      io.sockets.to(room).emit('setPlayerCountOnClient', numInRoom);
       thisRoom = io.sockets.adapter.rooms[room];
       console.log("room: " + JSON.stringify(room));
       console.log("thisRoom: " + JSON.stringify(thisRoom));
 
       if (thisRoom && !thisRoom.gameMaster) {
         thisRoom.gameMaster = socket.id;
+        console.log("gameMaster assigned: " + thisRoom.gameMaster);
         io.sockets.to(socket.id).emit('makeGameMaster');
       }
+      io.sockets.to(room).emit('setPlayerCountOnClient', numInRoom);
     }
   });
   socket.on('leaveRoom', function (room) {

@@ -378,7 +378,9 @@ td, th {
   top: 56vh;
   left: 60vw;
 }
-
+#startGameButton{
+  display:none;
+}
 #gameSetup {
   display: table;
   position: absolute;
