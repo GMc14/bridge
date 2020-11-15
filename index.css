@@ -449,7 +449,8 @@ td, th {
   background-color: white;
   color: black;
   text-align: center;
-  margin: 0.5vmax;
+  margin: 1vmax;
+  clear:both;
   border-radius: 0.5vmax;
   transition-duration: 0.1s;
 }

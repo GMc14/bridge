@@ -210,6 +210,9 @@ $(function () {
     });
     socketio.on('setPlayerCountOnClient', function (playerCount) {
         gameConfig_playerCount = playerCount;
+        for (var j = 1; j <= gameConfig_playerCount; j++) {
+            addSeatToTable(j);
+        }
     })
     socketio.on('playerDataToClient', function (data) {
         var nickname = data.nickname;
