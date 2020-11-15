@@ -38,37 +38,43 @@ var server = http.createServer(function (req, res) {
 console.log("server running on Port " + PORT);
 var io = socketio.listen(server);
 
-function enter(room, playerId){
-  if(!room.gameMaster) {
+function enter(room, socket) {
+  var playerId = socket.id;
+  console.log("room: " + JSON.stringify(room));
+  if (!room.gameMaster) {
     room.gameMaster = playerId;
   }
-  if(!room.seats){
-    room.seats = new Array({occupant:""});
+  if (!room.seats) {
+    room.seats = new Array({
+      occupant: ""
+    });
   }
-  if(!room.standing){
+  if (!room.standing) {
     room.standing = new Array(playerId);
   }
-  if(!room.players){
-    room.players = new Array({id:playerId});
+  if (!room.players) {
+    room.players = new Array({
+      id: playerId
+    });
   }
   console.log("@@@ enter room @@@: " + JSON.stringify(room));
-  io.sockets.to(socket.id).emit('updateRoom', room);
+  io.sockets.to(socket.room).emit('updateRoom', room);
 }
 
-function leave(room, playerId){
-  if(!room.gameMaster) {
+function leave(room, playerId) {
+  if (!room.gameMaster) {
     console.log("Todo: Assign New GameMaster");
   }
   room.standing.remove(playerId);
   room.seated.remove(playerId);
 }
 
-function sit(room, playerId, seatIndex){
+function sit(room, playerId, seatIndex) {
   room.standing.remove(playerId);
   room.seated.add(playerId);
 }
 
-function stand(room, playerId){
+function stand(room, playerId) {
   //room.standing.add(playerId);
   //room.seated.remove(playerId);
 }
@@ -89,21 +95,15 @@ const getCircularReplacer = () => {
 
 io.sockets.on('connection', function (socket) {
   //Room State
-  socket.on('enterRoom', function (room) {
-    var thisRoom = io.sockets.adapter.rooms[room];
-    var numInRoom = thisRoom === undefined ? 0 : thisRoom.length;
-    if (numInRoom >= maximumRoomSize) {
-      io.sockets.to(socket.id).emit('fullRoom', numInRoom);
+  socket.on('enterRoom', function (roomID) {
+    var thisRoom = io.sockets.adapter.rooms[roomID];
+    if (thisRoom && thisRoom.length < maximumRoomSize) {
+      //console.log("socket: " + JSON.stringify(socket, getCircularReplacer()));
+      socket.join(roomID);
+      socket.room = roomID;
+      enter(thisRoom, socket);
     } else {
-      socket.join(room);
-      socket.room = room;
-      numInRoom++;
-      thisRoom = io.sockets.adapter.rooms[room];
-      console.log("room: " + JSON.stringify(room));
-      console.log("thisRoom: " + JSON.stringify(thisRoom));
-      console.log("socket: " + JSON.stringify(socket, getCircularReplacer()));
-      enter(thisRoom, socket.id);
-      io.sockets.to(room).emit('setPlayerCountOnClient', numInRoom);
+      io.sockets.to(socket.id).emit('fullRoom', thisRoom.length);
     }
   });
   socket.on('leaveRoom', function (room) {
@@ -126,7 +126,7 @@ io.sockets.on('connection', function (socket) {
     var playerIndex = data.playerIndex;
     socket.nickname = data.nickname;
     socket.player = data.playerNum;
-    console.log("--------------playerSeated------  >>  playerIndex: " + playerIndex +" socket.player: "+socket.player +" socket.nickname: "+socket.nickname);
+    console.log("--------------playerSeated------  >>  playerIndex: " + playerIndex + " socket.player: " + socket.player + " socket.nickname: " + socket.nickname);
     io.sockets.to(data.roomID).emit('playerDataToClient', {
       nickname: socket.nickname,
       playerIndex: playerIndex
@@ -135,7 +135,7 @@ io.sockets.on('connection', function (socket) {
   socket.on('playerStand', function (player) {
     console.log("playerUnseated... data: " + JSON.stringify(data));
     console.log("playerUnseated... socket.room: " + JSON.stringify(socket.room));
-    if(socket == player || socket == room.gameMaster){
+    if (socket == player || socket == room.gameMaster) {
       stand(socket.room, player);
     } else {
       console.log("unauthorized seat kick");
