@@ -193,20 +193,20 @@ $(function () {
         updateComms(new Date().getTime() % 3);
     });
     socketio.on('updateRoom', function (room) {
-        console.log("--------updateRoom-----------"+JSON.stringify(room));
+        console.log("--------updateRoom-----------" + JSON.stringify(room));
         gameConfig_playerCount = room.players.length;
         clearSetupModule();
         playerModule();
         var standingPlayersHTMLString = "Waiting for... <br />";
-        $.each(room.players,function(){
+        $.each(room.players, function () {
             var nickname = this.nickname;
             var seatIndex = room.seats.indexOf(this.id);
-            if(seatIndex>-1){
-                if(this.nickName > 0){
+            if (seatIndex = -1) {
+                if (this.nickName > 0) {
                     this.nickName = this.id;
                 }
                 standingPlayersHTMLString = standingPlayersHTMLString.concat(this.nickName);
-                standingPlayersHTMLString = standingPlayersHTMLString.concat("<br />"); 
+                standingPlayersHTMLString = standingPlayersHTMLString.concat("<br />");
             } else {
                 addSeatToTable(seatIndex);
                 $("#btnPlayer" + seatIndex).val(nickname);
@@ -413,7 +413,7 @@ $(function () {
     });
     socketio.on('winnerOfRound', function (data) {
         var trickWinner = data.player;
-        var trickCards=  data.trickCards;
+        var trickCards = data.trickCards;
         roundNumber++;
         lead = trickWinner;
         currentPlayer = trickWinner;
@@ -687,8 +687,8 @@ function updateComms(status) {
         $("#myCommunication").html('mic');
     }
 }
-var path =window.location.pathname;
-console.log("window.location.pathname: "+path);
+var path = window.location.pathname;
+console.log("window.location.pathname: " + path);
 // if(path.length==4){
 //     console.log("AutoJoiner: "+path);             
 //     $("#roomID").val(path);

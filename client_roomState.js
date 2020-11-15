@@ -63,6 +63,10 @@ function playerModule() {
 }
 
 function addSeatToTable(seatNumber) {
+  if(seatNumber < 0){
+    console.log("--------------addSeatToTable ----------------: invalid seat: "+seatNumber);
+    return;
+  }
   console.log("--------------addSeatToTable ----------------: "+seatNumber);
   if ($("#btnPlayer"+seatNumber).length < 1) {
     var seatButton = document.createElement("input");
