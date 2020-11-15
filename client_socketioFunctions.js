@@ -105,7 +105,6 @@ var commanderName;
 //Player values
 var nickname;
 var playersInRoom;
-var remainingPlayers;
 var playerNum;
 var playerIndex;
 
@@ -215,8 +214,7 @@ $(function () {
     socketio.on('playerDataToClient', function (data) {
         var nickname = data.nickname;
         var playerIndex = data.playerIndex;
-        remainingPlayers = data.remainingPlayers;
-        console.log("playerDataToClient---- >> playerIndex: " + playerIndex + "  >> nickname: " + nickname + "  >>  remainingPlayers: " + remainingPlayers);
+        console.log("playerDataToClient---- >> playerIndex: " + playerIndex + "  >> nickname: " + nickname);
         $("#btnPlayer" + playerIndex).val(nickname);
         $("#btnPlayer" + playerIndex).prop('disabled', true);
         playerNickNames[playerIndex - 1] = nickname;
@@ -481,13 +479,11 @@ function clearSetupModule() {
 function joinRoom() {
     console.log("--------joinRoom-----------");
     roomID = $("#roomID").val();
-    remainingPlayers = gameConfig_playerCount;
-
     while (roomID.length < 4) {
         roomID = roomID.concat(codeCandidates.charAt(Math.floor(Math.random() * codeCandidates.length)));
     }
     roomID = roomID.toUpperCase()
-    socketio.emit('create', roomID);
+    socketio.emit('enterRoom', roomID);
     clearSetupModule();
     var roomText = document.createElement("span");
     roomText.setAttribute("id", "roomText");
@@ -497,7 +493,7 @@ function joinRoom() {
 }
 
 function leaveRoom() {
-    socketio.emit('leave', roomID);
+    socketio.emit('leaveRoom', roomID);
     $("#leaveRoom").hide();
     // $("#roomText").remove();
     // clearSetupModule();

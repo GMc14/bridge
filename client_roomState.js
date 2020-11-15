@@ -74,15 +74,13 @@ function playerModule() {
           var boldNames = document.createElement("b");
           boldNames.appendChild(document.createTextNode(playerNum + ': ' + nickname));
           $("#myName").append(boldNames);
-          remainingPlayers--;
           $.cookie("nickname", nickname);
           console.log("--------------playerBtns emit playerSeated...----------------");
           socketio.emit('playerSeated', {
               nickname: nickname,
               playerNum: playerNum,
               playerIndex: playerIndex,
-              roomID: roomID,
-              remainingPlayers: remainingPlayers
+              roomID: roomID
           });
           //TODO: show chat if want to use it $('#chat').show();
           playerColor = playerColors[playerIndex - 1];

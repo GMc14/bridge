@@ -1,4 +1,4 @@
-let maximumRoomSize = 10;
+var maximumRoomSize = 10;
 var http = require("http"),
   socketio = require("socket.io"),
   fs = require("fs"),
@@ -40,7 +40,7 @@ var io = socketio.listen(server);
 
 io.sockets.on('connection', function (socket) {
   //Room State
-  socket.on('create', function (room) {
+  socket.on('enterRoom', function (room) {
     var thisRoom = io.sockets.adapter.rooms[room];
     var numInRoom = thisRoom === undefined ? 0 : thisRoom.length;
     if (numInRoom >= maximumRoomSize) {
@@ -60,7 +60,7 @@ io.sockets.on('connection', function (socket) {
       }
     }
   });
-  socket.on('leave', function (room) {
+  socket.on('leaveRoom', function (room) {
     socket.leave(room);
     var thisRoom = io.sockets.adapter.rooms[room];
     var numInRoom = thisRoom === undefined ? 0 : thisRoom.length;
@@ -77,20 +77,21 @@ io.sockets.on('connection', function (socket) {
     console.log("playerSeated... data: " + JSON.stringify(data));
     console.log("playerSeated... socket.room: " + JSON.stringify(socket.room));
     io.sockets.adapter.rooms[data.roomID].inGame = 1;
-    socket.nickname = data.nickname;
     var playerIndex = data.playerIndex;
-    var playerNum = data.playerNum;
-    socket.player = playerNum;
-    var remainingPlayers = data.remainingPlayers;
-    console.log("--------------playerSeated----------------remainingPlayers: " + remainingPlayers + "  >>  playerIndex: " + playerIndex);
+    socket.nickname = data.nickname;
+    socket.player = data.playerNum;
+    console.log("--------------playerSeated------  >>  playerIndex: " + playerIndex +" socket.player: "+socket.player +" socket.nickname: "+socket.nickname);
     io.sockets.to(data.roomID).emit('playerDataToClient', {
       nickname: socket.nickname,
-      playerIndex: playerIndex,
-      remainingPlayers: remainingPlayers
+      playerIndex: playerIndex
     });
   });
-  socket.on('startGameOnServer', function (data) {
+  socket.on('playerUnseated', function (data) {
+    console.log("playerUnseated... data: " + JSON.stringify(data));
+    console.log("playerUnseated... socket.room: " + JSON.stringify(socket.room));
 
+  });
+  socket.on('startGameOnServer', function () {
     console.log("---startGameOnServer----");
     var startGamePlayerCount = io.sockets.adapter.rooms[socket.room].length;
     console.log("---startGameOnServer---- startGamePlayerCount" + startGamePlayerCount);
@@ -99,6 +100,9 @@ io.sockets.on('connection', function (socket) {
   });
   socket.on('sendMessage', function (data) {
     io.sockets.to(socket.room).emit('message', data);
+  });
+  socket.on('setMaxRoomSize', function (data) {
+    maximumRoomSize = data;
   });
   //Pregame
   socket.on('assignShortName', function (data) {
