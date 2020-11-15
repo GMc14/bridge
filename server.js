@@ -69,8 +69,8 @@ function sit(room, playerId, seatIndex){
 }
 
 function stand(room, playerId){
-  room.standing.add(playerId);
-  room.seated.remove(playerId);
+  //room.standing.add(playerId);
+  //room.seated.remove(playerId);
 }
 
 
@@ -101,7 +101,7 @@ io.sockets.on('connection', function (socket) {
       thisRoom = io.sockets.adapter.rooms[room];
       console.log("room: " + JSON.stringify(room));
       console.log("thisRoom: " + JSON.stringify(thisRoom));
-      console.log("socket: " + JSON.stringify(circularReference, getCircularReplacer()));
+      console.log("socket: " + JSON.stringify(socket, getCircularReplacer()));
       enter(thisRoom, socket.id);
       io.sockets.to(room).emit('setPlayerCountOnClient', numInRoom);
     }
@@ -119,7 +119,7 @@ io.sockets.on('connection', function (socket) {
       io.sockets.to(room).emit('setPlayerCountOnClient', thisRoom.length);
     }
   });
-  socket.on('playerSeated', function (data) {
+  socket.on('playerSit', function (data) {
     console.log("playerSeated... data: " + JSON.stringify(data));
     console.log("playerSeated... socket.room: " + JSON.stringify(socket.room));
     io.sockets.adapter.rooms[data.roomID].inGame = 1;
@@ -132,10 +132,14 @@ io.sockets.on('connection', function (socket) {
       playerIndex: playerIndex
     });
   });
-  socket.on('playerUnseated', function (data) {
+  socket.on('playerStand', function (player) {
     console.log("playerUnseated... data: " + JSON.stringify(data));
     console.log("playerUnseated... socket.room: " + JSON.stringify(socket.room));
-    io.sockets.to(socket.room).emit('syncTableState', thisRoom.gameMaster);
+    if(socket == player || socket == room.gameMaster){
+      stand(socket.room, player);
+    } else {
+      console.log("unauthorized seat kick");
+    }
   });
   socket.on('startGameOnServer', function () {
     console.log("---startGameOnServer----");
