@@ -79,7 +79,6 @@ function stand(room, playerId) {
   //room.seated.remove(playerId);
 }
 
-
 const getCircularReplacer = () => {
   const seen = new WeakSet();
   return (key, value) => {
@@ -97,10 +96,12 @@ io.sockets.on('connection', function (socket) {
   //Room State
   socket.on('enterRoom', function (roomID) {
     var thisRoom = io.sockets.adapter.rooms[roomID];
-    if (thisRoom && thisRoom.length < maximumRoomSize) {
-      console.log("thisRoom all good");
+    if (!thisRoom || thisRoom.length < maximumRoomSize) {
+      console.log("thisRoom all good: " + thisRoom);
       //console.log("socket: " + JSON.stringify(socket, getCircularReplacer()));
       socket.join(roomID);
+      thisRoom = io.sockets.adapter.rooms[roomID]; 
+      console.log("thisRoom all good: " + thisRoom);//should exist now
       socket.room = roomID;
       enter(thisRoom, socket);
     } else {
