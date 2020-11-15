@@ -194,9 +194,19 @@ $(function () {
         updateComms(new Date().getTime() % 3);
     });
     socketio.on('updateRoom', function (room) {
-        console.log("--------fullRoom-----------"+JSON.stringify(room));
+        console.log("--------updateRoom-----------"+JSON.stringify(room));
         clearSetupModule();
         $(".setupModule:eq(0)").html("Room is Full. Try Again Later");
+
+
+        var playerCount = room["players"].length;
+        console.log("--------updateRoom-----------");
+        gameConfig_playerCount = playerCount;
+        setPlayerCount(playerCount);
+        playerModule();
+        for (var j = 1; j <= gameConfig_playerCount; j++) {
+            addSeatToTable(j);
+        }
     });
     socketio.on('fullRoom', function () {
         console.log("--------fullRoom-----------");
@@ -207,15 +217,6 @@ $(function () {
         console.log("--------makeGameMaster-----------");
         isGameMaster = true;
     });
-    socketio.on('setPlayerCountOnClient', function (playerCount) {
-        console.log("--------setPlayerCountOnClient-----------");
-        gameConfig_playerCount = playerCount;
-        setPlayerCount(playerCount);
-        playerModule();
-        for (var j = 1; j <= gameConfig_playerCount; j++) {
-            addSeatToTable(j);
-        }
-    })
     socketio.on('playerDataToClient', function (data) {
         var nickname = data.nickname;
         var playerIndex = data.playerIndex;

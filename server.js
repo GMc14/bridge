@@ -109,18 +109,16 @@ io.sockets.on('connection', function (socket) {
       //io.sockets.to(socket.id).emit('fullRoom', thisRoom.length);
     }
   });
-  socket.on('leaveRoom', function (room) {
-    socket.leave(room);
-    var thisRoom = io.sockets.adapter.rooms[room];
-    var numInRoom = thisRoom === undefined ? 0 : thisRoom.length;
-    io.sockets.to(room).emit('setPlayerCountOnClient', numInRoom);
+  socket.on('leaveRoom', function (roomID) {
+    socket.leave(roomID);
+    var thisRoom = io.sockets.adapter.rooms[roomID];
     if (thisRoom) {
       if (thisRoom.inGame == 1) {
         var nickname = socket.nickname === undefined ? 'Someone' : socket.nickname;
-        io.sockets.to(room).emit('leftInGame', nickname);
+        io.sockets.to(roomID).emit('leftInGame', nickname);
       }
-      io.sockets.to(room).emit('setPlayerCountOnClient', thisRoom.length);
     }
+    io.sockets.to(roomID).emit('updateRoom', io.sockets.adapter.rooms[roomID]);
   });
   socket.on('playerSit', function (data) {
     console.log("playerSeated... data: " + JSON.stringify(data));
@@ -148,7 +146,7 @@ io.sockets.on('connection', function (socket) {
     console.log("---startGameOnServer----");
     var startGamePlayerCount = io.sockets.adapter.rooms[socket.room].length;
     console.log("---startGameOnServer---- startGamePlayerCount" + startGamePlayerCount);
-    io.sockets.to(socket.room).emit('setPlayerCountOnClient', startGamePlayerCount);
+    io.sockets.to(socket.room).emit('updateRoom', io.sockets.adapter.rooms[socket.room]);
     io.sockets.to(socket.room).emit('startGame', startGamePlayerCount);
   });
   socket.on('sendMessage', function (data) {
