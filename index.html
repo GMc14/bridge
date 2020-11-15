@@ -13,6 +13,7 @@
   <script src="client_deckFunctions.js" type="text/javascript"></script>
   <script src="client_rules.js" type="text/javascript"></script>
   <script src="client_bidFunctions.js" type="text/javascript"></script>
+  <script src="client_roomState.js" type="text/javascript"></script>
 </head>
 <body>
   <div id="gameBoard">
@@ -28,6 +29,7 @@
     <div id="gameSetup">
       <div class="setupModule">
         <span>CREATE/JOIN:</span><br>
+        <div id="playersInRoom"></div>
         <form id="joinRoomForm">
           <input id="roomID" type="text" title="4 Character Room Code" placeholder="4 Character Room Code" maxlength="4" pattern="[a-zA-Z0-9]+">
           <input type="submit" value="Go">

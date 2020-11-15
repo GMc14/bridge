@@ -4,6 +4,9 @@ function Card(suit, rank) {
 }
 
 var currentTrumpCards = [];
+var tokenOptions = ['x', '1', '2', '3', '4', '5', 'i', 'ii', 'iii', 'iiii', 'O', '0'];
+var playerOptions = ['', 'GM', 'AM', 'EM',"AP"];
+
 function startGame() {
   console.log("--------------startGame-------isGameMaster?--------" + isGameMaster);
   $("#myHand").show();
@@ -80,6 +83,7 @@ function createDeck(taskOnly = false) {
     }
   }
 }
+
 function getSorted(inputDeck) {
   inputDeck.sort(function (a, b) {
     var aSuit = a.suit.replace("S","E");
@@ -94,6 +98,7 @@ function getSorted(inputDeck) {
   });
   return inputDeck;
 }
+
 function getShuffled(inputDeck) {
   var m = inputDeck.length,
     t, i, shuffled = inputDeck;
@@ -208,11 +213,6 @@ function setPlayerShortName(forPlayerNumber, shortName){
   $(_idSelector).addClass(shortName);
 }
 
-var tokenOptions = ['x', '1', '2', '3', '4', '5', 'i', 'ii', 'iii', 'iiii', 'O', '0'];
-//TODO: allow selecting specific cards
-var playerOptions = ['', 'GM', 'AM', 'EM',"AP"];
-
-
 function displayTrumpCard(trumpCard) {
   var cardRank = String(trumpCard.rank);
   var cardSuit = String(trumpCard.suit);
@@ -293,6 +293,7 @@ function displayCards() {
   }
   console.log("--------------displayCards>>>>>>>>>>>>>");
 }
+
 function highlightPlayable() {
   for (var i = 0; i < myHandOfCards.length; i++) {
       if (String(myHandOfCards[i].suit) == leadSuit) {
@@ -305,6 +306,7 @@ function highlightPlayable() {
       }
   }
 }
+
 function displayOtherCards(playerIndex, handSize) {
   console.log(">>>>>>>>>>>>>displayCards----in: #loc" + playerIndex + "Hand------------playerIndex: " + playerIndex + "  >>  handSize: " + handSize);
   $('#loc' + playerIndex + 'Hand').empty();

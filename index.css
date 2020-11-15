@@ -24,6 +24,7 @@ body {
 }
 
 #tokenLegend {
+  display:none;
   position: fixed;
   left: 2vmax;
   top: 2vmax;
@@ -312,6 +313,9 @@ td, th {
   cursor: pointer;
   font-weight: bold;
   z-index: 99999999;
+}
+#playersInRoom{
+  background: rgba(21,211,123,0.9);
 }
 
 .noComms{

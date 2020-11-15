@@ -6,7 +6,7 @@ var playerNickNames = ['', '', '', '', '', '', '', ''];
 var playerColors = ['#004499', '#770011', '#666600', '#116600', '#440099', '#883300', '#006666', '#660066'];
 
 //Game Config
-var gameConfig_playerCount = 4;
+var gameConfig_playerCount = 1;
 var gameConfig_startCardsPerPlayer = -1; //-1==Deal All
 var gameConfig_numberOfRounds = gameConfig_startCardsPerPlayer; //Plya all cards in hand
 var isGameMaster = false;
@@ -67,7 +67,6 @@ var gameConfig_isEuchre = false;
 var gameConfig_topDeckTrump = gameConfig_isEuchre;
 var gameConfig_euchreBowers = gameConfig_isEuchre;
 
-
 //Deck Setup
 var deck = [];
 var taskDeck = [];
@@ -105,6 +104,7 @@ var cardback = "card_imgs/cardback.png";
 var commanderName;
 //Player values
 var nickname;
+var playersInRoom;
 var remainingPlayers;
 var playerNum;
 var playerIndex;
@@ -119,13 +119,12 @@ var tricksWon = 0;
 var roundNumber = 0;
 var handsNeeded;
 
-function updateTurnIndicator(playerOnTurnName, isMe = false, isLead = false) {
-    $("#turnIndicator").html("<b>Commander</b>: " + commanderName + "    <b>" + (isLead ? "To Lead" : "On Duty") + "</b>: " + playerOnTurnName);
-    if (isMe) {
-        $("#myHand").addClass("highlighted");
-        highlightPlayable();
-    }
-}
+let codeCandidates = "234689ABCEFJKMNPQRTVWXY"
+var playerModuleIsShowing = false;
+var hovering = false;
+var playerIdMap = [];
+var inversePlayerIdMap = [];
+
 $(function () {
     $("#tokenQmark").click(function () {
         console.log("show THINGSSSS");
@@ -134,8 +133,6 @@ $(function () {
     $("#tokenLegend").click(function () {
         $("#tokenLegend").hide();
     });
-    $("#tokenLegend").hide();
-
     $('#drawTask').on('click', function () {
         if (taskDeck.length > 0) {
             taskDeck = getShuffled(taskDeck);
@@ -177,8 +174,6 @@ $(function () {
         console.log("[][][][][][][][][][]Need to ClearTrumpHighlights here?[][][][][][][][][][][]");
         socketio.emit('restartGame');
     });
-    // console.log("auto join room...");
-    // joinRoom();
     $("#joinRoomForm").on('submit', function (e) {
         e.preventDefault();
         joinRoom();
@@ -200,34 +195,20 @@ $(function () {
         updateComms(new Date().getTime() % 3);
     });
 
-    function updateComms(status) {
-        if (status == 1) {
-            $("#myCommunication").html('mic_none');
-        } else if (status == 2) {
-            $("#myCommunication").html('mic_off');
-        } else {
-            $("#myCommunication").html('mic');
-        }
-    }
-    socketio.on('wait4Players', function (numPlayers) {
-
-        console.log("--------wait4Players-----------");
-        // if (numPlayers < gameConfig_playerCount) {
-        //     waitRoom(numPlayers);
-        // } else {
+    socketio.on('playerCountToClient', function (numPlayers) {
+        console.log("--------playerCountToClient-----------");
+        setPlayerCount(numPlayers);
         playerModule();
-        // }
     });
     socketio.on('fullRoom', function (data) {
         console.log("--------fullRoom-----------");
         clearSetupModule();
         $(".setupModule:eq(0)").html("Room is Full. Try Again Later");
-    })
+    });
     socketio.on('makeGameMaster', function (data) {
         console.log("--------makeGameMaster-----------");
         isGameMaster = true;
-    })
-
+    });
     socketio.on('setPlayerCountOnClient', function (playerCount) {
         gameConfig_playerCount = playerCount;
     })
@@ -320,8 +301,6 @@ $(function () {
         console.log("--------------assignShortNameToClients----------------data.playerNumber " + data.playerNumber + ",  data.shortName: " + data.shortName);
         setPlayerShortName(data.playerNumber, data.shortName);
     });
-
-
     socketio.on('dealToClients', function (data) {
         xoob = data;
         console.log("--------------dealToClients---------------- " + JSON.stringify(data, null, 4));
@@ -496,10 +475,8 @@ function clearSetupModule() {
         setupModule.removeChild(setupModule.firstChild);
     }
 }
-let codeCandidates = "234689ABCEFJKMNPQRTVWXY"
 
 function joinRoom() {
-
     console.log("--------joinRoom-----------");
     roomID = $("#roomID").val();
     remainingPlayers = gameConfig_playerCount;
@@ -515,13 +492,7 @@ function joinRoom() {
     roomText.appendChild(document.createTextNode("Room Code: " + roomID));
     $("#topbar").prepend(roomText);
     $("#leaveRoom").show();
-
 }
-
-function leaveSeat(){
-    socketio.emit('leaveSeat', roomID);
-}
-
 
 function leaveRoom() {
     socketio.emit('leave', roomID);
@@ -532,11 +503,10 @@ function leaveRoom() {
     window.location.reload();
 }
 
-// function waitRoom(num) {
-//     clearSetupModule();
-//     $(".setupModule:eq(0)").html("<div class='loading'>Current Players in Room: " + num + " <br> Waiting for Players</div>");
-// }
-var playerModuleIsShowing = false;
+function setPlayerCount(num) {
+    playersInRoom = num;
+     $("#playersInRoom").text("Players in Room: " + playersInRoom);
+}
 
 function isOkayToStartTheGame() {
     var lowestOpen = 999;
@@ -557,105 +527,9 @@ function isOkayToStartTheGame() {
     return isOkay;
 }
 
-function playerModule() {
-    console.log("--------------playerModule----------------");
-    if (playerModuleIsShowing) {
-        return;
-    }
-    playerModuleIsShowing = true;
-    clearSetupModule();
-    var playerSetup = document.createElement("div");
-    playerSetup.setAttribute("id", "playerSetup");
-
-    var nicknameInput = document.createElement("input");
-    nicknameInput.setAttribute("type", "text");
-    nicknameInput.setAttribute("id", "nickname");
-    var span1 = document.createElement("span");
-    span1.setAttribute("id", "nicknameLabel");
-    span1.appendChild(document.createTextNode("NICKNAME:"));
-
-    var teamInfo = '';
-    if (gameConfig_isBridge || gameConfig_hasTeams) {
-        teamInfo = "(TEAMS: 1 & 3 and 2 & 4)"
-    }
-    var span2 = document.createElement("span");
-    span2.setAttribute("id", "playerSelectLabel");
-    span2.appendChild(document.createTextNode("SELECT PLAYER: " + teamInfo));
-
-    $(playerSetup).append(span2);
-    $(playerSetup).append(span1);
-    $(playerSetup).append("<br />");
-    $(playerSetup).append(nicknameInput);
-    $(playerSetup).append("<br />");
-    $(playerSetup).append("<br />");
-
-
-    var previousNickName = $.cookie("nickname");
-    if (previousNickName) {
-        $(nicknameInput).val(previousNickName);
-    }
-
-    for (var j = 1; j <= gameConfig_playerCount; j++) {
-        var currPlayer = document.createElement("input");
-        currPlayer.setAttribute("type", "button");
-        currPlayer.setAttribute("id", "btnPlayer" + j);
-        currPlayer.setAttribute("data-player-number", j);
-        currPlayer.setAttribute("class", "playerBtns");
-        currPlayer.setAttribute("value", "Player" + j);
-
-        $(playerSetup).append("<br />");
-        $(playerSetup).append(currPlayer);
-    }
-    $(playerSetup).append("<br />");
-    if (isGameMaster) {
-        $(playerSetup).append('<button id="startGameButton" class="startBtn">Start Game</button>');
-        $("#startGameButton").on("click", function () {
-            if (isOkayToStartTheGame()) {
-                socketio.emit('startGameOnServer');
-            } else {
-                alert("Problematic Open Seats");
-            }
-        });
-    }
-    $(".setupModule:eq(0)").append(playerSetup);
-    $(".playerBtns").on("click", function () {
-        console.log("--------------playerBtns Click----------------");
-        playerNum = $(this).val();
-        nickname = String($("#nickname").val());
-        playerIndex = Number($(this).attr("data-player-number"));
-        console.log("playerSelect >> playerNum: " + playerNum + "  >> nickname: " + nickname + "  >>  playerIndex: " + playerIndex);
-        if (nickname == '' || playerNickNames.indexOf(nickname) > -1) {
-            alert('Pick a unique Nickname!');
-        } else {
-            // $("#playerSetup").hide();
-            // $(".setupModule:eq(0)").html("<div class='loading'>Waiting for Teams</div>");
-            
-
-            var boldNames = document.createElement("b");
-            boldNames.appendChild(document.createTextNode(playerNum + ': ' + nickname));
-            $("#myName").append(boldNames);
-            remainingPlayers--;
-            $.cookie("nickname", nickname);
-            console.log("--------------playerBtns emit selPlayer...----------------");
-            socketio.emit('selPlayer', {
-                nickname: nickname,
-                playerNum: playerNum,
-                playerIndex: playerIndex,
-                roomID: roomID,
-                remainingPlayers: remainingPlayers
-            });
-            //TODO: show chat if want to use it $('#chat').show();
-            playerColor = playerColors[playerIndex - 1];
-            $(".playerBtns").prop('disabled', true);
-            $("#nickname").prop('disabled', true);
-        }
-    });
-}
-
 function addWinText(who, wins) {
     $("#" + who).text(wins);
 }
-var hovering = false;
 
 function addWin(who, cards) {
     console.log("[][][][][][][] addWin: " + who + " cards:" + cards);
@@ -732,8 +606,6 @@ function scrollToBottom() {
     var divObj = $("#msgBox");
     divObj.scrollTop($(divObj)[0].scrollHeight);
 }
-var playerIdMap = [];
-var inversePlayerIdMap = [];
 
 function constructPlayArea() {
     var clientNumber = Number(playerNum.slice(-1));
@@ -809,4 +681,22 @@ function rotate($el, degrees) {
 function getNicknameForPlayer(player) {
     var myPIndex = Number(player.slice(-1)) - 1;
     return playerNickNames[myPIndex];
+}
+
+function updateTurnIndicator(playerOnTurnName, isMe = false, isLead = false) {
+    $("#turnIndicator").html("<b>Commander</b>: " + commanderName + "    <b>" + (isLead ? "To Lead" : "On Duty") + "</b>: " + playerOnTurnName);
+    if (isMe) {
+        $("#myHand").addClass("highlighted");
+        highlightPlayable();
+    }
+}
+
+function updateComms(status) {
+    if (status == 1) {
+        $("#myCommunication").html('mic_none');
+    } else if (status == 2) {
+        $("#myCommunication").html('mic_off');
+    } else {
+        $("#myCommunication").html('mic');
+    }
 }
