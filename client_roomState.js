@@ -13,10 +13,9 @@ function playerModule() {
   }
 
   $(".setupModule:eq(0)").append("<div id='playerSetup'></div>");
-  $("#playerSetup").append($("<span id='playerSelectLabel'>SELECT SEAT:" + teamInfo + "</span>"));
-  $("#playerSetup").append($("<span id='nicknameLabel'>NICKNAME:</span>"));
+  $("#playerSetup").append($("<span class='seatSelectionLabel' id='nicknameLabel'>NICKNAME:</span>"));
   $("#playerSetup").append($("<input id='nicknameInput' type='text'></input>"));
-
+  $("#playerSetup").append($("<span class='seatSelectionLabel' id='playerSelectLabel'>SELECT SEAT:" + teamInfo + "</span>"));
   var previousNickName = $.cookie("nickname");
   if (previousNickName) {
     $("#nicknameInput").val(previousNickName);
@@ -63,6 +62,7 @@ function playerModule() {
 }
 
 function addSeatToTable(seatNumber) {
+  console.log("--------------addSeatToTable ----------------: "+seatNumber);
   if ($("#btnPlayer"+seatNumber).length < 1) {
     var currPlayer = document.createElement("input");
     currPlayer.setAttribute("type", "button");

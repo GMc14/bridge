@@ -444,7 +444,9 @@ td, th {
   box-shadow: 0px 0px 1.5vmax rgba(0,182,82,0.5);
   color: white;
 }
-
+#nicknameInput{
+  display:block;
+}
 .playerBtns, .startBtn {
   background-color: white;
   color: black;

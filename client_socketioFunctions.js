@@ -689,3 +689,9 @@ function updateComms(status) {
         $("#myCommunication").html('mic');
     }
 }
+var path =window.location.pathname;
+console.log("window.location.pathname: "+path);
+if(path.length==4){
+    $("#roomID").val(path);
+    joinRoom();
+}
