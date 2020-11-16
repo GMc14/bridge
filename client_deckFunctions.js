@@ -13,14 +13,14 @@ function startGame() {
   $("#myHand").empty();
   $(".otherPlayerHand").empty();
 
-  $("#tokenLegend").toggle(gameConfig_isCrew && !isGameMaster);
+  $("#tokenLegend").toggle((gameType == GameType.CREW) && !isGameMaster);
   if (isGameMaster) {
     $("#gameControls").show();
     $("#restartGame").show();
-    $("#drawTask").toggle(gameConfig_isCrew);
-    $("#chooseTask").toggle(gameConfig_isCrew);
-    $("#hideTasks").toggle(gameConfig_isCrew);
-    $("#myCommunication").toggle(gameConfig_isCrew);
+    $("#drawTask").toggle(gameType == GameType.CREW);
+    $("#chooseTask").toggle(gameType == GameType.CREW);
+    $("#hideTasks").toggle(gameType == GameType.CREW);
+    $("#myCommunication").toggle(gameType == GameType.CREW);
 
     $(".plyrDropName").show();
 
@@ -77,7 +77,7 @@ function createDeck(taskOnly = false) {
   taskDeck = [];
   for (var i = 0; i < suits.length; i++) {
     for (var j = 0; j < ranks.length; j++) {
-      if (gameConfig_isCrew) {
+      if (gameType == GameType.CREW) {
         taskDeck.push(new Card(suits[i], ranks[j]));
       }
       if (!taskOnly) {
@@ -264,7 +264,7 @@ function displayTrumpCard(trumpCard) {
   $(card).append("<div id='token" + cardID + "' class='token'><img  src=''/></div>");
   $(card).append("<span id='assignment" + cardID + "' class='assignments'></span>");
 
-  if (isGameMaster && gameConfig_isCrew) {
+  if (isGameMaster && (gameType == GameType.CREW)) {
     $(card).append("<select class='trumpDrops icnDrop' id='drpIcon" + cardID + "' name='dropdownIcon' size=1>");
     $(card).append("<i class='material-icons trumpDrops doneBut' id='doneIcon" + cardID + "'>done</i>");
     $(card).append("<select class='trumpDrops plyrDrop' id='drpPlyr" + cardID + "' name='dropdownIcon' size=1>");

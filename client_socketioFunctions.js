@@ -8,15 +8,89 @@ var playerNickNames = ['', '', '', '', '', '', '', ''];
 var playerColors = ['#004499', '#770011', '#666600', '#116600', '#440099', '#883300', '#006666', '#660066'];
 
 //Game
-var gameConfig_playerCount = 1;
-var gameConfig_startCardsPerPlayer = -1; //-1==Deal All
-var gameConfig_numberOfRounds = gameConfig_startCardsPerPlayer; //Plya all cards in hand
+var gameType;
+var bonusCards;
+var gameConfig_permaTrumpSuit;
+var gameConfig_hasTeams;
+var gameConfig_topDeckTrump;
+var gameConfig_euchreBowers;
+var gameConfig_bidForTrump;
+var missions;
+var gameConfig_playerCount;
+var gameConfig_startCardsPerPlayer; //-1 == Deal All
+var gameConfig_numberOfRounds; //-1 == Play all cards in hand
+var ranks;
+var startPlayerCard;
+const GameType = Object.freeze({
+    CREW: Symbol("CREW"),
+    BRIDGE: Symbol("BRIDGE"),
+    EUCHRE: Symbol("EUCHRE")
+});
 
-var gameConfig_isCrew = false;
-var gameConfig_permaTrumpSuit = gameConfig_isCrew ? "R" : '';
-var crewBonusCards = new Array("R1", "R2", "R3", 'R4');
-var bonusCards = gameConfig_isCrew ? crewBonusCards : [];
-var crewMissions = [
+function setGameType(gT) {
+    gameType = gT;
+    bonusCards = [];
+    gameConfig_permaTrumpSuit = '';
+    gameConfig_hasTeams = false;
+    gameConfig_topDeckTrump = false;
+    gameConfig_euchreBowers = false;
+    gameConfig_bidForTrump = false;
+    missions = [];
+    gameConfig_startCardsPerPlayer = -1;
+    gameConfig_numberOfRounds = -1;
+    ranks = standardRanks;
+    startPlayerCard = '';
+
+    switch (gameType) {
+        case CREW:
+            bonusCards = crewBonusCards;
+            gameConfig_permaTrumpSuit = 'R';
+            ranks = crewRanks;
+            startPlayerCard = crewStartCard;
+            missions = crewMissions;
+            break;
+        case BRIDGE:
+            gameConfig_hasTeams = true;
+            gameConfig_bidForTrump = true;
+            break;
+        case EUCHRE:
+            gameConfig_hasTeams = true;
+            gameConfig_topDeckTrump = true;
+            gameConfig_euchreBowers = true;
+            ranks = euchreRanks;
+            gameConfig_startCardsPerPlayer = 5;
+            break;
+        default:
+            alert("Unknown GameType: " + gameType);
+    }
+}
+
+//Deck Setup
+var deck = [];
+var taskDeck = [];
+var handSizes = [];
+var roomState;
+var suits = new Array("C", "D", "S", "H");
+var suitNames = {
+    "C": "Clubs",
+    "D": "Diamonds",
+    "S": "Spades",
+    "H": "Hearts",
+    "R": "Rockets"
+}
+var suitColors = {
+    "C": "Black",
+    "S": "Black",
+    "H": "Red",
+    "D": "Red"
+}
+
+const standardRanks = new Array(2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14);
+const euchreRanks = new Array(9, 10, 11, 12, 13, 14);
+const crewRanks = new Array(1, 2, 3, 4, 5, 6, 7, 8, 9);
+const crewBonusCards = new Array("R1", "R2", "R3", 'R4');
+const crewStartCard = 'R4';
+const crewMissions = [
     "_->_",
     "_->_ & _->_",
     "_->_ then _->_",
@@ -60,49 +134,8 @@ var crewMissions = [
     "",
     "",
     "",
-]
-var gameConfig_isBridge = false;
-var gameConfig_bidForTrump = gameConfig_isBridge;
+];
 
-var gameConfig_isEuchre = true;
-var gameConfig_topDeckTrump = gameConfig_isEuchre;
-var gameConfig_euchreBowers = gameConfig_isEuchre;
-
-var gameConfig_hasTeams = gameConfig_isBridge||gameConfig_isEuchre;
-
-//Deck Setup
-var deck = [];
-var taskDeck = [];
-var handSizes = [];
-var roomState;
-var suits = new Array("C", "D", "S", "H");
-var suitNames = {
-    "C": "Clubs",
-    "D": "Diamonds",
-    "S": "Spades",
-    "H": "Hearts",
-    "R": "Rockets"
-}
-var suitColors = {
-    "C": "Black",
-    "S": "Black",
-    "H": "Red",
-    "D": "Red"
-}
-
-var standardRanks = new Array(2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14);
-var euchreRanks = new Array(9, 10, 11, 12, 13, 14);
-var crewRanks = new Array(1, 2, 3, 4, 5, 6, 7, 8, 9);
-var crewStartCard = 'R4';
-var startPlayerCard = '';
-var ranks = standardRanks;
-if (gameConfig_isEuchre) {
-    ranks = euchreRanks;
-    gameConfig_startCardsPerPlayer = 5;
-} else if (gameConfig_isCrew) {
-    ranks = crewRanks;
-    startPlayerCard = crewStartCard;
-}
 var cardback = "card_imgs/cardback.png";
 var commanderName;
 //Player values
@@ -204,12 +237,11 @@ $(function () {
         console.log("--------updateRoom ------roomState.players-----" + JSON.stringify(roomState.players));
         var standingPlayersHTMLString = "Waiting for... <br />";
         $("#seatingArea").empty();
-        //$(".playerBtns").prop('disabled', false);
-        
+
         var counter = 1;
         $.each(roomState.players, function () {
             addSeatToTable(counter);
-            counter = counter+1;
+            counter = counter + 1;
         });
         applySeatButtonClickListener();
         $.each(roomState.players, function () {
@@ -217,16 +249,16 @@ $(function () {
             if (nickname.length <= 0) {
                 nickname = this.id;
             }
-            var seatIndex = roomState.seats.indexOf(this.id)+1;
-            console.log("--------seatIndex-----------" + seatIndex +"  for:"+this.id);
+            var seatIndex = roomState.seats.indexOf(this.id) + 1;
+            console.log("--------seatIndex-----------" + seatIndex + "  for:" + this.id);
             console.log("--------roomState.seats-----------" + JSON.stringify(roomState.seats));
             if (seatIndex < 1) {
-                
-                console.log("--------seatIndex Add em to the queue-----------" + seatIndex +"  for:"+this.id);
+
+                console.log("--------seatIndex Add em to the queue-----------" + seatIndex + "  for:" + this.id);
                 standingPlayersHTMLString = standingPlayersHTMLString.concat(nickname);
                 standingPlayersHTMLString = standingPlayersHTMLString.concat("<br />");
             } else {
-                console.log("--------seat "+nickname+" at the table-----------" + seatIndex +"  for:"+this.id);
+                console.log("--------seat " + nickname + " at the table-----------" + seatIndex + "  for:" + this.id);
                 $("#btnPlayer" + seatIndex).val(nickname);
                 $("#btnPlayer" + seatIndex).prop('disabled', true);
                 playerNickNames[seatIndex - 1] = nickname;
@@ -250,6 +282,7 @@ $(function () {
         window.location.reload();
     });
     socketio.on('startGame', function (playerCount) {
+        setGameType(GameType.EUCHRE);
         gameConfig_playerCount = playerCount;
         $("#playArea").show();
         console.log("client_socket :: startGame");
@@ -343,12 +376,8 @@ $(function () {
         for (var i = 0; i < data.hands.length; i++) {
             handSizes[i] = data.hands[i].length;
         }
-
-
         $("#showCase").empty();
-
         $(".setupModule").hide();
-
         
         if (gameConfig_bidForTrump) {
             displayCards(); //Display cards before & after trump determined, sort may have changed
@@ -395,7 +424,7 @@ $(function () {
             } else {
                 updateTurnIndicator(getNicknameForPlayer(lead), false, true);
             }
-            console.log("--------------commanderName---------------- #loc" + commanderName + '   lead'+lead);
+            console.log("--------------commanderName---------------- #loc" + commanderName + '   lead' + lead);
             console.log("--------------markingLeader---------------- #loc" + leaderNum + 'name');
             $(".leader").removeClass("leader");
             $('#loc' + leaderNum + 'name').addClass("leader");
@@ -463,7 +492,7 @@ $(function () {
         } else {
             console.log("[][][][][][][] no bueno winner mustBeMe");
         }
-        if (gameConfig_isBridge && gameConfig_playerCount == 4 && trickWinner == nextPlayer(nextPlayer(playerNum))) {
+        if (gameConfig_hasTeams && gameConfig_playerCount == 4 && trickWinner == nextPlayer(nextPlayer(playerNum))) {
             tricksWon++;
         }
         if (roundNumber == gameConfig_numberOfRounds) {
@@ -532,7 +561,7 @@ function leaveRoom() {
     // clearSetupModule();
     // roomModule();
     window.location.reload();
-    
+
 }
 
 function isOkayToStartTheGame() {
@@ -700,8 +729,8 @@ function getNicknameForPlayer(player) {
 
 function updateTurnIndicator(playerOnTurnName, isMe = false, isLead = false) {
     var spaces = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
-    var commanderText = gameConfig_isCrew? "<b>Commander:</b> " + commanderName + spaces+"<b>" : "";
-    $("#turnIndicator").html( commanderText + (isLead ? "To Lead" : "To Play") + ":</b> " + playerOnTurnName);
+    var commanderText = (gameType == GameType.CREW) ? "<b>Commander:</b> " + commanderName + spaces + "<b>" : "";
+    $("#turnIndicator").html(commanderText + (isLead ? "To Lead" : "To Play") + ":</b> " + playerOnTurnName);
     if (isMe) {
         $("#myHand").addClass("highlighted");
         highlightPlayable();

@@ -7,7 +7,7 @@ function initPlayerModule() {
   playerModuleIsShowing = true;
   clearSetupModule();
   var teamInfo = '';
-  if (gameConfig_isBridge || gameConfig_hasTeams) {
+  if (gameConfig_hasTeams) {
     teamInfo = "(TEAMS: 1 & 3 and 2 & 4)"
   }
 
