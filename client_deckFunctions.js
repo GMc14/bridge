@@ -20,6 +20,7 @@ function startGame() {
     $("#drawTask").toggle(gameConfig_isCrew);
     $("#chooseTask").toggle(gameConfig_isCrew);
     $("#hideTasks").toggle(gameConfig_isCrew);
+    $("#myCommunication").toggle(gameConfig_isCrew);
 
     $(".plyrDropName").show();
 
@@ -199,7 +200,9 @@ function getEuchreCardValue(card) {
 }
 
 function sortHand() {
-  myHandOfCards.sort(function (a, b) {
+  myHandOfCards.sort(function (aRef, bRef) {
+    var a = aRef;
+    var b = bRef;
     if (gameConfig_euchreBowers) {
       a = getEuchreCardValue(a);
       b = getEuchreCardValue(b);
@@ -250,21 +253,18 @@ function displayTrumpCard(trumpCard) {
   var cardID = cardSuit + cardRank;
   currentTrumpCards.push(cardID);
 
-  var card = document.createElement("div");
-  card.setAttribute("class", "trumpCard otherCards");
-  card.setAttribute("id", 'trump' + cardID);
+  var card = $("<div id='trump" + cardID+"' class='trumpCard otherCards'></div>");
   var cardObj = $("#" + cardID + "_img").clone().show();
   $(cardObj).addClass('isTrump');
-  $(cardObj).appendTo(card);
-
+  $(card).append(cardObj);
   $("#" + cardID + "_img").addClass('isTrump');
-  //card.addEventListener("click", playCard, true);
+
   $("#showCase").show();
   $("#showCase").append(card);
   $(card).append("<div id='token" + cardID + "' class='token'><img  src=''/></div>");
   $(card).append("<span id='assignment" + cardID + "' class='assignments'></span>");
 
-  if (isGameMaster) {
+  if (isGameMaster && gameConfig_isCrew) {
     $(card).append("<select class='trumpDrops icnDrop' id='drpIcon" + cardID + "' name='dropdownIcon' size=1>");
     $(card).append("<i class='material-icons trumpDrops doneBut' id='doneIcon" + cardID + "'>done</i>");
     $(card).append("<select class='trumpDrops plyrDrop' id='drpPlyr" + cardID + "' name='dropdownIcon' size=1>");
@@ -283,7 +283,6 @@ function displayTrumpCard(trumpCard) {
       });
     });
     $("#drpIcon" + cardID).change(function () {
-
       console.log(">>>>>>>>>>>>> cycleOrderIcon selected ---------------- cardID:" + cardID + ";;" + $(this).val());
       socketio.emit('cycleOrderIcon', {
         cardID: cardID,
@@ -292,7 +291,6 @@ function displayTrumpCard(trumpCard) {
       });
     });
     $("#drpPlyr" + cardID).change(function () {
-
       console.log(">>>>>>>>>>>>>cycleAssignee selected ---------------- cardID:" + cardID + ";;" + $(this).val());
       socketio.emit('cycleAssignee', {
         cardID: cardID,

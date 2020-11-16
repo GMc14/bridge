@@ -63,11 +63,12 @@ var crewMissions = [
 ]
 var gameConfig_isBridge = false;
 var gameConfig_bidForTrump = gameConfig_isBridge;
-var gameConfig_hasTeams = gameConfig_isBridge;
 
 var gameConfig_isEuchre = true;
 var gameConfig_topDeckTrump = gameConfig_isEuchre;
 var gameConfig_euchreBowers = gameConfig_isEuchre;
+
+var gameConfig_hasTeams = gameConfig_isBridge||gameConfig_isEuchre;
 
 //Deck Setup
 var deck = [];
@@ -699,7 +700,8 @@ function getNicknameForPlayer(player) {
 
 function updateTurnIndicator(playerOnTurnName, isMe = false, isLead = false) {
     var spaces = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
-    $("#turnIndicator").html("<b>Commander:</b> " + commanderName + spaces+"<b>" + (isLead ? "To Lead" : "On Duty") + ":</b> " + playerOnTurnName);
+    var commanderText = gameConfig_isCrew? "<b>Commander:</b> " + commanderName + spaces+"<b>" : "";
+    $("#turnIndicator").html( commanderText + (isLead ? "To Lead" : "To Play") + ":</b> " + playerOnTurnName);
     if (isMe) {
         $("#myHand").addClass("highlighted");
         highlightPlayable();
