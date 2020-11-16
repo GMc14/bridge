@@ -471,9 +471,9 @@ b {
 .myHand {
   display: block;
   position: absolute;
-  height: 15%;
+  height: 22%;
   width: 100%;
-  bottom: 2%;
+  bottom: -5%;
   padding:1.5vmax;
   /*margin:auto;
   height: 100%;*/

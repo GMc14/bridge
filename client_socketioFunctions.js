@@ -1,16 +1,18 @@
-var socketio = io.connect();
-var roomID;
-var xoob;
 //Meta
+var socketio = io.connect();
+
+//Room
+var roomID;
+var isGameMaster = false;
 var playerNickNames = ['', '', '', '', '', '', '', ''];
 var playerColors = ['#004499', '#770011', '#666600', '#116600', '#440099', '#883300', '#006666', '#660066'];
 
-//Game Config
+//Game
 var gameConfig_playerCount = 1;
 var gameConfig_startCardsPerPlayer = -1; //-1==Deal All
 var gameConfig_numberOfRounds = gameConfig_startCardsPerPlayer; //Plya all cards in hand
-var isGameMaster = false;
-var gameConfid_isCrew = true;
+
+var gameConfid_isCrew = false;
 var gameConfig_permaTrumpSuit = gameConfid_isCrew ? "R" : '';
 var crewBonusCards = new Array("R1", "R2", "R3", 'R4');
 var bonusCards = gameConfid_isCrew ? crewBonusCards : [];
@@ -63,7 +65,7 @@ var gameConfig_isBridge = false;
 var gameConfig_bidForTrump = gameConfig_isBridge;
 var gameConfig_hasTeams = gameConfig_isBridge;
 
-var gameConfig_isEuchre = false;
+var gameConfig_isEuchre = true;
 var gameConfig_topDeckTrump = gameConfig_isEuchre;
 var gameConfig_euchreBowers = gameConfig_isEuchre;
 
@@ -325,7 +327,6 @@ $(function () {
         setPlayerShortName(data.playerNumber, data.shortName);
     });
     socketio.on('dealToClients', function (data) {
-        xoob = data;
         console.log("--------------dealToClients---------------- " + JSON.stringify(data, null, 4));
         console.log("--------------dealToClients---------------- playerNum: " + playerNum);
         $("#tokenQmark").click(function () {

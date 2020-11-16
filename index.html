@@ -32,6 +32,10 @@
       <div id="playersInRoom"></div>
       <div class="setupModule">
         <span>CREATE/JOIN:</span><br>
+        <select class='trumpDrops plyrDrop' id='drpPlyr" + cardID + "' name='dropdownIcon' size=1>
+          <option value="TheCrew">TheCrew</option>
+          <option value="Wizard">Wizard</option>
+        </select>
         <form id="joinRoomForm">
           <input id="roomID" type="text" title="4 Character Room Code" placeholder="4 Character Room Code" maxlength="4" pattern="[a-zA-Z0-9]+">
           <input type="submit" value="Go">
