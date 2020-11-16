@@ -14,6 +14,7 @@ function confirmLegal(cardID) {
 function isFollowingSuit(cardID) {
   console.log("GMcCards-rules.js-isFollowingSuit-#0000");
   var cardSuit = cardID.charAt(0);
+  // TODO: Change to card.rank & card.suit to allow use of getEuchreCardValue(card)
   if (gameConfig_euchreBowers && cardID.substr(1) == "11" && suitColors[cardSuit] == suitColors[leadSuit]) {
     cardSuit = leadSuit;
   }
@@ -78,6 +79,7 @@ function resolveTrick() {
     var card1Rank = Number(card1ID.substr(1));
     var card2Rank = Number(card2ID.substr(1));
     if (gameConfig_euchreBowers) {
+      // TODO: Change to card.rank & card.suit to allow use of getEuchreCardValue(card)
       if (card1Rank == 11 && suitColors[card1Suit] == suitColors[trumpSuit]) {
         if (card1Suit == trumpSuit) {
           card1Rank += 1;

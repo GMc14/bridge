@@ -12,10 +12,17 @@ function startGame() {
   $("#myHand").show();
   $("#myHand").empty();
   $(".otherPlayerHand").empty();
+
+  $("#tokenLegend").toggle(gameConfig_isCrew && !isGameMaster);
   if (isGameMaster) {
     $("#gameControls").show();
+    $("#restartGame").show();
+    $("#drawTask").toggle(gameConfig_isCrew);
+    $("#chooseTask").toggle(gameConfig_isCrew);
+    $("#hideTasks").toggle(gameConfig_isCrew);
+
     $(".plyrDropName").show();
-    $("#tokenLegend").hide();
+
     createDeck();
     deck = getShuffled(deck);
     dealCards();
@@ -69,7 +76,7 @@ function createDeck(taskOnly = false) {
   taskDeck = [];
   for (var i = 0; i < suits.length; i++) {
     for (var j = 0; j < ranks.length; j++) {
-      if (gameConfid_isCrew) {
+      if (gameConfig_isCrew) {
         taskDeck.push(new Card(suits[i], ranks[j]));
       }
       if (!taskOnly) {
@@ -172,12 +179,36 @@ function cardValue(card) {
   return value;
 }
 
+function getEuchreCardValue(card) {
+  if (trumpSuit) {
+    //only after trump is determined
+    if (card.rank == 11) {
+      //only jacks
+      if (suitColors[card.suit] == suitColors[trumpSuit]) {
+        //only same color
+        if (card.suit == trumpSuit) {
+          //right bower higher
+          card.rank += 1;
+        }
+        card.rank += 4;
+        card.suit = trumpSuit;
+      }
+    }
+  }
+  return card;
+}
+
 function sortHand() {
   myHandOfCards.sort(function (a, b) {
-    var aSuit = a.suit.replace("S", "E");
-    var bSuit = b.suit.replace("S", "E"); //Move spades between D-iamonds and H-earts
+    if (gameConfig_euchreBowers) {
+      a = getEuchreCardValue(a);
+      b = getEuchreCardValue(b);
+    }
     var aRank = a.rank;
     var bRank = b.rank;
+    var aSuit = a.suit.replace("S", "E");
+    var bSuit = b.suit.replace("S", "E");
+    //Move spades between D-iamonds and H-earts
     if (aSuit == bSuit) {
       return (aRank < bRank) ? -1 : (aRank > bRank) ? 1 : 0;
     } else {
@@ -273,6 +304,7 @@ function displayTrumpCard(trumpCard) {
 }
 
 function displayCards() {
+  sortHand();
   currentTrumpCards = [];
   console.log(">>>>>>>>>>>>>displayCards----------------");
   for (var j = 1; j < gameConfig_playerCount; j++) {

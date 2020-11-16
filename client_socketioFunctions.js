@@ -12,10 +12,10 @@ var gameConfig_playerCount = 1;
 var gameConfig_startCardsPerPlayer = -1; //-1==Deal All
 var gameConfig_numberOfRounds = gameConfig_startCardsPerPlayer; //Plya all cards in hand
 
-var gameConfid_isCrew = false;
-var gameConfig_permaTrumpSuit = gameConfid_isCrew ? "R" : '';
+var gameConfig_isCrew = false;
+var gameConfig_permaTrumpSuit = gameConfig_isCrew ? "R" : '';
 var crewBonusCards = new Array("R1", "R2", "R3", 'R4');
-var bonusCards = gameConfid_isCrew ? crewBonusCards : [];
+var bonusCards = gameConfig_isCrew ? crewBonusCards : [];
 var crewMissions = [
     "_->_",
     "_->_ & _->_",
@@ -98,7 +98,7 @@ var ranks = standardRanks;
 if (gameConfig_isEuchre) {
     ranks = euchreRanks;
     gameConfig_startCardsPerPlayer = 5;
-} else if (gameConfid_isCrew) {
+} else if (gameConfig_isCrew) {
     ranks = crewRanks;
     startPlayerCard = crewStartCard;
 }
@@ -342,12 +342,15 @@ $(function () {
         for (var i = 0; i < data.hands.length; i++) {
             handSizes[i] = data.hands[i].length;
         }
-        sortHand();
-        displayCards();
+
+
         $("#showCase").empty();
 
         $(".setupModule").hide();
+
+        
         if (gameConfig_bidForTrump) {
+            displayCards(); //Display cards before & after trump determined, sort may have changed
             currentBidder = nextPlayer(dealer);
             listenToBids();
             $("#bidArea").show();
@@ -362,7 +365,7 @@ $(function () {
             } else {
                 trumpSuit = gameConfig_permaTrumpSuit;
             }
-
+            displayCards(); //Display cards before & after trump determined, sort may have changed
             if (startPlayerCard) {
                 console.log("------- startPlayerCard how could this go wrong?: " + startPlayerCard);
                 for (var i = 0; i < data.hands.length; i++) {
@@ -397,6 +400,8 @@ $(function () {
             $('#loc' + leaderNum + 'name').addClass("leader");
             $('#bidOfRound').show();
         }
+
+
         console.log("--------------dealt...ToClients---------------- playerNum: " + playerNum);
     });
     socketio.on('cardPlayed', function (data) {
@@ -413,6 +418,7 @@ $(function () {
         othersPlayed(player, card);
         if (currentPlayer == lead) {
             leadSuit = card.charAt(0);
+            // TODO: Change to card.rank & card.suit to allow use of getEuchreCardValue(card)
             if (gameConfig_euchreBowers && card.substr(1) == "11" && suitColors[leadSuit] == suitColors[trumpSuit]) {
                 leadSuit = trumpSuit;
             }

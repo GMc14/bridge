@@ -316,6 +316,12 @@ b {
   cursor: pointer;
   font-weight: bold;
   z-index: 99999999;
+
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 #playersInRoom{  
   width:20vw;
