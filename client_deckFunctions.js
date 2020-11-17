@@ -12,14 +12,14 @@ function startGame() {
   $("#myHand").show();
   $("#myHand").empty();
   $(".otherPlayerHand").empty();
+  $("#helpLegendTrigger").toggle(gameType == GameType.CREW);
 
-  $("#tokenLegend").toggle((gameType == GameType.CREW) && !isGameMaster);
   if (isGameMaster) {
     $("#gameControls").show();
     $("#restartGame").show();
-    $("#drawTask").toggle(gameType == GameType.CREW);
-    $("#chooseTask").toggle(gameType == GameType.CREW);
-    $("#hideTasks").toggle(gameType == GameType.CREW);
+    $("#drawTask").toggle(gameConfig_hasTasks);
+    $("#chooseTask").toggle(gameConfig_hasTasks);
+    $("#hideTasks").toggle(gameConfig_hasTasks);
     $("#myCommunication").toggle(gameType == GameType.CREW);
 
     $(".plyrDropName").show();
@@ -147,7 +147,7 @@ function dealCards() {
 
   }
 
-  if (gameConfig_isBridge) {
+  if (gameType = GameType.BRIDGE) {
     for (var i = 0; i < gameConfig_playerCount; i++) {
       if (handValues[i] < 4) {
         //needToRedeal

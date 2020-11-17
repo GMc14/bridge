@@ -169,9 +169,9 @@ io.sockets.on('connection', function (socket) {
   socket.on('cycleAssignee', function (data) {
     io.sockets.to(data.roomID).emit('cycleClientOrderAssignee', data);
   });
-  socket.on('drawTask', function (card) {
-    console.log("drawTask... socket.room: " + JSON.stringify(socket.room));
-    io.sockets.to(socket.room).emit('drawTask', card);
+  socket.on('taskDrawn', function (card) {
+    console.log("taskDrawn... socket.room: " + JSON.stringify(socket.room));
+    io.sockets.to(socket.room).emit('taskDrawn', card);
   });
   socket.on('hideTasks', function () {
     io.sockets.to(socket.room).emit('hideTasks');

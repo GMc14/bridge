@@ -21,6 +21,8 @@ var gameConfig_startCardsPerPlayer; //-1 == Deal All
 var gameConfig_numberOfRounds; //-1 == Play all cards in hand
 var ranks;
 var startPlayerCard;
+var gameConfig_hasTasks;
+
 const GameType = Object.freeze({
     CREW: Symbol("CREW"),
     BRIDGE: Symbol("BRIDGE"),
@@ -40,20 +42,22 @@ function setGameType(gT) {
     gameConfig_numberOfRounds = -1;
     ranks = standardRanks;
     startPlayerCard = '';
+    gameConfig_hasTasks= false;
 
     switch (gameType) {
-        case CREW:
+        case GameType.CREW:
             bonusCards = crewBonusCards;
             gameConfig_permaTrumpSuit = 'R';
             ranks = crewRanks;
             startPlayerCard = crewStartCard;
             missions = crewMissions;
+            gameConfig_hasTasks = true;
             break;
-        case BRIDGE:
+        case GameType.BRIDGE:
             gameConfig_hasTeams = true;
             gameConfig_bidForTrump = true;
             break;
-        case EUCHRE:
+        case GameType.EUCHRE:
             gameConfig_hasTeams = true;
             gameConfig_topDeckTrump = true;
             gameConfig_euchreBowers = true;
@@ -87,54 +91,6 @@ var suitColors = {
 
 const standardRanks = new Array(2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14);
 const euchreRanks = new Array(9, 10, 11, 12, 13, 14);
-const crewRanks = new Array(1, 2, 3, 4, 5, 6, 7, 8, 9);
-const crewBonusCards = new Array("R1", "R2", "R3", 'R4');
-const crewStartCard = 'R4';
-const crewMissions = [
-    "_->_",
-    "_->_ & _->_",
-    "_->_ then _->_",
-    "_->_ & _->_ & _->_",
-    "_ must not win any tricks", //One player receives no tricks (Captain decides)
-    "(_->_ then _->_) & _->_ & noone can communicate high/low/only (just show the card)",
-    "(_->_ & _->_) then _->_",
-    "_->_ then _->_ then _->_",
-    "Someone->with a '1'",
-    "_->_&_->_&_->_&_->_",
-    "_->_then(_->_&_->_&_->_) & _can't communicate",
-    "12***requires passing",
-    "13 don't understand win with each rocket, seems trivial",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-];
 
 var cardback = "card_imgs/cardback.png";
 var commanderName;
@@ -160,17 +116,17 @@ var playerIdMap = [];
 var inversePlayerIdMap = [];
 
 $(function () {
-    $("#tokenQmark").click(function () {
+    $("#helpLegendTrigger").click(function () {
         console.log("show THINGSSSS");
-        $("#tokenLegend").toggle();
+        $("#helpLegend").toggle();
     });
-    $("#tokenLegend").click(function () {
-        $("#tokenLegend").hide();
+    $("#helpLegend").click(function () {
+        $("#helpLegend").hide();
     });
     $('#drawTask').on('click', function () {
         if (taskDeck.length > 0) {
             taskDeck = getShuffled(taskDeck);
-            socketio.emit('drawTask', taskDeck.pop());
+            socketio.emit('taskDrawn', taskDeck.pop());
         } else {
             alert("No Tasks Available");
         }
@@ -195,7 +151,7 @@ $(function () {
         $(".potentialTask").click(function () {
             var selectedCardIndex = $(this).attr("task-index");
             console.log("emitting " + JSON.stringify(taskDeck[selectedCardIndex]) + " base on " + selectedCardIndex);
-            socketio.emit('drawTask', taskDeck[selectedCardIndex]);
+            socketio.emit('taskDrawn', taskDeck[selectedCardIndex]);
             taskDeck.splice(selectedCardIndex, 1);
             $("#taskOptions").empty();
         });
@@ -204,6 +160,15 @@ $(function () {
         createDeck(true);
         socketio.emit('hideTasks');
     });
+    socketio.on('taskDrawn', function (card) {
+        console.log("--------------taskDrawn----------------card" + JSON.stringify(card));
+        displayTrumpCard(card);
+    });
+    socketio.on('hideTasks', function () {
+        $("#showCase").empty();
+        $("#showCase").hide();
+    });
+    
     $('#restartGame').on('click', function () {
         console.log("[][][][][][][][][][]Need to ClearTrumpHighlights here?[][][][][][][][][][][]");
         socketio.emit('restartGame');
@@ -306,14 +271,7 @@ $(function () {
 
         startGame();
     });
-    socketio.on('drawTask', function (card) {
-        console.log("--------------drawTask----------------card" + JSON.stringify(card));
-        displayTrumpCard(card);
-    });
-    socketio.on('hideTasks', function () {
-        $("#showCase").empty();
-        $("#showCase").hide();
-    });
+
     socketio.on('some1Bid', function (data) {
         passCount = 0;
         currentBidder = nextPlayer(currentBidder);
@@ -363,13 +321,6 @@ $(function () {
     socketio.on('dealToClients', function (data) {
         console.log("--------------dealToClients---------------- " + JSON.stringify(data, null, 4));
         console.log("--------------dealToClients---------------- playerNum: " + playerNum);
-        $("#tokenQmark").click(function () {
-            $("#tokenLegend").show();
-        });
-        $("#tokenLegend").click(function () {
-            $("#tokenLegend").hide();
-        });
-        $("#tokenLegend").hide();
         var myPIndex = Number(playerNum.slice(-1)) - 1;
         myHandOfCards = data.hands[myPIndex];
 
