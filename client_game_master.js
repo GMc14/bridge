@@ -1,5 +1,13 @@
 var isGameMaster = false;
-
+function updateComms(status) {
+  if (status == 1) {
+      $("#myCommunication").html('mic_none');
+  } else if (status == 2) {
+      $("#myCommunication").html('mic_off');
+  } else {
+      $("#myCommunication").html('mic');
+  }
+}
 $(function () {
   socketio.on('makeGameMaster', function () {
     console.log("--------makeGameMaster-----------");
@@ -62,5 +70,7 @@ $(function () {
     createDeck(true);
     socketio.emit('hideTasks');
   });
-
+  $("#myCommunication").click(function () {
+    updateComms(new Date().getTime() % 3);
+});
 });

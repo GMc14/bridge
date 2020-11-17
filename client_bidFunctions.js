@@ -4,8 +4,13 @@ var currentBidder;
 var currentBid;
 var passCount;
 
-function listenToBids() {
-  console.log("GMcCards-bidFunctions.js-listenToBids-#0000");
+function startBidding() {
+  currentBidder = nextPlayer(dealer);
+  $("#bidArea").show();
+  if (playerNum == currentBidder) {
+    alert("Your Turn to Bid");
+  }
+  console.log("GMcCards-bidFunctions.js-startBidding-#0000");
   $('#pass').click(function () {
     console.log("GMcCards-bidFunctions.js-passClick-#0000");
     if (playerNum == currentBidder) {
@@ -60,3 +65,39 @@ function disablePrevCells(row, col) {
     }
   }
 }
+$(function () {
+  socketio.on('some1Bid', function (data) {
+    passCount = 0;
+    currentBidder = nextPlayer(currentBidder);
+    currentBid = data.bid;
+    otherColor = data.color;
+    $('#' + data.bid).trigger('click');
+    if (playerNum == currentBidder) {
+      alert("Your Turn to Bid");
+    }
+  });
+  socketio.on('some1Passed', function () {
+    passCount++;
+    if (passCount == 4) {
+      $('#bidOfRound').html('<b>' + currentBidder + ": " + currentBid + '</b>');
+      trumpSuit = currentBid.charAt(1);
+      if (playerNum == currentBidder || playerNum == nextPlayer(nextPlayer(currentBidder))) {
+        handsNeeded = 6 + Number(currentBid.charAt(0));
+      } else {
+        handsNeeded = 14 - (6 + Number(currentBid.charAt(0)));
+      }
+      currentPlayer = nextPlayer(currentBidder);
+      lead = currentPlayer;
+      $('#bidArea').hide();
+      if (playerNum == currentPlayer) {
+        updateTurnIndicator("You", true, true);
+      }
+      $('#bidOfRound').show();
+    } else {
+      currentBidder = nextPlayer(currentBidder);
+      if (playerNum == currentBidder) {
+        alert("Your Turn to Bid");
+      }
+    }
+  });
+});

@@ -3,10 +3,8 @@ var socketio = io.connect();
 
 //Room
 var roomID;
-
 var playerIdMap = [];
 var inversePlayerIdMap = [];
-
 
 //Game
 var gameType;
@@ -16,7 +14,7 @@ var gameConfig_hasTeams;
 var gameConfig_topDeckTrump;
 var gameConfig_euchreBowers;
 var gameConfig_bidForTrump;
-var missions;
+var gameConfig_missions;
 var gameConfig_playerCount;
 var gameConfig_startCardsPerPlayer; //-1 == Deal All
 var gameConfig_numberOfRounds; //-1 == Play all cards in hand
@@ -38,7 +36,7 @@ function setGameType(gT) {
     gameConfig_topDeckTrump = false;
     gameConfig_euchreBowers = false;
     gameConfig_bidForTrump = false;
-    missions = [];
+    gameConfig_missions = [];
     gameConfig_startCardsPerPlayer = -1;
     gameConfig_numberOfRounds = -1;
     ranks = standardRanks;
@@ -51,7 +49,7 @@ function setGameType(gT) {
             gameConfig_permaTrumpSuit = 'R';
             ranks = crewRanks;
             startPlayerCard = crewStartCard;
-            missions = crewMissions;
+            gameConfig_missions = crewMissions;
             gameConfig_hasTasks = true;
             break;
         case GameType.BRIDGE:
@@ -110,8 +108,7 @@ var tricksWon = 0;
 var roundNumber = 0;
 var handsNeeded;
 
-
-var hovering = false;
+var hoveringOverWonTricks = false;
 
 $(function () {
     $("#helpLegendTrigger").click(function () {
@@ -139,9 +136,7 @@ $(function () {
             $(this).val('');
         }
     });
-    $("#myCommunication").click(function () {
-        updateComms(new Date().getTime() % 3);
-    });
+
     socketio.on('leftInGame', function (nickname) {
         alert(nickname + " left the room. Kicking everybody out... ");
         window.location.reload();
@@ -172,41 +167,6 @@ $(function () {
         startGame();
     });
 
-    socketio.on('some1Bid', function (data) {
-        passCount = 0;
-        currentBidder = nextPlayer(currentBidder);
-        currentBid = data.bid;
-        otherColor = data.color;
-        $('#' + data.bid).trigger('click');
-        if (playerNum == currentBidder) {
-            alert("Your Turn to Bid");
-        }
-    });
-    socketio.on('some1Passed', function () {
-        passCount++;
-        if (passCount == 4) {
-            $('#bidOfRound').html('<b>' + currentBidder + ": " + currentBid + '</b>');
-            trumpSuit = currentBid.charAt(1);
-            if (playerNum == currentBidder || playerNum == nextPlayer(nextPlayer(currentBidder))) {
-                handsNeeded = 6 + Number(currentBid.charAt(0));
-            } else {
-                handsNeeded = 14 - (6 + Number(currentBid.charAt(0)));
-            }
-            currentPlayer = nextPlayer(currentBidder);
-            lead = currentPlayer;
-            $('#bidArea').hide();
-            if (playerNum == currentPlayer) {
-                updateTurnIndicator("You", true, true);
-            }
-            $('#bidOfRound').show();
-        } else {
-            currentBidder = nextPlayer(currentBidder);
-            if (playerNum == currentBidder) {
-                alert("Your Turn to Bid");
-            }
-        }
-    });
-
     socketio.on('dealToClients', function (data) {
         console.log("--------------dealToClients---------------- " + JSON.stringify(data, null, 4));
         console.log("--------------dealToClients---------------- playerNum: " + playerNum);
@@ -221,12 +181,7 @@ $(function () {
 
         if (gameConfig_bidForTrump) {
             displayCards(); //Display cards before & after trump determined, sort may have changed
-            currentBidder = nextPlayer(dealer);
-            listenToBids();
-            $("#bidArea").show();
-            if (playerNum == currentBidder) {
-                alert("Your Turn to Bid");
-            }
+            startBidding();
         } else {
             if (data.trumpCard) {
                 console.log("------- Trump Card: " + data.trumpCard);
@@ -270,8 +225,6 @@ $(function () {
             $('#loc' + leaderNum + 'name').addClass("leader");
             $('#bidOfRound').show();
         }
-
-
         console.log("--------------dealt...ToClients---------------- playerNum: " + playerNum);
     });
     socketio.on('cardPlayed', function (data) {
@@ -341,16 +294,6 @@ $(function () {
             //TODO: check it any players still have card 
         }
     });
-
-    socketio.on('message', function (data) {
-        var msg = data.msg;
-        var nickname = data.nickname;
-        var chatBox = $("#chatBox");
-        var textBox = $("#msgBox");
-        textBox.append("<span><b>" + nickname + ":</b>&emsp;" + msg + "</span><br><br>");
-        scrollToBottom();
-        $('#boxBottom').show();
-    });
 });
 
 function nextPlayer(currPlayer) {
@@ -361,7 +304,6 @@ function nextPlayer(currPlayer) {
     }
     return "Player" + currNumber;
 }
-
 function prevPlayer(currPlayer) {
     var currNumber = Number(currPlayer.slice(-1));
     currNumber -= 1;
@@ -383,7 +325,6 @@ function updateTurnIndicator(playerOnTurnName, isMe = false, isLead = false) {
         highlightPlayable();
     }
 }
-
 function clearSetupModule() {
     console.log("--------------clearSetupModule----------------");
     var setupModule = document.getElementsByClassName("setupModule")[0];
@@ -391,28 +332,26 @@ function clearSetupModule() {
         setupModule.removeChild(setupModule.firstChild);
     }
 }
-
 function addWinText(who, wins) {
     $("#" + who).text(wins);
 }
-
 function addWin(who, cards) {
     console.log("[][][][][][][] addWin: " + who + " cards:" + cards);
     var card = document.createElement("div");
     card.setAttribute('class', 'otherCards');
     card.setAttribute('data-cards', cards);
     $(".cardback:eq(0)").clone().show().appendTo(card);
-    var stuff = $('#' + who);
-    $(stuff).append(card);
-    $(stuff).hover(
+    var wonTricks = $('#' + who);
+    $(wonTricks).append(card);
+    $(wonTricks).hover(
         function () {
-            if (!hovering) {
-                hovering = true;
+            if (!hoveringOverWonTricks) {
+                hoveringOverWonTricks = true;
                 $($(this).children()[0]).attr("data-cards").split(',');
-                console.log("stuff hover...");
+                console.log("wonTricks hover...");
                 var trickDetailsDiv = $("<div id='trickDetails'></div>");
                 $(this).children().each(function () {
-                    console.log("Stuff Child:  " + $(this).attr("data-cards"));
+                    console.log("wonTricks Child:  " + $(this).attr("data-cards"));
                     if ($(this).attr("data-cards")) {
                         var cardsToDraw = $(this).attr("data-cards").split(',');
                         var trick = $("<div class='trick'></div>");
@@ -428,13 +367,12 @@ function addWin(who, cards) {
             }
         },
         function () {
-            console.log("stuff UNhover...");
+            console.log("wonTricks UNhover...");
             $("#trickDetails").remove();
-            hovering = false;
+            hoveringOverWonTricks = false;
         }
     );
 }
-
 function calculateWinner() {
     var win = tricksWon < handsNeeded ? 0 : 1;
     if (win) {
@@ -449,7 +387,6 @@ function calculateWinner() {
     currentPlayer = '', lead = '', leadSuit = '', trumpSuit = '', handsNeeded = '', tricksWon = 0, roundNumber = 0;
     $('#gameRecap').show();
 }
-
 function refreshTeamWins(win) {
     console.log("refreshTeamWins rewrite this with locations instead of 'left/right/across'");
     switch (win) {
@@ -466,12 +403,6 @@ function refreshTeamWins(win) {
             break;
     }
 }
-
-function scrollToBottom() {
-    var divObj = $("#msgBox");
-    divObj.scrollTop($(divObj)[0].scrollHeight);
-}
-
 function constructPlayArea() {
     var clientNumber = Number(playerNum.slice(-1));
     for (var j = 1; j < gameConfig_playerCount; j++) {
@@ -531,15 +462,6 @@ function constructPlayArea() {
     });
 }
 
-function updateComms(status) {
-    if (status == 1) {
-        $("#myCommunication").html('mic_none');
-    } else if (status == 2) {
-        $("#myCommunication").html('mic_off');
-    } else {
-        $("#myCommunication").html('mic');
-    }
-}
 var path = window.location.pathname;
 console.log("window.location.pathname: " + path);
 // if(path.length==4){
