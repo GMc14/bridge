@@ -1,3 +1,5 @@
+var isGameMaster = false;
+
 $(function () {
   socketio.on('makeGameMaster', function () {
     console.log("--------makeGameMaster-----------");

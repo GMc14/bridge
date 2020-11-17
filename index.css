@@ -19,11 +19,11 @@ body {
 /* div {
   border: 2px dotted rgba(255, 255, 128, 0.8) !important;
 } */
-#tokenQmark {
+#helpLegendTrigger {
   height: 2vmax;
 }
 
-#tokenLegend {
+#helpLegend {
   display:none;
   position: fixed;
   left: 2vmax;

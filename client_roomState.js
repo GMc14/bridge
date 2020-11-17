@@ -1,3 +1,8 @@
+const roomCodeCandidates = "234689ABCEFJKMNPQRTVWXY";
+const playerColors = ['#004499', '#770011', '#666600', '#116600', '#440099', '#883300', '#006666', '#660066'];
+var playerModuleIsShowing = false;
+var playerNickNames = ['', '', '', '', '', '', '', ''];
+
 function initPlayerModule() {
   console.log("--------------initPlayerModule----------------");
   if (playerModuleIsShowing) {
@@ -20,17 +25,16 @@ function initPlayerModule() {
   if (previousNickName) {
     $("#nicknameInput").val(previousNickName);
   }
-  if (isGameMaster) {
-    console.log("--------------<({[isGameMaster]})>----------------");
-    $("#startGameButton").show();
-    $("#startGameButton").on("click", function () {
-      if (isOkayToStartTheGame()) {
-        socketio.emit('startGameOnServer');
-      } else {
-        alert("Problematic Open Seats");
-      }
-    });
-  }
+
+  $("#startGameButton").toggle(isGameMaster);
+  $("#startGameButton:visible").on("click", function () {
+    if (isOkayToStartTheGame()) {
+      socketio.emit('startGameOnServer');
+    } else {
+      alert("Problematic Open Seats");
+    }
+  });
+
 }
 function applySeatButtonClickListener() {
   $(".playerBtns").on("click", function () {
@@ -77,7 +81,7 @@ function joinRoom() {
   console.log("--------joinRoom-----------");
   roomID = $("#roomID").val();
   while (roomID.length < 4) {
-      roomID = roomID.concat(codeCandidates.charAt(Math.floor(Math.random() * codeCandidates.length)));
+    roomID = roomID.concat(roomCodeCandidates.charAt(Math.floor(Math.random() * roomCodeCandidates.length)));
   }
   roomID = roomID.toUpperCase()
   socketio.emit('enterRoom', roomID);
@@ -97,7 +101,24 @@ function leaveRoom() {
   window.location.reload();
 
 }
-
+function isOkayToStartTheGame() {
+  var lowestOpen = 999;
+  var highestReadied = 0;
+  $('.playerBtns').each(function () {
+      var number = Number($(this).data("player-number"));
+      var isReadied = $(this).prop("disabled");
+      console.log("P#:" + number);
+      if (isReadied && number > highestReadied) {
+          highestReadied = number;
+      }
+      if (!isReadied && number < lowestOpen) {
+          lowestOpen = number;
+      }
+  });
+  var isOkay = lowestOpen > highestReadied;
+  console.log("LO: " + lowestOpen + "   HR: " + highestReadied + "  okay? " + isOkay);
+  return isOkay;
+}
 $(function () {
   $("#joinRoomForm").on('submit', function (e) {
     e.preventDefault();

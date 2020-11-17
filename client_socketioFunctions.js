@@ -3,9 +3,10 @@ var socketio = io.connect();
 
 //Room
 var roomID;
-var isGameMaster = false;
-var playerNickNames = ['', '', '', '', '', '', '', ''];
-var playerColors = ['#004499', '#770011', '#666600', '#116600', '#440099', '#883300', '#006666', '#660066'];
+
+var playerIdMap = [];
+var inversePlayerIdMap = [];
+
 
 //Game
 var gameType;
@@ -109,11 +110,8 @@ var tricksWon = 0;
 var roundNumber = 0;
 var handsNeeded;
 
-let codeCandidates = "234689ABCEFJKMNPQRTVWXY"
-var playerModuleIsShowing = false;
+
 var hovering = false;
-var playerIdMap = [];
-var inversePlayerIdMap = [];
 
 $(function () {
     $("#helpLegendTrigger").click(function () {
@@ -372,6 +370,19 @@ function prevPlayer(currPlayer) {
     }
     return "Player" + currNumber;
 }
+function getNicknameForPlayer(player) {
+    var myPIndex = Number(player.slice(-1)) - 1;
+    return playerNickNames[myPIndex];
+}
+function updateTurnIndicator(playerOnTurnName, isMe = false, isLead = false) {
+    var spaces = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+    var commanderText = (gameType == GameType.CREW) ? "<b>Commander:</b> " + commanderName + spaces + "<b>" : "";
+    $("#turnIndicator").html(commanderText + (isLead ? "To Lead" : "To Play") + ":</b> " + playerOnTurnName);
+    if (isMe) {
+        $("#myHand").addClass("highlighted");
+        highlightPlayable();
+    }
+}
 
 function clearSetupModule() {
     console.log("--------------clearSetupModule----------------");
@@ -379,27 +390,6 @@ function clearSetupModule() {
     while (setupModule.firstChild) {
         setupModule.removeChild(setupModule.firstChild);
     }
-}
-
-
-
-function isOkayToStartTheGame() {
-    var lowestOpen = 999;
-    var highestReadied = 0;
-    $('.playerBtns').each(function () {
-        var number = Number($(this).data("player-number"));
-        var isReadied = $(this).prop("disabled");
-        console.log("P#:" + number);
-        if (isReadied && number > highestReadied) {
-            highestReadied = number;
-        }
-        if (!isReadied && number < lowestOpen) {
-            lowestOpen = number;
-        }
-    });
-    var isOkay = lowestOpen > highestReadied;
-    console.log("LO: " + lowestOpen + "   HR: " + highestReadied + "  okay? " + isOkay);
-    return isOkay;
 }
 
 function addWinText(who, wins) {
@@ -539,21 +529,6 @@ function constructPlayArea() {
             shortName: shortName
         });
     });
-}
-
-function getNicknameForPlayer(player) {
-    var myPIndex = Number(player.slice(-1)) - 1;
-    return playerNickNames[myPIndex];
-}
-
-function updateTurnIndicator(playerOnTurnName, isMe = false, isLead = false) {
-    var spaces = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
-    var commanderText = (gameType == GameType.CREW) ? "<b>Commander:</b> " + commanderName + spaces + "<b>" : "";
-    $("#turnIndicator").html(commanderText + (isLead ? "To Lead" : "To Play") + ":</b> " + playerOnTurnName);
-    if (isMe) {
-        $("#myHand").addClass("highlighted");
-        highlightPlayable();
-    }
 }
 
 function updateComms(status) {
