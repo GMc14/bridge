@@ -42,7 +42,7 @@ function setGameType(gT) {
     gameConfig_numberOfRounds = -1;
     ranks = standardRanks;
     startPlayerCard = '';
-    gameConfig_hasTasks= false;
+    gameConfig_hasTasks = false;
 
     switch (gameType) {
         case GameType.CREW:
@@ -123,59 +123,10 @@ $(function () {
     $("#helpLegend").click(function () {
         $("#helpLegend").hide();
     });
-    $('#drawTask').on('click', function () {
-        if (taskDeck.length > 0) {
-            taskDeck = getShuffled(taskDeck);
-            socketio.emit('taskDrawn', taskDeck.pop());
-        } else {
-            alert("No Tasks Available");
-        }
-    });
-    $('#chooseTask').on('click', function () {
-        taskDeck = getSorted(taskDeck);
-        var previousSuit;
-        $.each(taskDeck, function (index, trumpCard) {
 
-            var cardRank = String(trumpCard.rank);
-            var cardSuit = String(trumpCard.suit);
-            var cardID = cardSuit + cardRank;
-            var cardObj = $("#" + cardID + "_img").clone().show();
-            $(cardObj).attr('task-index', index);
-            $(cardObj).addClass('potentialTask');
-            if (previousSuit && previousSuit != cardSuit) {
-                $("#taskOptions").append("<br/>");
-            }
-            $("#taskOptions").append(cardObj);
-            previousSuit = cardSuit;
-        });
-        $(".potentialTask").click(function () {
-            var selectedCardIndex = $(this).attr("task-index");
-            console.log("emitting " + JSON.stringify(taskDeck[selectedCardIndex]) + " base on " + selectedCardIndex);
-            socketio.emit('taskDrawn', taskDeck[selectedCardIndex]);
-            taskDeck.splice(selectedCardIndex, 1);
-            $("#taskOptions").empty();
-        });
-    });
-    $('#hideTasks').on('click', function () {
-        createDeck(true);
-        socketio.emit('hideTasks');
-    });
-    socketio.on('taskDrawn', function (card) {
-        console.log("--------------taskDrawn----------------card" + JSON.stringify(card));
-        displayTrumpCard(card);
-    });
-    socketio.on('hideTasks', function () {
-        $("#showCase").empty();
-        $("#showCase").hide();
-    });
-    
     $('#restartGame').on('click', function () {
         console.log("[][][][][][][][][][]Need to ClearTrumpHighlights here?[][][][][][][][][][][]");
         socketio.emit('restartGame');
-    });
-    $("#joinRoomForm").on('submit', function (e) {
-        e.preventDefault();
-        joinRoom();
     });
     $("#boxTop").on("click", function () {
         $('#boxBottom').toggle();
@@ -192,55 +143,6 @@ $(function () {
     });
     $("#myCommunication").click(function () {
         updateComms(new Date().getTime() % 3);
-    });
-    socketio.on('updateRoom', function (room) {
-        roomState = room;
-        console.log("--------updateRoom-----------" + JSON.stringify(roomState));
-        gameConfig_playerCount = roomState.players.length;
-
-        initPlayerModule();
-        console.log("--------updateRoom ------roomState.players-----" + JSON.stringify(roomState.players));
-        var standingPlayersHTMLString = "Waiting for... <br />";
-        $("#seatingArea").empty();
-
-        var counter = 1;
-        $.each(roomState.players, function () {
-            addSeatToTable(counter);
-            counter = counter + 1;
-        });
-        applySeatButtonClickListener();
-        $.each(roomState.players, function () {
-            var nickname = this.nickname;
-            if (nickname.length <= 0) {
-                nickname = this.id;
-            }
-            var seatIndex = roomState.seats.indexOf(this.id) + 1;
-            console.log("--------seatIndex-----------" + seatIndex + "  for:" + this.id);
-            console.log("--------roomState.seats-----------" + JSON.stringify(roomState.seats));
-            if (seatIndex < 1) {
-
-                console.log("--------seatIndex Add em to the queue-----------" + seatIndex + "  for:" + this.id);
-                standingPlayersHTMLString = standingPlayersHTMLString.concat(nickname);
-                standingPlayersHTMLString = standingPlayersHTMLString.concat("<br />");
-            } else {
-                console.log("--------seat " + nickname + " at the table-----------" + seatIndex + "  for:" + this.id);
-                $("#btnPlayer" + seatIndex).val(nickname);
-                $("#btnPlayer" + seatIndex).prop('disabled', true);
-                playerNickNames[seatIndex - 1] = nickname;
-            }
-        });
-        $("#playersInRoom").html(standingPlayersHTMLString);
-    });
-    socketio.on('setPlayerId', function (playerId) {
-        clientPlayerId = playerId;
-    });
-    socketio.on('fullRoom', function () {
-        console.log("--------fullRoom-----------");
-        alert("Room is Full. Try Again Later");
-    });
-    socketio.on('makeGameMaster', function () {
-        console.log("--------makeGameMaster-----------");
-        isGameMaster = true;
     });
     socketio.on('leftInGame', function (nickname) {
         alert(nickname + " left the room. Kicking everybody out... ");
@@ -306,18 +208,7 @@ $(function () {
             }
         }
     });
-    socketio.on('cycleClientOrderIcon', function (data) {
-        console.log("--------------cycleClientOrderIcon----------------data.cardID " + data.cardID + ",  data.icon: " + data.icon);
-        setTrumpCardOrderIcon(data.cardID, data.icon);
-    });
-    socketio.on('cycleClientOrderAssignee', function (data) {
-        console.log("--------------cycleClientOrderAssignee----------------data.cardID " + data.cardID + ",  data.player: " + data.player);
-        setTrumpCardAssignee(data.cardID, data.player);
-    });
-    socketio.on('assignShortNameToClients', function (data) {
-        console.log("--------------assignShortNameToClients----------------data.playerNumber " + data.playerNumber + ",  data.shortName: " + data.shortName);
-        setPlayerShortName(data.playerNumber, data.shortName);
-    });
+
     socketio.on('dealToClients', function (data) {
         console.log("--------------dealToClients---------------- " + JSON.stringify(data, null, 4));
         console.log("--------------dealToClients---------------- playerNum: " + playerNum);
@@ -329,7 +220,7 @@ $(function () {
         }
         $("#showCase").empty();
         $(".setupModule").hide();
-        
+
         if (gameConfig_bidForTrump) {
             displayCards(); //Display cards before & after trump determined, sort may have changed
             currentBidder = nextPlayer(dealer);
@@ -452,6 +343,7 @@ $(function () {
             //TODO: check it any players still have card 
         }
     });
+
     socketio.on('message', function (data) {
         var msg = data.msg;
         var nickname = data.nickname;
@@ -489,31 +381,7 @@ function clearSetupModule() {
     }
 }
 
-function joinRoom() {
-    console.log("--------joinRoom-----------");
-    roomID = $("#roomID").val();
-    while (roomID.length < 4) {
-        roomID = roomID.concat(codeCandidates.charAt(Math.floor(Math.random() * codeCandidates.length)));
-    }
-    roomID = roomID.toUpperCase()
-    socketio.emit('enterRoom', roomID);
-    clearSetupModule();
-    var roomText = document.createElement("span");
-    roomText.setAttribute("id", "roomText");
-    roomText.appendChild(document.createTextNode("Room Code: " + roomID));
-    $("#topbar").prepend(roomText);
-    $("#leaveRoom").show();
-}
 
-function leaveRoom() {
-    socketio.emit('leaveRoom', roomID);
-    $("#leaveRoom").hide();
-    // $("#roomText").remove();
-    // clearSetupModule();
-    // roomModule();
-    window.location.reload();
-
-}
 
 function isOkayToStartTheGame() {
     var lowestOpen = 999;
