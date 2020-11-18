@@ -142,7 +142,7 @@ $(function () {
         window.location.reload();
     });
     socketio.on('startGame', function (playerCount) {
-        setGameType(GameType.EUCHRE);
+        setGameType($("#gameDrop").val());
         gameConfig_playerCount = playerCount;
         $("#playArea").show();
         console.log("client_socket :: startGame");
@@ -285,9 +285,9 @@ $(function () {
         } else {
             console.log("[][][][][][][] no bueno winner mustBeMe");
         }
-        if (gameConfig_hasTeams && gameConfig_playerCount == 4 && trickWinner == nextPlayer(nextPlayer(playerNum))) {
-            tricksWon++;
-        }
+        // if (gameConfig_hasTeams && gameConfig_playerCount == 4 && trickWinner == nextPlayer(nextPlayer(playerNum))) {
+        //     tricksWon++;
+        // }
         if (roundNumber == gameConfig_numberOfRounds) {
             calculateWinner();
         } else if (gameConfig_numberOfRounds == -1) {
