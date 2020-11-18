@@ -22,11 +22,8 @@ var ranks;
 var startPlayerCard;
 var gameConfig_hasTasks;
 
-const GameType = Object.freeze({
-    CREW: Symbol("CREW"),
-    BRIDGE: Symbol("BRIDGE"),
-    EUCHRE: Symbol("EUCHRE")
-});
+
+const GameType = { "CREW": 1, "BRIDGE": 2, "EUCHRE": 3 };
 
 function setGameType(gT) {
     gameType = gT;
@@ -142,7 +139,7 @@ $(function () {
         window.location.reload();
     });
     socketio.on('startGame', function (playerCount) {
-        setGameType(Symbol($("#gameDrop").val()));
+        setGameType($("#gameDrop").val());
         gameConfig_playerCount = playerCount;
         $("#playArea").show();
         console.log("client_socket :: startGame");
