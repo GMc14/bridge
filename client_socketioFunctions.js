@@ -142,7 +142,7 @@ $(function () {
         window.location.reload();
     });
     socketio.on('startGame', function (playerCount) {
-        setGameType($("#gameDrop").val());
+        setGameType(Symbol($("#gameDrop").val()));
         gameConfig_playerCount = playerCount;
         $("#playArea").show();
         console.log("client_socket :: startGame");
