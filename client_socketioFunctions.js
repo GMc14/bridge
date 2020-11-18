@@ -43,33 +43,29 @@ function setGameType(gT) {
     ranks = standardRanks;
     startPlayerCard = '';
     gameConfig_hasTasks = false;
-    alert("Compare: " + gameType+" : "+GameType.CREW);
+    alert("Compare: " + gameType + " : " + GameType.CREW);
 
-    console.log("-------A------"+gameType);
-    console.log("-------B------"+GameType.CREW);
-    
-    switch (gameType) {
-        case GameType.CREW:
-            bonusCards = crewBonusCards;
-            gameConfig_permaTrumpSuit = 'R';
-            ranks = crewRanks;
-            startPlayerCard = crewStartCard;
-            gameConfig_missions = crewMissions;
-            gameConfig_hasTasks = true;
-            break;
-        case GameType.BRIDGE:
-            gameConfig_hasTeams = true;
-            gameConfig_bidForTrump = true;
-            break;
-        case GameType.EUCHRE:
-            gameConfig_hasTeams = true;
-            gameConfig_topDeckTrump = true;
-            gameConfig_euchreBowers = true;
-            ranks = euchreRanks;
-            gameConfig_startCardsPerPlayer = 5;
-            break;
-        default:
-            alert("Unknown GameType: " + gameType);
+    console.log("-------A------" + gameType);
+    console.log("-------B------" + GameType.CREW);
+
+    if (gameType == GameType.CREW) {
+        bonusCards = crewBonusCards;
+        gameConfig_permaTrumpSuit = 'R';
+        ranks = crewRanks;
+        startPlayerCard = crewStartCard;
+        gameConfig_missions = crewMissions;
+        gameConfig_hasTasks = true;
+    } else if (gameType == GameType.BRIDGE) {
+        gameConfig_hasTeams = true;
+        gameConfig_bidForTrump = true;
+    } else if (gameType == GameType.EUCHRE) {
+        gameConfig_hasTeams = true;
+        gameConfig_topDeckTrump = true;
+        gameConfig_euchreBowers = true;
+        ranks = euchreRanks;
+        gameConfig_startCardsPerPlayer = 5;
+    } else {
+        alert("Unknown GameType: " + gameType);
     }
 }
 
