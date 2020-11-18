@@ -45,7 +45,7 @@ function setGameType(gT) {
     gameConfig_hasTasks = false;
 
     switch (gameType) {
-        case GameType.CREW.to:
+        case GameType.CREW:
             bonusCards = crewBonusCards;
             gameConfig_permaTrumpSuit = 'R';
             ranks = crewRanks;
