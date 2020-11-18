@@ -43,7 +43,11 @@ function setGameType(gT) {
     ranks = standardRanks;
     startPlayerCard = '';
     gameConfig_hasTasks = false;
+    alert("Compare: " + gameType+" : "+GameType.CREW);
 
+    console.log("-------A------"+gameType);
+    console.log("-------B------"+GameType.CREW);
+    
     switch (gameType) {
         case GameType.CREW:
             bonusCards = crewBonusCards;
