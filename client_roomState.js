@@ -21,6 +21,11 @@ function initPlayerModule() {
   $("#playerSetup").append($("<input id='nicknameInput' type='text'></input>"));
   $("#playerSetup").append($("<span class='seatSelectionLabel' id='playerSelectLabel'>SELECT SEAT:" + teamInfo + "</span>"));
   $("#playerSetup").append($("<div id='seatingArea'></div>"));
+  $("#playerSetup").append($("<select class='gameDrop' id='gameDrop' name='dropdownGame' size=1></select>"));
+  $("#gameDrop").append($("<option value='" + GameType.CREW + "'>The Crew</option>"));
+  $("#gameDrop").append($("<option value='" + GameType.BRIDGE + "'>Bridge</option>"));
+  $("#gameDrop").append($("<option value='" + GameType.EUCHRE + "'>Euchre</option>"));
+
   var previousNickName = $.cookie("nickname");
   if (previousNickName) {
     $("#nicknameInput").val(previousNickName);
@@ -36,6 +41,7 @@ function initPlayerModule() {
   });
 
 }
+
 function applySeatButtonClickListener() {
   $(".playerBtns").on("click", function () {
     console.log("--------------playerBtns Click----------------");
@@ -61,6 +67,7 @@ function applySeatButtonClickListener() {
     }
   });
 }
+
 function addSeatToTable(seatNumber) {
   if (seatNumber < 0) {
     console.log("--------------addSeatToTable ----------------: invalid seat: " + seatNumber);
@@ -77,6 +84,7 @@ function addSeatToTable(seatNumber) {
     $("#seatingArea").append(seatButton);
   }
 }
+
 function joinRoom() {
   console.log("--------joinRoom-----------");
   roomID = $("#roomID").val();
@@ -92,6 +100,7 @@ function joinRoom() {
   $("#topbar").prepend(roomText);
   $("#leaveRoom").show();
 }
+
 function leaveRoom() {
   socketio.emit('leaveRoom', roomID);
   $("#leaveRoom").hide();
@@ -101,24 +110,26 @@ function leaveRoom() {
   window.location.reload();
 
 }
+
 function isOkayToStartTheGame() {
   var lowestOpen = 999;
   var highestReadied = 0;
   $('.playerBtns').each(function () {
-      var number = Number($(this).data("player-number"));
-      var isReadied = $(this).prop("disabled");
-      console.log("P#:" + number);
-      if (isReadied && number > highestReadied) {
-          highestReadied = number;
-      }
-      if (!isReadied && number < lowestOpen) {
-          lowestOpen = number;
-      }
+    var number = Number($(this).data("player-number"));
+    var isReadied = $(this).prop("disabled");
+    console.log("P#:" + number);
+    if (isReadied && number > highestReadied) {
+      highestReadied = number;
+    }
+    if (!isReadied && number < lowestOpen) {
+      lowestOpen = number;
+    }
   });
   var isOkay = lowestOpen > highestReadied;
   console.log("LO: " + lowestOpen + "   HR: " + highestReadied + "  okay? " + isOkay);
   return isOkay;
 }
+
 function scrollToChatBottom() {
   var divObj = $("#msgBox");
   divObj.scrollTop($(divObj)[0].scrollHeight);
@@ -180,5 +191,5 @@ $(function () {
     $("#msgBox").append("<span><b>" + nickname + ":</b>&emsp;" + msg + "</span><br><br>");
     scrollToChatBottom();
     $('#boxBottom').show();
-});
+  });
 });

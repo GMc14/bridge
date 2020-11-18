@@ -23,7 +23,11 @@ var startPlayerCard;
 var gameConfig_hasTasks;
 
 
-const GameType = { "CREW": 1, "BRIDGE": 2, "EUCHRE": 3 };
+const GameType = {
+    "CREW": 1,
+    "BRIDGE": 2,
+    "EUCHRE": 3
+};
 
 function setGameType(gT) {
     gameType = gT;
@@ -41,7 +45,7 @@ function setGameType(gT) {
     gameConfig_hasTasks = false;
 
     switch (gameType) {
-        case GameType.CREW:
+        case GameType.CREW.to:
             bonusCards = crewBonusCards;
             gameConfig_permaTrumpSuit = 'R';
             ranks = crewRanks;
@@ -139,6 +143,8 @@ $(function () {
         window.location.reload();
     });
     socketio.on('startGame', function (playerCount) {
+
+        alert("LLLegit: " + $("#gameDrop").val());
         setGameType($("#gameDrop").val());
         gameConfig_playerCount = playerCount;
         $("#playArea").show();
@@ -301,6 +307,7 @@ function nextPlayer(currPlayer) {
     }
     return "Player" + currNumber;
 }
+
 function prevPlayer(currPlayer) {
     var currNumber = Number(currPlayer.slice(-1));
     currNumber -= 1;
@@ -309,10 +316,12 @@ function prevPlayer(currPlayer) {
     }
     return "Player" + currNumber;
 }
+
 function getNicknameForPlayer(player) {
     var myPIndex = Number(player.slice(-1)) - 1;
     return playerNickNames[myPIndex];
 }
+
 function updateTurnIndicator(playerOnTurnName, isMe = false, isLead = false) {
     var spaces = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
     var commanderText = (gameType == GameType.CREW) ? "<b>Commander:</b> " + commanderName + spaces + "<b>" : "";
@@ -322,6 +331,7 @@ function updateTurnIndicator(playerOnTurnName, isMe = false, isLead = false) {
         highlightPlayable();
     }
 }
+
 function clearSetupModule() {
     console.log("--------------clearSetupModule----------------");
     var setupModule = document.getElementsByClassName("setupModule")[0];
@@ -329,9 +339,11 @@ function clearSetupModule() {
         setupModule.removeChild(setupModule.firstChild);
     }
 }
+
 function addWinText(who, wins) {
     $("#" + who).text(wins);
 }
+
 function addWin(who, cards) {
     console.log("[][][][][][][] addWin: " + who + " cards:" + cards);
     var card = document.createElement("div");
@@ -370,6 +382,7 @@ function addWin(who, cards) {
         }
     );
 }
+
 function calculateWinner() {
     var win = tricksWon < handsNeeded ? 0 : 1;
     if (win) {
@@ -384,6 +397,7 @@ function calculateWinner() {
     currentPlayer = '', lead = '', leadSuit = '', trumpSuit = '', handsNeeded = '', tricksWon = 0, roundNumber = 0;
     $('#gameRecap').show();
 }
+
 function refreshTeamWins(win) {
     console.log("refreshTeamWins rewrite this with locations instead of 'left/right/across'");
     switch (win) {
@@ -400,6 +414,7 @@ function refreshTeamWins(win) {
             break;
     }
 }
+
 function constructPlayArea() {
     var clientNumber = Number(playerNum.slice(-1));
     for (var j = 1; j < gameConfig_playerCount; j++) {
