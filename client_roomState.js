@@ -125,7 +125,10 @@ function isOkayToStartTheGame() {
       lowestOpen = number;
     }
   });
-  var isOkay = lowestOpen > highestReadied;
+
+  var isOkay = lowestOpen > highestReadied 
+  && highestReadied >= gameConfig_minPlayerCount 
+  && highestReadied <= gameConfig_minPlayerCount;
   console.log("LO: " + lowestOpen + "   HR: " + highestReadied + "  okay? " + isOkay);
   return isOkay;
 }
@@ -138,44 +141,6 @@ $(function () {
   $("#joinRoomForm").on('submit', function (e) {
     e.preventDefault();
     joinRoom();
-  });
-  socketio.on('updateRoom', function (room) {
-    roomState = room;
-    console.log("--------updateRoom-----------" + JSON.stringify(roomState));
-    gameConfig_playerCount = roomState.players.length;
-
-    initPlayerModule();
-    console.log("--------updateRoom ------roomState.players-----" + JSON.stringify(roomState.players));
-    var standingPlayersHTMLString = "Waiting for... <br />";
-    $("#seatingArea").empty();
-
-    var counter = 1;
-    $.each(roomState.players, function () {
-      addSeatToTable(counter);
-      counter = counter + 1;
-    });
-    applySeatButtonClickListener();
-    $.each(roomState.players, function () {
-      var nickname = this.nickname;
-      if (nickname.length <= 0) {
-        nickname = this.id;
-      }
-      var seatIndex = roomState.seats.indexOf(this.id) + 1;
-      console.log("--------seatIndex-----------" + seatIndex + "  for:" + this.id);
-      console.log("--------roomState.seats-----------" + JSON.stringify(roomState.seats));
-      if (seatIndex < 1) {
-
-        console.log("--------seatIndex Add em to the queue-----------" + seatIndex + "  for:" + this.id);
-        standingPlayersHTMLString = standingPlayersHTMLString.concat(nickname);
-        standingPlayersHTMLString = standingPlayersHTMLString.concat("<br />");
-      } else {
-        console.log("--------seat " + nickname + " at the table-----------" + seatIndex + "  for:" + this.id);
-        $("#btnPlayer" + seatIndex).val(nickname);
-        $("#btnPlayer" + seatIndex).prop('disabled', true);
-        playerNickNames[seatIndex - 1] = nickname;
-      }
-    });
-    $("#playersInRoom").html(standingPlayersHTMLString);
   });
   socketio.on('setPlayerId', function (playerId) {
     clientPlayerId = playerId;
@@ -193,3 +158,55 @@ $(function () {
     $('#boxBottom').show();
   });
 });
+
+function updateRoom(room) {
+  roomState = room;
+  console.log("--------updateRoom-----------" + JSON.stringify(roomState));
+  gameConfig_playerCount = roomState.players.length;
+
+  initPlayerModule();
+  console.log("--------updateRoom ------roomState.players-----" + JSON.stringify(roomState.players));
+  var standingPlayersHTMLString = "Waiting for... <br />";
+  $("#seatingArea").empty();
+
+  var counter = 1;
+  $.each(roomState.players, function () {
+    addSeatToTable(counter);
+    counter = counter + 1;
+  });
+  applySeatButtonClickListener();
+  $.each(roomState.players, function () {
+    var nickname = this.nickname;
+    if (nickname.length <= 0) {
+      nickname = this.id;
+    }
+    var seatIndex = roomState.seats.indexOf(this.id) + 1;
+    console.log("--------seatIndex-----------" + seatIndex + "  for:" + this.id);
+    console.log("--------roomState.seats-----------" + JSON.stringify(roomState.seats));
+    if (seatIndex < 1) {
+
+      console.log("--------seatIndex Add em to the queue-----------" + seatIndex + "  for:" + this.id);
+      standingPlayersHTMLString = standingPlayersHTMLString.concat(nickname);
+      standingPlayersHTMLString = standingPlayersHTMLString.concat("<br />");
+    } else {
+      console.log("--------seat " + nickname + " at the table-----------" + seatIndex + "  for:" + this.id);
+      $("#btnPlayer" + seatIndex).val(nickname);
+      $("#btnPlayer" + seatIndex).prop('disabled', true);
+      playerNickNames[seatIndex - 1] = nickname;
+    }
+  });
+  $("#playersInRoom").html(standingPlayersHTMLString);
+}
+
+function clearSetupModule() {
+  console.log("--------------clearSetupModule----------------");
+  var setupModule = document.getElementsByClassName("setupModule")[0];
+  while (setupModule.firstChild) {
+    setupModule.removeChild(setupModule.firstChild);
+  }
+}
+
+function getNicknameForPlayer(player) {
+  var myPIndex = Number(player.slice(-1)) - 1;
+  return playerNickNames[myPIndex];
+}

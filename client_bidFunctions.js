@@ -49,7 +49,6 @@ function startBidding() {
     }
   });
 }
-
 function disablePrevCells(row, col) {
   console.log("GMcCards-bidFunctions.js-disablePrevCells-#0000");
   var table = document.getElementById("bidTable");
@@ -65,39 +64,37 @@ function disablePrevCells(row, col) {
     }
   }
 }
-$(function () {
-  socketio.on('some1Bid', function (data) {
-    passCount = 0;
+function someoneBid(data) {
+  passCount = 0;
+  currentBidder = nextPlayer(currentBidder);
+  currentBid = data.bid;
+  otherColor = data.color;
+  $('#' + data.bid).trigger('click');
+  if (playerNum == currentBidder) {
+    alert("Your Turn to Bid");
+  }
+}
+function someonePassed() {
+  passCount++;
+  if (passCount == 4) {
+    $('#bidOfRound').html('<b>' + currentBidder + ": " + currentBid + '</b>');
+    trumpSuit = currentBid.charAt(1);
+    if (playerNum == currentBidder || playerNum == nextPlayer(nextPlayer(currentBidder))) {
+      handsNeeded = 6 + Number(currentBid.charAt(0));
+    } else {
+      handsNeeded = 14 - (6 + Number(currentBid.charAt(0)));
+    }
+    currentPlayer = nextPlayer(currentBidder);
+    lead = currentPlayer;
+    $('#bidArea').hide();
+    if (playerNum == currentPlayer) {
+      updateTurnIndicator("You", true, true);
+    }
+    $('#bidOfRound').show();
+  } else {
     currentBidder = nextPlayer(currentBidder);
-    currentBid = data.bid;
-    otherColor = data.color;
-    $('#' + data.bid).trigger('click');
     if (playerNum == currentBidder) {
       alert("Your Turn to Bid");
     }
-  });
-  socketio.on('some1Passed', function () {
-    passCount++;
-    if (passCount == 4) {
-      $('#bidOfRound').html('<b>' + currentBidder + ": " + currentBid + '</b>');
-      trumpSuit = currentBid.charAt(1);
-      if (playerNum == currentBidder || playerNum == nextPlayer(nextPlayer(currentBidder))) {
-        handsNeeded = 6 + Number(currentBid.charAt(0));
-      } else {
-        handsNeeded = 14 - (6 + Number(currentBid.charAt(0)));
-      }
-      currentPlayer = nextPlayer(currentBidder);
-      lead = currentPlayer;
-      $('#bidArea').hide();
-      if (playerNum == currentPlayer) {
-        updateTurnIndicator("You", true, true);
-      }
-      $('#bidOfRound').show();
-    } else {
-      currentBidder = nextPlayer(currentBidder);
-      if (playerNum == currentBidder) {
-        alert("Your Turn to Bid");
-      }
-    }
-  });
-});
+  }
+}

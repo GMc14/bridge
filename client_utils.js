@@ -21,3 +21,10 @@ const getCircularReplacer = () => {
     return value;
   };
 };
+
+function noNulls(arr){
+	for (var j=0; j<arr.length; j++) {
+		if(arr[j] == null) {return false;}
+	}
+	return true;
+}

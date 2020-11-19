@@ -147,7 +147,7 @@ function dealCards() {
 
   }
 
-  if (gameType = GameType.BRIDGE) {
+  if (gameType == GameType.BRIDGE) {
     for (var i = 0; i < gameConfig_playerCount; i++) {
       if (handValues[i] < 4) {
         //needToRedeal

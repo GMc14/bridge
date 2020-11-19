@@ -16,12 +16,13 @@ var gameConfig_euchreBowers;
 var gameConfig_bidForTrump;
 var gameConfig_missions;
 var gameConfig_playerCount;
+var gameConfig_minPlayerCount;
+var gameConfig_maxPlayerCount;
 var gameConfig_startCardsPerPlayer; //-1 == Deal All
 var gameConfig_numberOfRounds; //-1 == Play all cards in hand
 var ranks;
 var startPlayerCard;
 var gameConfig_hasTasks;
-
 
 const GameType = {
     "CREW": 1,
@@ -40,6 +41,8 @@ function setGameType(gT) {
     gameConfig_missions = [];
     gameConfig_startCardsPerPlayer = -1;
     gameConfig_numberOfRounds = -1;
+    gameConfig_minPlayerCount = 1;
+    gameConfig_maxPlayerCount = 100;
     ranks = standardRanks;
     startPlayerCard = '';
     gameConfig_hasTasks = false;
@@ -55,15 +58,21 @@ function setGameType(gT) {
         startPlayerCard = crewStartCard;
         gameConfig_missions = crewMissions;
         gameConfig_hasTasks = true;
+        gameConfig_minPlayerCount = 1;
+        gameConfig_maxPlayerCount = 5;
     } else if (gameType == GameType.BRIDGE) {
         gameConfig_hasTeams = true;
         gameConfig_bidForTrump = true;
+        gameConfig_minPlayerCount = 4;
+        gameConfig_maxPlayerCount = 4;
     } else if (gameType == GameType.EUCHRE) {
         gameConfig_hasTeams = true;
         gameConfig_topDeckTrump = true;
         gameConfig_euchreBowers = true;
         ranks = euchreRanks;
         gameConfig_startCardsPerPlayer = 5;
+        gameConfig_minPlayerCount = 3;
+        gameConfig_maxPlayerCount = 4;
     } else {
         alert("Unknown GameType: " + gameType);
     }
@@ -119,11 +128,6 @@ $(function () {
     $("#helpLegend").click(function () {
         $("#helpLegend").hide();
     });
-
-    $('#restartGame').on('click', function () {
-        console.log("[][][][][][][][][][]Need to ClearTrumpHighlights here?[][][][][][][][][][][]");
-        socketio.emit('restartGame');
-    });
     $("#boxTop").on("click", function () {
         $('#boxBottom').toggle();
     });
@@ -137,7 +141,9 @@ $(function () {
             $(this).val('');
         }
     });
-
+    socketio.on('updateRoom', function (room) {
+        updateRoom(room);
+    });
     socketio.on('leftInGame', function (nickname) {
         alert(nickname + " left the room. Kicking everybody out... ");
         window.location.reload();
@@ -169,7 +175,6 @@ $(function () {
 
         startGame();
     });
-
     socketio.on('dealToClients', function (data) {
         console.log("--------------dealToClients---------------- " + JSON.stringify(data, null, 4));
         console.log("--------------dealToClients---------------- playerNum: " + playerNum);
@@ -280,11 +285,11 @@ $(function () {
         var winnerIndex = inversePlayerIdMap[trickWinner];
         if (winnerIndex) {
             console.log("[][][][][][][] put trick in... loc" + winnerIndex + "stuff");
-            addWin("loc" + winnerIndex + "stuff", trickCards);
+            addTrickWin("loc" + winnerIndex + "stuff", trickCards);
             var winsId = "loc" + winnerIndex + "wins";
             var currentWins = Number($("#" + winsId).text());
             console.log("OOOOOOOOOOOOOOOOOOOOO}}}}}}}}}}}}  currentWins: " + currentWins);
-            addWinText(winsId, currentWins + 1);
+            addTrickWinText(winsId, currentWins + 1);
         } else {
             console.log("[][][][][][][] no bueno winner mustBeMe");
         }
@@ -292,187 +297,18 @@ $(function () {
         //     tricksWon++;
         // }
         if (roundNumber == gameConfig_numberOfRounds) {
-            calculateWinner();
+            calculateGameWinner();
         } else if (gameConfig_numberOfRounds == -1) {
             //TODO: check it any players still have card 
         }
     });
+    socketio.on('some1Bid', function (data) {
+        someoneBid(data);
+    });
+    socketio.on('some1Passed', function () {
+        someonePassed();
+    });
 });
-
-function nextPlayer(currPlayer) {
-    var currNumber = Number(currPlayer.slice(-1));
-    currNumber += 1;
-    if (currNumber > gameConfig_playerCount) {
-        currNumber = 1;
-    }
-    return "Player" + currNumber;
-}
-
-function prevPlayer(currPlayer) {
-    var currNumber = Number(currPlayer.slice(-1));
-    currNumber -= 1;
-    if (currNumber < 1) {
-        currNumber = gameConfig_playerCount;
-    }
-    return "Player" + currNumber;
-}
-
-function getNicknameForPlayer(player) {
-    var myPIndex = Number(player.slice(-1)) - 1;
-    return playerNickNames[myPIndex];
-}
-
-function updateTurnIndicator(playerOnTurnName, isMe = false, isLead = false) {
-    var spaces = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
-    var commanderText = (gameType == GameType.CREW) ? "<b>Commander:</b> " + commanderName + spaces + "<b>" : "";
-    $("#turnIndicator").html(commanderText + (isLead ? "To Lead" : "To Play") + ":</b> " + playerOnTurnName);
-    if (isMe) {
-        $("#myHand").addClass("highlighted");
-        highlightPlayable();
-    }
-}
-
-function clearSetupModule() {
-    console.log("--------------clearSetupModule----------------");
-    var setupModule = document.getElementsByClassName("setupModule")[0];
-    while (setupModule.firstChild) {
-        setupModule.removeChild(setupModule.firstChild);
-    }
-}
-
-function addWinText(who, wins) {
-    $("#" + who).text(wins);
-}
-
-function addWin(who, cards) {
-    console.log("[][][][][][][] addWin: " + who + " cards:" + cards);
-    var card = document.createElement("div");
-    card.setAttribute('class', 'otherCards');
-    card.setAttribute('data-cards', cards);
-    $(".cardback:eq(0)").clone().show().appendTo(card);
-    var wonTricks = $('#' + who);
-    $(wonTricks).append(card);
-    $(wonTricks).hover(
-        function () {
-            if (!hoveringOverWonTricks) {
-                hoveringOverWonTricks = true;
-                $($(this).children()[0]).attr("data-cards").split(',');
-                console.log("wonTricks hover...");
-                var trickDetailsDiv = $("<div id='trickDetails'></div>");
-                $(this).children().each(function () {
-                    console.log("wonTricks Child:  " + $(this).attr("data-cards"));
-                    if ($(this).attr("data-cards")) {
-                        var cardsToDraw = $(this).attr("data-cards").split(',');
-                        var trick = $("<div class='trick'></div>");
-                        for (var i = 0; i < cardsToDraw.length; i++) {
-                            var img_src = "/card_imgs/" + cardsToDraw[i] + ".png";
-                            $(trick).append("<img class='wonTrickCard' src='" + img_src + "'/>");
-                        }
-                        $(trickDetailsDiv).append(trick);
-                    }
-                });
-                $(this).attr("data-cards")
-                $(this).append(trickDetailsDiv);
-            }
-        },
-        function () {
-            console.log("wonTricks UNhover...");
-            $("#trickDetails").remove();
-            hoveringOverWonTricks = false;
-        }
-    );
-}
-
-function calculateWinner() {
-    var win = tricksWon < handsNeeded ? 0 : 1;
-    if (win) {
-        $('#winners').html('<b>WINNER:</b> YOU');
-    } else {
-        $('#winners').html('<b>WINNER:</b> NOT YOU');
-    }
-    $('#gameBid').html('<b>BID:</b> ' + currentBid + ' (' + currentBidder + ')');
-    $('#wins').html('<b>YOU WON:</b> ' + tricksWon + ' tricks');
-    refreshTeamWins(win);
-    dealer = nextPlayer(dealer);
-    currentPlayer = '', lead = '', leadSuit = '', trumpSuit = '', handsNeeded = '', tricksWon = 0, roundNumber = 0;
-    $('#gameRecap').show();
-}
-
-function refreshTeamWins(win) {
-    console.log("refreshTeamWins rewrite this with locations instead of 'left/right/across'");
-    switch (win) {
-        case 0:
-            // var numWins = $('#leftWin').html();
-            // numWins = Number(numWins) + 1;
-            // $('#leftWin').html(numWins);
-            // $('#rightWin').html(numWins);
-            break;
-        case 1:
-            // var numWins = $('#acrossWin').html();
-            // numWins = Number(numWins) + 1;
-            // $('#myWin').html(numWins);
-            break;
-    }
-}
-
-function constructPlayArea() {
-    var clientNumber = Number(playerNum.slice(-1));
-    for (var j = 1; j < gameConfig_playerCount; j++) {
-        var pNumber = Number((clientNumber + j - 1) % gameConfig_playerCount) + 1;
-
-        var stuff = $('<div alt="loc' + j + 'stuff" id="loc' + j + 'stuff" class="stuff"></div>');
-        var plays = $('<div alt="loc' + j + 'play" id="loc' + j + 'play" class="plays"></div>');
-        var name = $('<div alt="loc' + j + 'name" id="loc' + j + 'name" class="name"></div>');
-        var winCounter = $('<div alt="loc' + j + 'wins" id="loc' + j + 'wins" class="winCount">0</div>');
-        var playerHand = $('<div alt="loc' + j + 'Hand" class="otherPlayerHand" id="loc' + j + 'Hand" ></div>');
-        var playerContainer = $("<div alt='loc" + j + "Container' id='loc" + j + "Container' class='locationContainer'></div>");
-
-        $(playerContainer).append(playerHand);
-        $(playerContainer).append(stuff);
-        $(playerContainer).append(plays);
-        $(playerContainer).append("<select class='trumpDrops plyrDrop plyrDropName' pNum='" + pNumber + "' id='drpPlyrName" + j + "' name='dropdownIcon' size=1>");
-        $(playerContainer).append(name);
-        $(playerContainer).append(winCounter);
-
-        $("#gameBoard").append(playerContainer);
-
-        var positionRelativeToCenter = j - ((gameConfig_playerCount) / 2);
-        $(playerContainer).css({
-            "left": ((j - 1) * 90 / (gameConfig_playerCount - 1) + 15.5) + "vw",
-            "top": "12vh",
-            "transform": "rotate(" + positionRelativeToCenter * 15 + "deg) translateY(" + Math.abs(positionRelativeToCenter) * 4 + "vmax)"
-        });
-        playerIdMap[j] = 'Player' + pNumber;
-        inversePlayerIdMap['Player' + pNumber] = j;
-        $("#loc" + j + "name").html('Player' + pNumber + ': ' + playerNickNames[pNumber - 1]);
-        $.each(playerOptions, function () {
-            $("#drpPlyrName" + j).append('<option value="' + this + '">' + this + '</option>');
-        });
-        $("#drpPlyrName" + j).change(function () {
-            var shortName = $(this).val();
-            var tempPNumber = $(this).attr("pNum");
-            console.log(">>>>>>>>>>>>>drpPlyrName selected ---------------- cardID:" + tempPNumber + " : " + shortName);
-            socketio.emit('assignShortName', {
-                playerNumber: tempPNumber,
-                roomID: roomID,
-                shortName: shortName
-            });
-        });
-    }
-    $.each(playerOptions, function () {
-        $("#myDrpPlyrName").append('<option value="' + this + '">' + this + '</option>');
-    });
-    $("#myDrpPlyrName").change(function () {
-        var playerNumber = playerNum.replace('Player', '');
-        var shortName = $(this).val();
-        console.log(">>>>>>>>>>>>>myDrpPlyrName selected ---------------- cardID:" + playerNumber + " : " + shortName);
-        socketio.emit('assignShortName', {
-            playerNumber: playerNumber,
-            roomID: roomID,
-            shortName: shortName
-        });
-    });
-}
 
 var path = window.location.pathname;
 console.log("window.location.pathname: " + path);
