@@ -6,11 +6,12 @@
   <title>GMcCrew</title>
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="index.css">
-
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js" type="text/javascript"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js" type="text/javascript"></script>
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js" type="text/javascript">
+  </script>
   <script src="/socket.io/socket.io.js"></script>
-  
+
   <script src="client_socketioFunctions.js" type="text/javascript"></script>
   <script src="client_gameMaster.js" type="text/javascript"></script>
   <script src="client_roomState.js" type="text/javascript"></script>
@@ -27,24 +28,42 @@
 <body>
   <div id="gameBoard">
     <div id=topbar>
-      <button id="startGameButton" class="startBtn">Start Game</button>
       <div id="taskOptions"></div>
       <button class="gameButtons" id="leaveRoom" onclick="leaveRoom()" style="display:none">Leave</button><br>
       <div id='bidOfRound' style="display:none; font-size:large;"></div>
       <div id="showCase"></div>
-      <img id="tokenQmark" src="token_imgs/q.png" />
+      <img id="helpLegendTrigger" src="token_imgs/q.png" />
       <img id="helpLegend" src="token_imgs/legend.png" />
       <div id="turnIndicator"></div>
     </div>
     <div id="gameSetup">
-      <div id="playersInRoom"></div>
-      <div class="setupModule">
+      <div id="roomSelection">
         <span>CREATE/JOIN:</span><br>
         <form id="joinRoomForm">
           <input id="roomID" type="text" title="4 Character Room Code" placeholder="4 Character Room Code" maxlength="4"
             pattern="[a-zA-Z0-9]+">
           <input type="submit" value="Go">
         </form>
+      </div>
+      <div id='playerSetup'>
+        <div id="playersInRoom"></div>
+        <span class='seatSelectionLabel' id='nicknameLabel'>NICKNAME:</span>
+        <input id='nicknameInput' type='text'></input>
+        <span class='seatSelectionLabel' id='playerSelectLabel'></span>
+        <div id='seatingArea'></div>
+        <select class='gameDrop' id='gameDrop' name='dropdownGame' size=1></select>
+        <button id="startGameButton" class="startBtn">Start Game</button>
+        <div id="tableClothChoices">
+          <img class="tableClothOption" src="table_imgs/bg_black_felt.jpg">
+          <img class="tableClothOption" src="table_imgs/bg_purple_felt.jpg">
+          <img class="tableClothOption" src="table_imgs/bg_red_felt.jpg">
+          <img class="tableClothOption" src="table_imgs/bg_orange_felt.jpg">
+          <img class="tableClothOption" src="table_imgs/bg_yellow_felt.jpg">
+          <img class="tableClothOption" src="table_imgs/bg_green_felt.jpg">
+          <img class="tableClothOption" src="table_imgs/bg_blue_felt.jpg">
+          <img class="tableClothOption" src="table_imgs/bg_white_felt.jpg">
+          <img class="tableClothOption" src="table_imgs/felt_bg.jpg">
+        </div>
       </div>
       <div id=bidArea style="display:none">
         <div id="legend_container">

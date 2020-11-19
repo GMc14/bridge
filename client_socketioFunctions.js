@@ -1,3 +1,9 @@
+$(".tableClothOption").selectable({
+    selected: function (event, ui) {
+        $(ui.selected).addClass('ui-selected').siblings().removeClass('ui-selected');
+    },
+});
+
 //Meta
 var socketio = io.connect();
 
@@ -156,8 +162,8 @@ $(function () {
         $("#playArea").show();
         console.log("client_socket :: startGame");
         preRenderImgs();
-        clearSetupModule();
-        $("#playersInRoom").hide();
+
+        $("#playerSetup").hide();
         $("#startGameButton").hide();
         constructPlayArea();
         startGame();
@@ -185,7 +191,6 @@ $(function () {
             handSizes[i] = data.hands[i].length;
         }
         $("#showCase").empty();
-        $(".setupModule").hide();
 
         if (gameConfig_bidForTrump) {
             displayCards(); //Display cards before & after trump determined, sort may have changed

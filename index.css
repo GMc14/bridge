@@ -328,7 +328,12 @@ b {
   height:20vh;
   /* background: rgba(21,211,123,0.1); */
 }
-
+.tableClothOption {
+  height:5vmax;
+}
+.ui-selected {
+  border: 0.5vmax double #ff3;
+}
 .noComms{
   -webkit-text-stroke: 1px #c66;
   color: #a21;
@@ -428,7 +433,7 @@ b {
   color: black;
 }
 
-.setupModule {
+#roomSelection {
   display: table-cell;
   vertical-align: middle;
 }

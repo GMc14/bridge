@@ -42,7 +42,7 @@ function enter(socket) {
   var playerId = socket.id;
   var roomID = socket.room;
   console.log("room: " + JSON.stringify(io.sockets.adapter.rooms[roomID]));
-  io.sockets.to(playerId).emit('setPlayerId',playerId);
+  io.sockets.to(playerId).emit('setPlayerId', playerId);
   if (!io.sockets.adapter.rooms[roomID].gameMaster) {
     io.sockets.adapter.rooms[roomID].gameMaster = playerId;
     io.sockets.to(playerId).emit('makeGameMaster');
@@ -66,6 +66,7 @@ function enter(socket) {
   console.log("@@@ enter room @@@: " + JSON.stringify(io.sockets.adapter.rooms[roomID]));
   io.sockets.to(socket.room).emit('updateRoom', io.sockets.adapter.rooms[roomID]);
 }
+
 function leave(room, playerId) {
   console.log("Todo: Implement Game Leaving Logic");
   if (!room.gameMaster) {
@@ -75,18 +76,21 @@ function leave(room, playerId) {
   //??room.players.remove(playerId);
   //??sockets.remove(playerId);
 }
+
 function setNickname(socket, playerId, nickname) {
   var room = io.sockets.adapter.rooms[socket.room];
   for (var i = 0; i < room.players.length; i++) {
-    if (room.players[i].id == playerId){
+    if (room.players[i].id == playerId) {
       room.players[i].nickname = nickname;
     }
   }
 }
+
 function sit(socket, seatIndex, playerId) {
-  io.sockets.adapter.rooms[socket.room].seats[seatIndex]=playerId;
+  io.sockets.adapter.rooms[socket.room].seats[seatIndex] = playerId;
   io.sockets.to(socket.room).emit('updateRoom', io.sockets.adapter.rooms[socket.room]);
 }
+
 function stand(room, playerId) {
   var seatIndex = room.seats.indexOf(playerId);
   if (seatIndex > -1) {
@@ -106,7 +110,7 @@ io.sockets.on('connection', function (socket) {
       socket.room = roomID;
       enter(socket);
     } else {
-      console.log("thisRoom is full? "+JSON.stringify(io.sockets.adapter.rooms[roomID]));
+      console.log("thisRoom is full? " + JSON.stringify(io.sockets.adapter.rooms[roomID]));
       //io.sockets.to(socket.id).emit('fullRoom', thisRoom.length);
     }
   });
@@ -128,7 +132,7 @@ io.sockets.on('connection', function (socket) {
 
     if (socket.id == data.playerId || socket.id == thisRoom.gameMaster) {
       setNickname(socket, data.playerId, data.nickname);
-      sit(socket, data.seatIndex-1, data.playerId, data.nickname);
+      sit(socket, data.seatIndex - 1, data.playerId, data.nickname);
     } else {
       console.log("unauthorized sit");
     }

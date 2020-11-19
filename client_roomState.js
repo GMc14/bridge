@@ -10,21 +10,17 @@ function initPlayerModule() {
     return;
   }
   playerModuleIsShowing = true;
-  clearSetupModule();
+
   var teamInfo = '';
   if (gameConfig_hasTeams) {
     teamInfo = "(TEAMS: 1 & 3 and 2 & 4)"
   }
 
-  $(".setupModule:eq(0)").append("<div id='playerSetup'></div>");
-  $("#playerSetup").append($("<span class='seatSelectionLabel' id='nicknameLabel'>NICKNAME:</span>"));
-  $("#playerSetup").append($("<input id='nicknameInput' type='text'></input>"));
-  $("#playerSetup").append($("<span class='seatSelectionLabel' id='playerSelectLabel'>SELECT SEAT:" + teamInfo + "</span>"));
-  $("#playerSetup").append($("<div id='seatingArea'></div>"));
-  $("#playerSetup").append($("<select class='gameDrop' id='gameDrop' name='dropdownGame' size=1></select>"));
+
   $("#gameDrop").append($("<option value='" + GameType.CREW + "'>The Crew</option>"));
   $("#gameDrop").append($("<option value='" + GameType.BRIDGE + "'>Bridge</option>"));
   $("#gameDrop").append($("<option value='" + GameType.EUCHRE + "'>Euchre</option>"));
+  $("#playerSelectLabel").text("SELECT SEAT: " + teamInfo + "</span>");
 
   var previousNickName = $.cookie("nickname");
   if (previousNickName) {
@@ -93,19 +89,20 @@ function joinRoom() {
   }
   roomID = roomID.toUpperCase()
   socketio.emit('enterRoom', roomID);
-  clearSetupModule();
+
   var roomText = document.createElement("span");
   roomText.setAttribute("id", "roomText");
   roomText.appendChild(document.createTextNode("Room Code: " + roomID));
   $("#topbar").prepend(roomText);
   $("#leaveRoom").show();
+  $("#playerSetup").show();
+  $("#roomSelection").hide();
 }
 
 function leaveRoom() {
   socketio.emit('leaveRoom', roomID);
   $("#leaveRoom").hide();
   // $("#roomText").remove();
-  // clearSetupModule();
   // roomModule();
   window.location.reload();
 
@@ -126,9 +123,9 @@ function isOkayToStartTheGame() {
     }
   });
 
-  var isOkay = lowestOpen > highestReadied 
-  && highestReadied >= gameConfig_minPlayerCount 
-  && highestReadied <= gameConfig_maxnPlayerCount;
+  var isOkay = lowestOpen > highestReadied &&
+    highestReadied >= gameConfig_minPlayerCount &&
+    highestReadied <= gameConfig_maxnPlayerCount;
   console.log("LO: " + lowestOpen + "   HR: " + highestReadied + "  okay? " + isOkay);
   return isOkay;
 }
@@ -196,14 +193,6 @@ function updateRoom(room) {
     }
   });
   $("#playersInRoom").html(standingPlayersHTMLString);
-}
-
-function clearSetupModule() {
-  console.log("--------------clearSetupModule----------------");
-  var setupModule = document.getElementsByClassName("setupModule")[0];
-  while (setupModule.firstChild) {
-    setupModule.removeChild(setupModule.firstChild);
-  }
 }
 
 function getNicknameForPlayer(player) {
