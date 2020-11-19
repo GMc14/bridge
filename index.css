@@ -16,35 +16,40 @@ body {
   background-color: #131313;
   background-size: 20px 20px;
 }
+
 /* div {
   border: 2px dotted rgba(255, 255, 128, 0.8) !important;
 } */
+
 #helpLegendTrigger {
   height: 2vmax;
 }
 
 #helpLegend {
-  display:none;
+  display: none;
   position: fixed;
   left: 2vmax;
   top: 2vmax;
   z-index: 99999999999;
 }
+
 .token {
   position: absolute;
   z-index: 999999;
   font-size: 0px;
   top: .7vmax;
   left: 6.7vw;
- }
-.token > img {
+}
+
+.token>img {
   filter: drop-shadow(0.15vmax 0.15vmax 0 rgba(248, 255, 206, 0.5)) drop-shadow(-0.15vmax 0.15vmax 0 rgba(248, 255, 206, 0.5)) drop-shadow(0.15vmax -0.15vmax 0 rgba(248, 255, 206, 0.5)) drop-shadow(-0.15vmax -0.15vmax 0 rgba(248, 255, 206, 0.5));
   width: 2vmax;
 }
 
 .isTrump {
-    box-shadow: inset 0 0 0.5vmax #Fd0, inset 0 0 2.5vmax #ff3;
+  box-shadow: inset 0 0 0.5vmax #Fd0, inset 0 0 2.5vmax #ff3;
 }
+
 .trumpDrops {
   font-size: 1vmax;
   opacity: 0.9;
@@ -56,12 +61,14 @@ body {
 .icnDrop {
   top: 0.4vmax;
 }
-.doneBut{
+
+.doneBut {
   top: 1.7vmax;
   cursor: pointer;
   left: 0.4vmax;
   font-size: 1.2vmax;
 }
+
 .plyrDrop {
   top: 2.9vmax;
   font-size: 1vmax;
@@ -71,11 +78,10 @@ body {
   font-size: 4vmax;
 }
 
-.attentionWobble{
-	-webkit-animation: wobble-hor-top 0.8s both;
-	        animation: wobble-hor-top 0.8s both;
+.attentionWobble {
+  -webkit-animation: wobble-hor-top 0.8s both;
+  animation: wobble-hor-top 0.8s both;
 }
-
 
 #bidOfRound {
   position: absolute;
@@ -186,14 +192,16 @@ td, th {
   left: 30vw;
   /* border: 2px double #f18; */
 }
-#taskOptions{
-  position:absolute;
-  top:10vh;
-  left:25vw;
-  z-index:999999999;
+
+#taskOptions {
+  position: absolute;
+  top: 10vh;
+  left: 25vw;
+  z-index: 999999999;
   max-width: 50vw;
-  background: rgba(45,45,45,0.65);
+  background: rgba(45, 45, 45, 0.65);
 }
+
 #showCase {
   text-align: center;
   position: absolute;
@@ -204,10 +212,9 @@ td, th {
   left: 0vw;
   border-width: 3px;
   border-style: solid;
-  background: linear-gradient(190deg, rgba(233,233,233,1) 0%, rgba(56,75,73,1) 35%, rgba(252,176,69,0) 80%);
+  background: linear-gradient(190deg, rgba(233, 233, 233, 1) 0%, rgba(56, 75, 73, 1) 35%, rgba(252, 176, 69, 0) 80%);
   box-shadow: inset 0 0 1vmax rgba(33, 33, 33, 0.5);
-  border-image: 
-  linear-gradient(190deg, rgba(233,233,233,1) 0%, rgba(56,75,73,1) 35%, rgba(252,176,69,0) 80%);
+  border-image: linear-gradient(190deg, rgba(233, 233, 233, 1) 0%, rgba(56, 75, 73, 1) 35%, rgba(252, 176, 69, 0) 80%);
   display: none;
 }
 
@@ -226,11 +233,13 @@ td, th {
   width: 20vw;
   /* border: 1px dashed #f68; */
 }
+
 .leader {
   /* border: 2px double #8f1; */
   background: rgba(4, 55, 20, 0.07);
   text-decoration: underline;
 }
+
 .plays {
   position: absolute;
   height: 10vmax;
@@ -246,9 +255,11 @@ td, th {
   height: 7vmax;
   width: 5vmax;
 }
+
 b {
-  color:rgba(90,130,250,1);
+  color: rgba(90, 130, 250, 1);
 }
+
 .name {
   box-sizing: border-box;
   position: absolute;
@@ -302,13 +313,14 @@ b {
   left: 60vw;
   width: 24vw;
 }
-.potentialTask{
-  width:4vmax;
-  margin:1px;
+
+.potentialTask {
+  width: 4vmax;
+  margin: 1px;
   background: #fff;
 }
 
-#myCommunication{
+#myCommunication {
   position: absolute;
   top: 58.5vh;
   left: 38vw;
@@ -316,69 +328,64 @@ b {
   cursor: pointer;
   font-weight: bold;
   z-index: 99999999;
-
   -webkit-user-select: none;
   -khtml-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
 }
-#playersInRoom{  
-  width:20vw;
-  height:20vh;
+
+#playersInRoom {
+  width: 20vw;
+  height: 20vh;
   /* background: rgba(21,211,123,0.1); */
 }
+
 .tableClothOption {
-  height:5vmax;
+  height: 5vmax;
 }
+
 .ui-selected {
   border: 0.5vmax double #ff3;
 }
-.noComms{
+
+.noComms {
   -webkit-text-stroke: 1px #c66;
   color: #a21;
-  text-shadow:
-      3px 3px 0 #c66,
-    -1px -1px 0 #c66,  
-     1px -1px 0 #c66,
-     -1px 1px 0 #c66,
-      1px 1px 0 #c66;
-}
-.usedComms{
-  -webkit-text-stroke: 1px #ccc;
-  color: #333;
-  text-shadow:
-      3px 3px 0 #ccc,
-    -1px -1px 0 #ccc,  
-     1px -1px 0 #ccc,
-     -1px 1px 0 #ccc,
-      1px 1px 0 #ccc;
-}
-.limitedComms{
-  -webkit-text-stroke: 1px #cc6;
-  color: #dc0;
-  text-shadow:
-      3px 3px 0 #cc6,
-    -1px -1px 0 #cc6,  
-     1px -1px 0 #cc6,
-     -1px 1px 0 #cc6,
-      1px 1px 0 #cc6;
-}
-.readyComms{
-  -webkit-text-stroke: 1px #6c6;
-  color: #383;
-  text-shadow:
-      3px 3px 0 #6c6,
-    -1px -1px 0 #6c6,  
-     1px -1px 0 #6c6,
-     -1px 1px 0 #6c6,
-      1px 1px 0 #6c6;
+  text-shadow: 3px 3px 0 #c66, -1px -1px 0 #c66, 1px -1px 0 #c66, -1px 1px 0 #c66, 1px 1px 0 #c66;
 }
 
-.plyrDropName{
-  display:none;
+.usedComms {
+  -webkit-text-stroke: 1px #ccc;
+  color: #333;
+  text-shadow: 3px 3px 0 #ccc, -1px -1px 0 #ccc, 1px -1px 0 #ccc, -1px 1px 0 #ccc, 1px 1px 0 #ccc;
 }
-#myDrpPlyrName{
+
+.limitedComms {
+  -webkit-text-stroke: 1px #cc6;
+  color: #dc0;
+  text-shadow: 3px 3px 0 #cc6, -1px -1px 0 #cc6, 1px -1px 0 #cc6, -1px 1px 0 #cc6, 1px 1px 0 #cc6;
+}
+
+.readyComms {
+  -webkit-text-stroke: 1px #6c6;
+  color: #383;
+  text-shadow: 3px 3px 0 #6c6, -1px -1px 0 #6c6, 1px -1px 0 #6c6, -1px 1px 0 #6c6, 1px 1px 0 #6c6;
+}
+
+#helpLegendTrigger {
+  display: none;
+}
+
+#playerSetup {
+  display: none;
+}
+
+.plyrDropName {
+  display: none;
+}
+
+#myDrpPlyrName {
   position: absolute;
   top: 58.5vh;
   left: 42vw;
@@ -394,9 +401,11 @@ b {
   top: 56vh;
   left: 60vw;
 }
-#startGameButton{
-  display:none;
+
+#startGameButton {
+  display: none;
 }
+
 #gameSetup {
   display: table;
   position: absolute;
@@ -452,25 +461,29 @@ b {
   border-radius: 0.5vmax;
   transition-duration: 0.2s;
 }
-.playerBtns:disabled, .playerBtns[disabled], .startBtn:disabled, .startBtn[disabled]  {
+
+.playerBtns:disabled, .playerBtns[disabled], .startBtn:disabled, .startBtn[disabled] {
   background-color: #999;
   color: #333;
 }
+
 .gameButtons:hover, .startBtn:hover {
   background-color: #435078;
-  box-shadow: 0px 0px 1.5vmax rgba(0,182,82,0.5);
+  box-shadow: 0px 0px 1.5vmax rgba(0, 182, 82, 0.5);
   color: white;
 }
-#nicknameInput{
-  display:block;
+
+#nicknameInput {
+  display: block;
   margin-bottom: 2vmax;
 }
+
 .playerBtns, .startBtn {
   background-color: white;
   color: black;
   text-align: center;
   display: block;
-  clear:both;
+  clear: both;
   border-radius: 0.5vmax;
   transition-duration: 0.1s;
 }
@@ -485,7 +498,7 @@ b {
   height: 22%;
   width: 100%;
   bottom: -5%;
-  padding:1.5vmax;
+  padding: 1.5vmax;
   /*margin:auto;
   height: 100%;*/
   text-align: center;
@@ -551,8 +564,8 @@ div#myHand.highlighted {
   inset 0.6vmin 0 3vmin #7EB2A8, /* inner left broad */
   inset -0.6vmin 0 3vmin #7EB2A8;
   /* inner right broad */
-	-webkit-animation: heartbeat 0.8s 4s;
-	        animation: heartbeat 0.8s 4s;
+  -webkit-animation: heartbeat 0.8s 4s;
+  animation: heartbeat 0.8s 4s;
 }
 
 .assignments {
@@ -562,21 +575,24 @@ div#myHand.highlighted {
   left: 6.75vw;
 }
 
-.AM{
+.AM {
   text-shadow: 0 -1px 5px #EE2233, -2px 0 10px #EE2233, 0 3px 15px #CCDD33, 4px 0 25px #CCDD33;
-  color:rgba(255,255,255,0.66);
+  color: rgba(255, 255, 255, 0.66);
 }
-.AP{
+
+.AP {
   text-shadow: 0 -1px 5px #00aa88, -2px 0 10px #00aa88, 0 3px 15px #cc44dd, 4px 0 25px #cc44dd;
-  color:rgba(255,255,255,0.66);
+  color: rgba(255, 255, 255, 0.66);
 }
-.EM{
+
+.EM {
   text-shadow: 0 -1px 5px #4400AA, -2px 0 10px #4400AA, 0 3px 15px #009933, 4px 0 25px #009933;
-  color:rgba(255,255,255,0.66);
+  color: rgba(255, 255, 255, 0.66);
 }
-.GM{
+
+.GM {
   text-shadow: 0 -1px 5px #FF8800, -2px 0 10px #FF8800, 0 3px 15px #002299, 4px 0 25px #002299;
-  color:rgba(255,255,255,0.66);
+  color: rgba(255, 255, 255, 0.66);
 }
 
 .myCards:hover {
@@ -599,11 +615,10 @@ div#myHand.highlighted {
 }
 
 #showCase>.otherCards {
-  
   margin: 0.05vmax 0.5vmax;
   box-shadow: 0vmax 0vmax 0vmax 0vmax #000;
   position: relative;
-  display:block;
+  display: block;
   background-color: transparent;
 }
 
@@ -713,7 +728,6 @@ div#myHand.highlighted {
   }
 }
 
-
 /* ----------------------------------------------
  * Generated by Animista on 2020-11-14 19:54:13
  * Licensed under FreeBSD License.
@@ -726,95 +740,97 @@ div#myHand.highlighted {
  * animation heartbeat
  * ----------------------------------------
  */
- @-webkit-keyframes heartbeat {
+
+@-webkit-keyframes heartbeat {
   from {
     -webkit-transform: scale(1);
-            transform: scale(1);
+    transform: scale(1);
     -webkit-transform-origin: center center;
-            transform-origin: center center;
+    transform-origin: center center;
     -webkit-animation-timing-function: ease-out;
-            animation-timing-function: ease-out;
+    animation-timing-function: ease-out;
     -webkit-transform: rotate(0deg);
-            transform: rotate(0deg);
+    transform: rotate(0deg);
     -webkit-transform-origin: 50% 100%;
-            transform-origin: 50% 100%;
+    transform-origin: 50% 100%;
   }
   10% {
     -webkit-transform: scale(1.03);
-            transform: scale(1.03);
+    transform: scale(1.03);
     -webkit-animation-timing-function: ease-in;
-            animation-timing-function: ease-in;
+    animation-timing-function: ease-in;
     -webkit-transform: rotate(1deg);
-            transform: rotate(1deg);
+    transform: rotate(1deg);
   }
   17% {
     -webkit-transform: scale(0.99);
-            transform: scale(0.99);
+    transform: scale(0.99);
     -webkit-animation-timing-function: ease-out;
-            animation-timing-function: ease-out;
+    animation-timing-function: ease-out;
     -webkit-transform: rotate(0deg);
-            transform: rotate(0deg);
+    transform: rotate(0deg);
   }
   33% {
     -webkit-transform: scale(1.02);
-            transform: scale(1.02);
+    transform: scale(1.02);
     -webkit-animation-timing-function: ease-in;
-            animation-timing-function: ease-in;
+    animation-timing-function: ease-in;
     -webkit-transform: rotate(-1deg);
-            transform: rotate(-1deg);
+    transform: rotate(-1deg);
   }
   45% {
     -webkit-transform: scale(1);
-            transform: scale(1);
+    transform: scale(1);
     -webkit-animation-timing-function: ease-out;
-            animation-timing-function: ease-out;
+    animation-timing-function: ease-out;
     -webkit-transform: rotate(0deg);
-            transform: rotate(0deg);
+    transform: rotate(0deg);
   }
 }
+
 @keyframes heartbeat {
   from {
     -webkit-transform: scale(1);
-            transform: scale(1);
+    transform: scale(1);
     -webkit-transform-origin: center center;
-            transform-origin: center center;
+    transform-origin: center center;
     -webkit-animation-timing-function: ease-out;
-            animation-timing-function: ease-out;
+    animation-timing-function: ease-out;
     -webkit-transform: rotate(0deg);
-            transform: rotate(0deg);
+    transform: rotate(0deg);
     -webkit-transform-origin: 50% 100%;
-            transform-origin: 50% 100%;
+    transform-origin: 50% 100%;
   }
   10% {
     -webkit-transform: scale(1.03);
-            transform: scale(1.03);
+    transform: scale(1.03);
     -webkit-animation-timing-function: ease-in;
-            animation-timing-function: ease-in;
+    animation-timing-function: ease-in;
     -webkit-transform: rotate(1deg);
-            transform: rotate(1deg);
+    transform: rotate(1deg);
   }
   17% {
     -webkit-transform: scale(0.99);
-            transform: scale(0.99);
+    transform: scale(0.99);
     -webkit-animation-timing-function: ease-out;
-            animation-timing-function: ease-out;
+    animation-timing-function: ease-out;
     -webkit-transform: rotate(0deg);
-            transform: rotate(0deg);
+    transform: rotate(0deg);
   }
   33% {
     -webkit-transform: scale(1.02);
-            transform: scale(1.02);
+    transform: scale(1.02);
     -webkit-animation-timing-function: ease-in;
-            animation-timing-function: ease-in;
+    animation-timing-function: ease-in;
     -webkit-transform: rotate(-1deg);
-            transform: rotate(-1deg);
+    transform: rotate(-1deg);
   }
   45% {
     -webkit-transform: scale(1);
-            transform: scale(1);
+    transform: scale(1);
     -webkit-animation-timing-function: ease-out;
-            animation-timing-function: ease-out;
+    animation-timing-function: ease-out;
     -webkit-transform: rotate(0deg);
-            transform: rotate(0deg);
+    transform: rotate(0deg);
   }
 }
