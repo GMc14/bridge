@@ -128,7 +128,7 @@ function isOkayToStartTheGame() {
 
   var isOkay = lowestOpen > highestReadied 
   && highestReadied >= gameConfig_minPlayerCount 
-  && highestReadied <= gameConfig_minPlayerCount;
+  && highestReadied <= gameConfig_maxnPlayerCount;
   console.log("LO: " + lowestOpen + "   HR: " + highestReadied + "  okay? " + isOkay);
   return isOkay;
 }
