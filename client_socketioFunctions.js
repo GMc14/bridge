@@ -153,8 +153,12 @@ $(function () {
         alert("LLLegit: " + $("#gameDrop").val());
         setGameType($("#gameDrop").val());
         gameConfig_playerCount = playerCount;
-        $("#playArea").show();
         cardback = $(".cardBackOption.ui-selected").prop("src");
+        tableCloth = $(".tableClothOption.ui-selected").prop("src");
+        $("#playArea").css("background-image", "url('"+tableCloth+"')");
+        $("#playArea").show();
+        
+        
         console.log("client_socket :: startGame");
         preRenderImgs();
 
