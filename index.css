@@ -179,6 +179,7 @@ td, th {
   height: 65vh;
   width: 70vw;
   box-sizing: border-box;
+  background: "table_imgs/felt_bg.jpg";
   /* border: 0.8vmax solid white; */
   /* display:none; */
 }
@@ -341,12 +342,40 @@ b {
   /* background: rgba(21,211,123,0.1); */
 }
 
-.tableClothOption {
+#tableClothChoices, #cardBackChoices {
+  position: fixed;
+  bottom: 0px;
+  padding: 0px;
+  background: rgba(255, 240, 230, 0.66);
+  max-width: 100vw;
+  list-style-type: none;
+  margin: auto;
+  overflow-x: auto;
+  white-space: nowrap;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+#cardBackChoices {
+  bottom: 7vmax;
+}
+
+.tableClothOption, .cardBackOption {
+  display: inline-block;
+  box-sizing: border-box;
   height: 5vmax;
+  margin: 0.5vmax;
+}
+
+.noClothOption {
+  width: 7vmax;
+  background: linear-gradient(27deg, #151515 5px, transparent 5px) 0 5px, linear-gradient(207deg, #151515 5px, transparent 5px) 10px 0px, linear-gradient(27deg, #222 5px, transparent 5px) 0px 10px, linear-gradient(207deg, #222 5px, transparent 5px) 10px 5px, linear-gradient(90deg, #1b1b1b 10px, transparent 10px), linear-gradient(#1d1d1d 25%, #1a1a1a 25%, #1a1a1a 50%, transparent 50%, transparent 75%, #242424 75%, #242424);
+  background-color: #131313;
+  background-size: 20px 20px;
 }
 
 .ui-selected {
-  border: 0.5vmax double #ff3;
+  border: 0.2vmax solid #ff3;
 }
 
 .noComms {
@@ -377,9 +406,9 @@ b {
   display: none;
 }
 
-#playerSetup {
+/* #playerSetup {
   display: none;
-}
+} */
 
 .plyrDropName {
   display: none;
@@ -409,7 +438,7 @@ b {
 #gameSetup {
   display: table;
   position: absolute;
-  top: 27.5%;
+  top: 7.5%;
   left: 5%;
   height: 40%;
   width: 40%;

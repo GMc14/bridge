@@ -1,9 +1,3 @@
-$(".tableClothOption").selectable({
-    selected: function (event, ui) {
-        $(ui.selected).addClass('ui-selected').siblings().removeClass('ui-selected');
-    },
-});
-
 //Meta
 var socketio = io.connect();
 
@@ -160,6 +154,7 @@ $(function () {
         setGameType($("#gameDrop").val());
         gameConfig_playerCount = playerCount;
         $("#playArea").show();
+        cardback = $(".cardBackOption.ui-selected").prop("src");
         console.log("client_socket :: startGame");
         preRenderImgs();
 

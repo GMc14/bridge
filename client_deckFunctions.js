@@ -43,7 +43,7 @@ function startGame() {
 
 function preRenderImgs() {
   console.log("preRenderImgs-#0000");
-  var img_src = "/card_imgs/cardback.png";
+  var img_src = cardback;
   var cardImg = document.createElement("img");
   cardImg.setAttribute("src", img_src);
   cardImg.setAttribute("class", "cardback");

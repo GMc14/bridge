@@ -7,8 +7,8 @@
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="index.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js" type="text/javascript"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.min.js" type="text/javascript" ></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js" type="text/javascript"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js" type="text/javascript">
+  </script>
   <script src="/socket.io/socket.io.js"></script>
 
   <script src="client_socketioFunctions.js" type="text/javascript"></script>
@@ -52,7 +52,12 @@
         <div id='seatingArea'></div>
         <select class='gameDrop' id='gameDrop' name='dropdownGame' size=1></select>
         <button id="startGameButton" class="startBtn">Start Game</button>
+        <div id="cardBackChoices">
+          <img class="cardBackOption ui-selected" src="card_imgs/cardback (0).png">
+        </div>
+        <!-- https://playhearthstone.com/en-us/cardbacks/ -->
         <div id="tableClothChoices">
+          <div class="tableClothOption noClothOption ui-selected"></div>
           <img class="tableClothOption" src="table_imgs/bg_black_felt.jpg">
           <img class="tableClothOption" src="table_imgs/bg_purple_felt.jpg">
           <img class="tableClothOption" src="table_imgs/bg_red_felt.jpg">
@@ -63,6 +68,19 @@
           <img class="tableClothOption" src="table_imgs/bg_white_felt.jpg">
           <img class="tableClothOption" src="table_imgs/felt_bg.jpg">
         </div>
+        <script>
+          var i;
+          for (i = 1; i < 162; i++) {
+            $("#cardBackChoices").append('<img class="cardBackOption" src="card_imgs/cardback (' + i + ').png">');
+          }
+          $(".cardBackOption").click(function () {
+            $(this).addClass('ui-selected').siblings().removeClass('ui-selected');
+          });
+
+          $(".tableClothOption").click(function () {
+            $(this).addClass('ui-selected').siblings().removeClass('ui-selected');
+          });
+        </script>
       </div>
       <div id=bidArea style="display:none">
         <div id="legend_container">
