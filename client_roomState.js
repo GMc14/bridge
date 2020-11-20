@@ -128,7 +128,7 @@ function isOkayToStartTheGame() {
     highestReadied <= gameConfig_maxPlayerCount;
 
   console.log("gameConfig_minPlayerCount: " + gameConfig_minPlayerCount + "   gameConfig_maxPlayerCount: " + gameConfig_maxPlayerCount);
-  console.log("A: " + (lowestOpen > highestReadied) + "   B: " + (highestReadied >= gameConfig_minPlayerCount) + "  C: " + (highestReadied <= gameConfig_maxnPlayerCount));
+  console.log("A: " + (lowestOpen > highestReadied) + "   B: " + (highestReadied >= gameConfig_minPlayerCount) + "  C: " + (highestReadied <= gameConfig_maxPlayerCount));
   console.log("LO: " + lowestOpen + "   HR: " + highestReadied + "  okay? " + isOkay);
   return isOkay;
 }
