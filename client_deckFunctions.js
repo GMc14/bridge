@@ -346,6 +346,10 @@ function displayOtherCards(seatIndex, handSize) {
     $(".cardback:eq(0)").clone().show().appendTo(card);
     $('#loc' + seatIndex + 'Hand').append(card);
   }
+  var counterR=0;
+  $("#loc2Hand").children().each(function(){
+    rotate($(this),(counterR - (handSize/2))*(50/handSize));
+  });
 }
 
 function playCard() {

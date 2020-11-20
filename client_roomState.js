@@ -16,11 +16,10 @@ function initPlayerModule() {
     teamInfo = "(TEAMS: 1 & 3 and 2 & 4)"
   }
 
-
   $("#gameDrop").append($("<option value='" + GameType.CREW + "'>The Crew</option>"));
   $("#gameDrop").append($("<option value='" + GameType.BRIDGE + "'>Bridge</option>"));
   $("#gameDrop").append($("<option value='" + GameType.EUCHRE + "'>Euchre</option>"));
-  $("#playerSelectLabel").text("SELECT SEAT: " + teamInfo + "</span>");
+  $("#playerSelectLabel").text("SELECT SEAT: " + teamInfo);
 
   var previousNickName = $.cookie("nickname");
   if (previousNickName) {
