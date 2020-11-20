@@ -16,8 +16,8 @@ var gameConfig_euchreBowers;
 var gameConfig_bidForTrump;
 var gameConfig_missions;
 var gameConfig_playerCount;
-var gameConfig_minPlayerCount;
-var gameConfig_maxPlayerCount;
+var gameConfig_minPlayerCount=1;
+var gameConfig_maxPlayerCount=4;
 var gameConfig_startCardsPerPlayer; //-1 == Deal All
 var gameConfig_numberOfRounds; //-1 == Play all cards in hand
 var ranks;
