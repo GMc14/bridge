@@ -138,7 +138,6 @@ table {
   table-layout: fixed;
   font-family: arial, sans-serif;
   border-collapse: collapse;
-  background-color: white;
   opacity: 0.8;
   color: black;
 }
@@ -180,6 +179,8 @@ td, th {
   width: 70vw;
   box-sizing: border-box;
   background: "table_imgs/felt_bg.jpg";
+  background-size: cover;
+  z-index: 0;
   /* border: 0.8vmax solid white; */
   /* display:none; */
 }
@@ -514,7 +515,7 @@ b {
   display: block;
   clear: both;
   border-radius: 0.5vmax;
-  transition-duration: 0.1s;
+  transition-duration: 0.2s;
 }
 
 .playerBtns:hover {
@@ -558,10 +559,9 @@ b {
 
 .myCards {
   display: inline-block;
-  background-color: white;
   margin: 0px 0.2vmax;
   border-radius: 0.5vmax;
-  transition-duration: 0.1s;
+  transition-duration: 0.2s;
 }
 
 #trickDetails {
@@ -626,6 +626,7 @@ div#myHand.highlighted {
 
 .myCards:hover {
   box-shadow: 0px 0px 1.5vmax red;
+  transform: translate3d(0,-0.25vmax,0);
 }
 
 .otherCards, .otherCards>img {
