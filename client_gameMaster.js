@@ -1,13 +1,7 @@
 var isGameMaster = false;
 
 function updateComms(status) {
-  if (status == 1) {
-    $("#myCommunication").html('mic_none');
-  } else if (status == 2) {
-    $("#myCommunication").html('mic_off');
-  } else {
-    $("#myCommunication").html('mic');
-  }
+  highlightCommunicatable();
 }
 $(function () {
   socketio.on('makeGameMaster', function () {

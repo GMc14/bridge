@@ -86,7 +86,7 @@ function joinRoom() {
   roomID = roomID.toUpperCase()
   socketio.emit('enterRoom', roomID);
 
-  $("#roomText").text("Room Code: " + roomID);
+  $("#roomText").html("<b>Room Code:</b> " + roomID);
   $("#topbar").show();
   $("#leaveRoom").show();
   $("#playerSetup").show();

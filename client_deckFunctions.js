@@ -345,19 +345,19 @@ function highlightCommunicatable() {
   var lowest = [];
 
   for (var i = 0; i < myHandOfCards.length; i++) {
-      var cardRank = String(myHandOfCards[i].rank);
-      var cardSuit = String(myHandOfCards[i].suit);
-      var cardID = cardSuit + cardRank;
+    var cardRank = String(myHandOfCards[i].rank);
+    var cardSuit = String(myHandOfCards[i].suit);
+    var cardID = cardSuit + cardRank;
 
-      if (!highest[cardSuit] || highest[cardSuit] < cardRank) {
-        highest[cardSuit] = cardRank;
-      }
-      if (!lowest[cardSuit] || lowest[cardSuit] > cardRank) {
-        lowest[cardSuit] = cardRank;
-      }
-      var encodedI = i + 10;
-      // card.setAttribute("id", encodedI + cardID);
-      $("#" + encodedI + cardID).addClass("highlighted");
+    if (!highest[cardSuit] || highest[cardSuit] < cardRank) {
+      highest[cardSuit] = cardRank;
+    }
+    if (!lowest[cardSuit] || lowest[cardSuit] > cardRank) {
+      lowest[cardSuit] = cardRank;
+    }
+    var encodedI = i + 10;
+    // card.setAttribute("id", encodedI + cardID);
+    $("#" + encodedI + cardID).addClass("highlighted");
   }
   for (var i = 0; i < myHandOfCards.length; i++) {
     var cardRank = String(myHandOfCards[i].rank);
@@ -366,16 +366,12 @@ function highlightCommunicatable() {
     var encodedI = i + 10;
     if (highest[cardSuit] && highest[cardSuit] == cardRank && lowest[cardSuit] && lowest[cardSuit] == cardRank) {
       $("#" + encodedI + cardID).addClass("only");
-    }
-    else if (highest[cardSuit] && highest[cardSuit] == cardRank) {
+    } else if (highest[cardSuit] && highest[cardSuit] == cardRank) {
       $("#" + encodedI + cardID).addClass("highest");
-    }
-    else if (lowest[cardSuit] && lowest[cardSuit] == cardRank) {
+    } else if (lowest[cardSuit] && lowest[cardSuit] == cardRank) {
       $("#" + encodedI + cardID).addClass("lowest");
     }
-
-
-}
+  }
 
 }
 
@@ -390,7 +386,7 @@ function displayOtherCards(seatIndex, handSize) {
   }
   var counterR = 0;
   $('#loc' + seatIndex + 'Hand').children().each(function () {
-    rotate($(this), (counterR - (handSize / 2)) * (50 / handSize));
+    rotate($(this), (counterR++ - (handSize / 2)) * (50 / handSize));
   });
 }
 
