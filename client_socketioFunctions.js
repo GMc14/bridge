@@ -40,7 +40,7 @@ function setGameType(gT) {
     ranks = standardRanks;
     startPlayerCard = '';
     gameConfig_hasTasks = false;
-    alert("Compare: " + gameType + " : " + GameType.CREW);
+    //alert("Compare: " + gameType + " : " + GameType.CREW);
 
     console.log("-------A------" + gameType);
     console.log("-------B------" + GameType.CREW);
@@ -144,7 +144,7 @@ $(function () {
     });
     socketio.on('startGame', function (playerCount) {
 
-        alert("LLLegit: " + $("#gameDrop").val());
+        //alert("LLLegit: " + $("#gameDrop").val());
         setGameType($("#gameDrop").val());
         gameConfig_playerCount = playerCount;
         cardback = $(".cardBackOption.ui-selected").prop("src");

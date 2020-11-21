@@ -90,7 +90,7 @@ function joinRoom() {
   $("#topbar").show();
   $("#leaveRoom").show();
   $("#playerSetup").show();
-  $("#chat").show();
+  //$("#chat").show();
   
   $("#uiChoices").show();
   $("#roomSelection").hide();
@@ -101,7 +101,6 @@ function leaveRoom() {
   $("#leaveRoom").hide();
   // $("#roomText").remove();
   // roomModule();
-  alert("xxx");
   window.location.reload();
 
 }
@@ -138,7 +137,6 @@ function scrollToChatBottom() {
 $(function () {
   $("#joinRoomForm").on('submit', function (e) {
     e.preventDefault();
-    alert("...");
     joinRoom();
   });
   socketio.on('setPlayerId', function (playerId) {
