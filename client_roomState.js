@@ -10,16 +10,7 @@ function initPlayerModule() {
     return;
   }
   playerModuleIsShowing = true;
-
-  var teamInfo = '';
-  if (gameConfig_hasTeams) {
-    teamInfo = "(TEAMS: 1 & 3 and 2 & 4)"
-  }
-
-  $("#gameDrop").append($("<option value='" + GameType.CREW + "'>The Crew</option>"));
-  $("#gameDrop").append($("<option value='" + GameType.BRIDGE + "'>Bridge</option>"));
-  $("#gameDrop").append($("<option value='" + GameType.EUCHRE + "'>Euchre</option>"));
-  $("#playerSelectLabel").text("SELECT SEAT: " + teamInfo);
+  $("#teamInfo").toggle(gameConfig_hasTeams);
 
   var previousNickName = $.cookie("nickname");
   if (previousNickName) {

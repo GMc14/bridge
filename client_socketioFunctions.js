@@ -24,12 +24,6 @@ var ranks;
 var startPlayerCard;
 var gameConfig_hasTasks;
 
-const GameType = {
-    "CREW": 1,
-    "BRIDGE": 2,
-    "EUCHRE": 3
-};
-
 function setGameType(gT) {
     gameType = gT;
     bonusCards = [];
