@@ -180,6 +180,7 @@ function updateTurnIndicator(playerOnTurnName, isMe = false, isLead = false) {
       if(!isLead){
         highlightPlayable();
       }
+      highlightCommunicatable();
   }
 
 }

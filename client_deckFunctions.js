@@ -253,7 +253,7 @@ function displayTrumpCard(trumpCard) {
   var cardID = cardSuit + cardRank;
   currentTrumpCards.push(cardID);
 
-  var card = $("<div id='trump" + cardID+"' class='trumpCard otherCards'></div>");
+  var card = $("<div id='trump" + cardID + "' class='trumpCard otherCards'></div>");
   var cardObj = $("#" + cardID + "_img").clone().show();
   $(cardObj).addClass('isTrump');
   $(card).append(cardObj);
@@ -338,6 +338,47 @@ function highlightPlayable() {
   }
 }
 
+function highlightCommunicatable() {
+  console.log("highlightCommunicatable");
+
+  var highest = [];
+  var lowest = [];
+
+  for (var i = 0; i < myHandOfCards.length; i++) {
+      var cardRank = String(myHandOfCards[i].rank);
+      var cardSuit = String(myHandOfCards[i].suit);
+      var cardID = cardSuit + cardRank;
+
+      if (!highest[cardSuit] || highest[cardSuit] < cardRank) {
+        highest[cardSuit] = cardRank;
+      }
+      if (!lowest[cardSuit] || lowest[cardSuit] > cardRank) {
+        lowest[cardSuit] = cardRank;
+      }
+      var encodedI = i + 10;
+      // card.setAttribute("id", encodedI + cardID);
+      $("#" + encodedI + cardID).addClass("highlighted");
+  }
+  for (var i = 0; i < myHandOfCards.length; i++) {
+    var cardRank = String(myHandOfCards[i].rank);
+    var cardSuit = String(myHandOfCards[i].suit);
+    var cardID = cardSuit + cardRank;
+    var encodedI = i + 10;
+    if (highest[cardSuit] && highest[cardSuit] == cardRank && lowest[cardSuit] && lowest[cardSuit] == cardRank) {
+      $("#" + encodedI + cardID).addClass("only");
+    }
+    else if (highest[cardSuit] && highest[cardSuit] == cardRank) {
+      $("#" + encodedI + cardID).addClass("highest");
+    }
+    else if (lowest[cardSuit] && lowest[cardSuit] == cardRank) {
+      $("#" + encodedI + cardID).addClass("lowest");
+    }
+
+
+}
+
+}
+
 function displayOtherCards(seatIndex, handSize) {
   console.log(">>>>>>>>>>>>>displayCards----in: #loc" + seatIndex + "Hand------------seatIndex: " + seatIndex + "  >>  handSize: " + handSize);
   $('#loc' + seatIndex + 'Hand').empty();
@@ -347,9 +388,9 @@ function displayOtherCards(seatIndex, handSize) {
     $(".cardback:eq(0)").clone().show().appendTo(card);
     $('#loc' + seatIndex + 'Hand').append(card);
   }
-  var counterR=0;
-  $('#loc' + seatIndex + 'Hand').children().each(function(){
-    rotate($(this),(counterR - (handSize/2))*(50/handSize));
+  var counterR = 0;
+  $('#loc' + seatIndex + 'Hand').children().each(function () {
+    rotate($(this), (counterR - (handSize / 2)) * (50 / handSize));
   });
 }
 
