@@ -338,11 +338,12 @@ function highlightPlayable() {
   }
 }
 
-function clearComms(){
+function clearComms() {
   $(".onlyOption").removeClass("onlyOption");
   $(".highestOption").removeClass("highestOption");
   $(".lowestOption").removeClass("lowestOption");
 }
+
 function highlightCommunicatable() {
   console.log("highlightCommunicatable");
 
@@ -391,8 +392,11 @@ function displayOtherCards(seatIndex, handSize) {
   }
   var counterR = 0;
   $('#loc' + seatIndex + 'Hand').children().each(function () {
-    let angle = (counterR++ - (handSize / 2)) * (50 / handSize);
-    rotate($(this), angle, Math.abs(angle)-25);
+    let halfHand = handSize / 2;
+    let distFromCenter = counterR++ - halfHand;
+    let angle = 50 * distFromCenter / handSize;
+    let relativeHeight = (distFromCenter * distFromCenter) / (halfHand * halfHand);
+    rotate($(this), angle, relativeHeight*15);
   });
 }
 
@@ -406,7 +410,6 @@ function playCard() {
     var cardID = $(this).attr('id').substr(2);
 
     console.log("--------------playCard! " + num + " : " + cardID);
-
     var legal = true;
     if (playerNum != lead) {
       legal = confirmLegal(cardID);
