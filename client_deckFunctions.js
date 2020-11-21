@@ -338,6 +338,11 @@ function highlightPlayable() {
   }
 }
 
+function clearComms(){
+  $(".onlyOption").removeClass("onlyOption");
+  $(".highestOption").removeClass("highestOption");
+  $(".lowestOption").removeClass("lowestOption");
+}
 function highlightCommunicatable() {
   console.log("highlightCommunicatable");
 
@@ -365,15 +370,15 @@ function highlightCommunicatable() {
     var cardID = cardSuit + cardRank;
     var encodedI = i + 10;
     if (highest[cardSuit] && highest[cardSuit] == cardRank && lowest[cardSuit] && lowest[cardSuit] == cardRank) {
-      $("#" + encodedI + cardID).addClass("only");
+      $("#" + encodedI + cardID).addClass("onlyOption");
     } else if (highest[cardSuit] && highest[cardSuit] == cardRank) {
-      $("#" + encodedI + cardID).addClass("highest");
+      $("#" + encodedI + cardID).addClass("highestOption");
     } else if (lowest[cardSuit] && lowest[cardSuit] == cardRank) {
-      $("#" + encodedI + cardID).addClass("lowest");
+      $("#" + encodedI + cardID).addClass("lowestOption");
     }
   }
-
 }
+
 
 function displayOtherCards(seatIndex, handSize) {
   console.log(">>>>>>>>>>>>>displayCards----in: #loc" + seatIndex + "Hand------------seatIndex: " + seatIndex + "  >>  handSize: " + handSize);
