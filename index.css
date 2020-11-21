@@ -347,10 +347,9 @@ b {
   position: fixed;
   bottom: 0px;
   padding: 0.5vmax;
-  background: rgba(255, 240, 230, 0.66);
-  max-width: 100vw;
+  background: rgba(33, 33, 44, 0.66);
+  max-width: 98vw;
   list-style-type: none;
-  margin: auto;
   overflow-x: auto;
   white-space: nowrap;
   left: 50%;
@@ -374,13 +373,33 @@ b {
   background-size: 20px 20px;
 }
 
+div::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.9);
+  border-radius: 10px;
+  background-color: #ccc;
+}
+
+div::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+  background-color: transparent;
+}
+
+div::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background-color: #0e3363;
+  background-image: -webkit-linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.4) 50%, transparent, transparent)
+}
+
 .ui-selected {
   border: 0.2vmax solid #ff3;
 }
-#startGameButton{
+
+#startGameButton {
   background-color: #117733;
-  color:white;
+  color: white;
 }
+
 .noComms {
   -webkit-text-stroke: 1px #c66;
   color: #a21;
@@ -409,9 +428,9 @@ b {
   display: none;
 }
 
-/* #playerSetup {
+#playerSetup {
   display: none;
-} */
+}
 
 .plyrDropName {
   display: none;
@@ -627,9 +646,9 @@ div#myHand.highlighted {
   color: rgba(255, 255, 255, 0.66);
 }
 
-.myCards > img:hover {
+.myCards>img:hover {
   box-shadow: 0px 0px 1.5vmax red;
-  transform: scale(1.1) translate3d(0,-0.75vmax,0);
+  transform: scale(1.1) translate3d(0, -0.75vmax, 0);
 }
 
 .otherCards, .otherCards>img {

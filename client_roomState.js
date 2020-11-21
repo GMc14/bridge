@@ -138,7 +138,7 @@ function scrollToChatBottom() {
 }
 $(function () {
   $("#joinRoomForm").on('submit', function (e) {
-    e.preventDefault();
+    //e.preventDefault();
     joinRoom();
   });
   socketio.on('setPlayerId', function (playerId) {

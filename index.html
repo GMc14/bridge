@@ -58,15 +58,25 @@
         <!-- https://playhearthstone.com/en-us/cardbacks/ -->
         <div id="tableClothChoices">
           <div class="tableClothOption noClothOption ui-selected"></div>
-          <img class="tableClothOption" src="table_imgs/bg_black_felt.jpg">
+          <img class="tableClothOption" src="table_imgs/bg.jpg">
+          <img class="tableClothOption" src="table_imgs/bg2.jpg">
+          <img class="tableClothOption" src="table_imgs/bg3.jpg">
+          <img class="tableClothOption" src="table_imgs/bg5.jpg">
+          <img class="tableClothOption" src="table_imgs/bg8.jpg">
+          <img class="tableClothOption" src="table_imgs/bg9.jpg">
+          <!-- <img class="tableClothOption" src="table_imgs/bg4.jpg">
+          <img class="tableClothOption" src="table_imgs/bg6.jpg">
+          <img class="tableClothOption" src="table_imgs/bg7.jpg">
+          <img class="tableClothOption" src="table_imgs/felt_bg.jpg">
+          <img class="tableClothOption" src="table_imgs/felt_bg2.jpg">
+          <img class="tableClothOption" src="table_imgs/bg_green_felt.jpg">
+          <img class="tableClothOption" src="table_imgs/bg_blue_felt.jpg">
           <img class="tableClothOption" src="table_imgs/bg_purple_felt.jpg">
           <img class="tableClothOption" src="table_imgs/bg_red_felt.jpg">
           <img class="tableClothOption" src="table_imgs/bg_orange_felt.jpg">
           <img class="tableClothOption" src="table_imgs/bg_yellow_felt.jpg">
-          <img class="tableClothOption" src="table_imgs/bg_green_felt.jpg">
-          <img class="tableClothOption" src="table_imgs/bg_blue_felt.jpg">
           <img class="tableClothOption" src="table_imgs/bg_white_felt.jpg">
-          <img class="tableClothOption" src="table_imgs/felt_bg.jpg">
+          <img class="tableClothOption" src="table_imgs/bg_black_felt.jpg"> -->
         </div>
         <script>
           var i;
@@ -79,6 +89,14 @@
 
           $(".tableClothOption").click(function () {
             $(this).addClass('ui-selected').siblings().removeClass('ui-selected');
+            tableCloth = $(".tableClothOption.ui-selected").prop("src");
+            if (tableCloth) {
+              $("body").css("background-image", "url('" + tableCloth + "')");
+              $("body").css("background-size", "cover");
+            } else {
+              $("body").css('background-image', '');
+              $("body").css("background-size", "20px 20px");
+            }
           });
         </script>
       </div>

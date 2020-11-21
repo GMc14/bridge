@@ -154,8 +154,7 @@ $(function () {
         setGameType($("#gameDrop").val());
         gameConfig_playerCount = playerCount;
         cardback = $(".cardBackOption.ui-selected").prop("src");
-        tableCloth = $(".tableClothOption.ui-selected").prop("src");
-        $("#playArea").css("background-image", "url('"+tableCloth+"')");
+
         $("#playArea").show();
         
         
