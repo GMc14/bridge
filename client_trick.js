@@ -171,6 +171,7 @@ function prevPlayer(currPlayer) {
 }
 
 function updateTurnIndicator(playerOnTurnName, isMe = false, isLead = false) {
+  console.log("updateTurnIndicator");
   var spaces = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
   var commanderText = (gameType == GameType.CREW) ? "<b>Commander:</b> " + commanderName + spaces + "<b>" : "";
   $("#turnIndicator").html(commanderText + (isLead ? "To Lead" : "To Play") + ":</b> " + playerOnTurnName);
@@ -178,4 +179,5 @@ function updateTurnIndicator(playerOnTurnName, isMe = false, isLead = false) {
       $("#myHand").addClass("highlighted");
       highlightPlayable();
   }
+
 }

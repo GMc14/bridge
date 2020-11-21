@@ -77,12 +77,15 @@ function leave(room, playerId) {
   //??sockets.remove(playerId);
 }
 
-function setNickname(socket, playerId, nickname) {
+function setNickname(socket, playerId, nickname, triggerUpdate=false) {
   var room = io.sockets.adapter.rooms[socket.room];
   for (var i = 0; i < room.players.length; i++) {
     if (room.players[i].id == playerId) {
       room.players[i].nickname = nickname;
     }
+  }
+  if(triggerUpdate){
+    io.sockets.to(socket.room).emit('updateRoom', io.sockets.adapter.rooms[socket.room]);
   }
 }
 
@@ -136,6 +139,10 @@ io.sockets.on('connection', function (socket) {
     } else {
       console.log("unauthorized sit");
     }
+  });
+  socket.on('setNickname', function (nickname) {
+    console.log("setNickname...: " + JSON.stringify(nickname));
+    setNickname(socket, socket.id, nickname, true);
   });
   socket.on('playerStand', function (player) {
     console.log("playerUnseated... data: " + JSON.stringify(data));

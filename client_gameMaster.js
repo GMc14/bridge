@@ -47,6 +47,7 @@ $(function () {
     }
   });
   $('#chooseTask').on('click', function () {
+    $("#taskOptions").empty();
     taskDeck = getSorted(taskDeck);
     var previousSuit;
     $.each(taskDeck, function (index, trumpCard) {
@@ -72,6 +73,7 @@ $(function () {
     });
   });
   $('#hideTasks').on('click', function () {
+    $("#taskOptions").empty();
     createDeck(true);
     socketio.emit('hideTasks');
   });

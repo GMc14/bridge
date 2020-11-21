@@ -10,11 +10,17 @@ function initPlayerModule() {
     return;
   }
   playerModuleIsShowing = true;
+
+  setGameType($("#gameDrop").val());
   $("#teamInfo").toggle(gameConfig_hasTeams);
+  $("#gameDrop").change(function(){
+    $("#teamInfo").toggle(gameConfig_hasTeams);
+  });
 
   var previousNickName = $.cookie("nickname");
   if (previousNickName) {
     $("#nicknameInput").val(previousNickName);
+    socketio.emit('setNickName',previousNickName);
   }
 
   $("#startGameButton").toggle(isGameMaster);

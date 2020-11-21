@@ -39,6 +39,7 @@
   display: none;
   background-color: #117733;
   color: white;
+  float: right;
 }
 
 #tableClothChoices, #cardBackChoices {

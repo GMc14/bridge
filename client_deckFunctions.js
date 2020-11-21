@@ -325,6 +325,7 @@ function displayCards() {
 }
 
 function highlightPlayable() {
+  console.log("highlightPlayable");
   for (var i = 0; i < myHandOfCards.length; i++) {
     if (String(myHandOfCards[i].suit) == leadSuit) {
       var cardRank = String(myHandOfCards[i].rank);
