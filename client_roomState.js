@@ -93,6 +93,7 @@ function leaveRoom() {
   $("#leaveRoom").hide();
   // $("#roomText").remove();
   // roomModule();
+  alert("xxx");
   window.location.reload();
 
 }
@@ -128,7 +129,8 @@ function scrollToChatBottom() {
 }
 $(function () {
   $("#joinRoomForm").on('submit', function (e) {
-    //e.preventDefault();
+    e.preventDefault();
+    alert("...");
     joinRoom();
   });
   socketio.on('setPlayerId', function (playerId) {
