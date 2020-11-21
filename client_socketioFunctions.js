@@ -62,6 +62,7 @@ function setGameType(gT) {
     } else if (gameType == GameType.EUCHRE) {
         gameConfig_hasTeams = true;
         gameConfig_topDeckTrump = true;
+        gameConfig_bidForTrump = true;
         gameConfig_euchreBowers = true;
         ranks = euchreRanks;
         gameConfig_startCardsPerPlayer = 5;
