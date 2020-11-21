@@ -5,6 +5,7 @@
   <meta charset="utf-8">
   <title>GMcCrew</title>
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="roomSetup.css">
   <link rel="stylesheet" type="text/css" href="index.css">
   <script>
     const GameType = {
@@ -38,15 +39,16 @@
       <img id="helpLegendTrigger" src="token_imgs/q.png" />
       <img id="helpLegend" src="token_imgs/legend.png" />
       <div id="turnIndicator"></div>
+      <span id="roomText"></span>
     </div>
     <div id="taskOptions"></div>
     <div id="showCase"></div>
     <div id="gameSetup">
-      <div id="roomSelection" style="display:none;">
+      <div id="roomSelection">
         <span class='setupInputLabel'>Create or Join Room:</span><br>
         <form id="joinRoomForm">
-          <input id="roomID" class="largeInputText" type="text" title="4 Letter Room Code" placeholder="4 Character Room Code" maxlength="4"
-            pattern="[a-zA-Z0-9]+">
+          <input id="roomID" class="largeInputText" type="text" title="4 Letter Room Code"
+            placeholder="4 Character Room Code" maxlength="4" pattern="[a-zA-Z0-9]+">
           <input id="enterRoomButton" type="submit" value="Enter">
         </form>
       </div>
@@ -54,27 +56,26 @@
         <span class='setupInputLabel' id='nicknameLabel'>Nickname:</span>
         <input id='nicknameInput' class="largeInputText" type='text'></input>
         <div id="playersInRoom"></div>
-
-        
         <span class='setupInputLabel' id='playerSelectLabel'>Select Seat:</span>
         <span class='setupInputLabel' id='teamInfo'>(TEAMS: 1 & 3 and 2 & 4)</span>
         <div id='seatingArea'></div>
         <select class='gameDrop' id='gameDrop' name='dropdownGame' size=1></select>
         <button id="startGameButton" class="startBtn">Start Game</button>
       </div>
-      <div id="cardBackChoices">
-        <img class="cardBackOption ui-selected" src="card_imgs/cardback_0.png">
-      </div>
-      <!-- https://playhearthstone.com/en-us/cardbacks/ -->
-      <div id="tableClothChoices">
-        <div class="tableClothOption noClothOption ui-selected"></div>
-        <img class="tableClothOption" src="table_imgs/bg.jpg">
-        <img class="tableClothOption" src="table_imgs/bg2.jpg">
-        <img class="tableClothOption" src="table_imgs/bg3.jpg">
-        <img class="tableClothOption" src="table_imgs/bg5.jpg">
-        <img class="tableClothOption" src="table_imgs/bg8.jpg">
-        <img class="tableClothOption" src="table_imgs/bg9.jpg">
-        <!-- <img class="tableClothOption" src="table_imgs/bg4.jpg">
+      <div id="uiChoices">
+        <div id="cardBackChoices">
+          <img class="cardBackOption ui-selected" src="card_imgs/cardback_0.png">
+        </div>
+        <!-- https://playhearthstone.com/en-us/cardbacks/ -->
+        <div id="tableClothChoices">
+          <div class="tableClothOption noClothOption ui-selected"></div>
+          <img class="tableClothOption" src="table_imgs/bg.jpg">
+          <img class="tableClothOption" src="table_imgs/bg2.jpg">
+          <img class="tableClothOption" src="table_imgs/bg3.jpg">
+          <img class="tableClothOption" src="table_imgs/bg5.jpg">
+          <img class="tableClothOption" src="table_imgs/bg8.jpg">
+          <img class="tableClothOption" src="table_imgs/bg9.jpg">
+          <!-- <img class="tableClothOption" src="table_imgs/bg4.jpg">
         <img class="tableClothOption" src="table_imgs/bg6.jpg">
         <img class="tableClothOption" src="table_imgs/bg7.jpg">
         <img class="tableClothOption" src="table_imgs/felt_bg.jpg">
@@ -87,6 +88,7 @@
         <img class="tableClothOption" src="table_imgs/bg_yellow_felt.jpg">
         <img class="tableClothOption" src="table_imgs/bg_white_felt.jpg">
         <img class="tableClothOption" src="table_imgs/bg_black_felt.jpg"> -->
+        </div>
       </div>
       <script>
         $("#gameDrop").append($("<option value='" + GameType.CREW + "'>The Crew</option>"));

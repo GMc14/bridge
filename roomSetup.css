@@ -1,0 +1,71 @@
+
+#gameSetup {
+  background: rgba(90, 130, 250, 0.4);
+}
+
+#roomSelection, #playerSetup {
+  position: fixed;
+  vertical-align: middle;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 2vh;
+  background: rgba( 90, 90, 90, 0.4);
+}
+
+#playersInRoom, #seatingArea {  
+  margin-top: 1vmin;
+  background: rgba( 40, 40, 40, 0.4);
+  width: 100%;
+  min-height: 5vh;
+  margin-bottom:2vh;
+}
+#playerSetup, #uiChoices {
+  display: none;
+}
+.largeInputText {
+  margin-top: 1vmin;
+  margin-bottom:2vh;
+  text-align: center;
+  font-size: 4vmax;
+}
+
+#enterRoomButton {
+  float: right;
+  margin-top:-1vh;
+}
+
+#startGameButton {
+  display: none;
+  background-color: #117733;
+  color: white;
+}
+
+#tableClothChoices, #cardBackChoices {
+  position: fixed;
+  bottom: 0px;
+  padding: 0.5vmax;
+  background: rgba(33, 33, 44, 0.66);
+  max-width: 98vw;
+  list-style-type: none;
+  overflow-x: auto;
+  white-space: nowrap;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+#cardBackChoices {
+  bottom: 7vmax;
+}
+
+.tableClothOption, .cardBackOption {
+  display: inline-block;
+  box-sizing: border-box;
+  height: 5vmax;
+}
+
+.noClothOption {
+  width: 7vmax;
+  background: linear-gradient(27deg, #151515 5px, transparent 5px) 0 5px, linear-gradient(207deg, #151515 5px, transparent 5px) 10px 0px, linear-gradient(27deg, #222 5px, transparent 5px) 0px 10px, linear-gradient(207deg, #222 5px, transparent 5px) 10px 5px, linear-gradient(90deg, #1b1b1b 10px, transparent 10px), linear-gradient(#1d1d1d 25%, #1a1a1a 25%, #1a1a1a 50%, transparent 50%, transparent 75%, #242424 75%, #242424);
+  background-color: #131313;
+  background-size: 20px 20px;
+}

@@ -156,6 +156,7 @@ $(function () {
         preRenderImgs();
 
         $("#playerSetup").hide();
+        $("#uiChoices").hide();
         $("#startGameButton").hide();
         constructPlayArea();
         startGame();

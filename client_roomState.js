@@ -80,12 +80,11 @@ function joinRoom() {
   roomID = roomID.toUpperCase()
   socketio.emit('enterRoom', roomID);
 
-  var roomText = document.createElement("span");
-  roomText.setAttribute("id", "roomText");
-  roomText.appendChild(document.createTextNode("Room Code: " + roomID));
-  $("#topbar").prepend(roomText);
+  $("#roomText").text("Room Code: " + roomID);
+  $("#topbar").show();
   $("#leaveRoom").show();
   $("#playerSetup").show();
+  $("#uiChoices").show();
   $("#roomSelection").hide();
 }
 
