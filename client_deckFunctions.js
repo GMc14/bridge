@@ -391,7 +391,8 @@ function displayOtherCards(seatIndex, handSize) {
   }
   var counterR = 0;
   $('#loc' + seatIndex + 'Hand').children().each(function () {
-    rotate($(this), (counterR++ - (handSize / 2)) * (50 / handSize));
+    let angle = (counterR++ - (handSize / 2)) * (50 / handSize);
+    rotate($(this), angle, Math.abs(angle)-25);
   });
 }
 

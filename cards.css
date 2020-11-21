@@ -1,5 +1,5 @@
 
-.isTrump {
+.myCards > .isTrump {
   box-shadow: inset 0 0 0.5vmax #Fd0, inset 0 0 2.5vmax #ff3;
 }
 
@@ -14,7 +14,8 @@
   margin: 0px -1vmax;
   border-radius: 0.2vmax;
   box-sizing: border-box;
-  box-shadow: -0.9vmax 0.15vmax 0.9vmax -0.45vmax rgba(0, 0, 0, 0.66);
+  filter: drop-shadow(-0.9vmax 0.15vmax -0.5vmax rgba(33,33,33,0.6));
+  /* box-shadow: -0.9vmax 0.15vmax 0.9vmax -0.45vmax rgba(0, 0, 0, 0.66); */
   /* border: 0.2vmax solid #88f; */
 }
 
@@ -80,7 +81,7 @@
 #trickDetails {
   background: rgba(53, 53, 53, 0.4);
   position: absolute;
-  margin-top: -12vmax;
+  top: -12vmax;
   width: 15vmax;
   max-height: 15vmax;
   overflow-y: auto;
@@ -103,15 +104,15 @@
   box-shadow: 0 0 2vmin rgb(36, 223, 76), inset 0 0 1vmin rgb(36, 223, 76);
 }
 
-.highest{
+.highestOption{
 
   box-shadow: 0 0 2vmin rgb(36,  76, 223), inset 0 0 1vmin rgb(36, 76, 223);
 }
-.lowest{
+.lowestOption{
   
   box-shadow: 0 0 2vmin rgb(223,36,  76), inset 0 0 1vmin rgb(223, 36, 76);
 }
-.only{
+.onlyOption{
   
   box-shadow: 0 0 2vmin rgb(223, 223, 76), inset 0 0 1vmin rgb(223, 223, 76);
 }

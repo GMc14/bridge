@@ -1,10 +1,10 @@
-function rotate($el, degrees) {
+function rotate($el, degrees, yTans = 0) {
   $el.css({
-      '-webkit-transform': 'rotate(' + degrees + 'deg)',
-      '-moz-transform': 'rotate(' + degrees + 'deg)',
-      '-ms-transform': 'rotate(' + degrees + 'deg)',
-      '-o-transform': 'rotate(' + degrees + 'deg)',
-      'transform': 'rotate(' + degrees + 'deg)',
+      '-webkit-transform': 'rotate(' + degrees + 'deg) translateY('+yTans+'px)',
+      '-moz-transform': 'rotate(' + degrees + 'deg) translateY('+yTans+'px)',
+      '-ms-transform': 'rotate(' + degrees + 'deg) translateY('+yTans+'px)',
+      '-o-transform': 'rotate(' + degrees + 'deg) translateY('+yTans+'px)',
+      'transform': 'rotate(' + degrees + 'deg) translateY('+yTans+'px)',
       'zoom': 1
   });
 }
