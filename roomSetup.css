@@ -71,3 +71,23 @@
   background-color: #131313;
   background-size: 20px 20px;
 }
+
+.setupInputLabel{
+  
+  font-family: 'Dawning_of_a_New_Day', serif;
+  font-size: 48px;
+}
+
+#signature {
+  position: fixed;
+  bottom: 0.5vmax;
+  right: 1.5vmax;
+  font-family: 'Dawning of a New Day';
+  font-size: 3vmax;
+
+  color: transparent; 
+  background: black; 
+  -webkit-background-clip: text; 
+  text-shadow: 2px 5px 5px  
+      rgba(255, 255, 255, 0.3); 
+}

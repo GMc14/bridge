@@ -348,7 +348,7 @@ function displayOtherCards(seatIndex, handSize) {
     $('#loc' + seatIndex + 'Hand').append(card);
   }
   var counterR=0;
-  $("#loc2Hand").children().each(function(){
+  $('#loc' + seatIndex + 'Hand').children().each(function(){
     rotate($(this),(counterR - (handSize/2))*(50/handSize));
   });
 }

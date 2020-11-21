@@ -177,7 +177,9 @@ function updateTurnIndicator(playerOnTurnName, isMe = false, isLead = false) {
   $("#turnIndicator").html(commanderText + (isLead ? "To Lead" : "To Play") + ":</b> " + playerOnTurnName);
   if (isMe) {
       $("#myHand").addClass("highlighted");
-      highlightPlayable();
+      if(!isLead){
+        highlightPlayable();
+      }
   }
 
 }

@@ -90,6 +90,8 @@ function joinRoom() {
   $("#topbar").show();
   $("#leaveRoom").show();
   $("#playerSetup").show();
+  $("#chat").show();
+  
   $("#uiChoices").show();
   $("#roomSelection").hide();
 }
@@ -149,7 +151,6 @@ $(function () {
   socketio.on('message', function (data) {
     var msg = data.msg;
     var nickname = data.nickname;
-    //$("#chatBox");
     $("#msgBox").append("<span><b>" + nickname + ":</b>&emsp;" + msg + "</span><br><br>");
     scrollToChatBottom();
     $('#boxBottom').show();

@@ -272,12 +272,12 @@ $(function () {
         roundNumber++;
         lead = trickWinner;
         currentPlayer = trickWinner;
+        $(".highlighted").removeClass("highlighted");
         if (playerNum == currentPlayer) {
             updateTurnIndicator("You", true, true);
         } else {
             updateTurnIndicator(getNicknameForPlayer(lead), false, true);
         }
-        $(".highlighted").removeClass("highlighted");
         console.log("[][][][][][][] winner of round: " + trickWinner + " cards:" + trickCards);
         var winnerIndex = inversePlayerIdMap[trickWinner];
         if (winnerIndex) {

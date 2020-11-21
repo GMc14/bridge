@@ -4,6 +4,8 @@
   border: 2px dotted rgba(255, 255, 128, 0.8) !important;*/
 }
 
+::selection { background: transparent; }
+
 html {
   overflow: hidden;
 }
@@ -17,18 +19,6 @@ body {
   background: linear-gradient(27deg, #151515 5px, transparent 5px) 0 5px, linear-gradient(207deg, #151515 5px, transparent 5px) 10px 0px, linear-gradient(27deg, #222 5px, transparent 5px) 0px 10px, linear-gradient(207deg, #222 5px, transparent 5px) 10px 5px, linear-gradient(90deg, #1b1b1b 10px, transparent 10px), linear-gradient(#1d1d1d 25%, #1a1a1a 25%, #1a1a1a 50%, transparent 50%, transparent 75%, #242424 75%, #242424);
   background-color: #131313;
   background-size: 20px 20px;
-}
-
-#helpLegendTrigger {
-  height: 2vmax;
-}
-
-#helpLegend {
-  display: none;
-  position: fixed;
-  left: 2vmax;
-  top: 2vmax;
-  z-index: 99999999999;
 }
 
 .token {
@@ -155,7 +145,8 @@ td, th {
   display: none;
   text-align: right;
   font-weight: bold;
-  padding: 0.5vmax
+  padding: 0.5vmax;
+  background: rgba(53, 53, 53, 0.6);
 }
 
 #gameBoard {
@@ -211,9 +202,24 @@ td, th {
   left: 0vw;
   border-width: 3px;
   border-style: solid;
-  background: linear-gradient(190deg, rgba(233, 233, 233, 1) 0%, rgba(56, 75, 73, 1) 35%, rgba(252, 176, 69, 0) 80%);
+  background: linear-gradient(190deg, rgba(233, 233, 233, 0.9) 0%, rgba(56, 75, 73, 0.9) 35%, rgba(252, 176, 69, 0) 80%);
   box-shadow: inset 0 0 1vmax rgba(33, 33, 33, 0.5);
-  border-image: linear-gradient(190deg, rgba(233, 233, 233, 1) 0%, rgba(56, 75, 73, 1) 35%, rgba(252, 176, 69, 0) 80%);
+  border-image: linear-gradient(190deg, rgba(233, 233, 233, 0.9) 0%, rgba(56, 75, 73, 0.9) 35%, rgba(252, 176, 69, 0) 80%);
+}
+
+#helpLegendTrigger {
+  display: none;
+  position: absolute;
+  left: 10vw;
+  height: 2vmax;
+}
+
+#helpLegend {
+  display: none;
+  position: fixed;
+  left: 2vmax;
+  top: 2vmax;
+  z-index: 99999999999;
 }
 
 #gameControls {
@@ -333,7 +339,6 @@ b {
   user-select: none;
 }
 
-
 div::-webkit-scrollbar-track {
   -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.9);
   border-radius: 10px;
@@ -380,10 +385,6 @@ div::-webkit-scrollbar-thumb {
   text-shadow: 3px 3px 0 #6c6, -1px -1px 0 #6c6, 1px -1px 0 #6c6, -1px 1px 0 #6c6, 1px 1px 0 #6c6;
 }
 
-#helpLegendTrigger {
-  display: none;
-}
-
 .plyrDropName {
   display: none;
 }
@@ -405,14 +406,14 @@ div::-webkit-scrollbar-thumb {
   left: 60vw;
 }
 
-
-
 #bidArea {
   display: none;
 }
+
 #teamInfo {
   display: none;
 }
+
 #leaveRoom {
   display: none;
 }
@@ -525,6 +526,7 @@ div::-webkit-scrollbar-thumb {
 #trickDetails {
   margin-top: -12vmax;
   width: 15vmax;
+  overflow-y: auto;
   z-index: 99999;
 }
 
@@ -606,114 +608,11 @@ div#myHand.highlighted {
   box-shadow: 0vmax 0vmax 0vmax 0vmax #000;
   position: relative;
   display: block;
-  background: white;
   background-color: transparent;
 }
 
-#chat {
-  position: absolute;
-  bottom: 0%;
-  right: 0;
-  height: 60%;
-  width: 25%;
-  padding: 0;
-  pointer-events: none;
-  display: none;
-}
-
-#chatBox {
-  position: static;
-  display: flex;
-  flex-direction: column-reverse;
-  height: 100%;
-  width: 100%;
-  color: black;
-}
-
-#boxTop {
-  pointer-events: auto;
-  position: relative;
-  background-color: #435078;
-  height: 7%;
-  width: 100%;
-  text-align: right;
-  color: white;
-  font-size: 100%;
-  border: 0.5vmax double #ff3;
-}
-
-#boxBottom {
-  pointer-events: auto;
-  display: none;
-  position: relative;
-  border: 0.2vmax solid black;
-  background-color: white;
-  height: 93%;
-  width: 100%;
-}
-
-#msgBox {
-  pointer-events: auto;
-  padding: 1vmax;
-  box-sizing: border-box;
-  position: absolute;
-  top: 0;
-  height: 80%;
-  display: block;
-  width: 100%;
-  overflow: scroll;
-  overflow-x: hidden;
-}
-
-#txtBox {
-  pointer-events: auto;
-  position: absolute;
-  bottom: 0;
-  height: 20%;
-  display: block;
-  width: 100%;
-  text-align: center;
-}
-
-#textArea {
-  pointer-events: auto;
-  height: 100%;
-  width: 96%
-}
-
-#boxTop>.closeBtn {
-  pointer-events: auto;
-  display: inline-block;
-  height: 100%;
-  padding: 2%;
-  box-sizing: border-box;
-}
-
-.loading {
-  font-size: 2.5vmax;
-}
-
-.loading:after {
-  overflow: hidden;
-  display: inline-block;
-  vertical-align: bottom;
-  -webkit-animation: ellipsis steps(4, end) 900ms infinite;
-  animation: ellipsis steps(4, end) 900ms infinite;
-  content: "\2026";
-  /* ascii code for the ellipsis character */
-  width: 0px;
-}
-
-@keyframes ellipsis {
-  to {
-    width: 1.25em;
-  }
-}
-
-@-webkit-keyframes ellipsis {
-  to {
-    width: 1.25em;
-  }
+#showCase>.otherCards>img {
+  background: white;
 }
 
 /* ----------------------------------------------
@@ -728,6 +627,18 @@ div#myHand.highlighted {
  * animation heartbeat
  * ----------------------------------------
  */
+
+@keyframes ellipsis {
+  to {
+    width: 1.25em;
+  }
+}
+
+@-webkit-keyframes ellipsis {
+  to {
+    width: 1.25em;
+  }
+}
 
 @-webkit-keyframes heartbeat {
   from {

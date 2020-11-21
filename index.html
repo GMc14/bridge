@@ -4,9 +4,13 @@
 <head>
   <meta charset="utf-8">
   <title>GMcCrew</title>
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link rel="stylesheet" type="text/css" href="roomSetup.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" >
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Tangerine">
+  <link  rel='stylesheet' href='https://fonts.googleapis.com/css?family=Dawning of a New Day'>
+  
   <link rel="stylesheet" type="text/css" href="index.css">
+  <link rel="stylesheet" type="text/css" href="roomSetup.css">
+  <link rel="stylesheet" type="text/css" href="chat.css">
   <script>
     const GameType = {
       "CREW": 1,
@@ -32,17 +36,18 @@
 </head>
 
 <body>
+  <span id='signature'>GMc14</span>
   <div id="gameBoard">
     <div id=topbar>
       <span id="roomText"></span>
       <button class="gameButtons" id="leaveRoom" onclick="leaveRoom()">Leave</button>
       <div id='bidOfRound'></div>
-      <img id="helpLegendTrigger" src="token_imgs/q.png" />
-      <img id="helpLegend" src="token_imgs/legend.png" />
       <div id="turnIndicator"></div>
     </div>
     <div id="taskOptions"></div>
     <div id="showCase"></div>
+    <img id="helpLegendTrigger" src="token_imgs/q.png" />
+    <img id="helpLegend" src="token_imgs/legend.png" />
     <div id="gameSetup">
       <div id="roomSelection">
         <span class='setupInputLabel'>Create or Join Room:</span><br>
