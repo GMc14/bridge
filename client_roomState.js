@@ -97,7 +97,7 @@ function joinRoom() {
 }
 
 function leaveRoom() {
-  socketio.emit('leaveRoom', roomID);
+  socketio.emit('leaveRoom');
   $("#leaveRoom").hide();
   // $("#roomText").remove();
   // roomModule();

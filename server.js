@@ -171,10 +171,10 @@ io.sockets.on('connection', function (socket) {
     io.sockets.to(socket.room).emit('assignShortNameToClients', data);
   });
   socket.on('cycleOrderIcon', function (data) {
-    io.sockets.to(data.roomID).emit('cycleClientOrderIcon', data);
+    io.sockets.to(socket.room).emit('cycleClientOrderIcon', data);
   });
   socket.on('cycleAssignee', function (data) {
-    io.sockets.to(data.roomID).emit('cycleClientOrderAssignee', data);
+    io.sockets.to(socket.room).emit('cycleClientOrderAssignee', data);
   });
   socket.on('taskDrawn', function (card) {
     console.log("taskDrawn... socket.room: " + JSON.stringify(socket.room));
@@ -188,7 +188,7 @@ io.sockets.on('connection', function (socket) {
   });
   //Game Play
   socket.on('dealCards', function (data) {
-    io.sockets.to(data.roomID).emit('dealToClients', data);
+    io.sockets.to(socket.room).emit('dealToClients', data);
   });
   socket.on('bid', function (data) {
     io.sockets.to(socket.room).emit('some1Bid', data);
@@ -203,9 +203,9 @@ io.sockets.on('connection', function (socket) {
     io.sockets.to(socket.room).emit('orderUp');
   });
   socket.on('playCard', function (data) {
-    io.sockets.to(data.roomID).emit('cardPlayed', data);
+    io.sockets.to(socket.room).emit('cardPlayed', data);
   });
   socket.on('winner', function (data) {
-    io.sockets.to(data.roomID).emit('winnerOfRound', data);
+    io.sockets.to(socket.room).emit('winnerOfRound', data);
   });
 });

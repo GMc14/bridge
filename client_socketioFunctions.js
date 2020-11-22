@@ -256,7 +256,7 @@ $(function () {
     socketio.on('cardPlayed', function (data) {
         var player = data.player;
         var card = data.card;
-        console.log("socketFunctions -> cardPayed card: " + card + "  >>  player: " + player + "  >> nextPlayer: " + nextPlayer(playerNum) + "  >>  prevPlayer: " + prevPlayer(playerNum));
+        console.log("socketFunctions -> cardPayed card: " + JSON.stringify(card) + "  >>  player: " + player + "  >> nextPlayer: " + nextPlayer(playerNum) + "  >>  prevPlayer: " + prevPlayer(playerNum));
         if (playerNum != lead && player == lead) {
             console.log("ssocketFunctions -> cardPLayed EMPTY" + playerNum + "  :  " + player + "  |  " + lead);
             $(".plays").empty();
@@ -266,9 +266,9 @@ $(function () {
 
         othersPlayed(player, card);
         if (currentPlayer == lead) {
-            leadSuit = card.charAt(0);
+            leadSuit = card.suit;
             // TODO: Change to card.rank & card.suit to allow use of getEuchreCardValue(card)
-            if (gameConfig_euchreBowers && card.substr(1) == "11" && suitColors[leadSuit] == suitColors[trumpSuit]) {
+            if (gameConfig_euchreBowers && card.rank == "11" && suitColors[leadSuit] == suitColors[trumpSuit]) {
                 leadSuit = trumpSuit;
             }
         }
@@ -340,6 +340,5 @@ var path = window.location.pathname;
 console.log("window.location.pathname: " + path);
 // if(path.length==4){
 //     console.log("AutoJoiner: "+path);             
-//     $("#roomID").val(path);
 //     joinRoom();
 // }

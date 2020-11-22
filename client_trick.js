@@ -1,5 +1,5 @@
-function confirmLegal(cardID) {
-  if (!isFollowingSuit(cardID)) {
+function confirmLegal(card) {
+  if (!isFollowingSuit(card)) {
     for (var i = 0; i < myHandOfCards.length; i++) {
       if (String(myHandOfCards[i].suit) == leadSuit) {
         alert("Must Follow Suit! " + suitNames[leadSuit] + " was lead.");
@@ -11,14 +11,12 @@ function confirmLegal(cardID) {
   return true;
 }
 
-function isFollowingSuit(cardID) {
+function isFollowingSuit(card) {
   console.log("GMcCards-rules.js-isFollowingSuit-#0000");
-  var cardSuit = cardID.charAt(0);
-  // TODO: Change to card.rank & card.suit to allow use of getEuchreCardValue(card)
-  if (gameConfig_euchreBowers && cardID.substr(1) == "11" && suitColors[cardSuit] == suitColors[leadSuit]) {
-    cardSuit = leadSuit;
+  if (gameConfig_euchreBowers && card.rank == "11" && suitColors[cardSuit] == suitColors[leadSuit]) {
+    card.suit = leadSuit;
   }
-  if (cardID.charAt(0) == leadSuit) {
+  if (card.suit == leadSuit) {
     console.log("GMcCards-rules.js-isFollowingSuit-matches the lead suit");
     return true;
   } else {
@@ -57,7 +55,6 @@ function resolveTrick() {
     addTrickWinText("myWin", tricksWon);
     socketio.emit('winner', {
       player: playerNum,
-      roomID: roomID,
       trickCards: trickCards
     });
   }

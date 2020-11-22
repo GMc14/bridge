@@ -34,10 +34,9 @@ function constructPlayArea() {
       $("#drpPlyrName" + j).change(function () {
           var shortName = $(this).val();
           var tempPNumber = $(this).attr("pNum");
-          console.log(">>>>>>>>>>>>>drpPlyrName selected ---------------- cardID:" + tempPNumber + " : " + shortName);
+          console.log(">>>>>>>>>>>>>drpPlyrName selected ----------------tempPNumber:" + tempPNumber + " : " + shortName);
           socketio.emit('assignShortName', {
               playerNumber: tempPNumber,
-              roomID: roomID,
               shortName: shortName
           });
       });
@@ -48,10 +47,9 @@ function constructPlayArea() {
   $("#myDrpPlyrName").change(function () {
       var playerNumber = playerNum.replace('Player', '');
       var shortName = $(this).val();
-      console.log(">>>>>>>>>>>>>myDrpPlyrName selected ---------------- cardID:" + playerNumber + " : " + shortName);
+      console.log(">>>>>>>>>>>>>myDrpPlyrName selected ---------------- playerNumber:" + playerNumber + " : " + shortName);
       socketio.emit('assignShortName', {
           playerNumber: playerNumber,
-          roomID: roomID,
           shortName: shortName
       });
   });

@@ -176,7 +176,6 @@ function dealCards() {
 
   const data = {
     hands: hands,
-    roomID: roomID,
     trumpCard: trumpCard
   };
   console.log("dealCards: "+JSON.stringify(data));
@@ -257,11 +256,8 @@ function setPlayerShortName(forPlayerNumber, shortName) {
 }
 
 function displayTrumpCard(trumpCard) {
-  var cardRank = String(trumpCard.rank);
-  var cardSuit = String(trumpCard.suit);
-  var cardID = cardSuit + cardRank;
-  currentTrumpCards.push(cardID);
-
+  currentTrumpCards.push(trumpCard);
+  var cardID = getCardID(trumpCard);
   var card = $("<div id='trump" + cardID + "' class='trumpCard otherCards'></div>");
   var cardObj = $("#" + cardID + "_img").clone().show();
   $(cardObj).addClass('isTrump');
@@ -284,26 +280,23 @@ function displayTrumpCard(trumpCard) {
       $("#drpPlyr" + cardID).append('<option value="' + this + '">' + this + '</option>');
     });
     $("#doneIcon" + cardID).click(function () {
-      console.log(">>>>>>>>>>>>> doneIcon selected ---------------- cardID:" + cardID + ";;");
+      console.log(">>>>>>>>>>>>> doneIcon selected ---------------- card:" + cardID + ";;");
       socketio.emit('cycleOrderIcon', {
-        cardID: cardID,
-        roomID: roomID,
+        card: trumpCard,
         icon: '0'
       });
     });
     $("#drpIcon" + cardID).change(function () {
-      console.log(">>>>>>>>>>>>> cycleOrderIcon selected ---------------- cardID:" + cardID + ";;" + $(this).val());
+      console.log(">>>>>>>>>>>>> cycleOrderIcon selected ---------------- card:" + cardID + ";;" + $(this).val());
       socketio.emit('cycleOrderIcon', {
-        cardID: cardID,
-        roomID: roomID,
+        card: trumpCard,
         icon: $(this).val()
       });
     });
     $("#drpPlyr" + cardID).change(function () {
-      console.log(">>>>>>>>>>>>>cycleAssignee selected ---------------- cardID:" + cardID + ";;" + $(this).val());
+      console.log(">>>>>>>>>>>>>cycleAssignee selected ---------------- card:" + cardID + ";;" + $(this).val());
       socketio.emit('cycleAssignee', {
-        cardID: cardID,
-        roomID: roomID,
+        card: trumpCard,
         player: $(this).val()
       });
     });
@@ -319,16 +312,12 @@ function displayCards() {
   }
   $("#myHand").empty();
   for (var i = 0; i < myHandOfCards.length; i++) {
-    var cardRank = String(myHandOfCards[i].rank);
-    var cardSuit = String(myHandOfCards[i].suit);
-    var cardID = cardSuit + cardRank;
-    var card = document.createElement("div");
+    var cardID = getCardID(myHandOfCards[i]);
     var encodedI = i + 10;
-    card.setAttribute("class", "myCards");
-    card.setAttribute("id", encodedI + cardID);
-    $("#" + cardID + "_img").clone().show().appendTo(card);
-    card.addEventListener("click", playCard, true);
-    $("#myHand").append(card);
+    var cardDiv = $("<div class=myCards' id='"+ (encodedI + cardID)+"'></div>");
+    $(cardDiv).append($("#" + cardID + "_img").clone().show())
+    $(cardDiv).click(playCard);
+    $("#myHand").append(cardDiv);
   }
   console.log("--------------displayCards>>>>>>>>>>>>>");
 }
@@ -337,11 +326,8 @@ function highlightPlayable() {
   console.log("highlightPlayable");
   for (var i = 0; i < myHandOfCards.length; i++) {
     if (String(myHandOfCards[i].suit) == leadSuit) {
-      var cardRank = String(myHandOfCards[i].rank);
-      var cardSuit = String(myHandOfCards[i].suit);
-      var cardID = cardSuit + cardRank;
+      var cardID = getCardID(myHandOfCards[i]);
       var encodedI = i + 10;
-      // card.setAttribute("id", encodedI + cardID);
       $("#" + encodedI + cardID).addClass("highlighted");
     }
   }
@@ -360,10 +346,7 @@ function highlightCommunicatable() {
   var lowest = [];
 
   for (var i = 0; i < myHandOfCards.length; i++) {
-    var cardRank = String(myHandOfCards[i].rank);
-    var cardSuit = String(myHandOfCards[i].suit);
-    var cardID = cardSuit + cardRank;
-
+    var cardID = getCardID(myHandOfCards[i]);
     if (!highest[cardSuit] || highest[cardSuit] < cardRank) {
       highest[cardSuit] = cardRank;
     }
@@ -371,13 +354,10 @@ function highlightCommunicatable() {
       lowest[cardSuit] = cardRank;
     }
     var encodedI = i + 10;
-    // card.setAttribute("id", encodedI + cardID);
     $("#" + encodedI + cardID).addClass("highlighted");
   }
   for (var i = 0; i < myHandOfCards.length; i++) {
-    var cardRank = String(myHandOfCards[i].rank);
-    var cardSuit = String(myHandOfCards[i].suit);
-    var cardID = cardSuit + cardRank;
+    var cardID = getCardID(myHandOfCards[i]);
     var encodedI = i + 10;
     if (highest[cardSuit] && highest[cardSuit] == cardRank && lowest[cardSuit] && lowest[cardSuit] == cardRank) {
       $("#" + encodedI + cardID).addClass("onlyOption");
@@ -421,29 +401,27 @@ function displayOtherCards(seatIndex, handSize) {
 }
 
 function playCard() {
-  console.log("--------------playCard >>>>>>>>>>>>>" + currentPlayer + " =? " + playerNum);
+  console.log("--------------playCard >>>>>>>>>>>>>" + currentPlayer + " =? " + playerNum +"   "+JSON.stringify(this));
   if (currentPlayer == playerNum) {
     if (playerNum == lead) {
       $(".plays").empty();
     }
     var num = $(this).attr('id').substr(0, 2);
     var cardID = $(this).attr('id').substr(2);
-
-    console.log("--------------playCard! " + num + " : " + cardID);
+    var card = getCardFromID(cardID);
+    console.log("--------------playCard! " + num + " : " + JSON.stringify(card));
     var legal = true;
     if (playerNum != lead) {
-      legal = confirmLegal(cardID);
+      legal = confirmLegal(card);
     }
     if (legal) {
       myHandOfCards[Number(num) - 10].suit = "Z";
-      card = document.getElementById(num + cardID);
-      cardsub = card;
-      card.parentNode.removeChild(card);
 
-      $("#myPlay").append(cardsub);
+      let cardDiv = $(this).detach();
+      $("#myPlay").append(cardDiv);
+
       socketio.emit('playCard', {
-        roomID: roomID,
-        card: cardID,
+        card: card,
         player: currentPlayer
       });
     }

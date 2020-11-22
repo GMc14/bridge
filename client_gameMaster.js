@@ -3,6 +3,12 @@ var isGameMaster = false;
 function updateComms(status) {
   highlightCommunicatable();
 }
+function getCardID(card){
+  return String(card.suit) + String(card.rank);
+}
+function getCardFromID(cardID){
+  return {suit:cardID.charAt(0), rank:cardID.substring(1)};
+}
 $(function () {
   socketio.on('makeGameMaster', function () {
     console.log("--------makeGameMaster-----------");
@@ -17,12 +23,12 @@ $(function () {
     $("#showCase").hide();
   });
   socketio.on('cycleClientOrderIcon', function (data) {
-    console.log("--------------cycleClientOrderIcon----------------data.cardID " + data.cardID + ",  data.icon: " + data.icon);
-    setTrumpCardOrderIcon(data.cardID, data.icon);
+    console.log("--------------cycleClientOrderIcon----------------data.card " + JSON.stringify(data.card) + ",  data.icon: " + data.icon);
+    setTrumpCardOrderIcon(getCardID(data.card), data.icon);
   });
   socketio.on('cycleClientOrderAssignee', function (data) {
-    console.log("--------------cycleClientOrderAssignee----------------data.cardID " + data.cardID + ",  data.player: " + data.player);
-    setTrumpCardAssignee(data.cardID, data.player);
+    console.log("--------------cycleClientOrderAssignee----------------data.card " + JSON.stringify(data.card) + ",  data.player: " + data.player);
+    setTrumpCardAssignee(getCardID(data.card), data.player);
   });
   socketio.on('assignShortNameToClients', function (data) {
     console.log("--------------assignShortNameToClients----------------data.playerNumber " + data.playerNumber + ",  data.shortName: " + data.shortName);
@@ -45,11 +51,7 @@ $(function () {
     taskDeck = getSorted(taskDeck);
     var previousSuit;
     $.each(taskDeck, function (index, trumpCard) {
-
-      var cardRank = String(trumpCard.rank);
-      var cardSuit = String(trumpCard.suit);
-      var cardID = cardSuit + cardRank;
-      var cardObj = $("#" + cardID + "_img").clone().show();
+      var cardObj = $("#" + getCardID(trumpCard.card) + "_img").clone().show();
       $(cardObj).attr('task-index', index);
       $(cardObj).addClass('potentialTask');
       if (previousSuit && previousSuit != cardSuit) {
