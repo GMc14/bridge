@@ -319,10 +319,10 @@ $(function () {
     socketio.on('some1Passed', function () {
         someonePassed();
     });
-    socket.on('declareSuit', function (suit) {
+    socketio.on('declareSuit', function (suit) {
         suitDeclared(suit);
     });
-    socket.on('orderUp', function () {
+    socketio.on('orderUp', function () {
         orderedUp();
     });
       

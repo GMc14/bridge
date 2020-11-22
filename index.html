@@ -22,7 +22,7 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js" type="text/javascript"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js" type="text/javascript">
   </script>
-  <script src="/socket.io/socket.io.js"></script>
+  <script src="/socket.io/socket.io.js" type="text/javascript"></script>
   <script src="client_socketioFunctions.js" type="text/javascript"></script>
   <script src="client_gameMaster.js" type="text/javascript"></script>
   <script src="client_roomState.js" type="text/javascript"></script>
@@ -166,6 +166,12 @@
     </div>
     <div id="alternativeActions">
       <button id="orderUp" class="gameButtons">Order It Up</button>
+      <select id="suitSelectionDropdown" size=1></select>
+      <script>
+        $.each(trumpOptions, function () {
+          $("#suitSelectionDropdown").append($("<option id='trumpSuitDropOption"+this+"' value='" + this + "'>"+this+"</option>"));
+        });
+      </script>
       <button id="declareSuit" class="gameButtons">Choose Trump</button>
       <button id="pass" class="gameButtons">Pass</button>
       <i id="myCommunication" class="material-icons">mic</i>

@@ -8,6 +8,7 @@ function updateActionStates() {
   const isMyTurn = playerNum == currentBidder;
   $("#orderUp").toggle(gameConfig_biddingState == BiddingStates.ORDERING_UP && isMyTurn);
   $("#declareSuit").toggle(gameConfig_biddingState == BiddingStates.SUIT_SELECTION && isMyTurn);
+  $("#suitSelectionDropdown").toggle(gameConfig_biddingState == BiddingStates.SUIT_SELECTION && isMyTurn);
   $(".bidCell").hide(gameConfig_biddingState == BiddingStates.BETTING);
   $('#pass').prop('disabled', !isMyTurn);
 }
@@ -34,7 +35,7 @@ function startBidding() {
     $('#declareSuit').click(function () {
       console.log("GMcCards-bidFunctions.js-declareSuit");
       if (confirm('declareSuit')) {
-        socketio.emit('declareSuit');
+        socketio.emit('declareSuit', $("#suitSelectionDropdown").val());
       }
     });
     $('#pass').click(function () {

@@ -196,8 +196,8 @@ io.sockets.on('connection', function (socket) {
   socket.on('pass', function () {
     io.sockets.to(socket.room).emit('some1Passed');
   });
-  socket.on('declareSuit', function () {
-    io.sockets.to(socket.room).emit('declareSuit');
+  socket.on('declareSuit', function (suit) {
+    io.sockets.to(socket.room).emit('declareSuit',suit);
   });
   socket.on('orderUp', function () {
     io.sockets.to(socket.room).emit('orderUp');
