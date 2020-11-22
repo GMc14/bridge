@@ -11,7 +11,7 @@ function updateActionStates() {
   $("#declareSuit").toggle(gameConfig_biddingState == BiddingStates.SUIT_SELECTION && isMyTurn);
   $("#suitSelectionDropdown").toggle(gameConfig_biddingState == BiddingStates.SUIT_SELECTION && isMyTurn);
   $(".bidCell").hide(gameConfig_biddingState == BiddingStates.BETTING);
-  $('#pass').prop('disabled', !isMyTurn);
+  $('#pass').toggle(isMyTurn);
 }
 
 function startBidding() {
@@ -105,7 +105,7 @@ function someoneBid(data) {
   currentBid = data.bid;
   otherColor = data.color;
   $('#' + data.bid).trigger('click');
-  $('#pass').prop('disabled', playerNum != currentBidder);
+  updateActionStates();
 }
 
 function someonePassed() {
@@ -132,7 +132,7 @@ function someonePassed() {
       return;
     }
   } else if (gameConfig_biddingState == BiddingStates.ORDERING_UP) {
-    console.log("someonePassed: ORDERING_UP");
+    console.log("someonePassed: ORDERING_UP passCount: "+passCount+" / "+gameConfig_playerCount);
     if (passCount == gameConfig_playerCount) {
       console.log("someonePassed: move to suit selection");
       startBidding();

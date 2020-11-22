@@ -380,14 +380,8 @@ function highlightCommunicatable() {
   }
 }
 
-
-var relativePosition = counterR - (handSize / 2);
-if (counterR * 2 > handSize || handSize % 2 == 1) {
-  relativePosition--;
-}
-
 function updateCardRotations(seatIndex, handSize) {
-  var counterR = 0;
+  var counterR = 1;
   $('#loc' + seatIndex + 'Hand').children().each(function () {
     let halfHand = (handSize / 2);
     var relativePosition = counterR - halfHand;
@@ -396,7 +390,8 @@ function updateCardRotations(seatIndex, handSize) {
     }
     let angle = 50 * relativePosition / handSize;
     let relativeHeight = (relativePosition * relativePosition) / (halfHand * halfHand);
-    rotate($(this), angle, relativeHeight * 15);
+    rotate($(this), angle, relativeHeight * -15);
+    counterR++;
   });
 }
 
