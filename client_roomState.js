@@ -190,6 +190,7 @@ function updateRoom(room) {
     }
   });
   $("#playersInRoom").html(standingPlayersHTMLString);
+  $(startGameButton).prop("disabled",!isOkayToStartTheGame());
 }
 
 function getNicknameForPlayer(player) {

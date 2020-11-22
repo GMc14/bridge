@@ -45,7 +45,7 @@ function startGame() {
 
 function preRenderImgs() {
   console.log("preRenderImgs-#0000");
-  var cardImg = $("<img src='"+cardback+"' class='cardback'");
+  var cardImg = $("<img src='"+cardback+"' class='cardback'>");
   $("body").append(cardImg);
   for (var i = 0; i < suits.length; i++) {
     for (var j = 0; j < ranks.length; j++) {
