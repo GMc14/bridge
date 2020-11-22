@@ -52,14 +52,14 @@ function preRenderImgs() {
       var cardID = suits[i] + ranks[j];
       console.log("===" + cardID);
       var img_src = "/card_imgs/" + cardID + ".png";
-      $("body").append($("<img src='"+img_src+"' id='"+cardID+"_img'"));
+      $("body").append($("<img src='"+img_src+"' id='"+cardID+"_img'>"));
     }
   }
   for (var i = 0; i < bonusCards.length; i++) {
     var cardID = bonusCards[i].charAt(0) + bonusCards[i].charAt(1);
     console.log("===" + cardID);
     var img_src = "/card_imgs/" + cardID + ".png";
-    $("body").append($("<img src='"+img_src+"' id='"+cardID+"_img'"));
+    $("body").append($("<img src='"+img_src+"' id='"+cardID+"_img'>"));
   }
   console.log("preRenderImgs-#1000");
 }
