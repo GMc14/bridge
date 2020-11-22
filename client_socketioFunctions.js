@@ -232,6 +232,7 @@ $(function () {
             }
             lead = currentPlayer;
             var leaderNum = inversePlayerIdMap[lead];
+            console.log("----dealToClients getNicknameForPlayer----- ");
             commanderName = getNicknameForPlayer(lead);
             $(".highlighted").removeClass("highlighted");
             if (playerNum == currentPlayer) {
@@ -276,6 +277,7 @@ $(function () {
         if (currentPlayer == playerNum) {
             updateTurnIndicator("You!", true, false);
         } else {
+            console.log("----cardPlayed getNicknameForPlayer----- ");
             updateTurnIndicator(getNicknameForPlayer(currentPlayer), false, false);
         }
 
@@ -287,6 +289,7 @@ $(function () {
         lead = trickWinner;
         currentPlayer = trickWinner;
         $(".highlighted").removeClass("highlighted");
+        console.log("----winnerOfRound getNicknameForPlayer----- ");
         if (playerNum == currentPlayer) {
             updateTurnIndicator("You", true, true);
         } else {

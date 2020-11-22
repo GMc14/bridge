@@ -15,7 +15,7 @@ function updateActionStates() {
 
 function startBidding() {
   const isMyTurn = playerNum == currentBidder;
-  console.log("GMcCards-bidFunctions.js-startBidding");
+  console.log("GMcCards-bidFunctions.js-startBidding: "+gameConfig_biddingState);
   if (gameConfig_biddingState == BiddingStates.PREBID) {
     if (gameType == GameType.EUCHRE) {
       gameConfig_biddingState = BiddingStates.ORDERING_UP;
@@ -107,6 +107,7 @@ function someoneBid(data) {
 }
 
 function someonePassed() {
+  console.log("someonePassed");
   passCount++;
   if (gameConfig_biddingState == BiddingStates.BETTING) {
     if (passCount == gameConfig_playerCount) {
@@ -143,11 +144,12 @@ function someonePassed() {
 }
 
 function suitDeclared(suit) {
+  console.log("suitDeclared: "+suit);
   trumpSuit = suit;
   gameConfig_biddingState = BiddingStates.FINISHED;
 }
 
 function orderedUp() {
-
+  console.log("orderedUp");
   gameConfig_biddingState = BiddingStates.FINISHED;
 }
