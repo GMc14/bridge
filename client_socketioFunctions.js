@@ -18,8 +18,8 @@ var gameConfig_missions;
 var gameConfig_playerCount;
 var gameConfig_stickTheDealer;
 var gameConfig_biddingState;
-var gameConfig_minPlayerCount=1;
-var gameConfig_maxPlayerCount=4;
+var gameConfig_minPlayerCount = 1;
+var gameConfig_maxPlayerCount = 4;
 var gameConfig_startCardsPerPlayer; //-1 == Deal All
 var gameConfig_numberOfRounds; //-1 == Play all cards in hand
 var ranks;
@@ -31,7 +31,8 @@ const BiddingStates = {
     "SUIT_SELECTION": 2,
     "BETTING": 3,
     "FINISHED": -1
-  };
+};
+
 function setGameType(gT) {
     gameType = gT;
     bonusCards = [];
@@ -163,8 +164,8 @@ $(function () {
         cardback = $(".cardBackOption.ui-selected").prop("src");
 
         $("#playArea").show();
-        
-        
+
+
         console.log("client_socket :: startGame");
         preRenderImgs();
 
@@ -191,7 +192,7 @@ $(function () {
         console.log("--------------dealToClients---------------- " + JSON.stringify(data, null, 4));
         console.log("--------------dealToClients---------------- playerNum: " + playerNum);
         console.log("--------------dealToClients---------------- gameType: " + gameType);
-        
+
         var myPIndex = Number(playerNum.slice(-1)) - 1;
         myHandOfCards = data.hands[myPIndex];
 
@@ -200,18 +201,18 @@ $(function () {
         }
         $("#showCase").empty();
 
+        if (data.trumpCard) {
+            console.log("------- Trump Card: " + data.trumpCard);
+            displayTrumpCard(data.trumpCard)
+            trumpSuit = data.trumpCard.suit;
+        } else if (gameConfig_permaTrumpSuit) {
+            trumpSuit = gameConfig_permaTrumpSuit;
+        }
+        displayCards(); //Display cards before & after trump determined, sort may have changed
+            
         if (gameConfig_bidForTrump) {
-            displayCards(); //Display cards before & after trump determined, sort may have changed
-            startBidding();
+           startBidding();
         } else {
-            if (data.trumpCard) {
-                console.log("------- Trump Card: " + data.trumpCard);
-                displayTrumpCard(data.trumpCard)
-                trumpSuit = data.trumpCard.suit;
-            } else {
-                trumpSuit = gameConfig_permaTrumpSuit;
-            }
-            displayCards(); //Display cards before & after trump determined, sort may have changed
             if (startPlayerCard) {
                 console.log("------- startPlayerCard how could this go wrong?: " + startPlayerCard);
                 for (var i = 0; i < data.hands.length; i++) {
@@ -329,7 +330,7 @@ $(function () {
     socketio.on('orderUp', function () {
         orderedUp();
     });
-      
+
 });
 
 var path = window.location.pathname;

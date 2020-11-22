@@ -163,15 +163,23 @@ function dealCards() {
   if (gameConfig_topDeckTrump) {
     if (deck.length > 0) {
       trumpCard = deck.pop();
+      console.log("gameConfig_topDeckTrump card: "+trumpCard);
     } else {
       alert("Empty Deck: no trump");
     }
+  } else {
+    console.log("gameConfig_topDeckTrump: "+gameConfig_topDeckTrump+"?????????????");
   }
-  socketio.emit('dealCards', {
+
+  
+
+  const data = {
     hands: hands,
     roomID: roomID,
     trumpCard: trumpCard
-  });
+  };
+  console.log("dealCards: "+JSON.stringify(data));
+  socketio.emit('dealCards', data);
   console.log("Finished dealing");
 }
 
@@ -390,7 +398,7 @@ function updateCardRotations(seatIndex, handSize) {
     }
     let angle = 50 * relativePosition / handSize;
     let relativeHeight = (relativePosition * relativePosition) / (halfHand * halfHand);
-    rotate($(this), angle, relativeHeight * -15);
+    rotate($(this), angle, (relativeHeight * 15) - 15);
     counterR++;
   });
 }
