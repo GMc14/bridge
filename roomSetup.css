@@ -22,6 +22,10 @@
 }
 #playerSetup, #uiChoices {
   display: none;
+  z-index:1;
+}
+#playerSetup{
+  z-index:2;
 }
 .largeInputText {
   margin-top: 1vmin;

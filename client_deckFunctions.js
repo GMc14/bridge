@@ -314,7 +314,7 @@ function displayCards() {
   for (var i = 0; i < myHandOfCards.length; i++) {
     var cardID = getCardID(myHandOfCards[i]);
     var encodedI = i + 10;
-    var cardDiv = $("<div class=myCards' id='"+ (encodedI + cardID)+"'></div>");
+    var cardDiv = $("<div class='myCards' id='"+ (encodedI + cardID)+"'></div>");
     $(cardDiv).append($("#" + cardID + "_img").clone().show())
     $(cardDiv).click(playCard);
     $("#myHand").append(cardDiv);
