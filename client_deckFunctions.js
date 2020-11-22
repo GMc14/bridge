@@ -392,7 +392,8 @@ function updateCardRotations(seatIndex, handSize) {
   var counterR = 1;
   $('#loc' + seatIndex + 'Hand').children().each(function () {
     let halfHand = (handSize / 2);
-    var relativePosition = counterR - halfHand;
+    var relativePosition = Math.floor(counterR - halfHand);
+    console.log("updateCardRotations card "+counterR+" / "+handSize +"    relativePosition: "+relativePosition);
     if (counterR * 2 > handSize || handSize % 2 == 1) {
       relativePosition--;
     }

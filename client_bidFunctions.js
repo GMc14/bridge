@@ -2,7 +2,7 @@ var otherColor;
 var playerColor;
 var currentBidder;
 var currentBid;
-var passCount;
+var passCount=0;
 
 function updateActionStates() {
   const isMyTurn = playerNum == currentBidder;
@@ -43,6 +43,7 @@ function startBidding() {
     $('#pass').click(function () {
       console.log("GMcCards-bidFunctions.js-passClick");
       if (confirm('Pass')) {
+        $(".highlighted").removeClass("highlighted");
         socketio.emit('pass');
       }
     });

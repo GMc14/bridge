@@ -24,6 +24,7 @@ var gameConfig_startCardsPerPlayer; //-1 == Deal All
 var gameConfig_numberOfRounds; //-1 == Play all cards in hand
 var ranks;
 var startPlayerCard;
+var gameConfig_captainTitle;
 var gameConfig_hasTasks;
 const BiddingStates = {
     "PREBID": 0,

@@ -135,6 +135,7 @@ td, th {
   max-height: 100%;
 }
 
+
 #topbar {
   display: none;
   text-align: right;
@@ -143,6 +144,9 @@ td, th {
   background: rgba(53, 53, 53, 0.6);
 }
 
+#topbar > span{
+  margin-left: 3vmax;
+}
 #gameBoard {
   position: relative;
   margin: 0;

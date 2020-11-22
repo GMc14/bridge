@@ -174,9 +174,10 @@ function prevPlayer(currPlayer) {
 
 function updateTurnIndicator(playerOnTurnName, isMe = false, isLead = false) {
   console.log("updateTurnIndicator");
-  if(gameConfig_captainTitle){
-    $("#commanderText").html("<b>"+gameConfig_captainTitle+":</b> "+commanderName);
-  }
+
+  $("#commanderText").html("<b>"+gameConfig_captainTitle+":</b> "+commanderName);
+  $("#commanderText").toggle(gameConfig_captainTitle);
+
   $("#turnText").html("<b>"+(isLead ? "To Lead" : "To Play") + ":</b> " + playerOnTurnName);
   if (isMe) {
       $("#myHand").addClass("highlighted");
