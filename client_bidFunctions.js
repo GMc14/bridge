@@ -6,6 +6,7 @@ var passCount;
 
 function updateActionStates() {
   const isMyTurn = playerNum == currentBidder;
+  console.log("updateActionStates" +isMyTurn +"  :"+playerNum+" =? "+currentBidder);
   $("#orderUp").toggle(gameConfig_biddingState == BiddingStates.ORDERING_UP && isMyTurn);
   $("#declareSuit").toggle(gameConfig_biddingState == BiddingStates.SUIT_SELECTION && isMyTurn);
   $("#suitSelectionDropdown").toggle(gameConfig_biddingState == BiddingStates.SUIT_SELECTION && isMyTurn);

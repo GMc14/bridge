@@ -153,6 +153,7 @@ function addTrickWin(who, cards) {
 }
 
 function nextPlayer(currPlayer) {
+  console.log("nextPlayer----currPlayer:"+currPlayer);
   var currNumber = Number(currPlayer.slice(-1));
   currNumber += 1;
   if (currNumber > gameConfig_playerCount) {
@@ -162,6 +163,7 @@ function nextPlayer(currPlayer) {
 }
 
 function prevPlayer(currPlayer) {
+  console.log("prevPlayer----currPlayer:"+currPlayer);
   var currNumber = Number(currPlayer.slice(-1));
   currNumber -= 1;
   if (currNumber < 1) {

@@ -191,6 +191,8 @@ $(function () {
     socketio.on('dealToClients', function (data) {
         console.log("--------------dealToClients---------------- " + JSON.stringify(data, null, 4));
         console.log("--------------dealToClients---------------- playerNum: " + playerNum);
+        console.log("--------------dealToClients---------------- gameType: " + gameType);
+        
         var myPIndex = Number(playerNum.slice(-1)) - 1;
         myHandOfCards = data.hands[myPIndex];
 
