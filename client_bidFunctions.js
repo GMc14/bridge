@@ -6,7 +6,7 @@ var passCount;
 
 function updateActionStates() {
   const isMyTurn = playerNum == currentBidder;
-  console.log("updateActionStates" +isMyTurn +"  :"+playerNum+" =? "+currentBidder);
+  console.log("updateActionStates  " + isMyTurn + "  :" + playerNum + " =? " + currentBidder + "   gameConfig_biddingState:" + gameConfig_biddingState);
   $("#orderUp").toggle(gameConfig_biddingState == BiddingStates.ORDERING_UP && isMyTurn);
   $("#declareSuit").toggle(gameConfig_biddingState == BiddingStates.SUIT_SELECTION && isMyTurn);
   $("#suitSelectionDropdown").toggle(gameConfig_biddingState == BiddingStates.SUIT_SELECTION && isMyTurn);
@@ -16,7 +16,7 @@ function updateActionStates() {
 
 function startBidding() {
   const isMyTurn = playerNum == currentBidder;
-  console.log("GMcCards-bidFunctions.js-startBidding: "+gameConfig_biddingState);
+  console.log("GMcCards-bidFunctions.js-startBidding: " + gameConfig_biddingState);
   if (gameConfig_biddingState == BiddingStates.PREBID) {
     if (gameType == GameType.EUCHRE) {
       gameConfig_biddingState = BiddingStates.ORDERING_UP;
@@ -26,7 +26,8 @@ function startBidding() {
     } else {
       alert("GameType not configured for bidding: " + gameType);
     }
-    
+
+    console.log("GMcCards-bidFunctions.js-startBidding: init Buttons");
     $('#orderUp').click(function () {
       console.log("GMcCards-bidFunctions.js-orderUp");
       if (confirm('orderUp')) {
@@ -71,7 +72,7 @@ function startBidding() {
         disablePrevCells(row, col);
       }
     });
-  
+
   } else if (gameConfig_biddingState == BiddingStates.ORDERING_UP) {
     gameConfig_biddingState = BiddingStates.SUIT_SELECTION;
   } else {
@@ -129,9 +130,11 @@ function someonePassed() {
       $('#bidOfRound').show();
       gameConfig_biddingState = BiddingStates.FINISHED;
       return;
-    } 
+    }
   } else if (gameConfig_biddingState == BiddingStates.ORDERING_UP) {
+    console.log("someonePassed: ORDERING_UP");
     if (passCount == gameConfig_playerCount) {
+      console.log("someonePassed: move to suit selection");
       startBidding();
       return;
     }
@@ -141,11 +144,11 @@ function someonePassed() {
   if (playerNum == currentBidder) {
     updateTurnIndicator("You", true, false);
   }
-
+  updateActionStates()
 }
 
 function suitDeclared(suit) {
-  console.log("suitDeclared: "+suit);
+  console.log("suitDeclared: " + suit);
   trumpSuit = suit;
   gameConfig_biddingState = BiddingStates.FINISHED;
 }
