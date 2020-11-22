@@ -48,6 +48,7 @@ function setGameType(gT) {
     gameConfig_numberOfRounds = -1;
     gameConfig_minPlayerCount = 1;
     gameConfig_maxPlayerCount = 100;
+    gameConfig_captainTitle='';
     gameConfig_biddingState = BiddingStates.FINISHED;
     ranks = standardRanks;
     startPlayerCard = '';

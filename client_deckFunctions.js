@@ -40,6 +40,7 @@ function startGame() {
   console.log("[][][][][][][][][][]ClearTrumpHighlights[][][][][][][][][][][]");
   currentTrumpCards = [];
   $(".isTrump").removeClass("isTrump");
+  updateActionStates();
 }
 
 function preRenderImgs() {
@@ -390,7 +391,7 @@ function highlightCommunicatable() {
 
 function updateCardRotations(seatIndex) {
   var counterR = 1;
-  let handSize = $('#loc' + seatIndex + 'Hand').children();
+  let handSize = $('#loc' + seatIndex + 'Hand').children().length;
   $('#loc' + seatIndex + 'Hand').children().each(function () {
     let halfHand = (handSize / 2);
     var relativePosition = Math.floor(counterR - halfHand);
@@ -400,7 +401,7 @@ function updateCardRotations(seatIndex) {
     }
     console.log("updateCardRotations card "+counterR+" / "+handSize +"    Adjusted relativePosition: "+relativePosition);
     
-    let angle = 50 * relativePosition / handSize;
+    let angle = 40 * relativePosition / handSize;
     let relativeHeight = (relativePosition * relativePosition) / (halfHand * halfHand);
     rotate($(this), angle, (relativeHeight * 15) - 25);
     counterR++;

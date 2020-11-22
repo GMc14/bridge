@@ -116,24 +116,25 @@ function someonePassed() {
   if (gameConfig_biddingState == BiddingStates.BETTING) {
     if (passCount == gameConfig_playerCount) {
       $('#bidOfRound').html('<b>' + currentBidder + ": " + currentBid + '</b>');
-      trumpSuit = currentBid.charAt(1);
+      $('#bidOfRound').show();
       if (playerNum == currentBidder || playerNum == nextPlayer(nextPlayer(currentBidder))) {
         handsNeeded = 6 + Number(currentBid.charAt(0));
       } else {
         handsNeeded = 14 - (6 + Number(currentBid.charAt(0)));
       }
+      trumpSuit = currentBid.charAt(1);
       currentPlayer = nextPlayer(currentBidder);
       lead = currentPlayer;
-      $('#bidArea').hide();
-      updateTurnIndicator(getNicknameForPlayer(currentBidder), playerNum == currentBidder, false);
-      $('#bidOfRound').show();
-      gameConfig_biddingState = BiddingStates.FINISHED;
+      biddingFinished();
       return;
     }
   } else if (gameConfig_biddingState == BiddingStates.ORDERING_UP) {
     console.log("someonePassed: ORDERING_UP passCount: " + passCount + " / " + gameConfig_playerCount);
     if (passCount == gameConfig_playerCount) {
       console.log("someonePassed: move to suit selection");
+      $(".trumpCard").prop('id','unused');
+      $("#unused").empty();
+      $("#unused").append($(".cardback:eq(0)").clone().show());
       startBidding();
       return;
     }
@@ -147,16 +148,22 @@ function someonePassed() {
 function suitDeclared(suit) {
   console.log("suitDeclared: " + suit);
   trumpSuit = suit;
-  gameConfig_biddingState = BiddingStates.FINISHED;
-  currentPlayer = lead;
-  updateActionStates();
-  updateTurnIndicator(getNicknameForPlayer(lead), false, true);
+  biddingFinished();
 }
 
 function orderedUp() {
   console.log("orderedUp");
+  biddingFinished();
+}
+
+
+function biddingFinished() {
+  console.log("biddingFinished");
+  $('#bidArea').hide();
+  $('#bidOfRound').show();
   gameConfig_biddingState = BiddingStates.FINISHED;
   currentPlayer = lead;
   updateActionStates();
-  updateTurnIndicator(getNicknameForPlayer(lead), false, true);
+  updateTurnIndicator(getNicknameForPlayer(lead), playerNum = lead, true);
 }
+

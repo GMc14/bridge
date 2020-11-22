@@ -1,4 +1,5 @@
 function rotate($el, degrees, yTans = 0) {
+  console.log("rotate: "+degrees+"  "+yTans);
   $el.css({
     'transform': 'rotate(' + degrees + 'deg) translateY(' + yTans + 'px)',
     'zoom': 1
