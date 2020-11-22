@@ -166,8 +166,6 @@ $(function () {
         cardback = $(".cardBackOption.ui-selected").prop("src");
 
         $("#playArea").show();
-
-
         console.log("client_socket :: startGame");
         preRenderImgs();
 
