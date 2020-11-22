@@ -64,6 +64,7 @@ function setGameType(gT) {
         gameConfig_hasTasks = true;
         gameConfig_minPlayerCount = 1;
         gameConfig_maxPlayerCount = 5;
+        gameConfig_captainTitle = 'Commander'
     } else if (gameType == GameType.BRIDGE) {
         gameConfig_bidForTrump = true;
         gameConfig_biddingState = BiddingStates.PREBID;
@@ -156,11 +157,9 @@ $(function () {
         alert(nickname + " left the room. Kicking everybody out... ");
         window.location.reload();
     });
-    socketio.on('startGame', function (playerCount) {
-
-        //alert("LLLegit: " + $("#gameDrop").val());
-        setGameType($("#gameDrop").val());
-        gameConfig_playerCount = playerCount;
+    socketio.on('startGame', function (data) {
+        setGameType(data.gameType);
+        gameConfig_playerCount = data.playerCount;
         cardback = $(".cardBackOption.ui-selected").prop("src");
 
         $("#playArea").show();

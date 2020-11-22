@@ -174,8 +174,8 @@ function prevPlayer(currPlayer) {
 
 function updateTurnIndicator(playerOnTurnName, isMe = false, isLead = false) {
   console.log("updateTurnIndicator");
-  if(gameType == GameType.CREW){
-    $("#commanderText").html("<b>Commander:</b> "+commanderName);
+  if(gameConfig_captainTitle){
+    $("#commanderText").html("<b>"+gameConfig_captainTitle+":</b> "+commanderName);
   }
   $("#turnText").html("<b>"+(isLead ? "To Lead" : "To Play") + ":</b> " + playerOnTurnName);
   if (isMe) {

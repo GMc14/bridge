@@ -153,12 +153,12 @@ io.sockets.on('connection', function (socket) {
       console.log("unauthorized seat kick");
     }
   });
-  socket.on('startGameOnServer', function () {
+  socket.on('startGameOnServer', function (gameType) {
     console.log("---startGameOnServer----");
     var startGamePlayerCount = io.sockets.adapter.rooms[socket.room].length;
     console.log("---startGameOnServer---- startGamePlayerCount" + startGamePlayerCount);
     io.sockets.to(socket.room).emit('updateRoom', io.sockets.adapter.rooms[socket.room]);
-    io.sockets.to(socket.room).emit('startGame', startGamePlayerCount);
+    io.sockets.to(socket.room).emit('startGame', {playerCount:startGamePlayerCount, gameType:gameType});
   });
   socket.on('sendMessage', function (data) {
     io.sockets.to(socket.room).emit('message', data);

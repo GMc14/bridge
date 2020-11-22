@@ -22,11 +22,11 @@ function startBidding() {
       gameConfig_biddingState = BiddingStates.ORDERING_UP;
     } else if (gameType == GameType.BRIDGE) {
       gameConfig_biddingState = BiddingStates.BETTING;
+      $("#bidArea").show();
     } else {
       alert("GameType not configured for bidding: " + gameType);
     }
-
-    $("#bidArea").show();
+    
     $('#orderUp').click(function () {
       console.log("GMcCards-bidFunctions.js-orderUp");
       if (confirm('orderUp')) {
@@ -45,7 +45,6 @@ function startBidding() {
         socketio.emit('pass');
       }
     });
-
     $(".bidCell").click(function (e) {
       console.log("GMcCards-bidFunctions.js-bidCellClick-#0000");
       var id = $(this).attr('id');
@@ -72,6 +71,7 @@ function startBidding() {
         disablePrevCells(row, col);
       }
     });
+  
   } else if (gameConfig_biddingState == BiddingStates.ORDERING_UP) {
     gameConfig_biddingState = BiddingStates.SUIT_SELECTION;
   } else {

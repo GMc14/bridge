@@ -26,7 +26,7 @@ function initPlayerModule() {
   $("#startGameButton").toggle(isGameMaster);
   $("#startGameButton:visible").on("click", function () {
     if (isOkayToStartTheGame()) {
-      socketio.emit('startGameOnServer');
+      socketio.emit('startGameOnServer', $("#gameDrop").val());
     } else {
       alert("Problematic Open Seats");
     }
