@@ -81,6 +81,7 @@ function startBidding() {
     alert("not prebid?");
   }
   currentBidder = nextPlayer(dealer);
+  updateTurnIndicator(getNicknameForPlayer(currentBidder), playerNum == currentBidder, false);
   updateActionStates();
 
 }
