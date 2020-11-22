@@ -45,31 +45,21 @@ function startGame() {
 
 function preRenderImgs() {
   console.log("preRenderImgs-#0000");
-  var img_src = cardback;
-  var cardImg = document.createElement("img");
-  cardImg.setAttribute("src", img_src);
-  cardImg.setAttribute("class", "cardback");
+  var cardImg = document.createElement("<img src='"+cardback+"' class='cardback'");
   $("body").append(cardImg);
-
   for (var i = 0; i < suits.length; i++) {
     for (var j = 0; j < ranks.length; j++) {
       var cardID = suits[i] + ranks[j];
       console.log("===" + cardID);
       var img_src = "/card_imgs/" + cardID + ".png";
-      var cardImg = document.createElement("img");
-      cardImg.setAttribute("src", img_src);
-      cardImg.setAttribute("id", cardID + "_img");
-      $("body").append(cardImg);
+      $("body").append($("<img src='"+img_src+"' id='"+cardID+"_img'"));
     }
   }
   for (var i = 0; i < bonusCards.length; i++) {
     var cardID = bonusCards[i].charAt(0) + bonusCards[i].charAt(1);
     console.log("===" + cardID);
     var img_src = "/card_imgs/" + cardID + ".png";
-    var cardImg = document.createElement("img");
-    cardImg.setAttribute("src", img_src);
-    cardImg.setAttribute("id", cardID + "_img");
-    $("body").append(cardImg);
+    $("body").append($("<img src='"+img_src+"' id='"+cardID+"_img'"));
   }
   console.log("preRenderImgs-#1000");
 }
@@ -389,13 +379,12 @@ function updateCardRotations(seatIndex) {
 }
 
 function displayOtherCards(seatIndex, handSize) {
-  console.log(">>>>>>>>>>>>>displayCards----in: #loc" + seatIndex + "Hand------------seatIndex: " + seatIndex + "  >>  handSize: " + handSize);
+  console.log(">>>>>>>>>>>>>displayCards----in: #loc" + seatIndex + "Hand---- >>  handSize: " + handSize);
   $('#loc' + seatIndex + 'Hand').empty();
   for (var i = 0; i < handSize; i++) {
-    var card = document.createElement("div");
-    card.setAttribute("class", "otherCards");
-    $(".cardback:eq(0)").clone().show().appendTo(card);
-    $('#loc' + seatIndex + 'Hand').append(card);
+    var cardDiv = $("<div class='otherCards'></div>");
+    $(cardDiv).append($(".cardback:eq(0)").clone().show());
+    $('#loc' + seatIndex + 'Hand').append(cardDiv);
   }
   updateCardRotations(seatIndex);
 }
@@ -441,7 +430,7 @@ function othersPlayed(player, card) {
 
   $("#loc" + seatIndex + "Hand").find(".otherCards").first().remove();
 
-  var cardObj = $("#" + card + "_img").attr("class", "myCards").clone().show();
+  var cardObj = $("#" + getCardID(card) + "_img").attr("class", "myCards").clone().show();
 
   if (isATrumpCard(card)) {
     $(cardObj).addClass('isTrump');

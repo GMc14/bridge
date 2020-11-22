@@ -112,12 +112,12 @@ function addTrickWinText(who, wins) {
 
 function addTrickWin(who, cards) {
   console.log("[][][][][][][] addTrickWin: " + who + " cards:" + cards);
-  var card = document.createElement("div");
-  card.setAttribute('class', 'otherCards');
-  card.setAttribute('data-cards', cards);
-  $(".cardback:eq(0)").clone().show().appendTo(card);
+  var cardDiv = $("<div></div>");
+  $(cardDiv).addClass('otherCards');
+  $(cardDiv).attr('data-cards', cards);
+  $(cardDiv).append($(".cardback:eq(0)").clone().show());
   var wonTricks = $('#' + who);
-  $(wonTricks).append(card);
+  $(wonTricks).append(cardDiv);
   $(wonTricks).hover(
       function () {
           if (!hoveringOverWonTricks) {
