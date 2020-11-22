@@ -48,7 +48,23 @@
   box-sizing: border-box;
   /* border: 0.2vmax solid #f88; */
 }
-
+#alternativeActions{
+  display: none;
+  left: 50%;
+  transform: translateX(-50%);
+  position: absolute;
+  bottom: 22%;
+}
+div#myHand.highlighted {
+  box-shadow: inset 0 0 1vmin #fff, /* inner */
+  inset 0.6vmin 0 2vmin rgb(51, 221, 213), /* inner left short */
+  inset -0.6vmin 0 2vmin rgb(51, 221, 213), /* inner right short */
+  inset 0.6vmin 0 3vmin #7EB2A8, /* inner left broad */
+  inset -0.6vmin 0 3vmin #7EB2A8;
+  /* inner right broad */
+  -webkit-animation: heartbeat 0.8s 4s;
+  animation: heartbeat 0.8s 4s;
+}
 .otherPlayerHand {
   position: absolute;
   display: block;
@@ -81,7 +97,7 @@
 #trickDetails {
   background: rgba(53, 53, 53, 0.4);
   position: absolute;
-  top: -12vmax;
+  top: -2vmax;
   width: 15vmax;
   max-height: 15vmax;
   overflow-y: auto;

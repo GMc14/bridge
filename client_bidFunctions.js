@@ -4,51 +4,82 @@ var currentBidder;
 var currentBid;
 var passCount;
 
+function updateActionStates() {
+  const isMyTurn = playerNum == currentBidder;
+  $("#orderUp").toggle(gameConfig_biddingState == BiddingStates.ORDERING_UP && isMyTurn);
+  $("#declareSuit").toggle(gameConfig_biddingState == BiddingStates.SUIT_SELECTION && isMyTurn);
+  $(".bidCell").hide(gameConfig_biddingState == BiddingStates.BETTING);
+  $('#pass').prop('disabled', !isMyTurn);
+}
+
 function startBidding() {
-  currentBidder = nextPlayer(dealer);
-  $("#bidArea").show();
-  if (playerNum == currentBidder) {
-    alert("Your Turn to Bid");
-  }
-  console.log("GMcCards-bidFunctions.js-startBidding-#0000");
-  $('#pass').click(function () {
-    console.log("GMcCards-bidFunctions.js-passClick-#0000");
-    if (playerNum == currentBidder) {
-      var pass = confirm('Pass');
-      if (pass) {
+  const isMyTurn = playerNum == currentBidder;
+  console.log("GMcCards-bidFunctions.js-startBidding");
+  if (gameConfig_biddingState == BiddingStates.PREBID) {
+    if (gameType == GameType.EUCHRE) {
+      gameConfig_biddingState = BiddingStates.ORDERING_UP;
+    } else if (gameType == GameType.BRIDGE) {
+      gameConfig_biddingState = BiddingStates.BETTING;
+    } else {
+      alert("GameType not configured for bidding: " + gameType);
+    }
+
+    $("#bidArea").show();
+    $('#orderUp').click(function () {
+      console.log("GMcCards-bidFunctions.js-orderUp");
+      if (confirm('orderUp')) {
+        socketio.emit('orderUp');
+      }
+    });
+    $('#declareSuit').click(function () {
+      console.log("GMcCards-bidFunctions.js-declareSuit");
+      if (confirm('declareSuit')) {
+        socketio.emit('declareSuit');
+      }
+    });
+    $('#pass').click(function () {
+      console.log("GMcCards-bidFunctions.js-passClick");
+      if (confirm('Pass')) {
         socketio.emit('pass');
       }
-    } else {
-      alert("Not your turn to bid!");
-    }
-  });
-  $(".bidCell").click(function (e) {
-    console.log("GMcCards-bidFunctions.js-bidCellClick-#0000");
-    var id = $(this).attr('id');
-    if (e.which) {
-      if (playerNum == currentBidder) {
-        var bid = confirm('Bid: ' + id);
-        if (bid) {
-          $(this).css('background-color', playerColor);
-          socketio.emit('bid', {
-            color: playerColor,
-            bid: id
-          });
-          var col = this.cellIndex;
-          var row = this.parentNode.rowIndex;
-          disablePrevCells(row, col);
+    });
+
+    $(".bidCell").click(function (e) {
+      console.log("GMcCards-bidFunctions.js-bidCellClick-#0000");
+      var id = $(this).attr('id');
+      if (e.which) {
+        if (isMyTurn) {
+          var bid = confirm('Bid: ' + id);
+          if (bid) {
+            $(this).css('background-color', playerColor);
+            socketio.emit('bid', {
+              color: playerColor,
+              bid: id
+            });
+            var col = this.cellIndex;
+            var row = this.parentNode.rowIndex;
+            disablePrevCells(row, col);
+          }
+        } else {
+          alert("Not your turn to bid!");
         }
       } else {
-        alert("Not your turn to bid!");
+        $(this).css('background-color', otherColor);
+        var col = this.cellIndex;
+        var row = this.parentNode.rowIndex;
+        disablePrevCells(row, col);
       }
-    } else {
-      $(this).css('background-color', otherColor);
-      var col = this.cellIndex;
-      var row = this.parentNode.rowIndex;
-      disablePrevCells(row, col);
-    }
-  });
+    });
+  } else if (gameConfig_biddingState == BiddingStates.ORDERING_UP) {
+    gameConfig_biddingState = BiddingStates.SUIT_SELECTION;
+  } else {
+    alert("not prebid?");
+  }
+  currentBidder = nextPlayer(dealer);
+  updateActionStates();
+
 }
+
 function disablePrevCells(row, col) {
   console.log("GMcCards-bidFunctions.js-disablePrevCells-#0000");
   var table = document.getElementById("bidTable");
@@ -64,37 +95,58 @@ function disablePrevCells(row, col) {
     }
   }
 }
+
 function someoneBid(data) {
   passCount = 0;
   currentBidder = nextPlayer(currentBidder);
   currentBid = data.bid;
   otherColor = data.color;
   $('#' + data.bid).trigger('click');
-  if (playerNum == currentBidder) {
-    alert("Your Turn to Bid");
-  }
+  $('#pass').prop('disabled', playerNum != currentBidder);
 }
+
 function someonePassed() {
   passCount++;
-  if (passCount == 4) {
-    $('#bidOfRound').html('<b>' + currentBidder + ": " + currentBid + '</b>');
-    trumpSuit = currentBid.charAt(1);
-    if (playerNum == currentBidder || playerNum == nextPlayer(nextPlayer(currentBidder))) {
-      handsNeeded = 6 + Number(currentBid.charAt(0));
-    } else {
-      handsNeeded = 14 - (6 + Number(currentBid.charAt(0)));
-    }
-    currentPlayer = nextPlayer(currentBidder);
-    lead = currentPlayer;
-    $('#bidArea').hide();
-    if (playerNum == currentPlayer) {
-      updateTurnIndicator("You", true, true);
-    }
-    $('#bidOfRound').show();
-  } else {
-    currentBidder = nextPlayer(currentBidder);
-    if (playerNum == currentBidder) {
-      alert("Your Turn to Bid");
+  if (gameConfig_biddingState == BiddingStates.BETTING) {
+    if (passCount == gameConfig_playerCount) {
+      $('#bidOfRound').html('<b>' + currentBidder + ": " + currentBid + '</b>');
+      trumpSuit = currentBid.charAt(1);
+      if (playerNum == currentBidder || playerNum == nextPlayer(nextPlayer(currentBidder))) {
+        handsNeeded = 6 + Number(currentBid.charAt(0));
+      } else {
+        handsNeeded = 14 - (6 + Number(currentBid.charAt(0)));
+      }
+      currentPlayer = nextPlayer(currentBidder);
+      lead = currentPlayer;
+      $('#bidArea').hide();
+      if (playerNum == currentPlayer) {
+        updateTurnIndicator("You", true, true);
+      }
+
+      $('#bidOfRound').show();
+      gameConfig_biddingState = BiddingStates.FINISHED;
+      return;
+    } 
+  } else if (gameConfig_biddingState == BiddingStates.ORDERING_UP) {
+    if (passCount == gameConfig_playerCount) {
+      startBidding();
+      return;
     }
   }
+
+  currentBidder = nextPlayer(currentBidder);
+  if (playerNum == currentBidder) {
+    updateTurnIndicator("You", true, false);
+  }
+
+}
+
+function suitDeclared(suit) {
+  trumpSuit = suit;
+  gameConfig_biddingState = BiddingStates.FINISHED;
+}
+
+function orderedUp() {
+
+  gameConfig_biddingState = BiddingStates.FINISHED;
 }

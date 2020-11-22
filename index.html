@@ -4,10 +4,10 @@
 <head>
   <meta charset="utf-8">
   <title>GMcCrew</title>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" >
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Tangerine">
-  <link  rel='stylesheet' href='https://fonts.googleapis.com/css?family=Dawning of a New Day'>
-  
+  <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Dawning of a New Day'>
+
   <link rel="stylesheet" type="text/css" href="index.css">
   <link rel="stylesheet" type="text/css" href="roomSetup.css">
   <link rel="stylesheet" type="text/css" href="chat.css">
@@ -141,66 +141,22 @@
               <th><img class="logo" src="card_imgs/spades.png" alt="Spades logo"></th>
               <th>NT </th>
             </tr>
-            <tr>
-              <td>1</td>
-              <td class="bidCell" id="1C"></td>
-              <td class="bidCell" id="1D"></td>
-              <td class="bidCell" id="1H"></td>
-              <td class="bidCell" id="1S"></td>
-              <td class="bidCell" id="1NT"></td>
-            </tr>
-            <tr>
-              <td>2</td>
-              <td class="bidCell" id="2C"></td>
-              <td class="bidCell" id="2D"></td>
-              <td class="bidCell" id="2H"></td>
-              <td class="bidCell" id="2S"></td>
-              <td class="bidCell" id="2NT"></td>
-            </tr>
-            <tr>
-              <td>3</td>
-              <td class="bidCell" id="3C"></td>
-              <td class="bidCell" id="3D"></td>
-              <td class="bidCell" id="3H"></td>
-              <td class="bidCell" id="3S"></td>
-              <td class="bidCell" id="3NT"></td>
-            </tr>
-            <tr>
-              <td>4</td>
-              <td class="bidCell" id="4C"></td>
-              <td class="bidCell" id="4D"></td>
-              <td class="bidCell" id="4H"></td>
-              <td class="bidCell" id="4S"></td>
-              <td class="bidCell" id="4NT"></td>
-            </tr>
-            <tr>
-              <td>5</td>
-              <td class="bidCell" id="5C"></td>
-              <td class="bidCell" id="5D"></td>
-              <td class="bidCell" id="5H"></td>
-              <td class="bidCell" id="5S"></td>
-              <td class="bidCell" id="5NT"></td>
-            </tr>
-            <tr>
-              <td>6</td>
-              <td class="bidCell" id="6C"></td>
-              <td class="bidCell" id="6D"></td>
-              <td class="bidCell" id="6H"></td>
-              <td class="bidCell" id="6S"></td>
-              <td class="bidCell" id="6NT"></td>
-            </tr>
-            <tr>
-              <td>7</td>
-              <td class="bidCell" id="7C"></td>
-              <td class="bidCell" id="7D"></td>
-              <td class="bidCell" id="7H"></td>
-              <td class="bidCell" id="7S"></td>
-              <td class="bidCell" id="7NT"></td>
-            </tr>
           </tbody>
         </table>
-        <button id="pass" class="gameButtons">PASS</button>
       </div>
+      <script>
+        const trumpOptions = ['C', 'D', 'H', 'S', 'NT'];
+        let n = 1;
+        while (n < 8) {
+          let tr = $("<tr></tr>");
+          tr.append('<td>' + n + '</td>');
+          $.each(trumpOptions, function () {
+            tr.append('<td class="bidCell" id="' + n + this + '"></td>');
+          });
+          n++;
+          $("#bidTable > tbody").append(tr);
+        }
+      </script>
       <div id="gameRecap">
         <p id="winners"> </p>
         <p id="gameBid"> </p>
@@ -208,10 +164,15 @@
         <!--<button id="restartGame" class="gameButtons">RESTART GAME</button>-->
       </div>
     </div>
+    <div id="alternativeActions">
+      <button id="orderUp" class="gameButtons">Order It Up</button>
+      <button id="declareSuit" class="gameButtons">Choose Trump</button>
+      <button id="pass" class="gameButtons">Pass</button>
+      <i id="myCommunication" class="material-icons">mic</i>
+    </div>
     <div id="myHand"></div>
     <div id="playArea">
       <div id="myStuff" class="stuff"></div>
-      <i class="material-icons" id="myCommunication">mic</i>
       <select id='myDrpPlyrName' class="plyrDropName" name='dropdownIcon' size=1></select>
       <div id="myName" class="name"></div>
       <div id="myPlay" class="plays"></div>

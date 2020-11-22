@@ -196,6 +196,12 @@ io.sockets.on('connection', function (socket) {
   socket.on('pass', function () {
     io.sockets.to(socket.room).emit('some1Passed');
   });
+  socket.on('declareSuit', function () {
+    io.sockets.to(socket.room).emit('declareSuit');
+  });
+  socket.on('orderUp', function () {
+    io.sockets.to(socket.room).emit('orderUp');
+  });
   socket.on('playCard', function (data) {
     io.sockets.to(data.roomID).emit('cardPlayed', data);
   });

@@ -16,6 +16,8 @@ var gameConfig_euchreBowers;
 var gameConfig_bidForTrump;
 var gameConfig_missions;
 var gameConfig_playerCount;
+var gameConfig_stickTheDealer;
+var gameConfig_biddingState;
 var gameConfig_minPlayerCount=1;
 var gameConfig_maxPlayerCount=4;
 var gameConfig_startCardsPerPlayer; //-1 == Deal All
@@ -23,7 +25,13 @@ var gameConfig_numberOfRounds; //-1 == Play all cards in hand
 var ranks;
 var startPlayerCard;
 var gameConfig_hasTasks;
-
+const BiddingStates = {
+    "PREBID": 0,
+    "ORDERING_UP": 1,
+    "SUIT_SELECTION": 2,
+    "BETTING": 3,
+    "FINISHED": -1
+  };
 function setGameType(gT) {
     gameType = gT;
     bonusCards = [];
@@ -32,11 +40,13 @@ function setGameType(gT) {
     gameConfig_topDeckTrump = false;
     gameConfig_euchreBowers = false;
     gameConfig_bidForTrump = false;
+    gameConfig_stickTheDealer = false;
     gameConfig_missions = [];
     gameConfig_startCardsPerPlayer = -1;
     gameConfig_numberOfRounds = -1;
     gameConfig_minPlayerCount = 1;
     gameConfig_maxPlayerCount = 100;
+    gameConfig_biddingState = BiddingStates.FINISHED;
     ranks = standardRanks;
     startPlayerCard = '';
     gameConfig_hasTasks = false;
@@ -55,14 +65,17 @@ function setGameType(gT) {
         gameConfig_minPlayerCount = 1;
         gameConfig_maxPlayerCount = 5;
     } else if (gameType == GameType.BRIDGE) {
-        gameConfig_hasTeams = true;
         gameConfig_bidForTrump = true;
+        gameConfig_biddingState = BiddingStates.PREBID;
+        gameConfig_hasTeams = true;
         gameConfig_minPlayerCount = 4;
         gameConfig_maxPlayerCount = 4;
     } else if (gameType == GameType.EUCHRE) {
+        gameConfig_bidForTrump = true;
+        gameConfig_biddingState = BiddingStates.PREBID;
         gameConfig_hasTeams = true;
         gameConfig_topDeckTrump = true;
-        gameConfig_bidForTrump = true;
+        gameConfig_stickTheDealer = true;
         gameConfig_euchreBowers = true;
         ranks = euchreRanks;
         gameConfig_startCardsPerPlayer = 5;
@@ -306,6 +319,13 @@ $(function () {
     socketio.on('some1Passed', function () {
         someonePassed();
     });
+    socket.on('declareSuit', function (suit) {
+        suitDeclared(suit);
+    });
+    socket.on('orderUp', function () {
+        orderedUp();
+    });
+      
 });
 
 var path = window.location.pathname;

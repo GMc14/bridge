@@ -10,7 +10,8 @@ var playerOptions = ['', 'GM', 'AM', 'EM', "AP"];
 function startGame() {
   console.log("--------------startGame-------isGameMaster?--------" + isGameMaster);
   $("#myHand").show();
-  $("#myHand").empty();
+  $("#myHand").empty();  
+  $("#alternativeActions").show();
   $(".otherPlayerHand").empty();
   $("#helpLegendTrigger").toggle(gameType == GameType.CREW);
 
@@ -144,7 +145,6 @@ function dealCards() {
       handValues[i] += cardValue(deck[deck.length - 1]);
       hands[i].push(deck.pop());
     }
-
   }
 
   if (gameType == GameType.BRIDGE) {
@@ -152,9 +152,9 @@ function dealCards() {
       if (handValues[i] < 4) {
         //needToRedeal
         console.log(":( ------------------ needToRedeal");
-
         deck = getShuffled(deck);
         dealCards();
+        i=999;
         return;
       }
     }
@@ -380,7 +380,16 @@ function highlightCommunicatable() {
   }
 }
 
-
+function updateCardRotations(seatIndex, handSize){
+  var counterR = 0;
+  $('#loc' + seatIndex + 'Hand').children().each(function () {
+    let halfHand = handSize / 2;
+    let distFromCenter = counterR++ - halfHand;
+    let angle = 50 * distFromCenter / handSize;
+    let relativeHeight = (distFromCenter * distFromCenter) / (halfHand * halfHand);
+    rotate($(this), angle, relativeHeight*15);
+  }); 
+}
 function displayOtherCards(seatIndex, handSize) {
   console.log(">>>>>>>>>>>>>displayCards----in: #loc" + seatIndex + "Hand------------seatIndex: " + seatIndex + "  >>  handSize: " + handSize);
   $('#loc' + seatIndex + 'Hand').empty();
@@ -390,14 +399,7 @@ function displayOtherCards(seatIndex, handSize) {
     $(".cardback:eq(0)").clone().show().appendTo(card);
     $('#loc' + seatIndex + 'Hand').append(card);
   }
-  var counterR = 0;
-  $('#loc' + seatIndex + 'Hand').children().each(function () {
-    let halfHand = handSize / 2;
-    let distFromCenter = counterR++ - halfHand;
-    let angle = 50 * distFromCenter / handSize;
-    let relativeHeight = (distFromCenter * distFromCenter) / (halfHand * halfHand);
-    rotate($(this), angle, relativeHeight*15);
-  });
+  updateCardRotations(seatIndex, handSize);
 }
 
 function playCard() {
@@ -419,6 +421,7 @@ function playCard() {
       card = document.getElementById(num + cardID);
       cardsub = card;
       card.parentNode.removeChild(card);
+
       $("#myPlay").append(cardsub);
       socketio.emit('playCard', {
         roomID: roomID,
@@ -448,4 +451,5 @@ function othersPlayed(player, card) {
     $(cardObj).addClass('isTrump');
   }
   $("#loc" + seatIndex + "play").append(cardObj);
+  updateCardRotations(seatIndex, $("#loc" + seatIndex + "Hand").find(".otherCards").length);
 }
