@@ -10,7 +10,7 @@ var playerOptions = ['', 'GM', 'AM', 'EM', "AP"];
 function startGame() {
   console.log("--------------startGame-------isGameMaster?--------" + isGameMaster);
   $("#myHand").show();
-  $("#myHand").empty();  
+  $("#myHand").empty();
   $("#alternativeActions").show();
   $(".otherPlayerHand").empty();
   $("#helpLegendTrigger").toggle(gameType == GameType.CREW);
@@ -154,7 +154,7 @@ function dealCards() {
         console.log(":( ------------------ needToRedeal");
         deck = getShuffled(deck);
         dealCards();
-        i=999;
+        i = 999;
         return;
       }
     }
@@ -380,16 +380,26 @@ function highlightCommunicatable() {
   }
 }
 
-function updateCardRotations(seatIndex, handSize){
+
+var relativePosition = counterR - (handSize / 2);
+if (counterR * 2 > handSize || handSize % 2 == 1) {
+  relativePosition--;
+}
+
+function updateCardRotations(seatIndex, handSize) {
   var counterR = 0;
   $('#loc' + seatIndex + 'Hand').children().each(function () {
-    let halfHand = handSize / 2;
-    let distFromCenter = counterR++ - halfHand;
-    let angle = 50 * distFromCenter / handSize;
-    let relativeHeight = (distFromCenter * distFromCenter) / (halfHand * halfHand);
-    rotate($(this), angle, relativeHeight*15);
-  }); 
+    let halfHand = (handSize / 2);
+    var relativePosition = counterR - halfHand;
+    if (counterR * 2 > handSize || handSize % 2 == 1) {
+      relativePosition--;
+    }
+    let angle = 50 * relativePosition / handSize;
+    let relativeHeight = (relativePosition * relativePosition) / (halfHand * halfHand);
+    rotate($(this), angle, relativeHeight * 15);
+  });
 }
+
 function displayOtherCards(seatIndex, handSize) {
   console.log(">>>>>>>>>>>>>displayCards----in: #loc" + seatIndex + "Hand------------seatIndex: " + seatIndex + "  >>  handSize: " + handSize);
   $('#loc' + seatIndex + 'Hand').empty();
