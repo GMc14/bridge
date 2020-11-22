@@ -388,18 +388,21 @@ function highlightCommunicatable() {
   }
 }
 
-function updateCardRotations(seatIndex, handSize) {
+function updateCardRotations(seatIndex) {
   var counterR = 1;
+  let handSize = $('#loc' + seatIndex + 'Hand').children();
   $('#loc' + seatIndex + 'Hand').children().each(function () {
     let halfHand = (handSize / 2);
     var relativePosition = Math.floor(counterR - halfHand);
     console.log("updateCardRotations card "+counterR+" / "+handSize +"    relativePosition: "+relativePosition);
-    if (counterR * 2 > handSize || handSize % 2 == 1) {
+    if (counterR * 2 > handSize && handSize % 2 == 0) {
       relativePosition--;
     }
+    console.log("updateCardRotations card "+counterR+" / "+handSize +"    Adjusted relativePosition: "+relativePosition);
+    
     let angle = 50 * relativePosition / handSize;
     let relativeHeight = (relativePosition * relativePosition) / (halfHand * halfHand);
-    rotate($(this), angle, (relativeHeight * 15) - 15);
+    rotate($(this), angle, (relativeHeight * 15) - 25);
     counterR++;
   });
 }
@@ -413,7 +416,7 @@ function displayOtherCards(seatIndex, handSize) {
     $(".cardback:eq(0)").clone().show().appendTo(card);
     $('#loc' + seatIndex + 'Hand').append(card);
   }
-  updateCardRotations(seatIndex, handSize);
+  updateCardRotations(seatIndex);
 }
 
 function playCard() {
@@ -465,5 +468,5 @@ function othersPlayed(player, card) {
     $(cardObj).addClass('isTrump');
   }
   $("#loc" + seatIndex + "play").append(cardObj);
-  updateCardRotations(seatIndex, $("#loc" + seatIndex + "Hand").find(".otherCards").length);
+  updateCardRotations(seatIndex);
 }

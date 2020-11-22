@@ -169,7 +169,10 @@
       <select id="suitSelectionDropdown" size=1></select>
       <script>
         $.each(trumpOptions, function () {
-          $("#suitSelectionDropdown").append($("<option id='trumpSuitDropOption"+this+"' value='" + this + "'>"+this+"</option>"));
+          if (this != 'NT') {
+            $("#suitSelectionDropdown").append($("<option id='trumpSuitDropOption" + this + "' value='" + this +
+              "'>" + this + "</option>"));
+          }
         });
       </script>
       <button id="declareSuit" class="gameButtons">Choose Trump</button>

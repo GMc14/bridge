@@ -212,6 +212,7 @@ $(function () {
         displayCards(); //Display cards before & after trump determined, sort may have changed
             
         if (gameConfig_bidForTrump) {
+            lead = nextPlayer(dealer);
            startBidding();
         } else {
             if (startPlayerCard) {

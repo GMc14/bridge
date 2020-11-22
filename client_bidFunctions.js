@@ -2,7 +2,7 @@ var otherColor;
 var playerColor;
 var currentBidder;
 var currentBid;
-var passCount=0;
+var passCount = 0;
 
 function updateActionStates() {
   const isMyTurn = playerNum == currentBidder;
@@ -10,8 +10,8 @@ function updateActionStates() {
   $("#orderUp").toggle(gameConfig_biddingState == BiddingStates.ORDERING_UP && isMyTurn);
   $("#declareSuit").toggle(gameConfig_biddingState == BiddingStates.SUIT_SELECTION && isMyTurn);
   $("#suitSelectionDropdown").toggle(gameConfig_biddingState == BiddingStates.SUIT_SELECTION && isMyTurn);
-  $(".bidCell").hide(gameConfig_biddingState == BiddingStates.BETTING);
-  $('#pass').toggle(isMyTurn);
+  $(".bidCell").toggle(gameConfig_biddingState == BiddingStates.BETTING);
+  $('#pass').toggle(isMyTurn && gameConfig_biddingState != BiddingStates.FINISHED);
 }
 
 function startBidding() {
@@ -76,6 +76,7 @@ function startBidding() {
 
   } else if (gameConfig_biddingState == BiddingStates.ORDERING_UP) {
     gameConfig_biddingState = BiddingStates.SUIT_SELECTION;
+    $("#suitSelectionDropdown > #trumpSuitDropOption" + trumpSuit).prop('disabled', true)
   } else {
     alert("not prebid?");
   }
@@ -124,16 +125,13 @@ function someonePassed() {
       currentPlayer = nextPlayer(currentBidder);
       lead = currentPlayer;
       $('#bidArea').hide();
-      if (playerNum == currentPlayer) {
-        updateTurnIndicator("You", true, true);
-      }
-
+      updateTurnIndicator(getNicknameForPlayer(currentBidder), playerNum == currentBidder, false);
       $('#bidOfRound').show();
       gameConfig_biddingState = BiddingStates.FINISHED;
       return;
     }
   } else if (gameConfig_biddingState == BiddingStates.ORDERING_UP) {
-    console.log("someonePassed: ORDERING_UP passCount: "+passCount+" / "+gameConfig_playerCount);
+    console.log("someonePassed: ORDERING_UP passCount: " + passCount + " / " + gameConfig_playerCount);
     if (passCount == gameConfig_playerCount) {
       console.log("someonePassed: move to suit selection");
       startBidding();
@@ -142,19 +140,21 @@ function someonePassed() {
   }
 
   currentBidder = nextPlayer(currentBidder);
-  if (playerNum == currentBidder) {
-    updateTurnIndicator("You", true, false);
-  }
-  updateActionStates()
+  updateTurnIndicator(getNicknameForPlayer(currentBidder), playerNum == currentBidder, false);
+  updateActionStates();
 }
 
 function suitDeclared(suit) {
   console.log("suitDeclared: " + suit);
   trumpSuit = suit;
   gameConfig_biddingState = BiddingStates.FINISHED;
+  updateActionStates();
+  updateTurnIndicator(getNicknameForPlayer(lead), false, true);
 }
 
 function orderedUp() {
   console.log("orderedUp");
   gameConfig_biddingState = BiddingStates.FINISHED;
+  updateActionStates();
+  updateTurnIndicator(getNicknameForPlayer(lead), false, true);
 }

@@ -1,7 +1,8 @@
 function rotate($el, degrees, yTans = 0) {
   $el.css({
-      'transform': 'rotate(' + degrees + 'deg) translateY('+yTans+'px)',
-      'zoom': 1
+    'transform-origin': 'bottom center',
+    'transform': 'rotate(' + degrees + 'deg) translateY(' + yTans + 'px)',
+    'zoom': 1
   });
 }
 
@@ -18,9 +19,11 @@ const getCircularReplacer = () => {
   };
 };
 
-function noNulls(arr){
-	for (var j=0; j<arr.length; j++) {
-		if(arr[j] == null) {return false;}
-	}
-	return true;
+function noNulls(arr) {
+  for (var j = 0; j < arr.length; j++) {
+    if (arr[j] == null) {
+      return false;
+    }
+  }
+  return true;
 }
