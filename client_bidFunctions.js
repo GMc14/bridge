@@ -148,6 +148,7 @@ function suitDeclared(suit) {
   console.log("suitDeclared: " + suit);
   trumpSuit = suit;
   gameConfig_biddingState = BiddingStates.FINISHED;
+  currentPlayer = lead;
   updateActionStates();
   updateTurnIndicator(getNicknameForPlayer(lead), false, true);
 }
@@ -155,6 +156,7 @@ function suitDeclared(suit) {
 function orderedUp() {
   console.log("orderedUp");
   gameConfig_biddingState = BiddingStates.FINISHED;
+  currentPlayer = lead;
   updateActionStates();
   updateTurnIndicator(getNicknameForPlayer(lead), false, true);
 }

@@ -173,7 +173,7 @@ function prevPlayer(currPlayer) {
 }
 
 function updateTurnIndicator(playerOnTurnName, isMe = false, isLead = false) {
-  console.log("updateTurnIndicator");
+  console.log("updateTurnIndicator: "+gameConfig_captainTitle);
 
   $("#commanderText").html("<b>"+gameConfig_captainTitle+":</b> "+commanderName);
   $("#commanderText").toggle(gameConfig_captainTitle);

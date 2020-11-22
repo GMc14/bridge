@@ -1,9 +1,9 @@
 function rotate($el, degrees, yTans = 0) {
   $el.css({
-    'transform-origin': 'bottom center',
     'transform': 'rotate(' + degrees + 'deg) translateY(' + yTans + 'px)',
     'zoom': 1
   });
+  //    'transform-origin': 'bottom center',
 }
 
 const getCircularReplacer = () => {
