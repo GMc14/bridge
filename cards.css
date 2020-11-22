@@ -96,17 +96,17 @@ div#myHand.highlighted {
 }
 
 #trickDetails {
-  background: rgba(53, 53, 53, 0.4);
+  /* background: rgba(53, 53, 53, 0.4); */
   position: absolute;
-  top: -2vmax;
+  top: -3.5vmax;
   width: 15vmax;
-  max-height: 15vmax;
-  overflow-y: auto;
+  /* max-height: 15vmax;
+  overflow-y: auto; */
   z-index: 99999;
 }
 
 .trick {
-  margin-top: -3vmax;
+  margin-top: -3.5vmax;
 }
 
 .wonTrickCard {
