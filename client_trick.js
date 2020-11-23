@@ -119,72 +119,73 @@ function addTrickWin(who, cards) {
   var wonTricks = $('#' + who);
   $(wonTricks).append(cardDiv);
   $(wonTricks).hover(
-      function () {
-          if (!hoveringOverWonTricks) {
-              hoveringOverWonTricks = true;
-              $($(this).children()[0]).attr("data-cards").split(',');
-              console.log("wonTricks hover...");
-              var trickDetailsDiv = $("<div id='trickDetails'></div>");
-              $(this).children().each(function () {
-                  console.log("wonTricks Child:  " + $(this).attr("data-cards"));
-                  if ($(this).attr("data-cards")) {
-                      var cardsToDraw = $(this).attr("data-cards").split(',');
-                      var trick = $("<div class='trick'></div>");
-                      for (var i = 0; i < cardsToDraw.length; i++) {
-                          var img_src = "/card_imgs/" + cardsToDraw[i] + ".png";
-                          $(trick).append("<img class='wonTrickCard' src='" + img_src + "'/>");
-                      }
-                      $(trickDetailsDiv).append(trick);
-                  }
-              });
-              $(this).attr("data-cards")
-              $(this).append(trickDetailsDiv);
+    function () {
+      if (!hoveringOverWonTricks) {
+        hoveringOverWonTricks = true;
+
+        console.log("wonTricks hover...");
+        var trickDetailsDiv = $("<div id='trickDetails'></div>");
+        $(this).children().each(function () {
+          console.log("wonTricks Child:  " + $(this).attr("data-cards"));
+          if ($(this).attr("data-cards")) {
+            var cardsToDraw = $(this).attr("data-cards").split(',');
+            var trick = $("<div class='trick'></div>");
+            for (var i = 0; i < cardsToDraw.length; i++) {
+              var img_src = "/card_imgs/" + cardsToDraw[i] + ".png";
+              $(trick).append("<img class='wonTrickCard' src='" + img_src + "'/>");
+            }
+            $(trickDetailsDiv).append(trick);
           }
-      },
-      function () {
-          console.log("wonTricks UNhover...");
-          $("#trickDetails").remove();
-          hoveringOverWonTricks = false;
+        });
+        $(this).attr("data-cards")
+        $(this).append(trickDetailsDiv);
+
       }
+    },
+    function () {
+      console.log("wonTricks UNhover...");
+      $("#trickDetails").remove();
+      hoveringOverWonTricks = false;
+    }
   );
 }
 
 function nextPlayer(currPlayer) {
-  console.log("nextPlayer----currPlayer:"+currPlayer);
+  console.log("nextPlayer----currPlayer:" + currPlayer);
   var currNumber = Number(currPlayer.slice(-1));
   currNumber += 1;
   if (currNumber > gameConfig_playerCount) {
-      currNumber = 1;
+    currNumber = 1;
   }
   return "Player" + currNumber;
 }
 
 function prevPlayer(currPlayer) {
-  console.log("prevPlayer----currPlayer:"+currPlayer);
+  console.log("prevPlayer----currPlayer:" + currPlayer);
   var currNumber = Number(currPlayer.slice(-1));
   currNumber -= 1;
   if (currNumber < 1) {
-      currNumber = gameConfig_playerCount;
+    currNumber = gameConfig_playerCount;
   }
   return "Player" + currNumber;
 }
 
 function updateTurnIndicator(playerOnTurnName, isMe = false, isLead = false) {
-  console.log("updateTurnIndicator: "+gameConfig_captainTitle);
-  if(gameConfig_captainTitle){
-    $("#commanderText").html("<b>"+gameConfig_captainTitle+":</b> "+commanderName);
+  console.log("updateTurnIndicator: " + gameConfig_captainTitle);
+  if (gameConfig_captainTitle) {
+    $("#commanderText").html("<b>" + gameConfig_captainTitle + ":</b> " + commanderName);
     $("#commanderText").show();
   } else {
     $("#commanderText").hide();
   }
-  
 
-  $("#turnText").html("<b>"+(isLead ? "To Lead" : "To Play") + ":</b> " + playerOnTurnName);
+
+  $("#turnText").html("<b>" + (isLead ? "To Lead" : "To Play") + ":</b> " + playerOnTurnName);
   if (isMe) {
-      $("#myHand").addClass("highlighted");
-      if(!isLead && gameConfig_biddingState == BiddingStates.FINISHED){
-        highlightPlayable();
-      }
+    $("#myHand").addClass("highlighted");
+    if (!isLead && gameConfig_biddingState == BiddingStates.FINISHED) {
+      highlightPlayable();
+    }
   }
 
 }

@@ -14,6 +14,7 @@ function startGame() {
   $("#alternativeActions").show();
   $(".otherPlayerHand").empty();
   $("#helpLegendTrigger").toggle(gameType == GameType.CREW);
+  $("#settingTrigger").show();
 
   if (isGameMaster) {
     $("#gameControls").show();

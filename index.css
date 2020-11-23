@@ -135,7 +135,6 @@ td, th {
   max-height: 100%;
 }
 
-
 #topbar {
   display: none;
   text-align: right;
@@ -144,9 +143,10 @@ td, th {
   background: rgba(53, 53, 53, 0.6);
 }
 
-#topbar > span{
+#topbar>span {
   margin-left: 3vmax;
 }
+
 #gameBoard {
   position: relative;
   margin: 0;
@@ -195,15 +195,20 @@ td, th {
   border-image: linear-gradient(190deg, rgba(233, 233, 233, 0.9) 0%, rgba(56, 75, 73, 0.9) 35%, rgba(252, 176, 69, 0) 80%);
 }
 
-#helpLegendTrigger {
+#helpLegendTrigger, #settingsTrigger {
   display: none;
   position: absolute;
   left: 11vw;
-  top: 1vw;
+  top: 0.5vmax;
   height: 2vmax;
 }
 
-#helpLegend {
+#helpLegendTrigger {
+  left: 11vw;
+  top: 3vmax;
+}
+
+#helpLegend, #settings {
   display: none;
   position: fixed;
   left: 2vmax;
@@ -214,7 +219,7 @@ td, th {
 #gameControls {
   position: absolute;
   left: 10vw;
-  bottom: 10vh;
+  bottom: 25vh;
   height: 10vh;
   width: 10vw;
   border: 2px double #18f;
@@ -325,12 +330,14 @@ div::-webkit-scrollbar-thumb {
 
 .plyrDropName {
   display: none;
+  z-index: 3;
 }
 
 #myDrpPlyrName {
   position: absolute;
   top: 58.5vh;
   left: 42vw;
+  z-index: 3;
 }
 
 #myName {
@@ -399,7 +406,8 @@ div::-webkit-scrollbar-thumb {
   box-shadow: 0px 0px 1.5vmax rgba(0, 182, 82, 0.5);
   color: white;
 }
-#commanderText{
+
+#commanderText {
   transition-duration: 0s;
 }
 
