@@ -155,6 +155,7 @@ $(function () {
 function updateRoom(room) {
   roomState = room;
   console.log("--------updateRoom-----------" + JSON.stringify(roomState));
+  setGameType(roomState.gameType);
   gameConfig_playerCount = roomState.players.length;
 
   initPlayerModule();

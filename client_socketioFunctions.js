@@ -9,6 +9,7 @@ var inversePlayerIdMap = [];
 //Game
 var gameType;
 var bonusCards;
+var gameConfig_gameName;
 var gameConfig_permaTrumpSuit;
 var gameConfig_hasTeams;
 var gameConfig_topDeckTrump;
@@ -37,6 +38,7 @@ const BiddingStates = {
 function setGameType(gT) {
     gameType = gT;
     bonusCards = [];
+    gameConfig_gameName='Unknown';
     gameConfig_permaTrumpSuit = '';
     gameConfig_hasTeams = false;
     gameConfig_topDeckTrump = false;
@@ -59,6 +61,7 @@ function setGameType(gT) {
     console.log("-------B------" + GameType.CREW);
 
     if (gameType == GameType.CREW) {
+        gameConfig_gameName='The Crew';
         bonusCards = crewBonusCards;
         gameConfig_permaTrumpSuit = 'R';
         ranks = crewRanks;
@@ -69,12 +72,14 @@ function setGameType(gT) {
         gameConfig_maxPlayerCount = 5;
         gameConfig_captainTitle = 'Commander'
     } else if (gameType == GameType.BRIDGE) {
+        gameConfig_gameName='Bridge';
         gameConfig_bidForTrump = true;
         gameConfig_biddingState = BiddingStates.PREBID;
         gameConfig_hasTeams = true;
         gameConfig_minPlayerCount = 4;
         gameConfig_maxPlayerCount = 4;
     } else if (gameType == GameType.EUCHRE) {
+        gameConfig_gameName='Euchre';
         gameConfig_bidForTrump = true;
         gameConfig_biddingState = BiddingStates.PREBID;
         gameConfig_hasTeams = true;
