@@ -179,6 +179,7 @@
     }
     $(".cardBackOption").click(function () {
       $(this).addClass('ui-selected').siblings().removeClass('ui-selected');
+      $(".cardback").attr("src",$(".cardBackOption.ui-selected").prop("src"));
     });
 
     $(".tableClothOption").click(function () {

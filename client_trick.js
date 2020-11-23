@@ -35,9 +35,9 @@ function resolveTrick() {
     var cardImgId = $(this).find("img").attr("id");
     console.log("GMcCards-rules.js-********* iterating plays1: " + cardImgId + "       : " + JSON.stringify(trickCards));
     if (cardImgId) {
-      let card2 = getCardFromID(cardImgId.slice(0, -4));
-      trickCards.push(card2);
-      if (!compareCard(myCard, card2)) {
+      let otherCard = getCardFromID(cardImgId.slice(0, -4));
+      trickCards.push(otherCard);
+      if (!compareCard(myCard, otherCard)) {
         iaAmTheWinner = false;
       }
     } else {
@@ -57,21 +57,23 @@ function resolveTrick() {
       trickCards: trickCards
     });
   }
-  function compareCard(card1, card2) {
-    compareRawCard(getEuchreCardValue(card1),getEuchreCardValue(card2));
-  }
+}
 
-  function compareRawCard(card1, card2) {
-    let win = 1;
-    if (card1.suit == card2.suit) {
-      win = (card1.rank >= card2.rank) ? 1 : 0;
-    } else if (card1.suit != trumpSuit && card2.suit == trumpSuit) {
-      win = 0;
-    } else if ((card1.suit != trumpSuit && card1.suit != leadSuit) && card2.suit == leadSuit) {
-      win = 0;
-    }
-    return win;
+function compareCard(card1, card2) {
+  compareRawCard(getEuchreCardValue(card1), getEuchreCardValue(card2));
+}
+
+function compareRawCard(card1, card2) {
+  let win = 1;
+  if (card1.suit == card2.suit) {
+    win = (card1.rank >= card2.rank) ? 1 : 0;
+  } else if (card1.suit != trumpSuit && card2.suit == trumpSuit) {
+    win = 0;
+  } else if ((card1.suit != trumpSuit && card1.suit != leadSuit) && card2.suit == leadSuit) {
+    win = 0;
   }
+  return win;
+}
 
 function addTrickWinText(who, wins) {
   $("#" + who).text(wins);
