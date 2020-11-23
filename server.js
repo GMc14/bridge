@@ -148,7 +148,7 @@ io.sockets.on('connection', function (socket) {
     }
   });
   socket.on('setNickname', function (nickname) {
-    console.log("setNickname...: " + JSON.stringify(nickname));
+    console.log("$$$$$$$$$$$$$$$$$$$$      setNickname...: " + JSON.stringify(nickname));
     setNickname(socket, socket.id, nickname, true);
   });
   socket.on('playerStand', function (player) {

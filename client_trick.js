@@ -27,18 +27,17 @@ function isFollowingSuit(card) {
 
 function resolveTrick() {
   console.log("GMcCards-rules.js-resolveTrick-#0000");
-  var myCard = $("#myPlay");
   var trickCards = [];
   var iaAmTheWinner = true;
-  var card1ID = myCard.find("img").attr("id").slice(0, -4);
-  trickCards.push(card1ID);
+  var myCard = getCardFromID($("#myPlay").find("img").attr("id").slice(0, -4));
+  trickCards.push(myCard);
   $(".plays").each(function () {
     var cardImgId = $(this).find("img").attr("id");
     console.log("GMcCards-rules.js-********* iterating plays1: " + cardImgId + "       : " + JSON.stringify(trickCards));
     if (cardImgId) {
-      var card2ID = cardImgId.slice(0, -4);
-      trickCards.push(card2ID);
-      if (!compareCard(card1ID, card2ID)) {
+      let card2 = getCardFromID(cardImgId.slice(0, -4));
+      trickCards.push(card2);
+      if (!compareCard(myCard, card2)) {
         iaAmTheWinner = false;
       }
     } else {
@@ -58,53 +57,21 @@ function resolveTrick() {
       trickCards: trickCards
     });
   }
+  function compareCard(card1, card2) {
+    compareRawCard(getEuchreCardValue(card1),getEuchreCardValue(card2));
+  }
 
-  function compareCard(card1ID, card2ID) {
-    console.log("GMcCards-rules.js-compareCard-#0000");
-    if (!card1ID) {
-      console.log("GMcCards-rules.js-compareCard-#0200---------------false");
-      return false;
-    }
-    if (!card2ID) {
-      console.log("GMcCards-rules.js-compareCard-#0300---------------true");
-      return true;
-    }
-    console.log("GMcCards-rules.js-compareCard-#0500    " + card1ID + "    <<<  vs. >>>   " + card2ID);
-    var card1Suit = card1ID.charAt(0);
-    var card2Suit = card2ID.charAt(0);
-
-    var card1Rank = Number(card1ID.substr(1));
-    var card2Rank = Number(card2ID.substr(1));
-    if (gameConfig_euchreBowers) {
-      // TODO: Change to card.rank & card.suit to allow use of getEuchreCardValue(card)
-      if (card1Rank == 11 && suitColors[card1Suit] == suitColors[trumpSuit]) {
-        if (card1Suit == trumpSuit) {
-          card1Rank += 1;
-        }
-        card1Rank += 4;
-        card1Suit = trumpSuit;
-      }
-      if (card2Rank == 11 && suitColors[card2Suit] == suitColors[trumpSuit]) {
-        if (card2Suit == trumpSuit) {
-          card2Rank += 1;
-        }
-        card2Rank += 4;
-        card2Suit = trumpSuit;
-      }
-    }
-    var win = 1;
-    if (card1Suit == card2Suit) {
-      win = (card1Rank >= card2Rank) ? 1 : 0;
-    } else if (card1Suit != trumpSuit && card2Suit == trumpSuit) {
+  function compareRawCard(card1, card2) {
+    let win = 1;
+    if (card1.suit == card2.suit) {
+      win = (card1.rank >= card2.rank) ? 1 : 0;
+    } else if (card1.suit != trumpSuit && card2.suit == trumpSuit) {
       win = 0;
-    } else if ((card1Suit != trumpSuit && card1Suit != leadSuit) && card2Suit == leadSuit) {
+    } else if ((card1.suit != trumpSuit && card1.suit != leadSuit) && card2.suit == leadSuit) {
       win = 0;
     }
-    console.log("GMcCards-rules.js-compareCard-#1000---------------  " + win);
     return win;
   }
-  console.log("GMcCards-rules.js-resolveTrick-#1000");
-}
 
 function addTrickWinText(who, wins) {
   $("#" + who).text(wins);

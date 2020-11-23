@@ -180,22 +180,27 @@ function cardValue(card) {
 }
 
 function getEuchreCardValue(card) {
+  if(!gameConfig_euchreBowers){
+    return card;
+  }
+  var rank = card.rank;
+  var suit = card.suit;
   if (trumpSuit) {
     //only after trump is determined
-    if (card.rank == 11) {
+    if (rank == 11) {
       //only jacks
-      if (suitColors[card.suit] == suitColors[trumpSuit]) {
+      if (suitColors[suit] == suitColors[trumpSuit]) {
         //only same color
-        if (card.suit == trumpSuit) {
+        if (suit == trumpSuit) {
           //right bower higher
-          card.rank += 1;
+          rank += 1;
         }
-        card.rank += 4;
-        card.suit = trumpSuit;
+        rank += 4;
+        suit = trumpSuit;
       }
     }
   }
-  return card;
+  return {rank:rank, suit:suit};
 }
 
 function sortHand() {

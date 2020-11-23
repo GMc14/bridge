@@ -23,7 +23,8 @@ function initPlayerModule() {
   var previousNickName = $.cookie("nickname");
   if (previousNickName) {
     $("#nicknameInput").val(previousNickName);
-    socketio.emit('setNickName', previousNickName);
+    console.log("--------------previousNickName----------------"+previousNickName);
+    socketio.emit('setNickname', previousNickName);
   }
 
   $("#startGameButton").toggle(isGameMaster);
@@ -157,9 +158,9 @@ function updateRoom(room) {
   console.log("--------updateRoom-----------" + JSON.stringify(roomState));
   if (roomState.gameType) {
     setGameType(roomState.gameType);
+    $("#gameNameText").html("<b>Game Type:</b> " + gameConfig_gameName);
   }
   gameConfig_playerCount = roomState.players.length;
-  $("#gameNameText").html("<b>Game Type:</b> " + gameConfig_gameName);
   initPlayerModule();
   console.log("--------updateRoom ------roomState.players-----" + JSON.stringify(roomState.players));
   var standingPlayersHTMLString = "Waiting for... <br />";

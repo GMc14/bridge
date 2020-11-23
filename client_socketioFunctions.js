@@ -273,11 +273,7 @@ $(function () {
 
         othersPlayed(player, card);
         if (currentPlayer == lead) {
-            leadSuit = card.suit;
-            // TODO: Change to card.rank & card.suit to allow use of getEuchreCardValue(card)
-            if (gameConfig_euchreBowers && card.rank == "11" && suitColors[leadSuit] == suitColors[trumpSuit]) {
-                leadSuit = trumpSuit;
-            }
+            leadSuit = getEuchreCardValue(card).suit;
         }
         if (nextPlayer(currentPlayer) == lead) {
             resolveTrick();
