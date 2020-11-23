@@ -78,13 +78,15 @@ function leave(room, playerId) {
 }
 
 function setNickname(socket, playerId, nickname, triggerUpdate = false) {
+  console.log("server setNickname... playerId: "+playerId+"   nickname: "+nickname);
   var room = io.sockets.adapter.rooms[socket.room];
   for (var i = 0; i < room.players.length; i++) {
     if (room.players[i].id == playerId) {
-      room.players[i].nickname = nickname;
+      io.sockets.adapter.rooms[socket.room].players[i].nickname = nickname;
     }
   }
   if (triggerUpdate) {
+    console.log("server setNickname now Update...");
     io.sockets.to(socket.room).emit('updateRoom', io.sockets.adapter.rooms[socket.room]);
   }
 }

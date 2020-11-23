@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-
 <head>
   <meta charset="utf-8">
   <title>GMcCrew</title>
@@ -40,6 +39,7 @@
   <span id='signature'>GMc14</span>
   <div id="gameBoard">
     <div id=topbar>
+      <span id="gameNameText"></span>
       <span id="commanderText"></span>
       <span id="turnText"></span>
       <span id="roomText"></span>
@@ -168,7 +168,6 @@
       </div>
     </div>
   </div>
-
   <script>
     $("#gameDrop").append($("<option value='" + GameType.CREW + "'>The Crew</option>"));
     $("#gameDrop").append($("<option value='" + GameType.BRIDGE + "'>Bridge</option>"));
@@ -213,5 +212,4 @@
     });
   </script>
 </body>
-
 </html>

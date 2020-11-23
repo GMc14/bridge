@@ -157,7 +157,7 @@ function updateRoom(room) {
   console.log("--------updateRoom-----------" + JSON.stringify(roomState));
   setGameType(roomState.gameType);
   gameConfig_playerCount = roomState.players.length;
-
+  $("#gameNameText").id("<b>Game Type:</b> "+gameConfig_gameName);
   initPlayerModule();
   console.log("--------updateRoom ------roomState.players-----" + JSON.stringify(roomState.players));
   var standingPlayersHTMLString = "Waiting for... <br />";
