@@ -337,24 +337,26 @@ function highlightCommunicatable() {
   var lowest = [];
 
   for (var i = 0; i < myHandOfCards.length; i++) {
-    var cardID = getCardID(myHandOfCards[i]);
-    if (!highest[cardSuit] || highest[cardSuit] < cardRank) {
-      highest[cardSuit] = cardRank;
+    const card = myHandOfCards[i];
+    var cardID = getCardID(card);
+    if (!highest[card.suit] || highest[card.suit] < card.rank) {
+      highest[card.suit] = card.rank;
     }
-    if (!lowest[cardSuit] || lowest[cardSuit] > cardRank) {
-      lowest[cardSuit] = cardRank;
+    if (!lowest[card.suit] || lowest[card.suit] > card.rank) {
+      lowest[card.suit] = card.rank;
     }
     var encodedI = i + 10;
     $("#" + encodedI + cardID).addClass("highlighted");
   }
   for (var i = 0; i < myHandOfCards.length; i++) {
-    var cardID = getCardID(myHandOfCards[i]);
+    const card = myHandOfCards[i];
+    var cardID = getCardID(card);
     var encodedI = i + 10;
-    if (highest[cardSuit] && highest[cardSuit] == cardRank && lowest[cardSuit] && lowest[cardSuit] == cardRank) {
+    if (highest[card.suit] && highest[card.suit] == card.rank && lowest[card.suit] && lowest[card.suit] == card.rank) {
       $("#" + encodedI + cardID).addClass("onlyOption");
-    } else if (highest[cardSuit] && highest[cardSuit] == cardRank) {
+    } else if (highest[card.suit] && highest[card.suit] == card.rank) {
       $("#" + encodedI + cardID).addClass("highestOption");
-    } else if (lowest[cardSuit] && lowest[cardSuit] == cardRank) {
+    } else if (lowest[card.suit] && lowest[card.suit] == card.rank) {
       $("#" + encodedI + cardID).addClass("lowestOption");
     }
   }

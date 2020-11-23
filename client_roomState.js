@@ -91,7 +91,6 @@ function joinRoom() {
   $("#leaveRoom").show();
   $("#playerSetup").show();
   //$("#chat").show();
-  $("#uiChoices").show();
   $("#roomSelection").hide();
 }
 

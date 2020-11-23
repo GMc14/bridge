@@ -1,4 +1,3 @@
-
 #gameSetup {
   background: rgba(90, 130, 250, 0.4);
 }
@@ -6,37 +5,40 @@
 #roomSelection, #playerSetup {
   position: fixed;
   vertical-align: middle;
-  top:7.5%;
+  top: 7.5%;
   left: 50%;
   transform: translateX(-50%);
   padding: 2vh;
   background: rgba( 90, 90, 90, 0.4);
 }
 
-#playersInRoom, #seatingArea {  
+#playersInRoom, #seatingArea {
   margin-top: 1vmin;
   background: rgba( 40, 40, 40, 0.4);
   width: 100%;
   min-height: 5vh;
-  margin-bottom:2vh;
+  margin-bottom: 2vh;
 }
-#playerSetup, #uiChoices {
+
+#playerSetup, #settings {
   display: none;
-  z-index:1;
+  z-index: 1;
 }
-#playerSetup{
-  z-index:2;
+
+#playerSetup {
+  z-index: 2;
 }
+
 .largeInputText {
   margin-top: 1vmin;
-  margin-bottom:2vh;
+  margin-bottom: 2vh;
   text-align: center;
   font-size: 4vmax;
 }
 
 #enterRoomButton {
   float: right;
-  margin-top:-1vh;
+  margin-top: -1vh;
 }
 
 #startGameButton {
@@ -76,8 +78,7 @@
   background-size: 20px 20px;
 }
 
-.setupInputLabel{
-}
+.setupInputLabel {}
 
 .ui-selected {
   border: 0.2vmax solid #ff3;
@@ -89,11 +90,10 @@
   right: 1.5vmax;
   font-family: 'Dawning of a New Day';
   font-size: 3vmax;
-  color: transparent; 
-  background: rgba( 40, 40, 40, 0.6); 
-  -webkit-background-clip: text; 
-  text-shadow: 2px 5px 5px  
-      rgba(100, 100, 100, 0.4); 
+  color: transparent;
+  background: rgba( 40, 40, 40, 0.6);
+  -webkit-background-clip: text;
+  text-shadow: 2px 5px 5px rgba(100, 100, 100, 0.4);
 }
 
 #leaveRoom {
