@@ -77,16 +77,21 @@ function leave(room, playerId) {
   //??sockets.remove(playerId);
 }
 
-function setNickname(socket, playerId, nickname, triggerUpdate=false) {
+function setNickname(socket, playerId, nickname, triggerUpdate = false) {
   var room = io.sockets.adapter.rooms[socket.room];
   for (var i = 0; i < room.players.length; i++) {
     if (room.players[i].id == playerId) {
       room.players[i].nickname = nickname;
     }
   }
-  if(triggerUpdate){
+  if (triggerUpdate) {
     io.sockets.to(socket.room).emit('updateRoom', io.sockets.adapter.rooms[socket.room]);
   }
+}
+
+function setGameType(socket, gameType) {
+  io.sockets.adapter.rooms[socket.room].gameType = gameType;
+  io.sockets.to(socket.room).emit('updateRoom', io.sockets.adapter.rooms[socket.room]);
 }
 
 function sit(socket, seatIndex, playerId) {
@@ -153,18 +158,14 @@ io.sockets.on('connection', function (socket) {
       console.log("unauthorized seat kick");
     }
   });
-  socket.on('startGameOnServer', function (gameType) {
-    console.log("---startGameOnServer----");
-    var startGamePlayerCount = io.sockets.adapter.rooms[socket.room].length;
-    console.log("---startGameOnServer---- startGamePlayerCount" + startGamePlayerCount);
-    io.sockets.to(socket.room).emit('updateRoom', io.sockets.adapter.rooms[socket.room]);
-    io.sockets.to(socket.room).emit('startGame', {playerCount:startGamePlayerCount, gameType:gameType});
-  });
   socket.on('sendMessage', function (data) {
     io.sockets.to(socket.room).emit('message', data);
   });
   socket.on('setMaxRoomSize', function (data) {
     maximumRoomSize = data;
+  });
+  socket.on('setGameType', function (gameType) {
+    setGameType(socket, gameType);
   });
   //Pregame
   socket.on('assignShortName', function (data) {
@@ -187,6 +188,17 @@ io.sockets.on('connection', function (socket) {
     io.sockets.to(socket.room).emit('restartGame');
   });
   //Game Play
+  socket.on('startGameOnServer', function (gameType) {
+    console.log("---startGameOnServer----");
+    var startGamePlayerCount = io.sockets.adapter.rooms[socket.room].length;
+    console.log("---startGameOnServer---- startGamePlayerCount" + startGamePlayerCount);
+    io.sockets.to(socket.room).emit('updateRoom', io.sockets.adapter.rooms[socket.room]);
+    io.sockets.to(socket.room).emit('startGame', {
+      playerCount: startGamePlayerCount,
+      gameType: gameType
+    });
+  });
+
   socket.on('dealCards', function (data) {
     io.sockets.to(socket.room).emit('dealToClients', data);
   });
@@ -197,7 +209,7 @@ io.sockets.on('connection', function (socket) {
     io.sockets.to(socket.room).emit('some1Passed');
   });
   socket.on('declareSuit', function (suit) {
-    io.sockets.to(socket.room).emit('declareSuit',suit);
+    io.sockets.to(socket.room).emit('declareSuit', suit);
   });
   socket.on('orderUp', function () {
     io.sockets.to(socket.room).emit('orderUp');

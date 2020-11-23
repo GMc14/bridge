@@ -195,19 +195,27 @@ td, th {
   border-image: linear-gradient(190deg, rgba(233, 233, 233, 0.9) 0%, rgba(56, 75, 73, 0.9) 35%, rgba(252, 176, 69, 0) 80%);
 }
 
-#helpLegendTrigger, #settingsTrigger {
+.material-icons {
   display: none;
+  cursor: pointer;
+  font-size: 2vmax;  
+  font-weight: bold;
+  z-index: 99;
+  user-select: none;
+}
+.material-icons:hover{
+  text-shadow: 0 0 3vmax #cccc00, 0 0 2vmax #669900, 0 0 1vmax #6699ff;
+}
+#settingsTrigger {
   position: absolute;
   left: 11vw;
   top: 0.5vmax;
-  height: 2vmax;
 }
-
 #helpLegendTrigger {
+  position: absolute;
   left: 11vw;
   top: 3vmax;
 }
-
 #helpLegend, #settings {
   display: none;
   position: fixed;
@@ -216,6 +224,29 @@ td, th {
   z-index: 99999999999;
 }
 
+.noComms {
+  -webkit-text-stroke: 1px #c66;
+  color: #a21;
+  text-shadow: 3px 3px 0 #c66, -1px -1px 0 #c66, 1px -1px 0 #c66, -1px 1px 0 #c66, 1px 1px 0 #c66;
+}
+
+.usedComms {
+  -webkit-text-stroke: 1px #ccc;
+  color: #333;
+  text-shadow: 3px 3px 0 #ccc, -1px -1px 0 #ccc, 1px -1px 0 #ccc, -1px 1px 0 #ccc, 1px 1px 0 #ccc;
+}
+
+.limitedComms {
+  -webkit-text-stroke: 1px #cc6;
+  color: #dc0;
+  text-shadow: 3px 3px 0 #cc6, -1px -1px 0 #cc6, 1px -1px 0 #cc6, -1px 1px 0 #cc6, 1px 1px 0 #cc6;
+}
+
+.readyComms {
+  -webkit-text-stroke: 1px #6c6;
+  color: #383;
+  text-shadow: 3px 3px 0 #6c6, -1px -1px 0 #6c6, 1px -1px 0 #6c6, -1px 1px 0 #6c6, 1px 1px 0 #6c6;
+}
 #gameControls {
   position: absolute;
   left: 10vw;
@@ -278,14 +309,6 @@ b {
   background-image: radial-gradient(RGBA(0, 0, 0, 1), RGBA(0, 0, 0, 0.33), RGBA(0, 0, 0, 0));
 }
 
-#myCommunication {
-  font-size: 2vmax;
-  cursor: pointer;
-  font-weight: bold;
-  z-index: 99;
-  user-select: none;
-}
-
 div::-webkit-scrollbar-track {
   -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.9);
   border-radius: 10px;
@@ -304,29 +327,6 @@ div::-webkit-scrollbar-thumb {
   background-image: -webkit-linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.4) 50%, transparent, transparent)
 }
 
-.noComms {
-  -webkit-text-stroke: 1px #c66;
-  color: #a21;
-  text-shadow: 3px 3px 0 #c66, -1px -1px 0 #c66, 1px -1px 0 #c66, -1px 1px 0 #c66, 1px 1px 0 #c66;
-}
-
-.usedComms {
-  -webkit-text-stroke: 1px #ccc;
-  color: #333;
-  text-shadow: 3px 3px 0 #ccc, -1px -1px 0 #ccc, 1px -1px 0 #ccc, -1px 1px 0 #ccc, 1px 1px 0 #ccc;
-}
-
-.limitedComms {
-  -webkit-text-stroke: 1px #cc6;
-  color: #dc0;
-  text-shadow: 3px 3px 0 #cc6, -1px -1px 0 #cc6, 1px -1px 0 #cc6, -1px 1px 0 #cc6, 1px 1px 0 #cc6;
-}
-
-.readyComms {
-  -webkit-text-stroke: 1px #6c6;
-  color: #383;
-  text-shadow: 3px 3px 0 #6c6, -1px -1px 0 #6c6, 1px -1px 0 #6c6, -1px 1px 0 #6c6, 1px 1px 0 #6c6;
-}
 
 .plyrDropName {
   display: none;
@@ -401,7 +401,7 @@ div::-webkit-scrollbar-thumb {
   color: #333;
 }
 
-.gameButtons:hover, .startBtn:hover, #myCommunication:hover {
+.gameButtons:hover, .startBtn:hover {
   background-color: #435078;
   box-shadow: 0px 0px 1.5vmax rgba(0, 182, 82, 0.5);
   color: white;

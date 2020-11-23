@@ -13,8 +13,11 @@ function initPlayerModule() {
 
   setGameType($("#gameDrop").val());
   $("#teamInfo").toggle(gameConfig_hasTeams);
+  $("#gameDrop").toggle(isGameMaster);
   $("#gameDrop").change(function(){
     $("#teamInfo").toggle(gameConfig_hasTeams);
+    setGameType($("#gameDrop").val());
+    socketio.emit('setGameType', gameType);
   });
 
   var previousNickName = $.cookie("nickname");
@@ -26,12 +29,11 @@ function initPlayerModule() {
   $("#startGameButton").toggle(isGameMaster);
   $("#startGameButton:visible").on("click", function () {
     if (isOkayToStartTheGame()) {
-      socketio.emit('startGameOnServer', $("#gameDrop").val());
+      socketio.emit('startGameOnServer', gameType);
     } else {
       alert("Problematic Open Seats");
     }
   });
-
 }
 
 function applySeatButtonClickListener() {
@@ -89,7 +91,6 @@ function joinRoom() {
   $("#leaveRoom").show();
   $("#playerSetup").show();
   //$("#chat").show();
-  
   $("#uiChoices").show();
   $("#roomSelection").hide();
 }
@@ -100,7 +101,6 @@ function leaveRoom() {
   // $("#roomText").remove();
   // roomModule();
   window.location.reload();
-
 }
 
 function isOkayToStartTheGame() {
