@@ -137,7 +137,7 @@ $(function () {
         console.log("show THINGSSSS");
         $("#helpLegend").toggle();
     });
-    $("#settingTrigger").click(function () {
+    $("#settingsTrigger").click(function () {
         console.log("show Settings");
         $("#settings").toggle();
     });
