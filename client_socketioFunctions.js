@@ -247,11 +247,7 @@ $(function () {
             console.log("----dealToClients getNicknameForPlayer----- ");
             commanderName = getNicknameForPlayer(lead);
             $(".highlighted").removeClass("highlighted");
-            if (playerNum == currentPlayer) {
-                updateTurnIndicator("You", true, true);
-            } else {
-                updateTurnIndicator(getNicknameForPlayer(lead), false, true);
-            }
+            updateTurnIndicator(getNicknameForPlayer(lead), playerNum == lead, true);
             console.log("--------------commanderName---------------- #loc" + commanderName + '   lead' + lead);
             console.log("--------------markingLeader---------------- #loc" + leaderNum + 'name');
             $(".leader").removeClass("leader");
@@ -282,12 +278,8 @@ $(function () {
         currentPlayer = nextPlayer(currentPlayer);
 
         $(".highlighted").removeClass("highlighted");
-        if (currentPlayer == playerNum) {
-            updateTurnIndicator("You!", true, false);
-        } else {
-            console.log("----cardPlayed getNicknameForPlayer----- ");
-            updateTurnIndicator(getNicknameForPlayer(currentPlayer), false, false);
-        }
+        updateTurnIndicator(getNicknameForPlayer(currentPlayer), currentPlayer == playerNum, false);
+        
 
     });
     socketio.on('winnerOfRound', function (data) {
@@ -298,11 +290,8 @@ $(function () {
         currentPlayer = trickWinner;
         $(".highlighted").removeClass("highlighted");
         console.log("----winnerOfRound getNicknameForPlayer----- ");
-        if (playerNum == currentPlayer) {
-            updateTurnIndicator("You", true, true);
-        } else {
-            updateTurnIndicator(getNicknameForPlayer(lead), false, true);
-        }
+        updateTurnIndicator(getNicknameForPlayer(lead), playerNum == currentPlayer, true);
+        
         console.log("[][][][][][][] winner of round: " + trickWinner + " cards:" + trickCards);
         var winnerIndex = inversePlayerIdMap[trickWinner];
         if (winnerIndex) {

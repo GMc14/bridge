@@ -165,6 +165,6 @@ function biddingFinished() {
   gameConfig_biddingState = BiddingStates.FINISHED;
   currentPlayer = lead;
   updateActionStates();
-  updateTurnIndicator(getNicknameForPlayer(lead), playerNum = lead, true);
+  updateTurnIndicator(getNicknameForPlayer(lead), playerNum == lead, true);
 }
 
