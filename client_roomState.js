@@ -14,7 +14,7 @@ function initPlayerModule() {
   setGameType($("#gameDrop").val());
   $("#teamInfo").toggle(gameConfig_hasTeams);
   $("#gameDrop").toggle(isGameMaster);
-  $("#gameDrop").change(function(){
+  $("#gameDrop").change(function () {
     $("#teamInfo").toggle(gameConfig_hasTeams);
     setGameType($("#gameDrop").val());
     socketio.emit('setGameType', gameType);
@@ -23,7 +23,7 @@ function initPlayerModule() {
   var previousNickName = $.cookie("nickname");
   if (previousNickName) {
     $("#nicknameInput").val(previousNickName);
-    socketio.emit('setNickName',previousNickName);
+    socketio.emit('setNickName', previousNickName);
   }
 
   $("#startGameButton").toggle(isGameMaster);
@@ -155,9 +155,11 @@ $(function () {
 function updateRoom(room) {
   roomState = room;
   console.log("--------updateRoom-----------" + JSON.stringify(roomState));
-  setGameType(roomState.gameType);
+  if (roomState.gameType) {
+    setGameType(roomState.gameType);
+  }
   gameConfig_playerCount = roomState.players.length;
-  $("#gameNameText").id("<b>Game Type:</b> "+gameConfig_gameName);
+  $("#gameNameText").html("<b>Game Type:</b> " + gameConfig_gameName);
   initPlayerModule();
   console.log("--------updateRoom ------roomState.players-----" + JSON.stringify(roomState.players));
   var standingPlayersHTMLString = "Waiting for... <br />";
@@ -190,7 +192,7 @@ function updateRoom(room) {
     }
   });
   $("#playersInRoom").html(standingPlayersHTMLString);
-  $(startGameButton).prop("disabled",!isOkayToStartTheGame());
+  $(startGameButton).prop("disabled", !isOkayToStartTheGame());
 }
 
 function getNicknameForPlayer(player) {
