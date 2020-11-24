@@ -27,34 +27,34 @@ function isFollowingSuit(card) {
 
 function resolveTrick() {
   console.log("GMcCards-rules.js-resolveTrick-#0000");
-  var trickCards = [];
+  var trickCardIDs = [];
   var iaAmTheWinner = true;
-  var myCard = getCardFromID($("#myPlay").find("img").attr("id").slice(0, -4));
-  trickCards.push(myCard);
+  var myCardID = $("#myPlay").find("img").attr("id").slice(0, -4);
+  trickCardIDs.push(myCardID);
   $(".plays").each(function () {
     var cardImgId = $(this).find("img").attr("id");
-    console.log("GMcCards-rules.js-********* iterating plays1: " + cardImgId + "       : " + JSON.stringify(trickCards));
+    console.log("GMcCards-rules.js-********* iterating plays1: " + cardImgId + "       : " + JSON.stringify(trickCardIDs));
     if (cardImgId) {
-      let otherCard = getCardFromID(cardImgId.slice(0, -4));
-      trickCards.push(otherCard);
-      if (!compareCard(myCard, otherCard)) {
+      let otherCardID = cardImgId.slice(0, -4);
+      trickCardIDs.push(otherCardID);
+      if (!compareCard(getCardFromID(myCardID), getCardFromID(otherCardID))) {
         iaAmTheWinner = false;
       }
     } else {
       console.log("noslice: " + cardImgId);
     }
-    console.log("GMcCards-rules.js-********* iterating plays2: " + cardImgId + "       : " + JSON.stringify(trickCards));
+    console.log("GMcCards-rules.js-********* iterating plays2: " + cardImgId + "       : " + JSON.stringify(trickCardIDs));
   });
-  trickCards = [...new Set(trickCards)];
-  console.log("GMcCards-rules.js-resolveTrick-#0200=======" + iaAmTheWinner + "  cards:" + JSON.stringify(trickCards));
+  trickCardIDs = [...new Set(trickCardIDs)];
+  console.log("GMcCards-rules.js-resolveTrick-#0200=======" + iaAmTheWinner + "  cards:" + JSON.stringify(trickCardIDs));
   if (iaAmTheWinner) {
     console.log("GMcCards-rules.js-iaAmTheWinner!!!!!!!!!!!!!!!!!!!!!!!!!!");
-    addTrickWin("myStuff", trickCards);
+    addTrickWin("myStuff", trickCardIDs);
     tricksWon++;
     addTrickWinText("myWin", tricksWon);
     socketio.emit('winner', {
       player: playerNum,
-      trickCards: trickCards
+      trickCards: trickCardIDs
     });
   }
 }
@@ -103,7 +103,7 @@ function addTrickWin(who, cards) {
             console.log("wonTricks Child: more specifically... "+JSON.stringify(cardsToDraw));
             var trick = $("<div class='trick'></div>");
             for (var i = 0; i < cardsToDraw.length; i++) {
-              console.log("--- Drawing card... "+cardsToDraw[i]);
+              console.log("--- Drawing card... "+JSON.stringify(cardsToDraw[i]));
               var img_src = "/card_imgs/" + getCardID(cardsToDraw[i]) + ".png";
               $(trick).append("<img class='wonTrickCard' src='" + img_src + "'/>");
             }
