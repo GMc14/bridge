@@ -99,10 +99,12 @@ function addTrickWin(who, cards) {
         $(this).children().each(function () {
           console.log("wonTricks Child:  " + $(this).attr("data-cards"));
           if ($(this).attr("data-cards")) {
+            console.log("wonTricks Child: more specifically... "+JSON.stringify(cardsToDraw));
             var cardsToDraw = $(this).attr("data-cards").split(',');
             var trick = $("<div class='trick'></div>");
             for (var i = 0; i < cardsToDraw.length; i++) {
-              var img_src = "/card_imgs/" + cardsToDraw[i] + ".png";
+              console.log("--- Drawing card... "+cardsToDraw[i]);
+              var img_src = "/card_imgs/" + getCardID(cardsToDraw[i]) + ".png";
               $(trick).append("<img class='wonTrickCard' src='" + img_src + "'/>");
             }
             $(trickDetailsDiv).append(trick);

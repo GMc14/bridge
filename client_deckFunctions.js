@@ -426,8 +426,10 @@ function playCard() {
 }
 
 function isATrumpCard(card) {
-  console.log("^^^^^^^^^^^^ isATrumpCard: " + card + " in:" + JSON.stringify(currentTrumpCards) + "  found at: " + jQuery.inArray(card, currentTrumpCards) + " includes?:" + currentTrumpCards.includes(card));
-  return currentTrumpCards.includes(card);
+  const isATrumpCard = currentTrumpCards.some(trumpCard => trumpCard.rank === card.rank && trumpCard.suit == card.suit);
+  console.log("^^^^^^^^^^^^ isATrumpCard: " + JSON.stringify(card) + " in:" + JSON.stringify(currentTrumpCards) + " includes?:" + isATrumpCard);
+
+  return isATrumpCard;
 }
 
 function othersPlayed(player, card) {
