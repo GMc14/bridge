@@ -50,9 +50,10 @@ $(function () {
     $("#taskOptions").empty();
     taskDeck = getSorted(taskDeck);
     var previousSuit;
+    console.log("taskDeck trumpCards: "+JSON.stringify(taskDeck));
     $.each(taskDeck, function (index, trumpCard) {
-      console.log("taskDeck trumpCards: "+JSON.stringify(taskDeck));
-      var cardObj = $("#" + getCardID(trumpCard.card) + "_img").clone().show();
+      console.log("taskDeck trumpCard: "+JSON.stringify(trumpCard));
+      var cardObj = $("#" + getCardID(trumpCard) + "_img").clone().show();
       $(cardObj).attr('task-index', index);
       $(cardObj).addClass('potentialTask');
       if (previousSuit && previousSuit != cardSuit) {

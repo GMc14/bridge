@@ -287,7 +287,7 @@ $(function () {
     });
     socketio.on('winnerOfRound', function (data) {
         var trickWinner = data.player;
-        var trickCards = data.trickCards;
+        var trickCardIDs = data.trickCards;
         roundNumber++;
         lead = trickWinner;
         currentPlayer = trickWinner;
@@ -295,11 +295,11 @@ $(function () {
         console.log("----winnerOfRound getNicknameForPlayer----- ");
         updateTurnIndicator(getNicknameForPlayer(lead), playerNum == currentPlayer, true);
         
-        console.log("[][][][][][][] winner of round: " + trickWinner + " cards:" + trickCards);
+        console.log("[][][][][][][] winner of round: " + trickWinner + " cards:" + trickCardIDs);
         var winnerIndex = inversePlayerIdMap[trickWinner];
         if (winnerIndex) {
             console.log("[][][][][][][] put trick in... loc" + winnerIndex + "stuff");
-            addTrickWin("loc" + winnerIndex + "stuff", trickCards);
+            addTrickWin("loc" + winnerIndex + "stuff", trickCardIDs);
             var winsId = "loc" + winnerIndex + "wins";
             var currentWins = Number($("#" + winsId).text());
             console.log("OOOOOOOOOOOOOOOOOOOOO}}}}}}}}}}}}  currentWins: " + currentWins);

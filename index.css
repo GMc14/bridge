@@ -54,10 +54,11 @@ body {
 }
 
 .doneBut {
+  display: block !important;
   top: 1.7vmax;
   cursor: pointer;
   left: 0.4vmax;
-  font-size: 1.2vmax;
+  font-size: 1.2vmax !important;
 }
 
 .plyrDrop {

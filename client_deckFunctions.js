@@ -368,16 +368,17 @@ function highlightCommunicatable() {
 }
 
 function updateCardRotations(seatIndex) {
+  console.log("updateCardRotations");
   var counterR = 1;
   let handSize = $('#loc' + seatIndex + 'Hand').children().length;
   $('#loc' + seatIndex + 'Hand').children().each(function () {
     let halfHand = (handSize / 2);
     var relativePosition = Math.floor(counterR - halfHand);
-    console.log("updateCardRotations card "+counterR+" / "+handSize +"    relativePosition: "+relativePosition);
+    //console.log("updateCardRotations card "+counterR+" / "+handSize +"    relativePosition: "+relativePosition);
     if (counterR * 2 > handSize && handSize % 2 == 0) {
       relativePosition--;
     }
-    console.log("updateCardRotations card "+counterR+" / "+handSize +"    Adjusted relativePosition: "+relativePosition);
+    //console.log("updateCardRotations card "+counterR+" / "+handSize +"    Adjusted relativePosition: "+relativePosition);
     
     let angle = 40 * relativePosition / handSize;
     let relativeHeight = (relativePosition * relativePosition) / (halfHand * halfHand);
@@ -426,7 +427,7 @@ function playCard() {
 }
 
 function isATrumpCard(card) {
-  const isATrumpCard = currentTrumpCards.some(trumpCard => trumpCard.rank === card.rank && trumpCard.suit == card.suit);
+  const isATrumpCard = currentTrumpCards.some(trumpCard => trumpCard.rank == card.rank && trumpCard.suit == card.suit);
   console.log("^^^^^^^^^^^^ isATrumpCard: " + JSON.stringify(card) + " in:" + JSON.stringify(currentTrumpCards) + " includes?:" + isATrumpCard);
 
   return isATrumpCard;
