@@ -146,6 +146,9 @@ $(function () {
         console.log("show Settings");
         $("#settings").toggle();
     });
+    $("#settings").click(function () {
+        $("#settings").hide();
+    });
     $("#helpLegend").click(function () {
         $("#helpLegend").hide();
     });

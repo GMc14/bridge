@@ -60,7 +60,9 @@ function resolveTrick() {
 }
 
 function compareCard(card1, card2) {
-  compareRawCard(getEuchreCardValue(card1), getEuchreCardValue(card2));
+  let result = compareRawCard(getEuchreCardValue(card1), getEuchreCardValue(card2));
+  console.log("compareCards... "+JSON.stringify(card1)+"vs."+JSON.stringify(card2)+"   ="+result);
+  return result;
 }
 
 function compareRawCard(card1, card2) {

@@ -5,7 +5,7 @@ function Card(suit, rank) {
 
 var currentTrumpCards = [];
 var tokenOptions = ['x', '1', '2', '3', '4', '5', 'i', 'ii', 'iii', 'iiii', 'O', '0'];
-var playerOptions = ['', 'GM', 'AM', 'EM', "AP"];
+var playerOptions = ['', 'GM', 'AM', 'EM', "AP", "AB", "MJ"];
 
 function startGame() {
   console.log("--------------startGame-------isGameMaster?--------" + isGameMaster);
@@ -431,7 +431,7 @@ function isATrumpCard(card) {
 }
 
 function othersPlayed(player, card) {
-  console.log("othersPlayed++++++++++++ player: " + player + " card:" + card);
+  console.log("othersPlayed++++++++++++ player: " + player + " card:" + JSON.stringify(card));
 
   var seatIndex = inversePlayerIdMap[player];
   console.log("othersPlayed++++++++++++ seatIndex:" + seatIndex);
@@ -440,8 +440,12 @@ function othersPlayed(player, card) {
 
   var cardObj = $("#" + getCardID(card) + "_img").attr("class", "myCards").clone().show();
 
+
   if (isATrumpCard(card)) {
+    console.log("othersPlayed++++++++++++ NOT A TRUMP");
     $(cardObj).addClass('isTrump');
+  } else {
+    console.log("othersPlayed++++++++++++ NOT A TRUMP");
   }
   $("#loc" + seatIndex + "play").append(cardObj);
   updateCardRotations(seatIndex);

@@ -1,9 +1,8 @@
-
-.myCards > .isTrump {
+.myCards>.isTrump {
   box-shadow: inset 0 0 0.5vmax #Fd0, inset 0 0 2.5vmax #ff3;
 }
 
-#myHand > .myCards:hover {
+#myHand>.myCards:hover {
   box-shadow: 0px 0px 1.5vmax red;
   transform: scale(1.1) translate3d(0, -0.75vmax, 0);
 }
@@ -14,7 +13,7 @@
   margin: 0px -1vmax;
   border-radius: 0.2vmax;
   box-sizing: border-box;
-  filter: drop-shadow(-0.9vmax 0.15vmax -0.5vmax rgba(33,33,33,0.6));
+  filter: drop-shadow(-0.9vmax 0.15vmax -0.5vmax rgba(33, 33, 33, 0.6));
   /* box-shadow: -0.9vmax 0.15vmax 0.9vmax -0.45vmax rgba(0, 0, 0, 0.66); */
   /* border: 0.2vmax solid #88f; */
 }
@@ -22,6 +21,7 @@
 .stuff>.otherCards>img {
   height: 4vmax;
 }
+
 #showCase>.otherCards {
   margin: 0.05vmax 0.5vmax;
   box-shadow: 0vmax 0vmax 0vmax 0vmax #000;
@@ -34,21 +34,20 @@
   background: white;
 }
 
-
 #myHand {
   display: none;
   position: absolute;
-  height: 22%;
-  width: 100%;
-  bottom: -5%;
-  padding: 1.5vmax;
-  /*margin:auto;
-  height: 100%;*/
+  height: 22vh;
+  width: 100vw;
+  bottom: -5vh;
+  padding: 1.5vh 1.5vw 1.5vh 12vw;
+  padding-right: 1.5vmax;
   text-align: center;
   box-sizing: border-box;
   /* border: 0.2vmax solid #f88; */
 }
-#alternativeActions{
+
+#alternativeActions {
   display: none;
   left: 50%;
   transform: translateX(-50%);
@@ -56,6 +55,7 @@
   bottom: 22%;
   z-index: 9999999;
 }
+
 div#myHand.highlighted {
   box-shadow: inset 0 0 1vmin #fff, /* inner */
   inset 0.6vmin 0 2vmin rgb(51, 221, 213), /* inner left short */
@@ -66,6 +66,7 @@ div#myHand.highlighted {
   -webkit-animation: heartbeat 0.8s 4s;
   animation: heartbeat 0.8s 4s;
 }
+
 .otherPlayerHand {
   position: absolute;
   display: block;
@@ -121,16 +122,15 @@ div#myHand.highlighted {
   box-shadow: 0 0 2vmin rgb(36, 223, 76), inset 0 0 1vmin rgb(36, 223, 76);
 }
 
-.highestOption{
+.highestOption {
+  box-shadow: 0 0 2vmin rgb(36, 76, 223), inset 0 0 1vmin rgb(36, 76, 223);
+}
 
-  box-shadow: 0 0 2vmin rgb(36,  76, 223), inset 0 0 1vmin rgb(36, 76, 223);
+.lowestOption {
+  box-shadow: 0 0 2vmin rgb(223, 36, 76), inset 0 0 1vmin rgb(223, 36, 76);
 }
-.lowestOption{
-  
-  box-shadow: 0 0 2vmin rgb(223,36,  76), inset 0 0 1vmin rgb(223, 36, 76);
-}
-.onlyOption{
-  
+
+.onlyOption {
   box-shadow: 0 0 2vmin rgb(223, 223, 76), inset 0 0 1vmin rgb(223, 223, 76);
 }
 

@@ -22,11 +22,13 @@
 
 #playerSetup, #settings {
   display: none;
-  z-index: 1;
+  z-index: 100;
 }
-
+#settings {
+  background: rgba(33, 33, 33, 0.66);
+}
 #playerSetup {
-  z-index: 2;
+  z-index: 101;
 }
 
 .largeInputText {
@@ -49,8 +51,6 @@
 }
 
 #tableClothChoices, #cardBackChoices {
-  position: fixed;
-  bottom: 0px;
   padding: 0.5vmax;
   background: rgba(33, 33, 44, 0.66);
   max-width: 98vw;
@@ -59,10 +59,6 @@
   white-space: nowrap;
   left: 50%;
   transform: translateX(-50%);
-}
-
-#cardBackChoices {
-  bottom: 7vmax;
 }
 
 .tableClothOption, .cardBackOption {

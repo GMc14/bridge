@@ -158,12 +158,9 @@ td, th {
 #playArea {
   display: none;
   position: absolute;
-  top: 15vh;
-  left: 15vw;
-  height: 65vh;
-  width: 70vw;
+  top: 16vh;
+  left: 20.5vw;
   box-sizing: border-box;
-  background: "table_imgs/felt_bg.jpg";
   background-size: cover;
   z-index: 0;
   /* border: 0.8vmax solid white; */
@@ -216,14 +213,19 @@ td, th {
   left: 11vw;
   top: 3vmax;
 }
-#helpLegend, #settings {
+#helpLegend {
   display: none;
   position: fixed;
   left: 2vmax;
   top: 2vmax;
   z-index: 99999999999;
 }
-
+#settings {
+  display: none;
+  position: fixed;
+  bottom:20vh;
+  z-index: 99999999999;
+}
 .noComms {
   -webkit-text-stroke: 1px #c66;
   color: #a21;
