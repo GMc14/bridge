@@ -52,13 +52,11 @@
 
 #tableClothChoices, #cardBackChoices {
   padding: 0.5vmax;
-  background: rgba(33, 33, 44, 0.66);
-  max-width: 98vw;
+  background: rgba(33, 33, 33, 0.66);
+  margin: 1vmax;
   list-style-type: none;
   overflow-x: auto;
   white-space: nowrap;
-  left: 50%;
-  transform: translateX(-50%);
 }
 
 .tableClothOption, .cardBackOption {

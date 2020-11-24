@@ -51,6 +51,7 @@ $(function () {
     taskDeck = getSorted(taskDeck);
     var previousSuit;
     $.each(taskDeck, function (index, trumpCard) {
+      console.log("taskDeck trumpCards: "+JSON.stringify(taskDeck));
       var cardObj = $("#" + getCardID(trumpCard.card) + "_img").clone().show();
       $(cardObj).attr('task-index', index);
       $(cardObj).addClass('potentialTask');

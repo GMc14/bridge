@@ -99,8 +99,8 @@ function addTrickWin(who, cards) {
         $(this).children().each(function () {
           console.log("wonTricks Child:  " + $(this).attr("data-cards"));
           if ($(this).attr("data-cards")) {
-            console.log("wonTricks Child: more specifically... "+JSON.stringify(cardsToDraw));
             var cardsToDraw = $(this).attr("data-cards").split(',');
+            console.log("wonTricks Child: more specifically... "+JSON.stringify(cardsToDraw));
             var trick = $("<div class='trick'></div>");
             for (var i = 0; i < cardsToDraw.length; i++) {
               console.log("--- Drawing card... "+cardsToDraw[i]);
