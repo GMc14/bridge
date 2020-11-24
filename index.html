@@ -61,25 +61,7 @@
         <!-- https://playhearthstone.com/en-us/cardbacks/ -->
         <div id="tableClothChoices">
           <div class="tableClothOption noClothOption ui-selected"></div>
-          <img class="tableClothOption" src="table_imgs/bg.jpg">
-          <img class="tableClothOption" src="table_imgs/bg2.jpg">
-          <img class="tableClothOption" src="table_imgs/bg3.jpg">
-          <img class="tableClothOption" src="table_imgs/bg5.jpg">
-          <img class="tableClothOption" src="table_imgs/bg8.jpg">
-          <img class="tableClothOption" src="table_imgs/bg9.jpg">
-          <!-- <img class="tableClothOption" src="table_imgs/bg4.jpg">
-        <img class="tableClothOption" src="table_imgs/bg6.jpg">
-        <img class="tableClothOption" src="table_imgs/bg7.jpg">
-        <img class="tableClothOption" src="table_imgs/felt_bg.jpg">
-        <img class="tableClothOption" src="table_imgs/felt_bg2.jpg">
-        <img class="tableClothOption" src="table_imgs/bg_green_felt.jpg">
-        <img class="tableClothOption" src="table_imgs/bg_blue_felt.jpg">
-        <img class="tableClothOption" src="table_imgs/bg_purple_felt.jpg">
-        <img class="tableClothOption" src="table_imgs/bg_red_felt.jpg">
-        <img class="tableClothOption" src="table_imgs/bg_orange_felt.jpg">
-        <img class="tableClothOption" src="table_imgs/bg_yellow_felt.jpg">
-        <img class="tableClothOption" src="table_imgs/bg_white_felt.jpg">
-        <img class="tableClothOption" src="table_imgs/bg_black_felt.jpg"> -->
+
         </div>
       </div>
     </div>
@@ -174,17 +156,26 @@
     $("#gameDrop").append($("<option value='" + GameType.EUCHRE + "'>Euchre</option>"));
 
     var i;
-    for (i = 1; i < 162; i++) {
-      $("#cardBackChoices").append('<img class="cardBackOption" src="card_imgs/cardback_' + i + '.png">');
+    for (i = 1; i < 165; i++) {
+      $("#cardBackChoices").append('<img class="cardBackOption" id="cardBackOption'+i+'" src="card_imgs/cardback_' + i + '.png">');
     }
+    for (i = 1; i < 10; i++) {
+      $("#tableClothChoices").append('<img class="tableClothOption" id="tableClothOption'+i+'" src="table_imgs/bg'+i+'.jpg">');
+    }
+
     $(".cardBackOption").click(function () {
       $(this).addClass('ui-selected').siblings().removeClass('ui-selected');
-      $(".cardback").attr("src",$(".cardBackOption.ui-selected").prop("src"));
+      let cardBackSrc = $(".cardBackOption.ui-selected").prop("src");
+      $(".cardback").attr("src",cardBackSrc);
+      $.cookie("selectedCardBack", $(this).prop('id'));
     });
-
+    let previousCardBack = $.cookie("selectedCardBack");
+    if(previousCardBack){
+      $("#"+previousCardBack).addClass('ui-selected').siblings().removeClass('ui-selected');;
+    }
     $(".tableClothOption").click(function () {
       $(this).addClass('ui-selected').siblings().removeClass('ui-selected');
-      tableCloth = $(".tableClothOption.ui-selected").prop("src");
+      tableCloth = $(this).prop("src");
       if (tableCloth) {
         $("body").css("background-image", "url('" + tableCloth + "')");
         $("body").css("background-size", "cover");
@@ -192,8 +183,13 @@
         $("body").css('background-image', '');
         $("body").css("background-size", "20px 20px");
       }
+      
+      $.cookie("selectedTableBackground", $(this).prop('id'));
     });
-
+    let previousTableBackground = $.cookie("selectedTableBackground");
+    if(previousTableBackground){
+      $("#"+previousTableBackground).addClass('ui-selected').siblings().removeClass('ui-selected');;
+    }
     const trumpOptions = ['C', 'D', 'H', 'S', 'NT'];
     let n = 1;
     while (n < 8) {
