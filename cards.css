@@ -1,4 +1,4 @@
-.myCards>.isTrump {
+.myCards>.isTrump, .plays>.isTrump {
   box-shadow: inset 0 0 0.5vmax #Fd0, inset 0 0 2.5vmax #ff3;
 }
 

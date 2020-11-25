@@ -56,11 +56,11 @@ $(function () {
       var cardObj = $("#" + getCardID(trumpCard) + "_img").clone().show();
       $(cardObj).attr('task-index', index);
       $(cardObj).addClass('potentialTask');
-      if (previousSuit && previousSuit != cardSuit) {
+      if (previousSuit && previousSuit != trumpCard.suit) {
         $("#taskOptions").append("<br/>");
       }
       $("#taskOptions").append(cardObj);
-      previousSuit = cardSuit;
+      previousSuit = trumpCard.suit;
     });
     $(".potentialTask").click(function () {
       var selectedCardIndex = $(this).attr("task-index");
