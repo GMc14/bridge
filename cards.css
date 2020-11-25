@@ -96,32 +96,6 @@ div#myHand.highlighted {
   transition-duration: 0.2s;
 }
 
-.highestOption:after, .lowestOption:after, .onlyOption:after {
-  position: absolute;
-  top: 0;
-  left: 0;
-  color: #fff;
-  background: rgba(0, 0, 0, 0.6);
-  font-family: 'Material Icons';
-  content: "link";
-  -webkit-font-feature-settings: 'liga';
-}
-.highestOption, .lowestOption, .onlyOption {
-  content: "---";
-  background: #fff;
-}
-.highestOption:after {
-  content: 'arrow_circle_up';
-}
-
-.lowestOption:after {
-  content: 'arrow_circle_down';
-}
-
-.onlyOption:after {
-  content: 'gps_fixed';
-}
-
 #trickDetails {
   /* background: rgba(53, 53, 53, 0.4); */
   position: absolute;
@@ -144,20 +118,49 @@ div#myHand.highlighted {
   border-radius: 0.2vmax;
 }
 
+.highestOption:after, .lowestOption:after, .onlyOption:after, .highestCard, .lowestCard, .onlyCard {
+  position: absolute;
+  top: 0;
+  left: 0;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.6);
+  font-family: 'Material Icons';
+  content: "link";
+  -webkit-font-feature-settings: 'liga';
+}
+.highestCard, .lowestCard, .onlyCard {
+  content: "---";
+  background: #fff;
+}
+.highestOption:after, .highestCard {
+  content: 'arrow_circle_up';
+}
+
+.lowestOption:after, .lowestCard {
+  content: 'arrow_circle_down';
+}
+
+.onlyOption:after, .onlyCard {
+  content: 'gps_fixed';
+}
+
 .highlighted {
   box-shadow: 0 0 2vmin rgb(36, 223, 76), inset 0 0 1vmin rgb(36, 223, 76);
 }
 
 .highestOption {
   box-shadow: 0 0 2vmin rgb(36, 76, 223), inset 0 0 1vmin rgb(36, 76, 223);
+  content: 'arrow_circle_up';
 }
 
 .lowestOption {
   box-shadow: 0 0 2vmin rgb(223, 36, 76), inset 0 0 1vmin rgb(223, 36, 76);
+  content: 'arrow_circle_down';
 }
 
 .onlyOption {
   box-shadow: 0 0 2vmin rgb(223, 223, 76), inset 0 0 1vmin rgb(223, 223, 76);
+  content: 'gps_fixed';
 }
 
 #myPlay {

@@ -372,34 +372,35 @@ function highlightCommunicatable() {
     socketio.emit('communicateCard', {
       player: playerNum,
       cardID: $(this).prop('id').slice(0, -4),
-      type: 'onlyOption'
+      type: 'onlyCard'
     });
     clearComms();
-    $(this).addClass("onlyOption");
+    $(this).addClass("onlyCard");
   });
   $(".highestOption").click(function () {
     socketio.emit('communicateCard', {
       player: playerNum,
       cardID: $(this).prop('id').slice(0, -4),
-      type: 'highestOption'
+      type: 'highestCard'
     });
     clearComms();
-    $(this).addClass("highestOption");
+    $(this).addClass("highestCard");
   });
   $(".lowestOption").click(function () {
     socketio.emit('communicateCard', {
       player: playerNum,
       cardID: $(this).prop('id').slice(0, -4),
-      type: 'lowestOption'
+      type: 'lowestCard'
     });
     clearComms();
-    $(this).addClass("lowestOption");
+    $(this).addClass("lowestCard");
   });
 }
 
 function cardCommunicated(data) {
 
   console.log("cardCommunicated++++++++++++ player: " + data.player);
+  console.log("cardCommunicated++++++++++++ data.cardID: " +data.cardID);
   var seatIndex = inversePlayerIdMap[data.player];
   console.log("cardCommunicated++++++++++++ seatIndex:" + seatIndex);
   let communicatedCardSrc = $("#" + data.cardID + "_img").prop("src");
