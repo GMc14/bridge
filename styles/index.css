@@ -71,7 +71,7 @@ body {
   animation: wobble-hor-top 0.8s both;
 }
 
-#bidOfRound {
+#bidOfRoundText {
   display: none;
   font-size: large;
   position: absolute;

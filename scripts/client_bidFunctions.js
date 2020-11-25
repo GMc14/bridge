@@ -116,8 +116,8 @@ function someonePassed() {
   passCount++;
   if (gameConfig_biddingState == BiddingStates.BETTING) {
     if (passCount == gameConfig_playerCount) {
-      $('#bidOfRound').html('<b>' + currentBidder + ": " + currentBid + '</b>');
-      $('#bidOfRound').show();
+      $('#bidOfRoundText').html('<b>' + currentBidder + ": " + currentBid + '</b>');
+      $('#bidOfRoundText').show();
       if (playerNum == currentBidder || playerNum == nextPlayer(nextPlayer(currentBidder))) {
         handsNeeded = 6 + Number(currentBid.charAt(0));
       } else {
@@ -161,7 +161,7 @@ function orderedUp() {
 function biddingFinished() {
   console.log("biddingFinished");
   $('#bidArea').hide();
-  $('#bidOfRound').show();
+  $('#bidOfRoundText').show();
   gameConfig_biddingState = BiddingStates.FINISHED;
   currentPlayer = lead;
   updateActionStates();

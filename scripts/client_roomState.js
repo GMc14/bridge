@@ -89,7 +89,7 @@ function joinRoom() {
 
   $("#roomText").html("<b>Room: </b>" + roomID);
   $("#topbar").show();
-  $("#leaveRoom").show();
+  // $("#leaveRoom").show();
   $("#playerSetup").show();
   //$("#chat").show();
   $("#roomSelection").hide();

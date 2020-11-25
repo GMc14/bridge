@@ -196,7 +196,7 @@ $(function () {
         $('#gameRecap').hide();
         $('.stuff').empty();
         $('.plays').empty();
-        $('#bidOfRound').hide();
+        $('#bidOfRoundText').hide();
         $('.winCount').text(0);
         $('td').css('background-color', 'transparent');
         tricksWon = 0;
@@ -260,7 +260,7 @@ $(function () {
             console.log("--------------markingLeader---------------- #loc" + leaderNum + 'name');
             $(".leader").removeClass("leader");
             $('#loc' + leaderNum + 'name').addClass("leader");
-            $('#bidOfRound').show();
+            $('#bidOfRoundText').show();
         }
         console.log("--------------dealt...ToClients---------------- playerNum: " + playerNum);
     });
