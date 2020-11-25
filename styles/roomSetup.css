@@ -20,14 +20,8 @@
   margin-bottom: 2vh;
 }
 
-#playerSetup, #settings {
-  display: none;
-  z-index: 100;
-}
-#settings {
-  background: rgba(33, 33, 33, 0.66);
-}
 #playerSetup {
+  display: none;
   z-index: 101;
 }
 

@@ -36,7 +36,6 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js" type="text/javascript">
   </script>
   <script src="/socket.io/socket.io.js" type="text/javascript"></script>
-  <script src="scripts/rules.js" type="text/javascript"></script>
 
   <script src="scripts/client_socketioFunctions.js" type="text/javascript"></script>
   <script src="scripts/client_gameMaster.js" type="text/javascript"></script>
@@ -186,7 +185,7 @@
       $("#cardBackChoices").append('<img class="cardBackOption" id="cardBackOption' + i + '" src="card_imgs/cardback_' +
         i + '.png">');
     }
-    for (i = 1; i < 10; i++) {
+    for (i = 1; i < 14; i++) {
       $("#tableClothChoices").append('<img class="tableClothOption" id="tableClothOption' + i + '" src="table_imgs/bg' +
         i + '.jpg">');
     }
@@ -235,6 +234,8 @@
       }
     });
   </script>
+  
+  <script src="scripts/rules.js" type="text/javascript"></script>
 </body>
 
 </html>

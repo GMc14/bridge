@@ -230,7 +230,9 @@ td, th {
   display: none;
   position: fixed;
   bottom: 20vh;
-  z-index: 99999999999;
+  background: rgba(33, 33, 33, 0.66);
+  width: 100vw;
+  z-index: 100;
 }
 
 .noComms {
