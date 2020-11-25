@@ -15,8 +15,8 @@ function startGame() {
   $(".otherPlayerHand").empty();
   $("#helpLegendTrigger").toggle(gameType == GameType.CREW);
   $("#settingsTrigger").show();
-  $("#missionNumberText").html("<b>Mission #: </b>" + missionNumber);
-  $("#handNumberText").html("<b>Attempt #: </b>" + attempts);
+  $("#missionNumberText").html("<b>Mission #: </b>" + $("#missionNumberInput").val());
+  $("#handNumberText").html("<b>Attempt #: </b>" + $("#handNumberInput").val());
    
   if (isGameMaster) {
     $("#gameControls").show();
