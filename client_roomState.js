@@ -152,7 +152,15 @@ $(function () {
     $('#boxBottom').show();
   });
 });
-
+function applyTableCloth(tableCloth){
+  if (tableCloth) {
+    $("body").css("background-image", "url('" + tableCloth + "')");
+    $("body").css("background-size", "cover");
+  } else {
+    $("body").css('background-image', '');
+    $("body").css("background-size", "20px 20px");
+  }
+}
 function updateRoom(room) {
   roomState = room;
   console.log("--------updateRoom-----------" + JSON.stringify(roomState));

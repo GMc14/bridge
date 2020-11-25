@@ -123,7 +123,7 @@ var suitColors = {
 const standardRanks = new Array(2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14);
 const euchreRanks = new Array(9, 10, 11, 12, 13, 14);
 
-var cardback = "card_imgs/cardback.png";
+
 var commanderName;
 //Player values
 var nickname;

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <meta charset="utf-8">
   <title>GMcCrew</title>
@@ -164,49 +165,46 @@
     </div>
   </div>
   <script>
+    var cardback = "card_imgs/cardback.png";
     $("#gameDrop").append($("<option value='" + GameType.CREW + "'>The Crew</option>"));
     $("#gameDrop").append($("<option value='" + GameType.BRIDGE + "'>Bridge</option>"));
     $("#gameDrop").append($("<option value='" + GameType.EUCHRE + "'>Euchre</option>"));
 
     var i;
     for (i = 1; i < 165; i++) {
-      $("#cardBackChoices").append('<img class="cardBackOption" id="cardBackOption'+i+'" src="card_imgs/cardback_' + i + '.png">');
+      $("#cardBackChoices").append('<img class="cardBackOption" id="cardBackOption' + i + '" src="card_imgs/cardback_' +
+        i + '.png">');
     }
     for (i = 1; i < 10; i++) {
-      $("#tableClothChoices").append('<img class="tableClothOption" id="tableClothOption'+i+'" src="table_imgs/bg'+i+'.jpg">');
+      $("#tableClothChoices").append('<img class="tableClothOption" id="tableClothOption' + i + '" src="table_imgs/bg' +
+        i + '.jpg">');
     }
 
     $(".cardBackOption").click(function () {
       $(this).addClass('ui-selected').siblings().removeClass('ui-selected');
       let cardBackSrc = $(".cardBackOption.ui-selected").prop("src");
-      $(".cardback").attr("src",cardBackSrc);
+      $(".cardback").attr("src", cardBackSrc);
       $.cookie("selectedCardBack", $(this).prop('id'));
-    console.log("Cookie: selectedCardBack"+$(this).prop('id'));
+      console.log("Cookie: selectedCardBack" + $(this).prop('id'));
     });
     let previousCardBack = $.cookie("selectedCardBack");
-    console.log("Cookie: previousCardBack"+previousCardBack);
-    if(previousCardBack){
-      $("#"+previousCardBack).addClass('ui-selected').siblings().removeClass('ui-selected');;
+    console.log("Cookie: previousCardBack" + previousCardBack);
+    if (previousCardBack) {
+      $("#" + previousCardBack).addClass('ui-selected').siblings().removeClass('ui-selected');
+      cardBack = $("#" + previousCardBack).prop("src");
     }
     $(".tableClothOption").click(function () {
       $(this).addClass('ui-selected').siblings().removeClass('ui-selected');
       tableCloth = $(this).prop("src");
-      if (tableCloth) {
-        $("body").css("background-image", "url('" + tableCloth + "')");
-        $("body").css("background-size", "cover");
-      } else {
-        $("body").css('background-image', '');
-        $("body").css("background-size", "20px 20px");
-      }
-      
+      applyTableCloth(tableCloth);
       $.cookie("selectedTableBackground", $(this).prop('id'));
-      
-    console.log("Cookie: selectedTableBackground"+$(this).prop('id'));
+      console.log("Cookie: selectedTableBackground" + $(this).prop('id'));
     });
     let previousTableBackground = $.cookie("selectedTableBackground");
-    console.log("Cookie: previousTableBackground"+previousTableBackground);
-    if(previousTableBackground){
-      $("#"+previousTableBackground).addClass('ui-selected').siblings().removeClass('ui-selected');;
+    console.log("Cookie: previousTableBackground" + previousTableBackground);
+    if (previousTableBackground) {
+      $("#" + previousTableBackground).addClass('ui-selected').siblings().removeClass('ui-selected');;
+      applyTableCloth($("#" + previousTableBackground).prop("src"));
     }
     const trumpOptions = ['C', 'D', 'H', 'S', 'NT'];
     let n = 1;
@@ -227,4 +225,5 @@
     });
   </script>
 </body>
+
 </html>

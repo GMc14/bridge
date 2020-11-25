@@ -370,7 +370,7 @@ function highlightCommunicatable() {
 
   $(".onlyOption").click(function () {
     socketio.emit('communicateCard', {
-      player: currentPlayer,
+      player: playerNum,
       cardID: $(this).prop('id').slice(0, -4),
       type: 'onlyOption'
     });
@@ -379,7 +379,7 @@ function highlightCommunicatable() {
   });
   $(".highestOption").click(function () {
     socketio.emit('communicateCard', {
-      player: currentPlayer,
+      player: playerNum,
       cardID: $(this).prop('id').slice(0, -4),
       type: 'highestOption'
     });
@@ -388,7 +388,7 @@ function highlightCommunicatable() {
   });
   $(".lowestOption").click(function () {
     socketio.emit('communicateCard', {
-      player: currentPlayer,
+      player: playerNum,
       cardID: $(this).prop('id').slice(0, -4),
       type: 'lowestOption'
     });
