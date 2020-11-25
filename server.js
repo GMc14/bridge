@@ -47,6 +47,10 @@ function enter(socket) {
     io.sockets.adapter.rooms[roomID].gameMaster = playerId;
     io.sockets.to(playerId).emit('makeGameMaster');
   }
+  if (!io.sockets.adapter.rooms[roomID].gameType) {
+    io.sockets.adapter.rooms[roomID].gameType = 1;
+  }
+  
   if (!io.sockets.adapter.rooms[roomID].seats) {
     io.sockets.adapter.rooms[roomID].seats = new Array("");
   } else {
