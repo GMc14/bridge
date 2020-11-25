@@ -87,7 +87,7 @@ function joinRoom() {
   roomID = roomID.toUpperCase()
   socketio.emit('enterRoom', roomID);
 
-  $("#roomText").html("<b>Room Code: </b>" + roomID);
+  $("#roomText").html("<b>Room: </b>" + roomID);
   $("#topbar").show();
   $("#leaveRoom").show();
   $("#playerSetup").show();
@@ -174,7 +174,7 @@ function updateRoom(room) {
   console.log("--------updateRoom-----------" + JSON.stringify(roomState));
   if (roomState.gameType) {
     setGameType(roomState.gameType);
-    $("#gameNameText").html("<b>Game Type: </b>" + gameConfig_gameName);
+    $("#gameNameText").html("<b>Game: </b>" + gameConfig_gameName);
   }
   gameConfig_playerCount = roomState.players.length;
   initPlayerModule();

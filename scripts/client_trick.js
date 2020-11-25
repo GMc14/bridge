@@ -153,7 +153,7 @@ function updateTurnIndicator(playerOnTurnName, isMe = false, isLead = false) {
   }
 
 
-  $("#turnText").html("<b>" + (isLead ? "To Lead" : "To Play") + ": </b>" + playerOnTurnName);
+  $("#turnText").html("<b>" + (isLead ? "Lead" : "Turn") + ": </b>" + playerOnTurnName);
   if (isMe) {
     $("#myHand").addClass("highlighted");
     if (!isLead && gameConfig_biddingState == BiddingStates.FINISHED) {
