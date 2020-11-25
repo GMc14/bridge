@@ -106,8 +106,9 @@ div#myHand.highlighted {
   content: "link";
   -webkit-font-feature-settings: 'liga';
 }
-.highestOption{
-  content: "FFFFF";
+.highestOption, .lowestOption, .onlyOption {
+  content: "---";
+  background: #fff;
 }
 .highestOption:after {
   content: 'arrow_circle_up';

@@ -403,7 +403,9 @@ function cardCommunicated(data) {
   var seatIndex = inversePlayerIdMap[data.player];
   console.log("cardCommunicated++++++++++++ seatIndex:" + seatIndex);
   let communicatedCardSrc = $("#" + data.cardID + "_img").prop("src");
-  $("#loc" + seatIndex + "Hand .otherCards").last().find("img").prop("src", communicatedCardSrc).addClass(data.type);
+  console.log("cardCommunicated++++++++++++ communicatedCardSrc:" + communicatedCardSrc);
+  $("#loc" + seatIndex + "Hand .otherCards").last().find("img").prop("src", communicatedCardSrc);
+  $("#loc" + seatIndex + "Hand .otherCards").last().find("img").addClass(data.type);
 }
 
 function updateCardRotations(seatIndex) {
