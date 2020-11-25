@@ -104,7 +104,7 @@ function addTrickWin(who, cards) {
             var trick = $("<div class='trick'></div>");
             for (var i = 0; i < cardsToDraw.length; i++) {
               console.log("--- Drawing card... "+JSON.stringify(cardsToDraw[i]));
-              var img_src = "/card_imgs/" + getCardID(cardsToDraw[i]) + ".png";
+              var img_src = "/card_imgs/" + cardsToDraw[i] + ".png";
               $(trick).append("<img class='wonTrickCard' src='" + img_src + "'/>");
             }
             $(trickDetailsDiv).append(trick);

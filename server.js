@@ -222,4 +222,7 @@ io.sockets.on('connection', function (socket) {
   socket.on('winner', function (data) {
     io.sockets.to(socket.room).emit('winnerOfRound', data);
   });
+  socket.on('communicateCard', function (data) {
+    io.sockets.to(socket.room).emit('communicateCard', data);
+  });
 });

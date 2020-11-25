@@ -3,11 +3,16 @@ var isGameMaster = false;
 function updateComms(status) {
   highlightCommunicatable();
 }
-function getCardID(card){
+
+function getCardID(card) {
   return String(card.suit) + String(card.rank);
 }
-function getCardFromID(cardID){
-  return {suit:cardID.charAt(0), rank:cardID.substring(1)};
+
+function getCardFromID(cardID) {
+  return {
+    suit: cardID.charAt(0),
+    rank: cardID.substring(1)
+  };
 }
 $(function () {
   socketio.on('makeGameMaster', function () {
@@ -39,6 +44,7 @@ $(function () {
     socketio.emit('restartGame');
   });
   $('#drawTask').on('click', function () {
+    $("#taskOptions").hide();
     if (taskDeck.length > 0) {
       taskDeck = getShuffled(taskDeck);
       socketio.emit('taskDrawn', taskDeck.pop());
@@ -47,28 +53,31 @@ $(function () {
     }
   });
   $('#chooseTask').on('click', function () {
-    $("#taskOptions").empty();
-    taskDeck = getSorted(taskDeck);
-    var previousSuit;
-    console.log("taskDeck trumpCards: "+JSON.stringify(taskDeck));
-    $.each(taskDeck, function (index, trumpCard) {
-      console.log("taskDeck trumpCard: "+JSON.stringify(trumpCard));
-      var cardObj = $("#" + getCardID(trumpCard) + "_img").clone().show();
-      $(cardObj).attr('task-index', index);
-      $(cardObj).addClass('potentialTask');
-      if (previousSuit && previousSuit != trumpCard.suit) {
-        $("#taskOptions").append("<br/>");
-      }
-      $("#taskOptions").append(cardObj);
-      previousSuit = trumpCard.suit;
-    });
-    $(".potentialTask").click(function () {
-      var selectedCardIndex = $(this).attr("task-index");
-      console.log("emitting " + JSON.stringify(taskDeck[selectedCardIndex]) + " base on " + selectedCardIndex);
-      socketio.emit('taskDrawn', taskDeck[selectedCardIndex]);
-      taskDeck.splice(selectedCardIndex, 1);
+    $("#taskOptions").toggle();
+    if ($("#taskOptions").is(":visible")) {
       $("#taskOptions").empty();
-    });
+      taskDeck = getSorted(taskDeck);
+      var previousSuit;
+      console.log("taskDeck trumpCards: " + JSON.stringify(taskDeck));
+      $.each(taskDeck, function (index, trumpCard) {
+        console.log("taskDeck trumpCard: " + JSON.stringify(trumpCard));
+        var cardObj = $("#" + getCardID(trumpCard) + "_img").clone().show();
+        $(cardObj).attr('task-index', index);
+        $(cardObj).addClass('potentialTask');
+        if (previousSuit && previousSuit != trumpCard.suit) {
+          $("#taskOptions").append("<br/>");
+        }
+        $("#taskOptions").append(cardObj);
+        previousSuit = trumpCard.suit;
+      });
+      $(".potentialTask").click(function () {
+        var selectedCardIndex = $(this).attr("task-index");
+        console.log("emitting " + JSON.stringify(taskDeck[selectedCardIndex]) + " base on " + selectedCardIndex);
+        socketio.emit('taskDrawn', taskDeck[selectedCardIndex]);
+        taskDeck.splice(selectedCardIndex, 1);
+        $("#taskOptions").empty();
+      });
+    }
   });
   $('#hideTasks').on('click', function () {
     $("#taskOptions").empty();

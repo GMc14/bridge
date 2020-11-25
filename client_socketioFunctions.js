@@ -34,7 +34,12 @@ const BiddingStates = {
     "BETTING": 3,
     "FINISHED": -1
 };
-
+const CommunicationTypes = {
+    "ONLY": 0,
+    "LOWEST": 1,
+    "HIGHEST": 2,
+    "ANY": -1
+};
 function setGameType(gT) {
     gameType = gT;
     bonusCards = [];
@@ -328,7 +333,9 @@ $(function () {
     socketio.on('orderUp', function () {
         orderedUp();
     });
-
+    socketio.on('communicateCard', function (data) {
+        cardCommunicated(data);
+    });
 });
 
 var path = window.location.pathname;
