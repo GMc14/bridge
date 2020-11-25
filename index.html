@@ -181,8 +181,10 @@
       let cardBackSrc = $(".cardBackOption.ui-selected").prop("src");
       $(".cardback").attr("src",cardBackSrc);
       $.cookie("selectedCardBack", $(this).prop('id'));
+    console.log("Cookie: selectedCardBack"+$(this).prop('id'));
     });
     let previousCardBack = $.cookie("selectedCardBack");
+    console.log("Cookie: previousCardBack"+previousCardBack);
     if(previousCardBack){
       $("#"+previousCardBack).addClass('ui-selected').siblings().removeClass('ui-selected');;
     }
@@ -198,8 +200,11 @@
       }
       
       $.cookie("selectedTableBackground", $(this).prop('id'));
+      
+    console.log("Cookie: selectedTableBackground"+$(this).prop('id'));
     });
     let previousTableBackground = $.cookie("selectedTableBackground");
+    console.log("Cookie: previousTableBackground"+previousTableBackground);
     if(previousTableBackground){
       $("#"+previousTableBackground).addClass('ui-selected').siblings().removeClass('ui-selected');;
     }

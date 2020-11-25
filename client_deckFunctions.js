@@ -400,7 +400,7 @@ function highlightCommunicatable() {
 function cardCommunicated(data) {
 
   console.log("cardCommunicated++++++++++++ player: " + data.player);
-  var seatIndex = inversePlayerIdMap[player];
+  var seatIndex = inversePlayerIdMap[data.player];
   console.log("cardCommunicated++++++++++++ seatIndex:" + seatIndex);
   let communicatedCardSrc = $("#" + data.cardID + "_img").prop("src");
   $("#loc" + seatIndex + "Hand .otherCards").last().find("img").prop("src", communicatedCardSrc).addClass(data.type);

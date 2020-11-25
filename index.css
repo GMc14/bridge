@@ -289,7 +289,7 @@ b {
   top: 9.5vmax;
   left: 0vmax;
   height: 5vmax;
-  width: 5vmax;
+  max-width: 15vmax;
   z-index: 666;
   text-align: center;
   /* border: 1px solid #8f8; */
