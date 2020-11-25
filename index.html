@@ -21,10 +21,10 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Tangerine">
   <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Dawning of a New Day'>
 
-  <link rel="stylesheet" type="text/css" href="index.css">
-  <link rel="stylesheet" type="text/css" href="roomSetup.css">
-  <link rel="stylesheet" type="text/css" href="chat.css">
-  <link rel="stylesheet" type="text/css" href="cards.css">
+  <link rel="stylesheet" type="text/css" href="styles/index.css">
+  <link rel="stylesheet" type="text/css" href="styles/roomSetup.css">
+  <link rel="stylesheet" type="text/css" href="styles/chat.css">
+  <link rel="stylesheet" type="text/css" href="styles/cards.css">
   <script>
     const GameType = {
       "CREW": 1,
@@ -36,24 +36,26 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js" type="text/javascript">
   </script>
   <script src="/socket.io/socket.io.js" type="text/javascript"></script>
-  <script src="client_socketioFunctions.js" type="text/javascript"></script>
-  <script src="client_gameMaster.js" type="text/javascript"></script>
-  <script src="client_roomState.js" type="text/javascript"></script>
-  <script src="client_crew.js" type="text/javascript"></script>
-  <script src="client_bidFunctions.js" type="text/javascript"></script>
-  <script src="client_deckFunctions.js" type="text/javascript"></script>
-  <script src="client_game.js" type="text/javascript"></script>
-  <script src="client_round.js" type="text/javascript"></script>
-  <script src="client_trick.js" type="text/javascript"></script>
-  <script src="client_bidFunctions.js" type="text/javascript"></script>
-  <script src="client_utils.js" type="text/javascript"></script>
-</head>
 
+  <script src="scripts/client_socketioFunctions.js" type="text/javascript"></script>
+  <script src="scripts/client_gameMaster.js" type="text/javascript"></script>
+  <script src="scripts/client_roomState.js" type="text/javascript"></script>
+  <script src="scripts/client_crew.js" type="text/javascript"></script>
+  <script src="scripts/client_bidFunctions.js" type="text/javascript"></script>
+  <script src="scripts/client_deckFunctions.js" type="text/javascript"></script>
+  <script src="scripts/client_game.js" type="text/javascript"></script>
+  <script src="scripts/client_round.js" type="text/javascript"></script>
+  <script src="scripts/client_trick.js" type="text/javascript"></script>
+  <script src="scripts/client_bidFunctions.js" type="text/javascript"></script>
+  <script src="scripts/client_utils.js" type="text/javascript"></script>
+</head>
 <body>
   <span id='signature'>GMc14</span>
   <div id="gameBoard">
     <div id=topbar>
       <span id="gameNameText"></span>
+      <span id="missionNumberText"></span>
+      <span id="handNumberText"></span>
       <span id="commanderText"></span>
       <span id="turnText"></span>
       <span id="roomText"></span>
@@ -147,6 +149,10 @@
       <button id="drawTask" class="gameButtons">Draw Task</button>
       <button id="chooseTask" class="gameButtons">Choose Task</button>
       <button id="hideTasks" class="gameButtons">Hide Tasks</button>
+      <form id="missionNumberForm">
+        <label for="missionNumberInput">Mission #:</label>
+        <input type="number" id="missionNumberInput" name="missionNumberInput" min="1" max="50">
+      </form>
     </div>
     <div id="chat">
       <div id="chatBox">

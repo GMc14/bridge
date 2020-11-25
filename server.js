@@ -225,4 +225,11 @@ io.sockets.on('connection', function (socket) {
   socket.on('communicateCard', function (data) {
     io.sockets.to(socket.room).emit('communicateCard', data);
   });
+  socket.on('setMission', function (data) {
+    io.sockets.to(socket.room).emit('setMission', data);
+  });
+  socket.on('setHand', function (data) {
+    io.sockets.to(socket.room).emit('setHand', data);
+  });
 });
+
