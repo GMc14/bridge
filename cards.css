@@ -95,19 +95,32 @@ div#myHand.highlighted {
   border-radius: 0.5vmax;
   transition-duration: 0.2s;
 }
-.myCards:after {
-  content:'Here is some text..';
-  color:#fff;
-  position:absolute;
-  width:100%; height:100%;
-  top:0; left:0;
-  background:rgba(0,0,0,0.6);
-  opacity:0;
-  transition: all 0.5s;
+
+.highestOption:after, .lowestOption:after, .onlyOption:after {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.6);
+  font-family: 'Material Icons';
+  content: "link";
+  -webkit-font-feature-settings: 'liga';
 }
-.myCards:hover:after {
-  opacity:1;
+
+.highestOption:after {
+  content: 'arrow_circle_up';
 }
+
+.lowestOption:after {
+  content: 'arrow_circle_down';
+}
+
+.onlyOption:after {
+  content: 'gps_fixed';
+}
+
 #trickDetails {
   /* background: rgba(53, 53, 53, 0.4); */
   position: absolute;
