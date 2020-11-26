@@ -29,7 +29,8 @@
     const GameType = {
       "CREW": 1,
       "BRIDGE": 2,
-      "EUCHRE": 3
+      "EUCHRE": 3,
+      "DIXIT": 4,
     };
   </script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js" type="text/javascript"></script>
@@ -179,9 +180,10 @@
     $("#gameDrop").append($("<option value='" + GameType.CREW + "'>The Crew</option>"));
     $("#gameDrop").append($("<option value='" + GameType.BRIDGE + "'>Bridge</option>"));
     $("#gameDrop").append($("<option value='" + GameType.EUCHRE + "'>Euchre</option>"));
+    $("#gameDrop").append($("<option value='" + GameType.DIXIT + "'>Euchre</option>"));
 
     var i;
-    for (i = 1; i < 165; i++) {
+    for (i = 1; i < 21; i++) {
       $("#cardBackChoices").append('<img class="cardBackOption" id="cardBackOption' + i + '" src="card_imgs/cardback_' +
         i + '.png">');
     }

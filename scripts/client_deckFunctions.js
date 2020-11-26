@@ -17,7 +17,7 @@ function startGame() {
   $("#settingsTrigger").show();
   $("#missionNumberText").html("<b>Mission #: </b>" + $("#missionNumberInput").val());
   $("#handNumberText").html("<b>Attempt #: </b>" + $("#handNumberInput").val());
-   
+
   if (isGameMaster) {
     $("#gameControls").show();
     $("#restartGame").show();
@@ -25,7 +25,7 @@ function startGame() {
     $("#chooseTask").toggle(gameConfig_hasTasks);
     $("#hideTasks").toggle(gameConfig_hasTasks);
     $("#myCommunication").toggle(gameType == GameType.CREW);
-    $('#handNumberInput').val( function(i, oldval) {
+    $('#handNumberInput').val(function (i, oldval) {
       return ++oldval;
     });
     $(".plyrDropName").show();
@@ -404,7 +404,7 @@ function highlightCommunicatable() {
 function cardCommunicated(data) {
 
   console.log("cardCommunicated++++++++++++ player: " + data.player);
-  console.log("cardCommunicated++++++++++++ data.cardID: " +data.cardID);
+  console.log("cardCommunicated++++++++++++ data.cardID: " + data.cardID);
   var seatIndex = inversePlayerIdMap[data.player];
   console.log("cardCommunicated++++++++++++ seatIndex:" + seatIndex);
   let communicatedCardSrc = $("#" + data.cardID + "_img").prop("src");
@@ -480,21 +480,24 @@ function isATrumpCard(card) {
 }
 
 function othersPlayed(player, card) {
+
   console.log("othersPlayed++++++++++++ player: " + player + " card:" + JSON.stringify(card));
 
   var seatIndex = inversePlayerIdMap[player];
   console.log("othersPlayed++++++++++++ seatIndex:" + seatIndex);
 
   $("#loc" + seatIndex + "Hand").find(".otherCards").first().remove();
-
-  var cardObj = $("#" + getCardID(card) + "_img").attr("class", "myCards").clone().show();
-
-
-  if (isATrumpCard(card)) {
-    console.log("othersPlayed++++++++++++ NOT A TRUMP");
-    $(cardObj).addClass('isTrump');
+  var cardObj;
+  if (gameConfig_playFaceDown) {
+    cardObj = $(".cardback:eq(0)").clone().show().prop('id', getCardID(card));
   } else {
-    console.log("othersPlayed++++++++++++ NOT A TRUMP");
+    cardObj = $("#" + getCardID(card) + "_img").attr("class", "myCards").clone().show();
+    if (isATrumpCard(card)) {
+      console.log("othersPlayed++++++++++++ IS A TRUMP");
+      $(cardObj).addClass('isTrump');
+    } else {
+      console.log("othersPlayed++++++++++++ NOT A TRUMP");
+    }
   }
   $("#loc" + seatIndex + "play").append(cardObj);
   updateCardRotations(seatIndex);

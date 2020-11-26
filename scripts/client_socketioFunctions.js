@@ -40,22 +40,24 @@ const CommunicationTypes = {
     "HIGHEST": 2,
     "ANY": -1
 };
+
 function setGameType(gT) {
     gameType = gT;
     bonusCards = [];
-    gameConfig_gameName='Unknown';
+    gameConfig_gameName = 'Unknown';
     gameConfig_permaTrumpSuit = '';
     gameConfig_hasTeams = false;
     gameConfig_topDeckTrump = false;
     gameConfig_euchreBowers = false;
     gameConfig_bidForTrump = false;
     gameConfig_stickTheDealer = false;
+    gameConfig_playFaceDown = false;
     gameConfig_missions = [];
     gameConfig_startCardsPerPlayer = -1;
     gameConfig_numberOfRounds = -1;
     gameConfig_minPlayerCount = 1;
     gameConfig_maxPlayerCount = 100;
-    gameConfig_captainTitle='';
+    gameConfig_captainTitle = '';
     gameConfig_biddingState = BiddingStates.FINISHED;
     ranks = standardRanks;
     startPlayerCard = '';
@@ -66,7 +68,7 @@ function setGameType(gT) {
     console.log("-------B------" + GameType.CREW);
 
     if (gameType == GameType.CREW) {
-        gameConfig_gameName='The Crew';
+        gameConfig_gameName = 'The Crew';
         bonusCards = crewBonusCards;
         gameConfig_permaTrumpSuit = 'R';
         ranks = crewRanks;
@@ -77,14 +79,14 @@ function setGameType(gT) {
         gameConfig_maxPlayerCount = 5;
         gameConfig_captainTitle = 'Commander'
     } else if (gameType == GameType.BRIDGE) {
-        gameConfig_gameName='Bridge';
+        gameConfig_gameName = 'Bridge';
         gameConfig_bidForTrump = true;
         gameConfig_biddingState = BiddingStates.PREBID;
         gameConfig_hasTeams = true;
         gameConfig_minPlayerCount = 4;
         gameConfig_maxPlayerCount = 4;
     } else if (gameType == GameType.EUCHRE) {
-        gameConfig_gameName='Euchre';
+        gameConfig_gameName = 'Euchre';
         gameConfig_bidForTrump = true;
         gameConfig_biddingState = BiddingStates.PREBID;
         gameConfig_hasTeams = true;
@@ -95,6 +97,12 @@ function setGameType(gT) {
         gameConfig_startCardsPerPlayer = 5;
         gameConfig_minPlayerCount = 3;
         gameConfig_maxPlayerCount = 4;
+    } else if (gameType == GameType.DIXIT) {
+        gameConfig_gameName = 'Dixit';
+        gameConfig_playFaceDown = true;
+        gameConfig_startCardsPerPlayer = 5;
+        gameConfig_minPlayerCount = 1;
+        gameConfig_maxPlayerCount = 5;
     } else {
         alert("Unknown GameType: " + gameType);
     }
@@ -226,10 +234,10 @@ $(function () {
             trumpSuit = gameConfig_permaTrumpSuit;
         }
         displayCards(); //Display cards before & after trump determined, sort may have changed
-            
+
         if (gameConfig_bidForTrump) {
             lead = nextPlayer(dealer);
-           startBidding();
+            startBidding();
         } else {
             if (startPlayerCard) {
                 console.log("------- startPlayerCard how could this go wrong?: " + startPlayerCard);
@@ -265,6 +273,7 @@ $(function () {
         console.log("--------------dealt...ToClients---------------- playerNum: " + playerNum);
     });
     socketio.on('cardPlayed', function (data) {
+
         var player = data.player;
         var card = data.card;
         console.log("socketFunctions -> cardPayed card: " + JSON.stringify(card) + "  >>  player: " + player + "  >> nextPlayer: " + nextPlayer(playerNum) + "  >>  prevPlayer: " + prevPlayer(playerNum));
@@ -274,20 +283,18 @@ $(function () {
         } else {
             console.log("ssocketFunctions -> cardPLayed " + playerNum + "  :  " + player + "  |  " + lead);
         }
-
-        othersPlayed(player, card);
+        if (player != playerNum) {
+            othersPlayed(player, card);
+        }
         if (currentPlayer == lead) {
             leadSuit = getEuchreCardValue(card).suit;
         }
         if (nextPlayer(currentPlayer) == lead) {
             resolveTrick();
         }
-
         currentPlayer = nextPlayer(currentPlayer);
-
         $(".highlighted").removeClass("highlighted");
         updateTurnIndicator(getNicknameForPlayer(currentPlayer), currentPlayer == playerNum, false);
-        
 
     });
     socketio.on('winnerOfRound', function (data) {
@@ -299,7 +306,7 @@ $(function () {
         $(".highlighted").removeClass("highlighted");
         console.log("----winnerOfRound getNicknameForPlayer----- ");
         updateTurnIndicator(getNicknameForPlayer(lead), playerNum == currentPlayer, true);
-        
+
         console.log("[][][][][][][] winner of round: " + trickWinner + " cards:" + trickCardIDs);
         var winnerIndex = inversePlayerIdMap[trickWinner];
         if (winnerIndex) {
