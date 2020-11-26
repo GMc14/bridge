@@ -1,4 +1,4 @@
-const lastModifiedString6 = ("Last modified: 2020/11/26 17:13:07");
+const lastModifiedString6 = ("Last modified: 2020/11/26 20:07:16");
 const roomTS=lastModifiedString6.replace("Last ","").replace("modified: ","");
 console.log("client_roomState.js "+lastModifiedString6);
 
@@ -217,6 +217,9 @@ function updateRoom(room) {
 }
 
 function getNicknameForPlayer(player) {
+  if(player == -1){
+    return "Anyone";
+  }
   var myPIndex = Number(player.slice(-1)) - 1;
   return playerNickNames[myPIndex];
 }
