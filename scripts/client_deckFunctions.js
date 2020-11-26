@@ -1,4 +1,4 @@
-const lastModifiedString3 = ("Last modified: 2020/11/26 22:36:54");
+const lastModifiedString3 = ("Last modified: 2020/11/26 23:49:06");
 const deckTS = lastModifiedString3.replace("Last ", "").replace("modified: ", "");
 console.log("client_deckFunction.js " + lastModifiedString3);
 
@@ -587,6 +587,7 @@ function cardPlayed(data) {
     updateTurnIndicator(currentPlayer, currentPlayer == playerNum, false);
   }
 
+  console.log("gameCongid_drawBackUp: "+gameCongid_drawBackUp);
   if (gameCongid_drawBackUp) {
     drawNewCard(player);
   }
@@ -594,6 +595,7 @@ function cardPlayed(data) {
 }
 
 function drawNewCard(player) {
+  console.log("drawNewCard");
   if (isGameMaster) {
     drawnCard = deck.pop();
     socketio.emit("cardDrawn", {
@@ -604,6 +606,7 @@ function drawNewCard(player) {
 }
 
 function cardDrawn(data) {
+  console.log("cardDrawn");
   if (data.drawnCard) {
     var hand;
     var cardObj;
