@@ -1,5 +1,5 @@
-function confirmLegal(card) {
-  if (!isFollowingSuit(card)) {
+function confirmLegal(card, isLead) {
+  if (!gameConfig_playCardsAsync && !isLead && !isFollowingSuit(card)) {
     for (var i = 0; i < myHandOfCards.length; i++) {
       if (String(myHandOfCards[i].suit) == leadSuit) {
         alert("Must Follow Suit! " + suitNames[leadSuit] + " was lead.");
@@ -61,7 +61,7 @@ function resolveTrick() {
 
 function compareCard(card1, card2) {
   let result = compareRawCard(getEuchreCardValue(card1), getEuchreCardValue(card2));
-  console.log("compareCards... "+JSON.stringify(card1)+"vs."+JSON.stringify(card2)+"   ="+result);
+  console.log("compareCards... " + JSON.stringify(card1) + "vs." + JSON.stringify(card2) + "   =" + result);
   return result;
 }
 
@@ -82,45 +82,47 @@ function addTrickWinText(who, wins) {
 }
 
 function addTrickWin(who, cards) {
-  console.log("[][][][][][][] addTrickWin: " + who + " cards:" + cards);
-  var cardDiv = $("<div></div>");
-  $(cardDiv).addClass('otherCards');
-  $(cardDiv).attr('data-cards', cards);
-  $(cardDiv).append($(".cardback:eq(0)").clone().show());
-  var wonTricks = $('#' + who);
-  $(wonTricks).append(cardDiv);
-  $(wonTricks).hover(
-    function () {
-      if (!hoveringOverWonTricks) {
-        hoveringOverWonTricks = true;
+  if (gameConfig_showWonTricks) {
+    console.log("[][][][][][][] addTrickWin: " + who + " cards:" + cards);
+    var cardDiv = $("<div></div>");
+    $(cardDiv).addClass('otherCards');
+    $(cardDiv).attr('data-cards', cards);
+    $(cardDiv).append($(".cardback:eq(0)").clone().show());
+    var wonTricks = $('#' + who);
+    $(wonTricks).append(cardDiv);
+    $(wonTricks).hover(
+      function () {
+        if (!hoveringOverWonTricks) {
+          hoveringOverWonTricks = true;
 
-        console.log("wonTricks hover...");
-        var trickDetailsDiv = $("<div id='trickDetails'></div>");
-        $(this).children().each(function () {
-          console.log("wonTricks Child:  " + $(this).attr("data-cards"));
-          if ($(this).attr("data-cards")) {
-            var cardsToDraw = $(this).attr("data-cards").split(',');
-            console.log("wonTricks Child: more specifically... "+JSON.stringify(cardsToDraw));
-            var trick = $("<div class='trick'></div>");
-            for (var i = 0; i < cardsToDraw.length; i++) {
-              console.log("--- Drawing card... "+JSON.stringify(cardsToDraw[i]));
-              var img_src = "/card_imgs/" + cardsToDraw[i] + ".png";
-              $(trick).append("<img class='wonTrickCard' src='" + img_src + "'/>");
+          console.log("wonTricks hover...");
+          var trickDetailsDiv = $("<div id='trickDetails'></div>");
+          $(this).children().each(function () {
+            console.log("wonTricks Child:  " + $(this).attr("data-cards"));
+            if ($(this).attr("data-cards")) {
+              var cardsToDraw = $(this).attr("data-cards").split(',');
+              console.log("wonTricks Child: more specifically... " + JSON.stringify(cardsToDraw));
+              var trick = $("<div class='trick'></div>");
+              for (var i = 0; i < cardsToDraw.length; i++) {
+                console.log("--- Drawing card... " + JSON.stringify(cardsToDraw[i]));
+                var img_src = "/card_imgs/" + cardsToDraw[i] + ".png";
+                $(trick).append("<img class='wonTrickCard' src='" + img_src + "'/>");
+              }
+              $(trickDetailsDiv).append(trick);
             }
-            $(trickDetailsDiv).append(trick);
-          }
-        });
-        $(this).attr("data-cards")
-        $(this).append(trickDetailsDiv);
+          });
+          $(this).attr("data-cards")
+          $(this).append(trickDetailsDiv);
 
+        }
+      },
+      function () {
+        console.log("wonTricks UNhover...");
+        $("#trickDetails").remove();
+        hoveringOverWonTricks = false;
       }
-    },
-    function () {
-      console.log("wonTricks UNhover...");
-      $("#trickDetails").remove();
-      hoveringOverWonTricks = false;
-    }
-  );
+    );
+  }
 }
 
 function nextPlayer(currPlayer) {

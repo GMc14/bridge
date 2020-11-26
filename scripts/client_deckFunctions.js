@@ -167,8 +167,6 @@ function dealCards() {
     console.log("gameConfig_topDeckTrump: " + gameConfig_topDeckTrump + "?????????????");
   }
 
-
-
   const data = {
     hands: hands,
     trumpCard: trumpCard
@@ -445,25 +443,17 @@ function displayOtherCards(seatIndex, handSize) {
 }
 
 function playCard() {
-  console.log("--------------playCard >>>>>>>>>>>>>" + currentPlayer + " =? " + playerNum + "   " + JSON.stringify(this));
-  if (currentPlayer == playerNum) {
-    if (playerNum == lead) {
-      $(".plays").empty();
-    }
+  // console.log("--------------playCard >>>>>>>>>>>>>" + currentPlayer + " =? " + playerNum + "   " + JSON.stringify(this));
+  if (gameConfig_playCardsAsync || currentPlayer == playerNum) {
+
     var num = $(this).attr('id').substr(0, 2);
     var cardID = $(this).attr('id').substr(2);
     var card = getCardFromID(cardID);
-    console.log("--------------playCard! " + num + " : " + JSON.stringify(card));
-    var legal = true;
-    if (playerNum != lead) {
-      legal = confirmLegal(card);
-    }
-    if (legal) {
+    // console.log("--------------playCard! " + num + " : " + JSON.stringify(card));
+
+    if (confirmLegal(card, playerNum == lead)) {
       myHandOfCards[Number(num) - 10].suit = "Z";
-
-      let cardDiv = $(this).detach();
-      $("#myPlay").append(cardDiv);
-
+      $(this).detach();
       socketio.emit('playCard', {
         card: card,
         player: currentPlayer
@@ -472,21 +462,18 @@ function playCard() {
   }
 }
 
-function isATrumpCard(card) {
-  const isATrumpCard = currentTrumpCards.some(trumpCard => trumpCard.rank == card.rank && trumpCard.suit == card.suit);
-  console.log("^^^^^^^^^^^^ isATrumpCard: " + JSON.stringify(card) + " in:" + JSON.stringify(currentTrumpCards) + " includes?:" + isATrumpCard);
-
-  return isATrumpCard;
-}
-
-function othersPlayed(player, card) {
-
+function cardPlayed(data) {
+  var player = data.player;
+  var card = data.card;
+  console.log("socketFunctions -> cardPayed card: " + JSON.stringify(card) + "  >>  player: " + player + "  >> nextPlayer: " + nextPlayer(playerNum) + "  >>  prevPlayer: " + prevPlayer(playerNum));
+  if (player == lead) {
+    console.log("ssocketFunctions -> cardPLayed EMPTY" + playerNum + "  :  " + player + "  |  " + lead);
+    $(".plays").empty();
+  } else {
+    console.log("ssocketFunctions -> cardPLayed " + playerNum + "  :  " + player + "  |  " + lead);
+  }
   console.log("othersPlayed++++++++++++ player: " + player + " card:" + JSON.stringify(card));
 
-  var seatIndex = inversePlayerIdMap[player];
-  console.log("othersPlayed++++++++++++ seatIndex:" + seatIndex);
-
-  $("#loc" + seatIndex + "Hand").find(".otherCards").first().remove();
   var cardObj;
   if (gameConfig_playFaceDown) {
     cardObj = $(".cardback:eq(0)").clone().show().prop('id', getCardID(card));
@@ -495,10 +482,31 @@ function othersPlayed(player, card) {
     if (isATrumpCard(card)) {
       console.log("othersPlayed++++++++++++ IS A TRUMP");
       $(cardObj).addClass('isTrump');
-    } else {
-      console.log("othersPlayed++++++++++++ NOT A TRUMP");
     }
   }
-  $("#loc" + seatIndex + "play").append(cardObj);
-  updateCardRotations(seatIndex);
+  if (player != playerNum) {
+    var seatIndex = inversePlayerIdMap[player];
+    console.log("othersPlayed++++++++++++ seatIndex:" + seatIndex);
+    $("#loc" + seatIndex + "Hand").find(".otherCards").first().remove();
+    $("#loc" + seatIndex + "play").append(cardObj);
+    updateCardRotations(seatIndex);
+  } else {
+    $("#myPlay").append(cardDiv);
+  }
+  if (currentPlayer == lead) {
+    leadSuit = getEuchreCardValue(card).suit;
+  }
+  if (nextPlayer(currentPlayer) == lead) {
+    resolveTrick();
+  }
+  currentPlayer = nextPlayer(currentPlayer);
+  $(".highlighted").removeClass("highlighted");
+  updateTurnIndicator(getNicknameForPlayer(currentPlayer), currentPlayer == playerNum, false);
+}
+
+function isATrumpCard(card) {
+  const isATrumpCard = currentTrumpCards.some(trumpCard => trumpCard.rank == card.rank && trumpCard.suit == card.suit);
+  console.log("^^^^^^^^^^^^ isATrumpCard: " + JSON.stringify(card) + " in:" + JSON.stringify(currentTrumpCards) + " includes?:" + isATrumpCard);
+
+  return isATrumpCard;
 }

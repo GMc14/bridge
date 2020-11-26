@@ -18,7 +18,11 @@ var gameConfig_bidForTrump;
 var gameConfig_missions;
 var gameConfig_playerCount;
 var gameConfig_stickTheDealer;
+var gameConfig_mustFollowSuit;
+var gameConfig_showWonTricks;
 var gameConfig_biddingState;
+var gameConfig_playFaceDown;
+var gameConfig_playCardsAsync;
 var gameConfig_minPlayerCount = 1;
 var gameConfig_maxPlayerCount = 4;
 var gameConfig_startCardsPerPlayer; //-1 == Deal All
@@ -44,25 +48,32 @@ const CommunicationTypes = {
 function setGameType(gT) {
     gameType = gT;
     bonusCards = [];
+    gameConfig_missions = [];
+
     gameConfig_gameName = 'Unknown';
     gameConfig_permaTrumpSuit = '';
+    startPlayerCard = '';
+    gameConfig_captainTitle = '';
+
     gameConfig_hasTeams = false;
     gameConfig_topDeckTrump = false;
     gameConfig_euchreBowers = false;
     gameConfig_bidForTrump = false;
     gameConfig_stickTheDealer = false;
     gameConfig_playFaceDown = false;
-    gameConfig_missions = [];
+    gameConfig_hasTasks = false;
+    gameConfig_playCardsAsync = false;
+
+    gameConfig_mustFollowSuit = true;
+    gameConfig_showWonTricks = true;
+    
     gameConfig_startCardsPerPlayer = -1;
     gameConfig_numberOfRounds = -1;
     gameConfig_minPlayerCount = 1;
     gameConfig_maxPlayerCount = 100;
-    gameConfig_captainTitle = '';
+
     gameConfig_biddingState = BiddingStates.FINISHED;
     ranks = standardRanks;
-    startPlayerCard = '';
-    gameConfig_hasTasks = false;
-    //alert("Compare: " + gameType + " : " + GameType.CREW);
 
     console.log("-------A------" + gameType);
     console.log("-------B------" + GameType.CREW);
@@ -100,6 +111,10 @@ function setGameType(gT) {
     } else if (gameType == GameType.DIXIT) {
         gameConfig_gameName = 'Dixit';
         gameConfig_playFaceDown = true;
+        gameConfig_playCardsAsync = true;
+
+        gameConfig_showWonTricks = false;
+        gameConfig_mustFollowSuit = false;
         gameConfig_startCardsPerPlayer = 5;
         gameConfig_minPlayerCount = 1;
         gameConfig_maxPlayerCount = 5;
@@ -273,29 +288,7 @@ $(function () {
         console.log("--------------dealt...ToClients---------------- playerNum: " + playerNum);
     });
     socketio.on('cardPlayed', function (data) {
-
-        var player = data.player;
-        var card = data.card;
-        console.log("socketFunctions -> cardPayed card: " + JSON.stringify(card) + "  >>  player: " + player + "  >> nextPlayer: " + nextPlayer(playerNum) + "  >>  prevPlayer: " + prevPlayer(playerNum));
-        if (playerNum != lead && player == lead) {
-            console.log("ssocketFunctions -> cardPLayed EMPTY" + playerNum + "  :  " + player + "  |  " + lead);
-            $(".plays").empty();
-        } else {
-            console.log("ssocketFunctions -> cardPLayed " + playerNum + "  :  " + player + "  |  " + lead);
-        }
-        if (player != playerNum) {
-            othersPlayed(player, card);
-        }
-        if (currentPlayer == lead) {
-            leadSuit = getEuchreCardValue(card).suit;
-        }
-        if (nextPlayer(currentPlayer) == lead) {
-            resolveTrick();
-        }
-        currentPlayer = nextPlayer(currentPlayer);
-        $(".highlighted").removeClass("highlighted");
-        updateTurnIndicator(getNicknameForPlayer(currentPlayer), currentPlayer == playerNum, false);
-
+        cardPlayed(data);
     });
     socketio.on('winnerOfRound', function (data) {
         var trickWinner = data.player;
