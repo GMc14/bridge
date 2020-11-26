@@ -1,4 +1,4 @@
-const lastModifiedString9 = ("Last modified: 2020/11/26 17:39:24");
+const lastModifiedString9 = ("Last modified: 2020/11/26 20:09:23");
 const trickTS=lastModifiedString9.replace("Last ","").replace("modified: ","");
 console.log("client_trick.js "+lastModifiedString9);
 
@@ -152,8 +152,9 @@ function prevPlayer(currPlayer) {
   return "Player" + currNumber;
 }
 
-function updateTurnIndicator(playerOnTurnName, isMe = false, isLead = false) {
-  console.log("updateTurnIndicator: " + gameConfig_captainTitle);
+function updateTurnIndicator(playerOnTurn, isMe = false, isLead = false) {
+  let playerOnTurnName = getNicknameForPlayer(playerOnTurn)
+  console.log("updateTurnIndicator gameConfig_captainTitle: " + gameConfig_captainTitle);
   if (gameConfig_captainTitle) {
     $("#commanderText").html("<b>" + gameConfig_captainTitle + ": </b>" + commanderName);
     $("#commanderText").show();

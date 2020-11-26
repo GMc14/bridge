@@ -1,5 +1,5 @@
 
-const lastModifiedString1 = ("Last modified: 2020/11/26 17:37:12");
+const lastModifiedString1 = ("Last modified: 2020/11/26 20:09:07");
 const bidTS=lastModifiedString1.replace("Last ","").replace("modified: ","");
 console.log("client_bidFunctions.js "+lastModifiedString1);
 
@@ -87,7 +87,7 @@ function startBidding() {
   }
   //Start Left of the dealer
   currentBidder = lead;
-  updateTurnIndicator(getNicknameForPlayer(currentBidder), playerNum == currentBidder, false);
+  updateTurnIndicator(currentBidder, playerNum == currentBidder, false);
   updateActionStates();
 
 }
@@ -148,7 +148,7 @@ function someonePassed() {
   }
 
   currentBidder = getNextPlayerName(currentBidder);
-  updateTurnIndicator(getNicknameForPlayer(currentBidder), playerNum == currentBidder, false);
+  updateTurnIndicator(currentBidder, playerNum == currentBidder, false);
   updateActionStates();
 }
 
@@ -171,6 +171,6 @@ function biddingFinished() {
   gameConfig_biddingState = BiddingStates.FINISHED;
   currentPlayer = lead;
   updateActionStates();
-  updateTurnIndicator(getNicknameForPlayer(lead), playerNum == lead, true);
+  updateTurnIndicator(lead, playerNum == lead, true);
 }
 

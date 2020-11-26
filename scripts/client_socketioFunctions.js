@@ -1,4 +1,4 @@
-const lastModifiedString8 = ("Last modified: 2020/11/26 17:42:13");
+const lastModifiedString8 = ("Last modified: 2020/11/26 20:08:45");
 const socketTS=lastModifiedString8.replace("Last ","").replace("modified: ","");
 console.log("client_socketioFunction.js "+lastModifiedString8);
 
@@ -289,7 +289,7 @@ $(function () {
             console.log("----dealToClients getNicknameForPlayer----- ");
             commanderName = getNicknameForPlayer(lead);
             $(".highlighted").removeClass("highlighted");
-            updateTurnIndicator(getNicknameForPlayer(lead), playerNum == lead, true);
+            updateTurnIndicator(lead, playerNum == lead, true);
             console.log("--------------commanderName---------------- #loc" + commanderName + '   lead' + lead);
             console.log("--------------markingLeader---------------- #loc" + leaderNum + 'name');
             $(".leader").removeClass("leader");
@@ -309,7 +309,7 @@ $(function () {
         currentPlayer = trickWinner;
         $(".highlighted").removeClass("highlighted");
         console.log("----winnerOfRound getNicknameForPlayer----- ");
-        updateTurnIndicator(getNicknameForPlayer(lead), playerNum == currentPlayer, true);
+        updateTurnIndicator(lead, playerNum == currentPlayer, true);
 
         console.log("[][][][][][][] winner of round: " + trickWinner + " cards:" + trickCardIDs);
         var winnerIndex = inversePlayerIdMap[trickWinner];
