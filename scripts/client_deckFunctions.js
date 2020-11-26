@@ -1,6 +1,6 @@
-const lastModifiedString3 = ("Last modified: 2020/11/26 20:21:37");
-const deckTS=lastModifiedString3.replace("Last ","").replace("modified: ","");
-console.log("client_deckFunction.js "+lastModifiedString3);
+const lastModifiedString3 = ("Last modified: 2020/11/26 22:29:37");
+const deckTS = lastModifiedString3.replace("Last ", "").replace("modified: ", "");
+console.log("client_deckFunction.js " + lastModifiedString3);
 
 function Card(suit, rank) {
   this.suit = suit;
@@ -11,10 +11,26 @@ var currentTrumpCards = [];
 var tokenOptions = ['x', '1', '2', '3', '4', '5', 'i', 'ii', 'iii', 'iiii', 'O', '0'];
 var playerOptions = ['', 'GM', 'AM', 'EM', "AP", "AB", "MJ"];
 
+function initialStartGame(data) {
+  console.log("initialStartGame");
+  setGameType(data.gameType);
+  gameConfig_playerCount = data.playerCount;
+  cardback = $(".cardBackOption.ui-selected").prop("src");
+  preRenderImgs();
+  constructPlayArea();
+  startGame();
+}
+
 function startGame() {
   console.log("--------------startGame-------isGameMaster?--------" + isGameMaster);
   $("#myHand").show();
   $("#myHand").empty();
+  $('#gameRecap').hide();
+  $('.stuff').empty();
+  $('.plays').empty();
+  $("#playArea").show();
+  $("#playerSetup").hide();
+  $("#startGameButton").hide();
   $("#alternativeActions").show();
   $(".otherPlayerHand").empty();
   $("#helpLegendTrigger").toggle(gameType == GameType.CREW);
@@ -24,7 +40,7 @@ function startGame() {
 
   if (isGameMaster) {
     $("#gameControls").show();
-    $("#restartGame").show();
+    $("#restartGameButton").show();
     $("#drawTask").toggle(gameConfig_hasTasks);
     $("#chooseTask").toggle(gameConfig_hasTasks);
     $("#hideTasks").toggle(gameConfig_hasTasks);
@@ -38,15 +54,13 @@ function startGame() {
     deck = getShuffled(deck);
     dealCards();
   }
-  if (playerNum == dealer) {
-    console.log("--------------startGame-------I'm the dealer---------" + playerNum + " == " + dealer);
 
+  console.log("[][][][][][][][][][] IS DEALER? " + (playerNum == dealer) + "[][][][][][][][][][][]");
+  $('#bidOfRoundText').hide();
+  $('.winCount').text(0);
+  $('td').css('background-color', 'transparent');
 
-  } else {
-    console.log("--------------startGame-------not the dealer---------" + playerNum + " == " + dealer);
-  }
-
-  console.log("[][][][][][][][][][]ClearTrumpHighlights[][][][][][][][][][][]");
+  tricksWon = 0;
   currentTrumpCards = [];
   $(".isTrump").removeClass("isTrump");
   updateActionStates();
@@ -308,12 +322,74 @@ function displayTrumpCard(trumpCard) {
   }
 }
 
+function deal(data) {
+  console.log("--------------dealToClients---------------- " + JSON.stringify(data, null, 4));
+  console.log("--------------dealToClients---------------- playerNum: " + playerNum);
+  console.log("--------------dealToClients---------------- gameType: " + gameType);
+
+  var myPIndex = Number(playerNum.slice(-1)) - 1;
+  myHandOfCards = data.hands[myPIndex];
+
+
+  $("#showCase").empty();
+
+  if (data.trumpCard) {
+    console.log("------- Trump Card: " + data.trumpCard);
+    displayTrumpCard(data.trumpCard)
+    trumpSuit = data.trumpCard.suit;
+  } else if (gameConfig_permaTrumpSuit) {
+    trumpSuit = gameConfig_permaTrumpSuit;
+  }
+  displayCards(); //Display cards before & after trump determined, sort may have changed
+
+  if (gameConfig_bidForTrump) {
+    //Start with left of the dealer
+    lead = getNextPlayerName(dealer);
+    startBidding();
+  } else {
+    if (startPlayerCard) {
+      console.log("------- startPlayerCard how could this go wrong?: " + startPlayerCard);
+      for (var i = 0; i < data.hands.length; i++) {
+        for (var j = 0; j < data.hands[i].length; j++) {
+          console.log("------- startPlayerCard i: " + i + "  j:" + j);
+          if (data.hands[i][j].suit == startPlayerCard.charAt(0) && data.hands[i][j].rank == startPlayerCard.charAt(1)) {
+
+            currentPlayer = "Player" + Number(i + 1);
+
+            console.log("------- FOUND ONE: " + i + " | " + currentPlayer);
+            j = data.hands[i].length;
+            i = data.hands.length;
+            break;
+          }
+        }
+      }
+    } else if (gameConfig_playCardsAsync) {
+      currentPlayer = -1;
+    } else {
+      //Start with left of the dealer
+      currentPlayer = getNextPlayerName(dealer);
+    }
+    lead = currentPlayer;
+    var leaderNum = inversePlayerIdMap[lead];
+    console.log("----dealToClients getNicknameForPlayer----- ");
+    commanderName = getNicknameForPlayer(lead);
+    $(".highlighted").removeClass("highlighted");
+    updateTurnIndicator(lead, playerNum == lead, true);
+    console.log("--------------commanderName---------------- #loc" + commanderName + '   lead' + lead);
+    console.log("--------------markingLeader---------------- #loc" + leaderNum + 'name');
+    $(".leader").removeClass("leader");
+    $('#loc' + leaderNum + 'name').addClass("leader");
+    $('#bidOfRoundText').show();
+  }
+  console.log("--------------dealt...ToClients---------------- playerNum: " + playerNum);
+}
+
 function displayCards() {
   sortHand();
   currentTrumpCards = [];
   console.log(">>>>>>>>>>>>>displayCards----------------");
   for (var j = 1; j < gameConfig_playerCount; j++) {
-    displayOtherCards(j, handSizes[j - 1]);
+    displayOtherCards(j);
   }
   $("#myHand").empty();
   for (var i = 0; i < myHandOfCards.length; i++) {
@@ -359,7 +435,6 @@ function highlightCommunicatable() {
     if (!lowest[card.suit] || lowest[card.suit] > card.rank) {
       lowest[card.suit] = card.rank;
     }
-    var encodedI = i + 10;
   }
   for (var i = 0; i < myHandOfCards.length; i++) {
     const card = myHandOfCards[i];
@@ -435,7 +510,7 @@ function updateCardRotations(seatIndex) {
   });
 }
 
-function displayOtherCards(seatIndex, handSize) {
+function displayOtherCards(seatIndex) {
   console.log(">>>>>>>>>>>>>displayCards----in: #loc" + seatIndex + "Hand---- >>  handSize: " + handSize);
   $('#loc' + seatIndex + 'Hand').empty();
   for (var i = 0; i < handSize; i++) {
@@ -480,9 +555,9 @@ function cardPlayed(data) {
 
   var cardObj;
   if (gameConfig_playFaceDown) {
-    cardObj = $(".cardback:eq(0)").clone().show().prop('id', getCardID(card));
+    cardObj = $(".cardback:eq(0)").clone().prop('id', getCardID(card)).show();
   } else {
-    cardObj = $("#" + getCardID(card) + "_img").attr("class", "myCards").clone().show();
+    cardObj = $("#" + getCardID(card) + "_img").clone().attr("class", "myCards").show();
     if (isATrumpCard(card)) {
       console.log("othersPlayed++++++++++++ IS A TRUMP");
       $(cardObj).addClass('isTrump');
@@ -499,7 +574,7 @@ function cardPlayed(data) {
     $(".highlighted").removeClass("highlighted");
   }
 
-  if(!gameConfig_playCardsAsync){
+  if (!gameConfig_playCardsAsync) {
     if (currentPlayer == lead) {
       leadSuit = getEuchreCardValue(card).suit;
     }
@@ -510,14 +585,39 @@ function cardPlayed(data) {
     updateTurnIndicator(currentPlayer, currentPlayer == playerNum, false);
   }
 
+  if (gameCongid_drawBackUp) {
+    drawNewCard(player);
+  }
+
 }
 
 function drawNewCard(player) {
-  if(isGameMaster){
+  if (isGameMaster) {
     drawnCard = deck.pop();
-    socketio.emit("cardDrawn",{card:drawnCard, player:player});  
+    socketio.emit("cardDrawn", {
+      card: drawnCard,
+      player: player
+    });
   }
 }
+
+function cardDrawn(data) {
+  if (data.drawnCard) {
+    var hand;
+    var cardObj;
+    if (data.player == playerNum) {
+      hand ="#myHand";
+      let encodedId = (myHandOfCards.length+10)+getCardID(data.card);
+      cardObj = $("#" + getCardID(data.card) + "_img").clone().attr("class", "myCards").prop("id",encodedId).show();
+      myHandOfCards.push(data.card);
+    } else {
+      hand = "#loc" + inversePlayerIdMap[data.player] + "Hand";
+      cardObj = $(".cardback:eq(0)").clone().show();
+    }
+    $(hand).append(cardObj);
+  }
+}
+
 function isATrumpCard(card) {
   const isATrumpCard = currentTrumpCards.some(trumpCard => trumpCard.rank == card.rank && trumpCard.suit == card.suit);
   console.log("^^^^^^^^^^^^ isATrumpCard: " + JSON.stringify(card) + " in:" + JSON.stringify(currentTrumpCards) + " includes?:" + isATrumpCard);

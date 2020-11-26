@@ -1,6 +1,10 @@
-const lastModifiedString6 = ("Last modified: 2020/11/26 20:07:16");
-const roomTS=lastModifiedString6.replace("Last ","").replace("modified: ","");
-console.log("client_roomState.js "+lastModifiedString6);
+const lastModifiedString6 = ("Last modified: 2020/11/26 21:27:56");
+const roomTS = lastModifiedString6.replace("Last ", "").replace("modified: ", "");
+console.log("client_roomState.js " + lastModifiedString6);
+
+
+var path = window.location.pathname;
+console.log("window.location.pathname: " + path);
 
 const roomCodeCandidates = "234689ABCEFJKMNPQRTVWXY";
 const playerColors = ['#004499', '#770011', '#666600', '#116600', '#440099', '#883300', '#006666', '#660066'];
@@ -27,7 +31,7 @@ function initPlayerModule() {
   var previousNickName = $.cookie("nickname");
   if (previousNickName) {
     $("#nicknameInput").val(previousNickName);
-    console.log("--------------previousNickName----------------"+previousNickName);
+    console.log("--------------previousNickName----------------" + previousNickName);
     socketio.emit('setNickname', previousNickName);
   }
 
@@ -137,6 +141,33 @@ function scrollToChatBottom() {
   divObj.scrollTop($(divObj)[0].scrollHeight);
 }
 $(function () {
+  $("#helpLegendTrigger").click(function () {
+    console.log("show THINGSSSS");
+    $("#helpLegend").toggle();
+  });
+  $("#settingsTrigger").click(function () {
+    console.log("show Settings");
+    $("#settings").toggle();
+  });
+  $("#settings").click(function () {
+    $("#settings").hide();
+  });
+  $("#helpLegend").click(function () {
+    $("#helpLegend").hide();
+  });
+  $("#boxTop").on("click", function () {
+    $('#boxBottom').toggle();
+  });
+  $('#textArea').bind('keyup', function (e) {
+    if (e.keyCode === 13) { // 13 is enter key
+      var msg = $(this).val();
+      socketio.emit('sendMessage', {
+        msg: msg,
+        nickname: nickname
+      });
+      $(this).val('');
+    }
+  });
   $("#joinRoomForm").on('submit', function (e) {
     e.preventDefault();
     joinRoom();
@@ -164,7 +195,8 @@ $(function () {
     $('#boxBottom').show();
   });
 });
-function applyTableCloth(tableCloth){
+
+function applyTableCloth(tableCloth) {
   if (tableCloth) {
     $("body").css("background-image", "url('" + tableCloth + "')");
     $("body").css("background-size", "cover");
@@ -173,6 +205,7 @@ function applyTableCloth(tableCloth){
     $("body").css("background-size", "20px 20px");
   }
 }
+
 function updateRoom(room) {
   roomState = room;
   console.log("--------updateRoom-----------" + JSON.stringify(roomState));
@@ -201,7 +234,6 @@ function updateRoom(room) {
     console.log("--------seatIndex-----------" + seatIndex + "  for:" + this.id);
     console.log("--------roomState.seats-----------" + JSON.stringify(roomState.seats));
     if (seatIndex < 1) {
-
       console.log("--------seatIndex Add em to the queue-----------" + seatIndex + "  for:" + this.id);
       standingPlayersHTMLString = standingPlayersHTMLString.concat(nickname);
       standingPlayersHTMLString = standingPlayersHTMLString.concat("<br />");
@@ -217,7 +249,7 @@ function updateRoom(room) {
 }
 
 function getNicknameForPlayer(player) {
-  if(player == -1){
+  if (player == -1) {
     return "Anyone";
   }
   var myPIndex = Number(player.slice(-1)) - 1;

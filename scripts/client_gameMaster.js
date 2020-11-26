@@ -1,4 +1,4 @@
-const lastModifiedString5 = ("Last modified: 2020/11/26 17:13:07");
+const lastModifiedString5 = ("Last modified: 2020/11/26 21:25:31");
 const gmTS=lastModifiedString5.replace("Last ","").replace("modified: ","");
 console.log("client_gameMaster.js "+lastModifiedString5);
 
@@ -43,8 +43,7 @@ $(function () {
     console.log("--------------assignShortNameToClients----------------data.playerNumber " + data.playerNumber + ",  data.shortName: " + data.shortName);
     setPlayerShortName(data.playerNumber, data.shortName);
   });
-  $('#restartGame').on('click', function () {
-    console.log("[][][][][][][][][][]Need to ClearTrumpHighlights here?[][][][][][][][][][][]");
+  $('#restartGameButton').on('click', function () {
     socketio.emit('restartGame');
   });
   $('#drawTask').on('click', function () {

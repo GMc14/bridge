@@ -1,4 +1,4 @@
-const lastModifiedString8 = ("Last modified: 2020/11/26 20:08:45");
+const lastModifiedString8 = ("Last modified: 2020/11/26 22:22:56");
 const socketTS=lastModifiedString8.replace("Last ","").replace("modified: ","");
 console.log("client_socketioFunction.js "+lastModifiedString8);
 
@@ -133,7 +133,6 @@ function setGameType(gT) {
 //Deck Setup
 var deck = [];
 var taskDeck = [];
-var handSizes = [];
 var roomState;
 var suits = new Array("C", "D", "S", "H");
 var suitNames = {
@@ -153,13 +152,13 @@ var suitColors = {
 const standardRanks = new Array(2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14);
 const euchreRanks = new Array(9, 10, 11, 12, 13, 14);
 
-
 var commanderName;
 //Player values
 var nickname;
 var playerNum;
 var seatIndex;
 var clientPlayerId;
+var myHandOfCards;
 //Play values
 var dealer = "Player1";
 var currentPlayer;
@@ -173,33 +172,6 @@ var handsNeeded;
 var hoveringOverWonTricks = false;
 
 $(function () {
-    $("#helpLegendTrigger").click(function () {
-        console.log("show THINGSSSS");
-        $("#helpLegend").toggle();
-    });
-    $("#settingsTrigger").click(function () {
-        console.log("show Settings");
-        $("#settings").toggle();
-    });
-    $("#settings").click(function () {
-        $("#settings").hide();
-    });
-    $("#helpLegend").click(function () {
-        $("#helpLegend").hide();
-    });
-    $("#boxTop").on("click", function () {
-        $('#boxBottom').toggle();
-    });
-    $('#textArea').bind('keyup', function (e) {
-        if (e.keyCode === 13) { // 13 is enter key
-            var msg = $(this).val();
-            socketio.emit('sendMessage', {
-                msg: msg,
-                nickname: nickname
-            });
-            $(this).val('');
-        }
-    });
     socketio.on('updateRoom', function (room) {
         updateRoom(room);
     });
@@ -208,129 +180,19 @@ $(function () {
         window.location.reload();
     });
     socketio.on('startGame', function (data) {
-        setGameType(data.gameType);
-        gameConfig_playerCount = data.playerCount;
-        cardback = $(".cardBackOption.ui-selected").prop("src");
-
-        $("#playArea").show();
-        console.log("client_socket :: startGame");
-        preRenderImgs();
-
-        $("#playerSetup").hide();
-
-        $("#startGameButton").hide();
-        constructPlayArea();
-        startGame();
+        initialStartGame(data);
     });
     socketio.on('restartGame', function () {
-        $('#gameRecap').hide();
-        $('.stuff').empty();
-        $('.plays').empty();
-        $('#bidOfRoundText').hide();
-        $('.winCount').text(0);
-        $('td').css('background-color', 'transparent');
-        tricksWon = 0;
-        currentTrumpCards = [];
-        $(".isTrump").removeClass("isTrump");
-
         startGame();
     });
     socketio.on('dealToClients', function (data) {
-        console.log("--------------dealToClients---------------- " + JSON.stringify(data, null, 4));
-        console.log("--------------dealToClients---------------- playerNum: " + playerNum);
-        console.log("--------------dealToClients---------------- gameType: " + gameType);
-
-        var myPIndex = Number(playerNum.slice(-1)) - 1;
-        myHandOfCards = data.hands[myPIndex];
-
-        for (var i = 0; i < data.hands.length; i++) {
-            handSizes[i] = data.hands[i].length;
-        }
-        $("#showCase").empty();
-
-        if (data.trumpCard) {
-            console.log("------- Trump Card: " + data.trumpCard);
-            displayTrumpCard(data.trumpCard)
-            trumpSuit = data.trumpCard.suit;
-        } else if (gameConfig_permaTrumpSuit) {
-            trumpSuit = gameConfig_permaTrumpSuit;
-        }
-        displayCards(); //Display cards before & after trump determined, sort may have changed
-
-        if (gameConfig_bidForTrump) {
-            //Start with left of the dealer
-            lead = getNextPlayerName(dealer);
-            startBidding();
-        } else {
-            if (startPlayerCard) {
-                console.log("------- startPlayerCard how could this go wrong?: " + startPlayerCard);
-                for (var i = 0; i < data.hands.length; i++) {
-                    for (var j = 0; j < data.hands[i].length; j++) {
-                        console.log("------- startPlayerCard i: " + i + "  j:" + j);
-                        if (data.hands[i][j].suit == startPlayerCard.charAt(0) && data.hands[i][j].rank == startPlayerCard.charAt(1)) {
-
-                            currentPlayer = "Player" + Number(i + 1);
-
-                            console.log("------- FOUND ONE: " + i + " | " + currentPlayer);
-                            j = data.hands[i].length;
-                            i = data.hands.length;
-                            break;
-                        }
-                    }
-                }
-            } else if (gameConfig_playCardsAsync){
-                currentPlayer = -1;
-            }else{
-                //Start with left of the dealer
-                currentPlayer = getNextPlayerName(dealer);
-            }
-            lead = currentPlayer;
-            var leaderNum = inversePlayerIdMap[lead];
-            console.log("----dealToClients getNicknameForPlayer----- ");
-            commanderName = getNicknameForPlayer(lead);
-            $(".highlighted").removeClass("highlighted");
-            updateTurnIndicator(lead, playerNum == lead, true);
-            console.log("--------------commanderName---------------- #loc" + commanderName + '   lead' + lead);
-            console.log("--------------markingLeader---------------- #loc" + leaderNum + 'name');
-            $(".leader").removeClass("leader");
-            $('#loc' + leaderNum + 'name').addClass("leader");
-            $('#bidOfRoundText').show();
-        }
-        console.log("--------------dealt...ToClients---------------- playerNum: " + playerNum);
+        deal(data);
     });
     socketio.on('cardPlayed', function (data) {
         cardPlayed(data);
     });
     socketio.on('winnerOfRound', function (data) {
-        var trickWinner = data.player;
-        var trickCardIDs = data.trickCards;
-        roundNumber++;
-        lead = trickWinner;
-        currentPlayer = trickWinner;
-        $(".highlighted").removeClass("highlighted");
-        console.log("----winnerOfRound getNicknameForPlayer----- ");
-        updateTurnIndicator(lead, playerNum == currentPlayer, true);
-
-        console.log("[][][][][][][] winner of round: " + trickWinner + " cards:" + trickCardIDs);
-        var winnerIndex = inversePlayerIdMap[trickWinner];
-        if (winnerIndex) {
-            console.log("[][][][][][][] put trick in... loc" + winnerIndex + "stuff");
-            addTrickWin("loc" + winnerIndex + "stuff", trickCardIDs);
-            var winsId = "loc" + winnerIndex + "wins";
-            var currentWins = Number($("#" + winsId).text());
-            console.log("OOOOOOOOOOOOOOOOOOOOO}}}}}}}}}}}}  currentWins: " + currentWins);
-            addTrickWinText(winsId, currentWins + 1);
-        } else {
-            console.log("[][][][][][][] no bueno winner mustBeMe");
-        }
-        // if (gameConfig_hasTeams && gameConfig_playerCount == 4 && trickWinner == getNextPlayerName(getNextPlayerName(playerNum))) {
-        //     tricksWon++;
-        // }
-        if (roundNumber == gameConfig_numberOfRounds) {
-            calculateGameWinner();
-        } else if (gameConfig_numberOfRounds == -1) {
-            //TODO: check it any players still have card 
-        }
+        winnerOfRound(data);
     });
     socketio.on('some1Bid', function (data) {
         someoneBid(data);
@@ -355,9 +217,3 @@ $(function () {
     });
 });
 
-var path = window.location.pathname;
-console.log("window.location.pathname: " + path);
-// if(path.length==4){
-//     console.log("AutoJoiner: "+path);             
-//     joinRoom();
-// }

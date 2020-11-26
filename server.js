@@ -1,4 +1,4 @@
-console.log("server.js Last modified: 2020/11/26 17:08:46");
+console.log("server.js Last modified: 2020/11/26 21:25:10");
 
 var maximumRoomSize = 10;
 var http = require("http"),
@@ -186,7 +186,6 @@ io.sockets.on('connection', function (socket) {
     io.sockets.to(socket.room).emit('cycleClientOrderAssignee', data);
   });
   socket.on('taskDrawn', function (card) {
-    console.log("taskDrawn... socket.room: " + JSON.stringify(socket.room));
     io.sockets.to(socket.room).emit('taskDrawn', card);
   });
   socket.on('hideTasks', function () {
