@@ -1,4 +1,4 @@
-const lastModifiedString3 = ("Last modified: 2020/11/26 17:13:07");
+const lastModifiedString3 = ("Last modified: 2020/11/26 17:27:53");
 const deckTS=lastModifiedString3.replace("Last ","").replace("modified: ","");
 console.log("client_deckFunction.js "+lastModifiedString3);
 
@@ -495,17 +495,22 @@ function cardPlayed(data) {
     $("#loc" + seatIndex + "play").append(cardObj);
     updateCardRotations(seatIndex);
   } else {
-    $("#myPlay").append(cardDiv);
+    $("#myPlay").append(cardObj);
+    $(".highlighted").removeClass("highlighted");
   }
-  if (currentPlayer == lead) {
-    leadSuit = getEuchreCardValue(card).suit;
+
+  if(!gameConfig_playCardsAsync){
+    if (currentPlayer == lead) {
+      leadSuit = getEuchreCardValue(card).suit;
+    }
+    if (nextPlayer(currentPlayer) == lead) {
+      resolveTrick();
+    }
+    currentPlayer = nextPlayer(currentPlayer);
+    updateTurnIndicator(getNicknameForPlayer(currentPlayer), currentPlayer == playerNum, false);
   }
-  if (nextPlayer(currentPlayer) == lead) {
-    resolveTrick();
-  }
-  currentPlayer = nextPlayer(currentPlayer);
-  $(".highlighted").removeClass("highlighted");
-  updateTurnIndicator(getNicknameForPlayer(currentPlayer), currentPlayer == playerNum, false);
+
+
 }
 
 function isATrumpCard(card) {
