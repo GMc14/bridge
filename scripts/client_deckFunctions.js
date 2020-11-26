@@ -1,4 +1,4 @@
-const lastModifiedString3 = ("Last modified: 2020/11/26 17:48:07");
+const lastModifiedString3 = ("Last modified: 2020/11/26 20:21:37");
 const deckTS=lastModifiedString3.replace("Last ","").replace("modified: ","");
 console.log("client_deckFunction.js "+lastModifiedString3);
 
@@ -460,7 +460,7 @@ function playCard() {
       $(this).detach();
       socketio.emit('playCard', {
         card: card,
-        player: currentPlayer
+        player: playerNum
       });
     }
   }
@@ -469,7 +469,7 @@ function playCard() {
 function cardPlayed(data) {
   var player = data.player;
   var card = data.card;
-  console.log("socketFunctions -> cardPayed card: " + JSON.stringify(card) + "  >>  player: " + player + "  >> getNextPlayerName: " + getNextPlayerName(playerNum) + "  >>  prevPlayer: " + prevPlayer(playerNum));
+  console.log("socketFunctions -> cardPlayed card: " + JSON.stringify(card) + "  >>  player: " + player + "  >> getNextPlayerName: " + getNextPlayerName(playerNum) + "  >>  prevPlayer: " + prevPlayer(playerNum));
   if (player == lead) {
     console.log("ssocketFunctions -> cardPLayed EMPTY" + playerNum + "  :  " + player + "  |  " + lead);
     $(".plays").empty();
@@ -507,7 +507,7 @@ function cardPlayed(data) {
       resolveTrick();
     }
     currentPlayer = getNextPlayerName(currentPlayer);
-    updateTurnIndicator(getNicknameForPlayer(currentPlayer), currentPlayer == playerNum, false);
+    updateTurnIndicator(currentPlayer, currentPlayer == playerNum, false);
   }
 
 }
