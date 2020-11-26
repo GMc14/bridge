@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <title>GMcCrew</title>
   <script>
-    const lastModifiedString10 = ("Last modified: 2020/11/26 17:21:04");
+    const lastModifiedString10 = ("Last modified: 2020/11/26 17:32:23");
     const htmlTS=lastModifiedString10.replace("Last ","").replace("modified: ","");
     console.log("index.html "+lastModifiedString10);
   </script>
@@ -249,7 +249,7 @@
     });
     console.log(JSON.stringify(dates));
     var maxDate=new Date(Math.max.apply(null,dates));
-    $("#timeStamp").text("Updated: "+maxDate);
+    $("#timeStamp").text("Updated: "+maxDate.toUTCString());
   </script>
 </body>
 

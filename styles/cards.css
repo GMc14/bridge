@@ -100,9 +100,10 @@ div#myHand.highlighted {
   /* background: rgba(53, 53, 53, 0.4); */
   position: absolute;
   top: -3.5vmax;
+  padding-top: 4vmax;
   width: 15vmax;
-  /* max-height: 15vmax;
-  overflow-y: auto; */
+  /* max-height: 15vmax;*/
+  overflow-y: auto; 
   z-index: 99999;
 }
 

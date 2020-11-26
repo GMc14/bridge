@@ -1,5 +1,5 @@
 
-const lastModifiedString1 = ("Last modified: 2020/11/26 17:13:07");
+const lastModifiedString1 = ("Last modified: 2020/11/26 17:37:12");
 const bidTS=lastModifiedString1.replace("Last ","").replace("modified: ","");
 console.log("client_bidFunctions.js "+lastModifiedString1);
 
@@ -85,7 +85,8 @@ function startBidding() {
   } else {
     alert("not prebid?");
   }
-  currentBidder = nextPlayer(dealer);
+  //Start Left of the dealer
+  currentBidder = lead;
   updateTurnIndicator(getNicknameForPlayer(currentBidder), playerNum == currentBidder, false);
   updateActionStates();
 
@@ -109,7 +110,7 @@ function disablePrevCells(row, col) {
 
 function someoneBid(data) {
   passCount = 0;
-  currentBidder = nextPlayer(currentBidder);
+  currentBidder = getNextPlayerName(currentBidder);
   currentBid = data.bid;
   otherColor = data.color;
   $('#' + data.bid).trigger('click');
@@ -123,13 +124,13 @@ function someonePassed() {
     if (passCount == gameConfig_playerCount) {
       $('#bidOfRoundText').html('<b>' + currentBidder + ": " + currentBid + '</b>');
       $('#bidOfRoundText').show();
-      if (playerNum == currentBidder || playerNum == nextPlayer(nextPlayer(currentBidder))) {
+      if (playerNum == currentBidder || playerNum == getNextPlayerName(getNextPlayerName(currentBidder))) {
         handsNeeded = 6 + Number(currentBid.charAt(0));
       } else {
         handsNeeded = 14 - (6 + Number(currentBid.charAt(0)));
       }
       trumpSuit = currentBid.charAt(1);
-      currentPlayer = nextPlayer(currentBidder);
+      currentPlayer = getNextPlayerName(currentBidder);
       lead = currentPlayer;
       biddingFinished();
       return;
@@ -146,7 +147,7 @@ function someonePassed() {
     }
   }
 
-  currentBidder = nextPlayer(currentBidder);
+  currentBidder = getNextPlayerName(currentBidder);
   updateTurnIndicator(getNicknameForPlayer(currentBidder), playerNum == currentBidder, false);
   updateActionStates();
 }

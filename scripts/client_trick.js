@@ -1,4 +1,4 @@
-const lastModifiedString9 = ("Last modified: 2020/11/26 17:17:33");
+const lastModifiedString9 = ("Last modified: 2020/11/26 17:39:24");
 const trickTS=lastModifiedString9.replace("Last ","").replace("modified: ","");
 console.log("client_trick.js "+lastModifiedString9);
 
@@ -129,8 +129,11 @@ function addTrickWin(who, cards) {
   }
 }
 
-function nextPlayer(currPlayer) {
-  console.log("nextPlayer----currPlayer:" + currPlayer);
+function getNextPlayerName(currPlayer) {
+  if(currPlayer == -1){
+    return -1;
+  }
+  console.log("getNextPlayerName----currPlayer:" + currPlayer);
   var currNumber = Number(currPlayer.slice(-1));
   currNumber += 1;
   if (currNumber > gameConfig_playerCount) {

@@ -68,7 +68,7 @@ body {
   font-size: xx-small;
   position:fixed;
   bottom:0px;
-  left:0px;
+  right:0px;
   color:#44FF33
 
 }
@@ -222,6 +222,8 @@ td, th {
 #helpLegend {
   display: none;
   position: fixed;
+  max-height: 90vh;
+  max-width: 90vw;
   left: 2vmax;
   top: 2vmax;
   z-index: 99999999999;

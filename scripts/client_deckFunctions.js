@@ -1,4 +1,4 @@
-const lastModifiedString3 = ("Last modified: 2020/11/26 17:27:53");
+const lastModifiedString3 = ("Last modified: 2020/11/26 17:48:07");
 const deckTS=lastModifiedString3.replace("Last ","").replace("modified: ","");
 console.log("client_deckFunction.js "+lastModifiedString3);
 
@@ -469,7 +469,7 @@ function playCard() {
 function cardPlayed(data) {
   var player = data.player;
   var card = data.card;
-  console.log("socketFunctions -> cardPayed card: " + JSON.stringify(card) + "  >>  player: " + player + "  >> nextPlayer: " + nextPlayer(playerNum) + "  >>  prevPlayer: " + prevPlayer(playerNum));
+  console.log("socketFunctions -> cardPayed card: " + JSON.stringify(card) + "  >>  player: " + player + "  >> getNextPlayerName: " + getNextPlayerName(playerNum) + "  >>  prevPlayer: " + prevPlayer(playerNum));
   if (player == lead) {
     console.log("ssocketFunctions -> cardPLayed EMPTY" + playerNum + "  :  " + player + "  |  " + lead);
     $(".plays").empty();
@@ -503,16 +503,21 @@ function cardPlayed(data) {
     if (currentPlayer == lead) {
       leadSuit = getEuchreCardValue(card).suit;
     }
-    if (nextPlayer(currentPlayer) == lead) {
+    if (getNextPlayerName(currentPlayer) == lead) {
       resolveTrick();
     }
-    currentPlayer = nextPlayer(currentPlayer);
+    currentPlayer = getNextPlayerName(currentPlayer);
     updateTurnIndicator(getNicknameForPlayer(currentPlayer), currentPlayer == playerNum, false);
   }
 
-
 }
 
+function drawNewCard(player) {
+  if(isGameMaster){
+    drawnCard = deck.pop();
+    socketio.emit("cardDrawn",{card:drawnCard, player:player});  
+  }
+}
 function isATrumpCard(card) {
   const isATrumpCard = currentTrumpCards.some(trumpCard => trumpCard.rank == card.rank && trumpCard.suit == card.suit);
   console.log("^^^^^^^^^^^^ isATrumpCard: " + JSON.stringify(card) + " in:" + JSON.stringify(currentTrumpCards) + " includes?:" + isATrumpCard);

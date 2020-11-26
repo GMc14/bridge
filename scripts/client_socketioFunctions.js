@@ -1,4 +1,4 @@
-const lastModifiedString8 = ("Last modified: 2020/11/26 17:13:07");
+const lastModifiedString8 = ("Last modified: 2020/11/26 17:42:13");
 const socketTS=lastModifiedString8.replace("Last ","").replace("modified: ","");
 console.log("client_socketioFunction.js "+lastModifiedString8);
 
@@ -26,6 +26,7 @@ var gameConfig_mustFollowSuit;
 var gameConfig_showWonTricks;
 var gameConfig_biddingState;
 var gameConfig_playFaceDown;
+var gameCongid_drawBackUp;
 var gameConfig_playCardsAsync;
 var gameConfig_minPlayerCount = 1;
 var gameConfig_maxPlayerCount = 4;
@@ -67,7 +68,8 @@ function setGameType(gT) {
     gameConfig_playFaceDown = false;
     gameConfig_hasTasks = false;
     gameConfig_playCardsAsync = false;
-
+    gameCongid_drawBackUp = false;
+    
     gameConfig_mustFollowSuit = true;
     gameConfig_showWonTricks = true;
     
@@ -116,6 +118,7 @@ function setGameType(gT) {
         gameConfig_gameName = 'Dixit';
         gameConfig_playFaceDown = true;
         gameConfig_playCardsAsync = true;
+        gameCongid_drawBackUp = true;
 
         gameConfig_showWonTricks = false;
         gameConfig_mustFollowSuit = false;
@@ -255,7 +258,8 @@ $(function () {
         displayCards(); //Display cards before & after trump determined, sort may have changed
 
         if (gameConfig_bidForTrump) {
-            lead = nextPlayer(dealer);
+            //Start with left of the dealer
+            lead = getNextPlayerName(dealer);
             startBidding();
         } else {
             if (startPlayerCard) {
@@ -274,8 +278,11 @@ $(function () {
                         }
                     }
                 }
-            } else {
-                currentPlayer = nextPlayer(dealer);
+            } else if (gameConfig_playCardsAsync){
+                currentPlayer = -1;
+            }else{
+                //Start with left of the dealer
+                currentPlayer = getNextPlayerName(dealer);
             }
             lead = currentPlayer;
             var leaderNum = inversePlayerIdMap[lead];
@@ -316,7 +323,7 @@ $(function () {
         } else {
             console.log("[][][][][][][] no bueno winner mustBeMe");
         }
-        // if (gameConfig_hasTeams && gameConfig_playerCount == 4 && trickWinner == nextPlayer(nextPlayer(playerNum))) {
+        // if (gameConfig_hasTeams && gameConfig_playerCount == 4 && trickWinner == getNextPlayerName(getNextPlayerName(playerNum))) {
         //     tricksWon++;
         // }
         if (roundNumber == gameConfig_numberOfRounds) {

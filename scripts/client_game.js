@@ -1,4 +1,4 @@
-const lastModifiedString4 = ("Last modified: 2020/11/26 17:13:07");
+const lastModifiedString4 = ("Last modified: 2020/11/26 17:33:57");
 const gameTS=lastModifiedString4.replace("Last ","").replace("modified: ","");
 console.log("client_game.js "+lastModifiedString4);
 
@@ -69,7 +69,8 @@ function calculateGameWinner() {
   $('#gameBid').html('<b>BID:</b> ' + currentBid + ' (' + currentBidder + ')');
   $('#wins').html('<b>YOU WON:</b> ' + tricksWon + ' tricks');
   refreshTeamWins(win);
-  dealer = nextPlayer(dealer);
+  //Dealer Moves to the left
+  dealer = getNextPlayerName(dealer);
   currentPlayer = '', lead = '', leadSuit = '', trumpSuit = '', handsNeeded = '', tricksWon = 0, roundNumber = 0;
   $('#gameRecap').show();
 }

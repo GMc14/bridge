@@ -79,9 +79,9 @@
   font-family: 'Dawning of a New Day';
   font-size: 3vmax;
   color: transparent;
-  background: rgba( 40, 40, 40, 0.6);
+  background: rgba( 40, 40, 40, 0.98);
   -webkit-background-clip: text;
-  text-shadow: 2px 5px 5px rgba(100, 100, 100, 0.4);
+  text-shadow: 2px 5px 5px rgba(0, 100, 100, 0.6);
 }
 
 #leaveRoom {
