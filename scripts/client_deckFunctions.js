@@ -1,4 +1,4 @@
-const lastModifiedString3 = ("Last modified: 2020/11/26 22:29:37");
+const lastModifiedString3 = ("Last modified: 2020/11/26 22:36:54");
 const deckTS = lastModifiedString3.replace("Last ", "").replace("modified: ", "");
 console.log("client_deckFunction.js " + lastModifiedString3);
 
@@ -511,6 +511,8 @@ function updateCardRotations(seatIndex) {
 }
 
 function displayOtherCards(seatIndex) {
+  
+  let handSize = $('#loc' + seatIndex + 'Hand').children().length;
   console.log(">>>>>>>>>>>>>displayCards----in: #loc" + seatIndex + "Hand---- >>  handSize: " + handSize);
   $('#loc' + seatIndex + 'Hand').empty();
   for (var i = 0; i < handSize; i++) {
