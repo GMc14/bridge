@@ -1,4 +1,6 @@
-console.log("client_trick.js Last modified: 2020/11/26 16:22:41");
+const lastModifiedString9 = ("Last modified: 2020/11/26 17:17:33");
+const trickTS=lastModifiedString9.replace("Last ","").replace("modified: ","");
+console.log("client_trick.js "+lastModifiedString9);
 
 function confirmLegal(card, isLead) {
   if (!gameConfig_playCardsAsync && !isLead && !isFollowingSuit(card)) {

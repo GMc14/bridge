@@ -1,4 +1,6 @@
-console.log("client_roomState.js Last modified: 2020/11/26 16:23:59");
+const lastModifiedString6 = ("Last modified: 2020/11/26 17:13:07");
+const roomTS=lastModifiedString6.replace("Last ","").replace("modified: ","");
+console.log("client_roomState.js "+lastModifiedString6);
 
 const roomCodeCandidates = "234689ABCEFJKMNPQRTVWXY";
 const playerColors = ['#004499', '#770011', '#666600', '#116600', '#440099', '#883300', '#006666', '#660066'];

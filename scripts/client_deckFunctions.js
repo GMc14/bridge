@@ -1,4 +1,6 @@
-console.log("client_deckFunctions.js Last modified: 2020/11/26 16:23:29");
+const lastModifiedString3 = ("Last modified: 2020/11/26 17:13:07");
+const deckTS=lastModifiedString3.replace("Last ","").replace("modified: ","");
+console.log("client_deckFunction.js "+lastModifiedString3);
 
 function Card(suit, rank) {
   this.suit = suit;

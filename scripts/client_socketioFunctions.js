@@ -1,4 +1,6 @@
-console.log("client_socketioFunctions.js Last modified: 2020/11/26 16:23:05");
+const lastModifiedString8 = ("Last modified: 2020/11/26 17:13:07");
+const socketTS=lastModifiedString8.replace("Last ","").replace("modified: ","");
+console.log("client_socketioFunction.js "+lastModifiedString8);
 
 //Meta
 var socketio = io.connect();

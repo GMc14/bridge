@@ -1,3 +1,7 @@
+const lastModifiedString0 = ("Last modified: 2020/11/26 17:17:35");
+const utilTS=lastModifiedString0.replace("Last ","").replace("modified: ","");
+console.log("client_utils.js "+lastModifiedString0);
+
 function rotate($el, degrees, yTans = 0) {
   console.log("rotate: "+degrees+"  "+yTans);
   $el.css({

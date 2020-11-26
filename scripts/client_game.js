@@ -1,3 +1,7 @@
+const lastModifiedString4 = ("Last modified: 2020/11/26 17:13:07");
+const gameTS=lastModifiedString4.replace("Last ","").replace("modified: ","");
+console.log("client_game.js "+lastModifiedString4);
+
 function constructPlayArea() {
   var clientNumber = Number(playerNum.slice(-1));
   for (var j = 1; j < gameConfig_playerCount; j++) {

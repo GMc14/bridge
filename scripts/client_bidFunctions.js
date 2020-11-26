@@ -1,4 +1,7 @@
-console.log("client_bidFunctions.js Last modified: 2020/11/26 16:23:22");
+
+const lastModifiedString1 = ("Last modified: 2020/11/26 17:13:07");
+const bidTS=lastModifiedString1.replace("Last ","").replace("modified: ","");
+console.log("client_bidFunctions.js "+lastModifiedString1);
 
 var otherColor;
 var playerColor;

@@ -1,3 +1,7 @@
+const lastModifiedString2 = ("Last modified: 2020/11/26 17:13:07");
+const crewTS=lastModifiedString2.replace("Last ","").replace("modified: ","");
+console.log("client_crew.js "+lastModifiedString2);
+
 const crewRanks = new Array(1, 2, 3, 4, 5, 6, 7, 8, 9);
 const crewBonusCards = new Array("R1", "R2", "R3", 'R4');
 const crewStartCard = 'R4';

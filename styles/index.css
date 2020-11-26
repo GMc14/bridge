@@ -1,9 +1,3 @@
-* {
-  font-size: 1.5vmax;
-  /* background:rgba(255, 255, 128, 0.1) 
-  border: 2px dotted rgba(255, 255, 128, 0.8) !important;*/
-}
-
 ::selection {
   background: transparent;
 }
@@ -70,7 +64,14 @@ body {
   -webkit-animation: wobble-hor-top 0.8s both;
   animation: wobble-hor-top 0.8s both;
 }
+#timeStamp{
+  font-size: xx-small;
+  position:fixed;
+  bottom:0px;
+  left:0px;
+  color:#44FF33
 
+}
 #bidOfRoundText {
   display: none;
   font-size: large;

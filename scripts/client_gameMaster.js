@@ -1,3 +1,7 @@
+const lastModifiedString5 = ("Last modified: 2020/11/26 17:13:07");
+const gmTS=lastModifiedString5.replace("Last ","").replace("modified: ","");
+console.log("client_gameMaster.js "+lastModifiedString5);
+
 var isGameMaster = false;
 
 function updateComms(status) {
