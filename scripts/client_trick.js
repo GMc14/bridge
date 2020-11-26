@@ -1,3 +1,5 @@
+console.log("client_trick.js Last modified: 2020/11/26 16:22:41");
+
 function confirmLegal(card, isLead) {
   if (!gameConfig_playCardsAsync && !isLead && !isFollowingSuit(card)) {
     for (var i = 0; i < myHandOfCards.length; i++) {

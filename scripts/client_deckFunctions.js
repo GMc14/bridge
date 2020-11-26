@@ -1,3 +1,5 @@
+console.log("client_deckFunctions.js Last modified: 2020/11/26 16:23:29");
+
 function Card(suit, rank) {
   this.suit = suit;
   this.rank = rank;

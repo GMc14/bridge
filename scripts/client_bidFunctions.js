@@ -1,3 +1,5 @@
+console.log("client_bidFunctions.js Last modified: 2020/11/26 16:23:22");
+
 var otherColor;
 var playerColor;
 var currentBidder;

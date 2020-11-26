@@ -1,3 +1,5 @@
+console.log("client_socketioFunctions.js Last modified: 2020/11/26 16:23:05");
+
 //Meta
 var socketio = io.connect();
 

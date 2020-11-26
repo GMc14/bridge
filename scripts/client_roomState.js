@@ -1,3 +1,5 @@
+console.log("client_roomState.js Last modified: 2020/11/26 16:23:59");
+
 const roomCodeCandidates = "234689ABCEFJKMNPQRTVWXY";
 const playerColors = ['#004499', '#770011', '#666600', '#116600', '#440099', '#883300', '#006666', '#660066'];
 var playerModuleIsShowing = false;
