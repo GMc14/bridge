@@ -1,4 +1,4 @@
-const lastModifiedString7 = ("Last modified: 2020/11/26 21:22:38");
+const lastModifiedString7 = ("Last modified: 2020/11/27 14:15:33");
 const roundTS = lastModifiedString7.replace("Last ", "").replace("modified: ", "");
 console.log("client_round.js " + lastModifiedString7);
 
@@ -9,8 +9,7 @@ function winnerOfRound(data) {
     roundNumber++;
     lead = trickWinner;
     currentPlayer = trickWinner;
-    $(".highlighted").removeClass("highlighted");
-    console.log("----winnerOfRound getNicknameForPlayer----- ");
+
     updateTurnIndicator(lead, playerNum == currentPlayer, true);
 
     console.log("[][][][][][][] winner of round: " + trickWinner + " cards:" + trickCardIDs);
@@ -33,4 +32,9 @@ function winnerOfRound(data) {
     } else if (gameConfig_numberOfRounds == -1) {
         //TODO: check it any players still have card 
     }
+}
+
+function endRound(){
+
+    $(".highlighted").removeClass("highlighted");
 }

@@ -1,4 +1,4 @@
-const lastModifiedString3 = ("Last modified: 2020/11/27 05:16:05");
+const lastModifiedString3 = ("Last modified: 2020/11/27 14:15:32");
 const deckTS = lastModifiedString3.replace("Last ", "").replace("modified: ", "");
 console.log("client_deckFunction.js " + lastModifiedString3);
 
@@ -580,6 +580,12 @@ function cardPlayed(data) {
     }
     currentPlayer = getNextPlayerName(currentPlayer);
     updateTurnIndicator(currentPlayer, currentPlayer == playerNum, false);
+  } else {
+    if ($(".plays").length == gameConfig_playerCount) {
+      //allPlayersHavePlayed
+      resolveTrick();
+    }
+    
   }
 
   console.log("gameCongid_drawBackUp: " + gameCongid_drawBackUp);
@@ -601,8 +607,8 @@ function drawNewCard(player) {
 }
 
 function cardDrawn(data) {
-  console.log("cardDrawn: "+JSON.stringify(data.drawnCard));
-  if (data.drawnCard) {
+  console.log("cardDrawn: " + JSON.stringify(data.card));
+  if (data.card) {
     var hand;
     var cardObj;
     if (data.player == playerNum) {
@@ -614,8 +620,8 @@ function cardDrawn(data) {
       hand = "#loc" + inversePlayerIdMap[data.player] + "Hand";
       cardObj = $(".cardback:eq(0)").clone().show();
     }
-    
-    console.log("cardDrawn hand: "+hand+"     cardObj"+JSON.stringify(cardObj));
+
+    console.log("cardDrawn hand: " + hand + "     cardObj" + JSON.stringify(cardObj));
     $(hand).append(cardObj);
   }
 }

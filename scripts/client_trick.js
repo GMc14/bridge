@@ -1,6 +1,6 @@
-const lastModifiedString9 = ("Last modified: 2020/11/26 20:09:23");
-const trickTS=lastModifiedString9.replace("Last ","").replace("modified: ","");
-console.log("client_trick.js "+lastModifiedString9);
+const lastModifiedString9 = ("Last modified: 2020/11/27 15:04:40");
+const trickTS = lastModifiedString9.replace("Last ", "").replace("modified: ", "");
+console.log("client_trick.js " + lastModifiedString9);
 
 function confirmLegal(card, isLead) {
   if (!gameConfig_playCardsAsync && !isLead && !isFollowingSuit(card)) {
@@ -30,35 +30,66 @@ function isFollowingSuit(card) {
 }
 
 function resolveTrick() {
-  console.log("GMcCards-rules.js-resolveTrick-#0000");
-  var trickCardIDs = [];
-  var iaAmTheWinner = true;
-  var myCardID = $("#myPlay").find("img").attr("id").slice(0, -4);
-  trickCardIDs.push(myCardID);
-  $(".plays").each(function () {
-    var cardImgId = $(this).find("img").attr("id");
-    console.log("GMcCards-rules.js-********* iterating plays1: " + cardImgId + "       : " + JSON.stringify(trickCardIDs));
-    if (cardImgId) {
-      let otherCardID = cardImgId.slice(0, -4);
-      trickCardIDs.push(otherCardID);
-      if (!compareCard(getCardFromID(myCardID), getCardFromID(otherCardID))) {
-        iaAmTheWinner = false;
-      }
-    } else {
-      console.log("noslice: " + cardImgId);
+
+  if (gameConfig_playFaceDown) {
+    $(".plays > img").sort(function () {
+      return Math.random() - 0.5;
+    }).each(function () {
+      $(this).prop("src", "/card_imgs/" + $(this).prop("id") + ".png");
+      $("#myPlay").append($(this));
+    });
+    if (gameConfig_voteForTrickWinner) {
+      $("#myPlay > img").addClass("highlighted").click(function () {
+        $("highlighted").removeClass("highlighted");
+        var cardID = $(this).attr('id');
+        var card = getCardFromID(cardID);
+        socketio.emit('submitVote', {
+          card: card,
+          player: playerNum
+        });
+      });
     }
-    console.log("GMcCards-rules.js-********* iterating plays2: " + cardImgId + "       : " + JSON.stringify(trickCardIDs));
-  });
-  trickCardIDs = [...new Set(trickCardIDs)];
-  console.log("GMcCards-rules.js-resolveTrick-#0200=======" + iaAmTheWinner + "  cards:" + JSON.stringify(trickCardIDs));
-  if (iaAmTheWinner) {
-    console.log("GMcCards-rules.js-iaAmTheWinner!!!!!!!!!!!!!!!!!!!!!!!!!!");
-    addTrickWin("myStuff", trickCardIDs);
-    tricksWon++;
-    addTrickWinText("myWin", tricksWon);
-    socketio.emit('winner', {
-      player: playerNum,
-      trickCards: trickCardIDs
+  } else {
+    console.log("GMcCards-rules.js-resolveTrick-#0000");
+    var trickCardIDs = [];
+    var iaAmTheWinner = true;
+    var myCardID = $("#myPlay").find("img").attr("id").slice(0, -4);
+    trickCardIDs.push(myCardID);
+    $(".plays").each(function () {
+      var cardImgId = $(this).find("img").attr("id");
+      console.log("GMcCards-rules.js-********* iterating plays1: " + cardImgId + "       : " + JSON.stringify(trickCardIDs));
+      if (cardImgId) {
+        let otherCardID = cardImgId.slice(0, -4);
+        trickCardIDs.push(otherCardID);
+        if (!compareCard(getCardFromID(myCardID), getCardFromID(otherCardID))) {
+          iaAmTheWinner = false;
+        }
+      } else {
+        console.log("noslice: " + cardImgId);
+      }
+      console.log("GMcCards-rules.js-********* iterating plays2: " + cardImgId + "       : " + JSON.stringify(trickCardIDs));
+    });
+    trickCardIDs = [...new Set(trickCardIDs)];
+    console.log("GMcCards-rules.js-resolveTrick-#0200=======" + iaAmTheWinner + "  cards:" + JSON.stringify(trickCardIDs));
+    if (iaAmTheWinner) {
+      console.log("GMcCards-rules.js-iaAmTheWinner!!!!!!!!!!!!!!!!!!!!!!!!!!");
+      addTrickWin("myStuff", trickCardIDs);
+      tricksWon++;
+      addTrickWinText("myWin", tricksWon);
+      socketio.emit('winner', {
+        player: playerNum,
+        trickCards: trickCardIDs
+      });
+    }
+  }
+}
+
+function voteSubmitted(data){
+  votes.push(data);
+  if (votes.length == gameConfig_playerCount){
+    //Everyone Has Voted
+    $(votes).each(function(){
+      $(".plays > #"+getCardID(this.card)).append("<i class='material-icons vote "+this.player+"'>icon</i>");
     });
   }
 }
@@ -130,7 +161,7 @@ function addTrickWin(who, cards) {
 }
 
 function getNextPlayerName(currPlayer) {
-  if(currPlayer == -1){
+  if (currPlayer == -1) {
     return -1;
   }
   console.log("getNextPlayerName----currPlayer:" + currPlayer);

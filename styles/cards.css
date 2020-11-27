@@ -103,7 +103,7 @@ div#myHand.highlighted {
   padding-top: 4vmax;
   width: 15vmax;
   /* max-height: 15vmax;*/
-  overflow-y: auto; 
+  overflow-y: auto;
   z-index: 99999;
 }
 
@@ -129,10 +129,12 @@ div#myHand.highlighted {
   content: "link";
   -webkit-font-feature-settings: 'liga';
 }
+
 .highestCard, .lowestCard, .onlyCard {
   content: "---";
   background: #fff;
 }
+
 .highestOption:after, .highestCard {
   content: 'arrow_circle_up';
 }
@@ -200,6 +202,7 @@ div#myHand.highlighted {
 }
 
 .plays>img {
+  background: white;
   height: 7vmax;
   width: 5vmax;
 }

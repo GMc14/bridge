@@ -1,6 +1,6 @@
-const lastModifiedString8 = ("Last modified: 2020/11/27 05:13:41");
-const socketTS=lastModifiedString8.replace("Last ","").replace("modified: ","");
-console.log("client_socketioFunction.js "+lastModifiedString8);
+const lastModifiedString8 = ("Last modified: 2020/11/27 14:21:26");
+const socketTS = lastModifiedString8.replace("Last ", "").replace("modified: ", "");
+console.log("client_socketioFunction.js " + lastModifiedString8);
 
 //Meta
 var socketio = io.connect();
@@ -31,6 +31,8 @@ var gameConfig_cardsPerTurn;
 var gameConfig_playCardsAsync;
 var gameConfig_minPlayerCount = 1;
 var gameConfig_maxPlayerCount = 4;
+var gameConfig_padTrickWithRandoms;
+var gameConfig_voteForTrickWinner;
 var gameConfig_startCardsPerPlayer; //-1 == Deal All
 var gameConfig_numberOfRounds; //-1 == Play all cards in hand
 var ranks;
@@ -70,10 +72,12 @@ function setGameType(gT) {
     gameConfig_hasTasks = false;
     gameConfig_playCardsAsync = false;
     gameCongid_drawBackUp = false;
+    gameConfig_padTrickWithRandoms = false;
+    gameConfig_voteForTrickWinner = false;
     
     gameConfig_mustFollowSuit = true;
     gameConfig_showWonTricks = true;
-    
+
     gameConfig_startCardsPerPlayer = -1;
     gameConfig_numberOfRounds = -1;
     gameConfig_cardsPerTurn = 1;
@@ -121,7 +125,8 @@ function setGameType(gT) {
         gameConfig_playFaceDown = true;
         gameConfig_playCardsAsync = true;
         gameCongid_drawBackUp = true;
-
+        gameConfig_voteForTrickWinner = true;
+        gameConfig_padTrickWithRandoms = true; //TODO: implement before card reveal
         gameConfig_showWonTricks = false;
         gameConfig_mustFollowSuit = false;
         gameConfig_startCardsPerPlayer = 5;
@@ -150,7 +155,7 @@ var suitColors = {
     "H": "Red",
     "D": "Red"
 }
-
+var votes=[];
 const standardRanks = new Array(2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14);
 const euchreRanks = new Array(9, 10, 11, 12, 13, 14);
 
@@ -220,5 +225,7 @@ $(function () {
     socketio.on('cardDrawn', function (data) {
         cardDrawn(data);
     });
+    socketio.on('voteSubmitted', function (data) {
+        voteSubmitted(data);
+    });
 });
-
