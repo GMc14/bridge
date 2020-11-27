@@ -1,4 +1,4 @@
-const lastModifiedString8 = ("Last modified: 2020/11/26 23:54:44");
+const lastModifiedString8 = ("Last modified: 2020/11/27 05:13:41");
 const socketTS=lastModifiedString8.replace("Last ","").replace("modified: ","");
 console.log("client_socketioFunction.js "+lastModifiedString8);
 
@@ -27,6 +27,7 @@ var gameConfig_showWonTricks;
 var gameConfig_biddingState;
 var gameConfig_playFaceDown;
 var gameCongid_drawBackUp;
+var gameConfig_cardsPerTurn;
 var gameConfig_playCardsAsync;
 var gameConfig_minPlayerCount = 1;
 var gameConfig_maxPlayerCount = 4;
@@ -75,6 +76,7 @@ function setGameType(gT) {
     
     gameConfig_startCardsPerPlayer = -1;
     gameConfig_numberOfRounds = -1;
+    gameConfig_cardsPerTurn = 1;
     gameConfig_minPlayerCount = 1;
     gameConfig_maxPlayerCount = 100;
 

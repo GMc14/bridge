@@ -1,4 +1,4 @@
-const lastModifiedString3 = ("Last modified: 2020/11/27 05:08:21");
+const lastModifiedString3 = ("Last modified: 2020/11/27 05:16:05");
 const deckTS = lastModifiedString3.replace("Last ", "").replace("modified: ", "");
 console.log("client_deckFunction.js " + lastModifiedString3);
 
@@ -342,7 +342,7 @@ function deal(data) {
   }
   displayMyCards();
   for (var j = 1; j < gameConfig_playerCount; j++) {
-    displayOtherCards(j,data.hands[j-1].length);
+    displayOtherCards(j, data.hands[j - 1].length);
   }
 
   if (gameConfig_bidForTrump) {
@@ -521,19 +521,19 @@ function displayOtherCards(seatIndex, handSize) {
 function playCard() {
   // console.log("--------------playCard >>>>>>>>>>>>>" + currentPlayer + " =? " + playerNum + "   " + JSON.stringify(this));
   if (gameConfig_playCardsAsync || currentPlayer == playerNum) {
-
     var num = $(this).attr('id').substr(0, 2);
     var cardID = $(this).attr('id').substr(2);
     var card = getCardFromID(cardID);
     // console.log("--------------playCard! " + num + " : " + JSON.stringify(card));
-
     if (confirmLegal(card, playerNum == lead)) {
-      myHandOfCards[Number(num) - 10].suit = "Z";
-      $(this).detach();
-      socketio.emit('playCard', {
-        card: card,
-        player: playerNum
-      });
+      if ($("#myPlay").children().length < gameConfig_cardsPerTurn) {
+        myHandOfCards[Number(num) - 10].suit = "Z";
+        $(this).detach();
+        socketio.emit('playCard', {
+          card: card,
+          player: playerNum
+        });
+      }
     }
   }
 }
@@ -601,7 +601,7 @@ function drawNewCard(player) {
 }
 
 function cardDrawn(data) {
-  console.log("cardDrawn");
+  console.log("cardDrawn: "+JSON.stringify(data.drawnCard));
   if (data.drawnCard) {
     var hand;
     var cardObj;
@@ -614,6 +614,8 @@ function cardDrawn(data) {
       hand = "#loc" + inversePlayerIdMap[data.player] + "Hand";
       cardObj = $(".cardback:eq(0)").clone().show();
     }
+    
+    console.log("cardDrawn hand: "+hand+"     cardObj"+JSON.stringify(cardObj));
     $(hand).append(cardObj);
   }
 }
