@@ -1,4 +1,4 @@
-const lastModifiedString9 = ("Last modified: 2020/11/27 15:04:40");
+const lastModifiedString9 = ("Last modified: 2020/11/27 15:21:35");
 const trickTS = lastModifiedString9.replace("Last ", "").replace("modified: ", "");
 console.log("client_trick.js " + lastModifiedString9);
 
@@ -32,6 +32,7 @@ function isFollowingSuit(card) {
 function resolveTrick() {
 
   if (gameConfig_playFaceDown) {
+    console.log("GMcCards-rules.js-resolveTrick-gameConfig_playFaceDown");
     $(".plays > img").sort(function () {
       return Math.random() - 0.5;
     }).each(function () {
@@ -39,7 +40,9 @@ function resolveTrick() {
       $("#myPlay").append($(this));
     });
     if (gameConfig_voteForTrickWinner) {
+      console.log("time for voting...");
       $("#myPlay > img").addClass("highlighted").click(function () {
+        console.log("vote Cast! ");
         $("highlighted").removeClass("highlighted");
         var cardID = $(this).attr('id');
         var card = getCardFromID(cardID);

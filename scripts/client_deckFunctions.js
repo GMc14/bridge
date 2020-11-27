@@ -1,4 +1,4 @@
-const lastModifiedString3 = ("Last modified: 2020/11/27 14:15:32");
+const lastModifiedString3 = ("Last modified: 2020/11/27 15:20:23");
 const deckTS = lastModifiedString3.replace("Last ", "").replace("modified: ", "");
 console.log("client_deckFunction.js " + lastModifiedString3);
 
@@ -581,7 +581,7 @@ function cardPlayed(data) {
     currentPlayer = getNextPlayerName(currentPlayer);
     updateTurnIndicator(currentPlayer, currentPlayer == playerNum, false);
   } else {
-    if ($(".plays").length == gameConfig_playerCount) {
+    if ($(".plays > img").length == gameConfig_playerCount) {
       //allPlayersHavePlayed
       resolveTrick();
     }
