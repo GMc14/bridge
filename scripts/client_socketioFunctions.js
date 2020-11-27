@@ -1,4 +1,4 @@
-const lastModifiedString8 = ("Last modified: 2020/11/26 22:22:56");
+const lastModifiedString8 = ("Last modified: 2020/11/26 23:54:44");
 const socketTS=lastModifiedString8.replace("Last ","").replace("modified: ","");
 console.log("client_socketioFunction.js "+lastModifiedString8);
 
@@ -214,6 +214,9 @@ $(function () {
     });
     socketio.on('setHand', function (data) {
         $("#handNumberText").html("<b>Attempt #: </b>" + data);
+    });
+    socketio.on('cardDrawn', function (data) {
+        cardDrawn(data);
     });
 });
 
