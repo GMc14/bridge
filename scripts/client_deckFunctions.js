@@ -1,4 +1,4 @@
-const lastModifiedString3 = ("Last modified: 2020/11/27 04:48:26");
+const lastModifiedString3 = ("Last modified: 2020/11/27 05:08:21");
 const deckTS = lastModifiedString3.replace("Last ", "").replace("modified: ", "");
 console.log("client_deckFunction.js " + lastModifiedString3);
 
@@ -340,7 +340,10 @@ function deal(data) {
   } else if (gameConfig_permaTrumpSuit) {
     trumpSuit = gameConfig_permaTrumpSuit;
   }
-  displayCards(); //Display cards before & after trump determined, sort may have changed
+  displayMyCards();
+  for (var j = 1; j < gameConfig_playerCount; j++) {
+    displayOtherCards(j,data.hands[j-1].length);
+  }
 
   if (gameConfig_bidForTrump) {
     //Start with left of the dealer
@@ -384,13 +387,8 @@ function deal(data) {
   console.log("--------------dealt...ToClients---------------- playerNum: " + playerNum);
 }
 
-function displayCards() {
+function displayMyCards() {
   sortHand();
-  currentTrumpCards = [];
-  console.log(">>>>>>>>>>>>>displayCards----------------");
-  for (var j = 1; j < gameConfig_playerCount; j++) {
-    displayOtherCards(j);
-  }
   $("#myHand").empty();
   for (var i = 0; i < myHandOfCards.length; i++) {
     var cardID = getCardID(myHandOfCards[i]);
@@ -400,7 +398,6 @@ function displayCards() {
     $(cardDiv).click(playCard);
     $("#myHand").append(cardDiv);
   }
-  console.log("--------------displayCards>>>>>>>>>>>>>");
 }
 
 function highlightPlayable() {
@@ -510,10 +507,8 @@ function updateCardRotations(seatIndex) {
   });
 }
 
-function displayOtherCards(seatIndex) {
-  
-  let handSize = $('#loc' + seatIndex + 'Hand').children().length;
-  console.log(">>>>>>>>>>>>>displayCards----in: #loc" + seatIndex + "Hand---- >>  handSize: " + handSize);
+function displayOtherCards(seatIndex, handSize) {
+  console.log(">>>>>>>>>>>>>displayOtherCards----in: #loc" + seatIndex + "Hand---- >>  handSize: " + handSize);
   $('#loc' + seatIndex + 'Hand').empty();
   for (var i = 0; i < handSize; i++) {
     var cardDiv = $("<div class='otherCards'></div>");
@@ -587,7 +582,7 @@ function cardPlayed(data) {
     updateTurnIndicator(currentPlayer, currentPlayer == playerNum, false);
   }
 
-  console.log("gameCongid_drawBackUp: "+gameCongid_drawBackUp);
+  console.log("gameCongid_drawBackUp: " + gameCongid_drawBackUp);
   if (gameCongid_drawBackUp) {
     drawNewCard(player);
   }
@@ -611,9 +606,9 @@ function cardDrawn(data) {
     var hand;
     var cardObj;
     if (data.player == playerNum) {
-      hand ="#myHand";
-      let encodedId = (myHandOfCards.length+10)+getCardID(data.card);
-      cardObj = $("#" + getCardID(data.card) + "_img").clone().attr("class", "myCards").prop("id",encodedId).show();
+      hand = "#myHand";
+      let encodedId = (myHandOfCards.length + 10) + getCardID(data.card);
+      cardObj = $("#" + getCardID(data.card) + "_img").clone().attr("class", "myCards").prop("id", encodedId).show();
       myHandOfCards.push(data.card);
     } else {
       hand = "#loc" + inversePlayerIdMap[data.player] + "Hand";
