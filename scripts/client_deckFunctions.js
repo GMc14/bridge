@@ -1,4 +1,4 @@
-const lastModifiedString3 = ("Last modified: 2020/11/27 15:20:23");
+const lastModifiedString3 = ("Last modified: 2020/11/28 00:32:14");
 const deckTS = lastModifiedString3.replace("Last ", "").replace("modified: ", "");
 console.log("client_deckFunction.js " + lastModifiedString3);
 
@@ -9,7 +9,7 @@ function Card(suit, rank) {
 
 var currentTrumpCards = [];
 var tokenOptions = ['x', '1', '2', '3', '4', '5', 'i', 'ii', 'iii', 'iiii', 'O', '0'];
-var playerOptions = ['', 'GM', 'AM', 'EM', "AP", "AB", "MJ"];
+var playerOptions = ['', 'GM', 'AM', 'EM', "AP", "AB", "MJ", "SJ"];
 
 function initialStartGame(data) {
   console.log("initialStartGame");

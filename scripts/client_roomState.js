@@ -1,4 +1,4 @@
-const lastModifiedString6 = ("Last modified: 2020/11/26 21:27:56");
+const lastModifiedString6 = ("Last modified: 2020/11/28 00:34:25");
 const roomTS = lastModifiedString6.replace("Last ", "").replace("modified: ", "");
 console.log("client_roomState.js " + lastModifiedString6);
 
@@ -23,8 +23,8 @@ function initPlayerModule() {
   $("#teamInfo").toggle(gameConfig_hasTeams);
   $("#gameDrop").toggle(isGameMaster);
   $("#gameDrop").change(function () {
-    $("#teamInfo").toggle(gameConfig_hasTeams);
     setGameType($("#gameDrop").val());
+    $("#teamInfo").toggle(gameConfig_hasTeams);
     socketio.emit('setGameType', gameType);
   });
 

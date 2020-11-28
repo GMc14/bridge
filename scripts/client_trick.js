@@ -1,4 +1,4 @@
-const lastModifiedString9 = ("Last modified: 2020/11/27 15:21:35");
+const lastModifiedString9 = ("Last modified: 2020/11/27 15:54:20");
 const trickTS = lastModifiedString9.replace("Last ", "").replace("modified: ", "");
 console.log("client_trick.js " + lastModifiedString9);
 
@@ -41,15 +41,19 @@ function resolveTrick() {
     });
     if (gameConfig_voteForTrickWinner) {
       console.log("time for voting...");
-      $("#myPlay > img").addClass("highlighted").click(function () {
-        console.log("vote Cast! ");
-        $("highlighted").removeClass("highlighted");
-        var cardID = $(this).attr('id');
-        var card = getCardFromID(cardID);
-        socketio.emit('submitVote', {
-          card: card,
-          player: playerNum
-        });
+      $("#myPlay > img").addClass("highlighted");
+      
+      $("#myPlay > img.highlighted").click(function () {
+        if($(this).hasClass( "highlighted" )){
+          console.log("vote Cast! ");
+          $("highlighted").removeClass("highlighted");
+          var cardID = $(this).attr('id');
+          var card = getCardFromID(cardID);
+          socketio.emit('submitVote', {
+            card: card,
+            player: playerNum
+          });
+        }
       });
     }
   } else {
@@ -88,9 +92,13 @@ function resolveTrick() {
 }
 
 function voteSubmitted(data){
+  
   votes.push(data);
+  console.log("voteSubmitted... votes:"+JSON.stringify(votes));
   if (votes.length == gameConfig_playerCount){
     //Everyone Has Voted
+    
+    console.log("voteSubmitted... votes:"+JSON.stringify(votes));
     $(votes).each(function(){
       $(".plays > #"+getCardID(this.card)).append("<i class='material-icons vote "+this.player+"'>icon</i>");
     });
