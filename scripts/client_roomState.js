@@ -1,4 +1,4 @@
-const lastModifiedString6 = ("Last modified: 2020/12/02 23:17:40");
+const lastModifiedString6 = ("Last modified: 2020/12/02 23:52:20");
 const roomTS = lastModifiedString6.replace("Last ", "").replace("modified: ", "");
 console.log("client_roomState.js " + lastModifiedString6);
 
@@ -28,8 +28,12 @@ function initPlayerModule() {
     socketio.emit('setGameType', gameType);
   });
 
-  var previousNickName = $.cookie("nickname");
+  var previousNickName = $.cookie("nickname").replace("0","");
   if (previousNickName) {
+    while(playerNickNames.includes(previousNickName) || $("#playersInRoom").html().indexOf(previousNickName) > -1){
+      previousNickName = previousNickName + "0";
+    }
+    
     $("#nicknameInput").val(previousNickName);
     console.log("--------------previousNickName----------------" + previousNickName);
     socketio.emit('setNickname', previousNickName);

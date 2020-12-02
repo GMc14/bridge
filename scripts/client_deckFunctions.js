@@ -1,4 +1,4 @@
-const lastModifiedString3 = ("Last modified: 2020/11/28 00:32:14");
+const lastModifiedString3 = ("Last modified: 2020/12/02 23:52:02");
 const deckTS = lastModifiedString3.replace("Last ", "").replace("modified: ", "");
 console.log("client_deckFunction.js " + lastModifiedString3);
 
@@ -519,14 +519,14 @@ function displayOtherCards(seatIndex, handSize) {
 }
 
 function playCard() {
-  // console.log("--------------playCard >>>>>>>>>>>>>" + currentPlayer + " =? " + playerNum + "   " + JSON.stringify(this));
+  console.log("--------------playCard >>>>>>>>>>>>>" + currentPlayer + " =? " + playerNum + "   " + JSON.stringify(this));
   if (gameConfig_playCardsAsync || currentPlayer == playerNum) {
     var num = $(this).attr('id').substr(0, 2);
     var cardID = $(this).attr('id').substr(2);
     var card = getCardFromID(cardID);
     // console.log("--------------playCard! " + num + " : " + JSON.stringify(card));
     if (confirmLegal(card, playerNum == lead)) {
-      if ($("#myPlay").children().length < gameConfig_cardsPerTurn) {
+      if (gameConfig_cardsPerTurn == 1 || $("#myPlay").children().length < gameConfig_cardsPerTurn) {
         myHandOfCards[Number(num) - 10].suit = "Z";
         $(this).detach();
         socketio.emit('playCard', {
@@ -534,7 +534,11 @@ function playCard() {
           player: playerNum
         });
       }
+    } else {
+      console.log("playCard? not legal.");
     }
+  } else {
+    console.log("playCard? nope.");
   }
 }
 

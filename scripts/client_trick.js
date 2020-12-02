@@ -1,4 +1,4 @@
-const lastModifiedString9 = ("Last modified: 2020/11/27 15:54:20");
+const lastModifiedString9 = ("Last modified: 2020/12/02 23:46:25");
 const trickTS = lastModifiedString9.replace("Last ", "").replace("modified: ", "");
 console.log("client_trick.js " + lastModifiedString9);
 
@@ -146,12 +146,12 @@ function addTrickWin(who, cards) {
           $(this).children().each(function () {
             console.log("wonTricks Child:  " + $(this).attr("data-cards"));
             if ($(this).attr("data-cards")) {
-              var cardsToDraw = $(this).attr("data-cards").split(',');
-              console.log("wonTricks Child: more specifically... " + JSON.stringify(cardsToDraw));
+              var cardsToRender = $(this).attr("data-cards").split(',');
+              console.log("wonTricks Child: more specifically... " + JSON.stringify(cardsToRender));
               var trick = $("<div class='trick'></div>");
-              for (var i = 0; i < cardsToDraw.length; i++) {
-                console.log("--- Drawing card... " + JSON.stringify(cardsToDraw[i]));
-                var img_src = "/card_imgs/" + cardsToDraw[i] + ".png";
+              for (var i = 0; i < cardsToRender.length; i++) {
+                console.log("--- Drawing card... " + JSON.stringify(cardsToRender[i]));
+                var img_src = "/card_imgs/" + cardsToRender[i] + ".png";
                 $(trick).append("<img class='wonTrickCard' src='" + img_src + "'/>");
               }
               $(trickDetailsDiv).append(trick);
