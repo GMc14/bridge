@@ -1,4 +1,4 @@
-const lastModifiedString8 = ("Last modified: 2020/11/27 15:40:09");
+const lastModifiedString8 = ("Last modified: 2020/12/02 23:11:28");
 const socketTS = lastModifiedString8.replace("Last ", "").replace("modified: ", "");
 console.log("client_socketioFunction.js " + lastModifiedString8);
 
@@ -178,7 +178,16 @@ var handsNeeded;
 
 var hoveringOverWonTricks = false;
 
+const GameType = {
+    "CREW": 1,
+    "BRIDGE": 2,
+    "EUCHRE": 3,
+    "DIXIT": 4,
+  };
+
 $(function () {
+
+    
     socketio.on('updateRoom', function (room) {
         updateRoom(room);
     });

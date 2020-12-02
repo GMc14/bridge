@@ -8,7 +8,7 @@
   top: 7.5%;
   left: 50%;
   transform: translateX(-50%);
-  padding: 2vh;
+  padding: 2vh 2vw;
   background: rgba( 90, 90, 90, 0.4);
 }
 

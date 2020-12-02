@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <title>GMcCrew</title>
   <script>
-    const lastModifiedString10 = ("Last modified: 2020/11/28 00:35:01");
+    const lastModifiedString10 = ("Last modified: 2020/12/02 23:14:57");
     const htmlTS=lastModifiedString10.replace("Last ","").replace("modified: ","");
     console.log("index.html "+lastModifiedString10);
   </script>
@@ -29,17 +29,9 @@
   <link rel="stylesheet" type="text/css" href="styles/roomSetup.css">
   <link rel="stylesheet" type="text/css" href="styles/chat.css">
   <link rel="stylesheet" type="text/css" href="styles/cards.css">
-  <script>
-    const GameType = {
-      "CREW": 1,
-      "BRIDGE": 2,
-      "EUCHRE": 3,
-      "DIXIT": 4,
-    };
-  </script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js" type="text/javascript"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js" type="text/javascript">
-  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js" type="text/javascript"></script>
+  <script src="https://www.gstatic.com/firebasejs/5.7.0/firebase.js"></script>
   <script src="/socket.io/socket.io.js" type="text/javascript"></script>
 
   <script src="scripts/client_socketioFunctions.js" type="text/javascript"></script>
@@ -177,68 +169,6 @@
       </div>
     </div>
   </div>
-  <script>
-    var cardback = "card_imgs/cardback.png";
-    $("#gameDrop").append($("<option value='" + GameType.CREW + "'>The Crew</option>"));
-    $("#gameDrop").append($("<option value='" + GameType.BRIDGE + "'>Bridge</option>"));
-    $("#gameDrop").append($("<option value='" + GameType.EUCHRE + "'>Euchre</option>"));
-    $("#gameDrop").append($("<option value='" + GameType.DIXIT + "'>Dixit</option>"));
-
-    var i;
-    for (i = 1; i < 21; i++) {
-      $("#cardBackChoices").append('<img class="cardBackOption" id="cardBackOption' + i + '" src="card_imgs/cardback_' +
-        i + '.png">');
-    }
-    for (i = 1; i < 14; i++) {
-      $("#tableClothChoices").append('<img class="tableClothOption" id="tableClothOption' + i + '" src="table_imgs/bg' +
-        i + '.jpg">');
-    }
-
-    $(".cardBackOption").click(function () {
-      $(this).addClass('ui-selected').siblings().removeClass('ui-selected');
-      let cardBackSrc = $(".cardBackOption.ui-selected").prop("src");
-      $(".cardback").attr("src", cardBackSrc);
-      $.cookie("selectedCardBack", $(this).prop('id'));
-      console.log("Cookie: selectedCardBack" + $(this).prop('id'));
-    });
-    let previousCardBack = $.cookie("selectedCardBack");
-    console.log("Cookie: previousCardBack" + previousCardBack);
-    if (previousCardBack) {
-      $("#" + previousCardBack).addClass('ui-selected').siblings().removeClass('ui-selected');
-      cardBack = $("#" + previousCardBack).prop("src");
-    }
-    $(".tableClothOption").click(function () {
-      $(this).addClass('ui-selected').siblings().removeClass('ui-selected');
-      tableCloth = $(this).prop("src");
-      applyTableCloth(tableCloth);
-      $.cookie("selectedTableBackground", $(this).prop('id'));
-      console.log("Cookie: selectedTableBackground" + $(this).prop('id'));
-    });
-    let previousTableBackground = $.cookie("selectedTableBackground");
-    console.log("Cookie: previousTableBackground" + previousTableBackground);
-    if (previousTableBackground) {
-      $("#" + previousTableBackground).addClass('ui-selected').siblings().removeClass('ui-selected');;
-      applyTableCloth($("#" + previousTableBackground).prop("src"));
-    }
-    const trumpOptions = ['C', 'D', 'H', 'S', 'NT'];
-    let n = 1;
-    while (n < 8) {
-      let tr = $("<tr></tr>");
-      tr.append('<td>' + n + '</td>');
-      $.each(trumpOptions, function () {
-        tr.append('<td class="bidCell" id="' + n + this + '"></td>');
-      });
-      n++;
-      $("#bidTable > tbody").append(tr);
-    }
-    $.each(trumpOptions, function () {
-      if (this != 'NT') {
-        $("#suitSelectionDropdown").append($("<option id='trumpSuitDropOption" + this + "' value='" + this +
-          "'>" + this + "</option>"));
-      }
-    });
-  </script>
-  
   <span id="timeStamp">---</span>
   <script>
     var dates=[htmlTS,bidTS,crewTS,deckTS,gameTS,gmTS,roomTS,roundTS,socketTS,trickTS,utilTS];

@@ -1,5 +1,5 @@
 
-const lastModifiedString1 = ("Last modified: 2020/11/26 20:09:07");
+const lastModifiedString1 = ("Last modified: 2020/12/02 23:14:18");
 const bidTS=lastModifiedString1.replace("Last ","").replace("modified: ","");
 console.log("client_bidFunctions.js "+lastModifiedString1);
 
@@ -174,3 +174,27 @@ function biddingFinished() {
   updateTurnIndicator(lead, playerNum == lead, true);
 }
 
+
+function initBiddingUI(){
+  const trumpOptions = ['C', 'D', 'H', 'S', 'NT'];
+  let n = 1;
+  while (n < 8) {
+    let tr = $("<tr></tr>");
+    tr.append('<td>' + n + '</td>');
+    $.each(trumpOptions, function () {
+      tr.append('<td class="bidCell" id="' + n + this + '"></td>');
+    });
+    n++;
+    $("#bidTable > tbody").append(tr);
+  }
+  $.each(trumpOptions, function () {
+    if (this != 'NT') {
+      $("#suitSelectionDropdown").append($("<option id='trumpSuitDropOption" + this + "' value='" + this +
+        "'>" + this + "</option>"));
+    }
+  });
+}
+
+$(function () {
+  initBiddingUI();
+});

@@ -1,8 +1,8 @@
-const lastModifiedString6 = ("Last modified: 2020/11/28 00:34:25");
+const lastModifiedString6 = ("Last modified: 2020/12/02 23:17:40");
 const roomTS = lastModifiedString6.replace("Last ", "").replace("modified: ", "");
 console.log("client_roomState.js " + lastModifiedString6);
 
-
+var cardback = "card_imgs/cardback.png";
 var path = window.location.pathname;
 console.log("window.location.pathname: " + path);
 
@@ -140,7 +140,51 @@ function scrollToChatBottom() {
   var divObj = $("#msgBox");
   divObj.scrollTop($(divObj)[0].scrollHeight);
 }
+
+function initSettings(){
+
+    var i;
+    for (i = 1; i < 21; i++) {
+      $("#cardBackChoices").append('<img class="cardBackOption" id="cardBackOption' + i + '" src="card_imgs/cardback_' +
+        i + '.png">');
+    }
+    for (i = 1; i < 14; i++) {
+      $("#tableClothChoices").append('<img class="tableClothOption" id="tableClothOption' + i + '" src="table_imgs/bg' +
+        i + '.jpg">');
+    }
+    $(".cardBackOption").click(function () {
+      $(this).addClass('ui-selected').siblings().removeClass('ui-selected');
+      let cardBackSrc = $(".cardBackOption.ui-selected").prop("src");
+      $(".cardback").attr("src", cardBackSrc);
+      $.cookie("selectedCardBack", $(this).prop('id'));
+      console.log("Cookie: selectedCardBack" + $(this).prop('id'));
+    });
+    let previousCardBack = $.cookie("selectedCardBack");
+    console.log("Cookie: previousCardBack" + previousCardBack);
+    if (previousCardBack) {
+      $("#" + previousCardBack).addClass('ui-selected').siblings().removeClass('ui-selected');
+      cardBack = $("#" + previousCardBack).prop("src");
+    }
+    $(".tableClothOption").click(function () {
+      $(this).addClass('ui-selected').siblings().removeClass('ui-selected');
+      tableCloth = $(this).prop("src");
+      applyTableCloth(tableCloth);
+      $.cookie("selectedTableBackground", $(this).prop('id'));
+      console.log("Cookie: selectedTableBackground" + $(this).prop('id'));
+    });
+    let previousTableBackground = $.cookie("selectedTableBackground");
+    console.log("Cookie: previousTableBackground" + previousTableBackground);
+    if (previousTableBackground) {
+      $("#" + previousTableBackground).addClass('ui-selected').siblings().removeClass('ui-selected');;
+      applyTableCloth($("#" + previousTableBackground).prop("src"));
+    }
+}
 $(function () {
+  $("#gameDrop").append($("<option value='" + GameType.CREW + "'>The Crew (1-5)</option>"));
+  $("#gameDrop").append($("<option value='" + GameType.BRIDGE + "'>Bridge (4)</option>"));
+  $("#gameDrop").append($("<option value='" + GameType.EUCHRE + "'>Euchre (3-4)</option>"));
+  $("#gameDrop").append($("<option value='" + GameType.DIXIT + "'>Dixit (1-5)</option>"));
+  initSettings();
   $("#helpLegendTrigger").click(function () {
     console.log("show THINGSSSS");
     $("#helpLegend").toggle();
