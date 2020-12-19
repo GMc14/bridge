@@ -1,4 +1,4 @@
-const lastModifiedString6 = ("Last modified: 2020/12/03 00:01:58");
+const lastModifiedString6 = ("Last modified: 2020/12/19 17:50:42");
 const roomTS = lastModifiedString6.replace("Last ", "").replace("modified: ", "");
 console.log("client_roomState.js " + lastModifiedString6);
 
@@ -28,12 +28,12 @@ function initPlayerModule() {
     socketio.emit('setGameType', gameType);
   });
 
-  var previousNickName = $.cookie("nickname").replace("0","");
+  var previousNickName = $.cookie("nickname").replace("0", "");
   if (previousNickName) {
-    while(playerNickNames.includes(previousNickName) || $("#playersInRoom").html().indexOf(previousNickName) > -1){
+    while (playerNickNames.includes(previousNickName) || $("#playersInRoom").html().indexOf(previousNickName) > -1) {
       previousNickName = previousNickName + "0";
     }
-    
+
     $("#nicknameInput").val(previousNickName);
     console.log("--------------previousNickName----------------" + previousNickName);
     socketio.emit('setNickname', previousNickName);
@@ -145,43 +145,43 @@ function scrollToChatBottom() {
   divObj.scrollTop($(divObj)[0].scrollHeight);
 }
 
-function initSettings(){
+function initSettings() {
 
-    var i;
-    for (i = 1; i < 5; i++) {
-      $("#cardBackChoices").append('<img class="cardBackOption" id="cardBackOption' + i + '" src="card_imgs/cardback_' +
-        i + '.png">');
-    }
-    for (i = 1; i < 14; i++) {
-      $("#tableClothChoices").append('<img class="tableClothOption" id="tableClothOption' + i + '" src="table_imgs/bg' +
-        i + '.jpg">');
-    }
-    $(".cardBackOption").click(function () {
-      $(this).addClass('ui-selected').siblings().removeClass('ui-selected');
-      let cardBackSrc = $(".cardBackOption.ui-selected").prop("src");
-      $(".cardback").attr("src", cardBackSrc);
-      $.cookie("selectedCardBack", $(this).prop('id'));
-      console.log("Cookie: selectedCardBack" + $(this).prop('id'));
-    });
-    let previousCardBack = $.cookie("selectedCardBack");
-    console.log("Cookie: previousCardBack" + previousCardBack);
-    if (previousCardBack) {
-      $("#" + previousCardBack).addClass('ui-selected').siblings().removeClass('ui-selected');
-      cardBack = $("#" + previousCardBack).prop("src");
-    }
-    $(".tableClothOption").click(function () {
-      $(this).addClass('ui-selected').siblings().removeClass('ui-selected');
-      tableCloth = $(this).prop("src");
-      applyTableCloth(tableCloth);
-      $.cookie("selectedTableBackground", $(this).prop('id'));
-      console.log("Cookie: selectedTableBackground" + $(this).prop('id'));
-    });
-    let previousTableBackground = $.cookie("selectedTableBackground");
-    console.log("Cookie: previousTableBackground" + previousTableBackground);
-    if (previousTableBackground) {
-      $("#" + previousTableBackground).addClass('ui-selected').siblings().removeClass('ui-selected');;
-      applyTableCloth($("#" + previousTableBackground).prop("src"));
-    }
+  var i;
+  for (i = 1; i < 5; i++) {
+    $("#cardBackChoices").append('<img class="cardBackOption" id="cardBackOption' + i + '" src="card_imgs/cardback_' +
+      i + '.png">');
+  }
+  for (i = 1; i < 14; i++) {
+    $("#tableClothChoices").append('<img class="tableClothOption" id="tableClothOption' + i + '" src="table_imgs/bg' +
+      i + '.jpg">');
+  }
+  $(".cardBackOption").click(function () {
+    $(this).addClass('ui-selected').siblings().removeClass('ui-selected');
+    let cardBackSrc = $(".cardBackOption.ui-selected").prop("src");
+    $(".cardback").attr("src", cardBackSrc);
+    $.cookie("selectedCardBack", $(this).prop('id'));
+    console.log("Cookie: selectedCardBack" + $(this).prop('id'));
+  });
+  let previousCardBack = $.cookie("selectedCardBack");
+  console.log("Cookie: previousCardBack" + previousCardBack);
+  if (previousCardBack) {
+    $("#" + previousCardBack).addClass('ui-selected').siblings().removeClass('ui-selected');
+    cardBack = $("#" + previousCardBack).prop("src");
+  }
+  $(".tableClothOption").click(function () {
+    $(this).addClass('ui-selected').siblings().removeClass('ui-selected');
+    tableCloth = $(this).prop("src");
+    applyTableCloth(tableCloth);
+    $.cookie("selectedTableBackground", $(this).prop('id'));
+    console.log("Cookie: selectedTableBackground" + $(this).prop('id'));
+  });
+  let previousTableBackground = $.cookie("selectedTableBackground");
+  console.log("Cookie: previousTableBackground" + previousTableBackground);
+  if (previousTableBackground) {
+    $("#" + previousTableBackground).addClass('ui-selected').siblings().removeClass('ui-selected');;
+    applyTableCloth($("#" + previousTableBackground).prop("src"));
+  }
 }
 $(function () {
   $("#gameDrop").append($("<option value='" + GameType.CREW + "'>The Crew (1-5)</option>"));
@@ -228,21 +228,35 @@ $(function () {
     socketio.emit('setHand', $(this).val());
   });
   $("#missionNumberInput").val(1);
-  socketio.on('setPlayerId', function (playerId) {
-    clientPlayerId = playerId;
-  });
-  socketio.on('fullRoom', function () {
-    console.log("--------fullRoom-----------");
-    alert("Room is Full. Try Again Later");
-  });
-  socketio.on('message', function (data) {
-    var msg = data.msg;
-    var nickname = data.nickname;
-    $("#msgBox").append("<span><b>" + nickname + ":</b>&emsp;" + msg + "</span><br><br>");
-    scrollToChatBottom();
-    $('#boxBottom').show();
-  });
 });
+
+function showMessage(msg, nickname) {
+  $("#msgBox").append("<span><b>" + nickname + ":</b>&emsp;" + msg + "</span><br><br>");
+  scrollToChatBottom();
+  $('#boxBottom').show();
+}
+
+function setClientPlayerId(playerId) {
+  clientPlayerId = playerId;
+}
+
+function notifyRoomFull() {
+  console.log("--------fullRoom-----------");
+  alert("Room is Full. Try Again Later");
+}
+
+function notifyUserLeftRoom(nickname) {
+  alert(nickname + " left the room. Kicking everybody out... ");
+  window.location.reload();
+}
+
+function updateMissionNumber(data) {
+  $("#missionNumberText").html("<b>Mission #: </b>" + data);
+}
+
+function updateAttemptNumber(data) {
+  $("#handNumberText").html("<b>Attempt #: </b>" + data);
+}
 
 function applyTableCloth(tableCloth) {
   if (tableCloth) {

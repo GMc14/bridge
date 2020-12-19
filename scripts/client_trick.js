@@ -1,4 +1,4 @@
-const lastModifiedString9 = ("Last modified: 2020/12/02 23:46:25");
+const lastModifiedString9 = ("Last modified: 2020/12/19 17:48:09");
 const trickTS = lastModifiedString9.replace("Last ", "").replace("modified: ", "");
 console.log("client_trick.js " + lastModifiedString9);
 
@@ -92,7 +92,7 @@ function resolveTrick() {
 }
 
 function voteSubmitted(data){
-  
+  console.log("voteSubmitted...");
   votes.push(data);
   console.log("voteSubmitted... votes:"+JSON.stringify(votes));
   if (votes.length == gameConfig_playerCount){

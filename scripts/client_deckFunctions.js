@@ -1,4 +1,4 @@
-const lastModifiedString3 = ("Last modified: 2020/12/19 17:39:30");
+const lastModifiedString3 = ("Last modified: 2020/12/19 18:18:26");
 const deckTS = lastModifiedString3.replace("Last ", "").replace("modified: ", "");
 console.log("client_deckFunction.js " + lastModifiedString3);
 
@@ -70,14 +70,14 @@ function preRenderImgs(gameType) {
   console.log("preRenderImgs-#0000");
   var cardImg = $("<img src='" + cardback + "' class='cardback'>");
   $("body").append(cardImg);
-  if(gameType == GameType.DIXIT){
+  if (gameType == GameType.DIXIT) {
     for (var i = 1; i <= 154; i++) {
-        var cardID = "hearthstoners ("+i+")";
-        console.log("===a " + cardID);
-        var img_src = "/card_imgs/" + cardID + ".png";
-        cardID = cardID.replace("(","").replace(")","").replace(" ","");
-        console.log("===b " + cardID);
-        $("body").append($("<img src='" + img_src + "' id='" + cardID + "_img'>"));
+      var cardID = "hearthstoners (" + i + ")";
+      console.log("===a " + cardID);
+      var img_src = "/card_imgs/" + cardID + ".png";
+      cardID = cardID.replace("(", "").replace(")", "").replace(" ", "");
+      console.log("===b " + cardID);
+      $("body").append($("<img src='" + img_src + "' id='" + cardID + "_img'>"));
     }
   } else {
     for (var i = 0; i < suits.length; i++) {
@@ -98,21 +98,27 @@ function preRenderImgs(gameType) {
 function createDeck(taskOnly = false) {
   deck = [];
   taskDeck = [];
-  for (var i = 0; i < suits.length; i++) {
-    for (var j = 0; j < ranks.length; j++) {
-      if (gameType == GameType.CREW) {
-        taskDeck.push(new Card(suits[i], ranks[j]));
-      }
-      if (!taskOnly) {
-        deck.push(new Card(suits[i], ranks[j]));
+  // if (gameType == GameType.DIXIT) {
+  //   for (var i = 1; i <= 154; i++) {
+  //     deck.push(new Card("hearthstoners", i));
+  //   }
+  // } else {
+    for (var i = 0; i < suits.length; i++) {
+      for (var j = 0; j < ranks.length; j++) {
+        if (gameType == GameType.CREW) {
+          taskDeck.push(new Card(suits[i], ranks[j]));
+        }
+        if (!taskOnly) {
+          deck.push(new Card(suits[i], ranks[j]));
+        }
       }
     }
-  }
-  if (!taskOnly) {
-    for (var i = 0; i < bonusCards.length; i++) {
-      deck.push(new Card(bonusCards[i].charAt(0), bonusCards[i].charAt(1)));
+    if (!taskOnly) {
+      for (var i = 0; i < bonusCards.length; i++) {
+        deck.push(new Card(bonusCards[i].charAt(0), bonusCards[i].charAt(1)));
+      }
     }
-  }
+  // }
 }
 
 function getSorted(inputDeck) {
@@ -155,15 +161,15 @@ function dealCards() {
   for (var i = 0; i < gameConfig_playerCount; i++) {
     hands[i] = [];
     handValues[i] = 0;
-    var cardsToDeal = gameConfig_startCardsPerPlayer;
-    if (cardsToDeal == -1) {
-      cardsToDeal = Math.floor(deckSize / gameConfig_playerCount);
+    var numberOfCardsToDeal = gameConfig_startCardsPerPlayer;
+    if (numberOfCardsToDeal == -1) {
+      numberOfCardsToDeal = Math.floor(deckSize / gameConfig_playerCount);
       if ((deckSize % gameConfig_playerCount) > i) {
-        cardsToDeal += 1;
+        numberOfCardsToDeal += 1;
       }
     }
-    console.log("DealCards -------deckSize:" + deckSize + "   cardsToDeal:" + cardsToDeal + "   deck.length:" + deck.length + "   i:" + i);
-    for (var j = 0; j < cardsToDeal; j++) {
+    console.log("DealCards -------deckSize:" + deckSize + "   cardsToDeal:" + numberOfCardsToDeal + "   deck.length:" + deck.length + "   i:" + i);
+    for (var j = 0; j < numberOfCardsToDeal; j++) {
       handValues[i] += cardValue(deck[deck.length - 1]);
       hands[i].push(deck.pop());
     }
@@ -597,7 +603,7 @@ function cardPlayed(data) {
       //allPlayersHavePlayed
       resolveTrick();
     }
-    
+
   }
 
   console.log("gameCongid_drawBackUp: " + gameCongid_drawBackUp);
