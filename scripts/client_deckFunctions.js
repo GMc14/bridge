@@ -1,4 +1,4 @@
-const lastModifiedString3 = ("Last modified: 2020/12/19 18:52:02");
+const lastModifiedString3 = ("Last modified: 2020/12/19 19:08:35");
 const deckTS = lastModifiedString3.replace("Last ", "").replace("modified: ", "");
 console.log("client_deckFunction.js " + lastModifiedString3);
 
@@ -585,20 +585,27 @@ function cardPlayed(data) {
     $("#myPlay").append(cardObj);
     $(".highlighted").removeClass("highlighted");
   }
-
+  console.log("still more to play on this trick?");
   if (!gameConfig_playCardsAsync) {
     if (currentPlayer == lead) {
       leadSuit = getEuchreCardValue(card).suit;
     }
     if (getNextPlayerName(currentPlayer) == lead) {
+      console.log("not a sync, back to leader");
       resolveTrick();
+    } else {
+      console.log("not a sync, NOT back to leader");
     }
     currentPlayer = getNextPlayerName(currentPlayer);
     updateTurnIndicator(currentPlayer, currentPlayer == playerNum, false);
   } else {
     if ($(".plays > img").length == gameConfig_playerCount) {
       //allPlayersHavePlayed
+      
+      console.log("allPlayersHavePlayed");
       resolveTrick();
+    } else {
+      console.log("allPlayersHave NOT Played");
     }
 
   }
@@ -629,8 +636,9 @@ function cardDrawn(data) {
     if (data.player == playerNum) {
       hand = "#myHand";
       let encodedId = (myHandOfCards.length + 10) + getCardID(data.card);
-      cardObj = $("#" + getCardID(data.card) + "_img").clone().attr("class", "myCards").prop("id", encodedId).show();
       myHandOfCards.push(data.card);
+      cardObj = $("<div class='myCards' id='" + encodedId + "'></div>");
+      $(cardObj).append($("#" + getCardID(data.card) + "_img").clone().show());
     } else {
       hand = "#loc" + inversePlayerIdMap[data.player] + "Hand";
       cardObj = $(".cardback:eq(0)").clone().show();
