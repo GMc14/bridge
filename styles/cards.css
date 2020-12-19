@@ -63,8 +63,7 @@ div#myHand.highlighted {
   inset 0.6vmin 0 3vmin #7EB2A8, /* inner left broad */
   inset -0.6vmin 0 3vmin #7EB2A8;
   /* inner right broad */
-  -webkit-animation: heartbeat 0.8s 4s;
-  animation: heartbeat 0.8s 4s;
+  animation: heartbeat 0.6s 4s 4s infinite;
 }
 
 .otherPlayerHand {

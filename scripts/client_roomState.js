@@ -1,4 +1,4 @@
-const lastModifiedString6 = ("Last modified: 2020/12/02 23:52:20");
+const lastModifiedString6 = ("Last modified: 2020/12/03 00:01:58");
 const roomTS = lastModifiedString6.replace("Last ", "").replace("modified: ", "");
 console.log("client_roomState.js " + lastModifiedString6);
 
@@ -148,7 +148,7 @@ function scrollToChatBottom() {
 function initSettings(){
 
     var i;
-    for (i = 1; i < 21; i++) {
+    for (i = 1; i < 5; i++) {
       $("#cardBackChoices").append('<img class="cardBackOption" id="cardBackOption' + i + '" src="card_imgs/cardback_' +
         i + '.png">');
     }

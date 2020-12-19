@@ -4,12 +4,11 @@
   <meta charset="utf-8">
   <title>GMcCrew</title>
   <script>
-    const lastModifiedString10 = ("Last modified: 2020/12/02 23:14:57");
+    const lastModifiedString10 = ("Last modified: 2020/12/03 00:02:45");
     const htmlTS=lastModifiedString10.replace("Last ","").replace("modified: ","");
     console.log("index.html "+lastModifiedString10);
   </script>
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-
   <!-- 
     Material Icons to Use:
     add_task (add tasks)
@@ -61,19 +60,19 @@
     <div id="taskOptions"></div>
     <div id="showCase"></div>
     <!-- <img id="helpLegendTrigger" src="token_imgs/q.png" /> -->
-
     <i id="helpLegendTrigger" class="material-icons">help_outline</i>
     <i id="settingsTrigger" class="material-icons">settings</i>
     <img id="helpLegend" src="token_imgs/legend.png" />
     <div id="settings">
       <div id="uiChoices">
+        <span>Card Back:</span>
         <div id="cardBackChoices">
           <img class="cardBackOption ui-selected" src="card_imgs/cardback_0.png">
         </div>
         <!-- https://playhearthstone.com/en-us/cardbacks/ -->
+        <span>Table Surface:</span>
         <div id="tableClothChoices">
           <div class="tableClothOption noClothOption ui-selected"></div>
-
         </div>
       </div>
     </div>
@@ -180,5 +179,4 @@
     $("#timeStamp").text("Updated: "+maxDate.toUTCString());
   </script>
 </body>
-
 </html>

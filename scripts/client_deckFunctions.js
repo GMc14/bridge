@@ -1,4 +1,4 @@
-const lastModifiedString3 = ("Last modified: 2020/12/02 23:52:02");
+const lastModifiedString3 = ("Last modified: 2020/12/19 17:39:30");
 const deckTS = lastModifiedString3.replace("Last ", "").replace("modified: ", "");
 console.log("client_deckFunction.js " + lastModifiedString3);
 
@@ -16,7 +16,7 @@ function initialStartGame(data) {
   setGameType(data.gameType);
   gameConfig_playerCount = data.playerCount;
   cardback = $(".cardBackOption.ui-selected").prop("src");
-  preRenderImgs();
+  preRenderImgs(data.gameType);
   constructPlayArea();
   startGame();
 }
@@ -66,25 +66,33 @@ function startGame() {
   updateActionStates();
 }
 
-function preRenderImgs() {
+function preRenderImgs(gameType) {
   console.log("preRenderImgs-#0000");
   var cardImg = $("<img src='" + cardback + "' class='cardback'>");
   $("body").append(cardImg);
-  for (var i = 0; i < suits.length; i++) {
-    for (var j = 0; j < ranks.length; j++) {
-      var cardID = suits[i] + ranks[j];
-      console.log("===" + cardID);
-      var img_src = "/card_imgs/" + cardID + ".png";
-      $("body").append($("<img src='" + img_src + "' id='" + cardID + "_img'>"));
+  if(gameType == GameType.DIXIT){
+    for (var i = 1; i <= 154; i++) {
+        var cardID = "hearthstoners ("+i+")";
+        console.log("===a " + cardID);
+        var img_src = "/card_imgs/" + cardID + ".png";
+        cardID = cardID.replace("(","").replace(")","").replace(" ","");
+        console.log("===b " + cardID);
+        $("body").append($("<img src='" + img_src + "' id='" + cardID + "_img'>"));
     }
+  } else {
+    for (var i = 0; i < suits.length; i++) {
+      for (var j = 0; j < ranks.length; j++) {
+        var cardID = suits[i] + ranks[j];
+        console.log("===" + cardID);
+        var img_src = "/card_imgs/" + cardID + ".png";
+        $("body").append($("<img src='" + img_src + "' id='" + cardID + "_img'>"));
+      }
+    }
+    for (var i = 0; i < bonusCards.length; i++) {
+      $("body").append($("<img src='/card_imgs/" + bonusCards[i] + ".png' id='" + bonusCards[i] + "_img'>"));
+    }
+    console.log("preRenderImgs-#1000");
   }
-  for (var i = 0; i < bonusCards.length; i++) {
-    var cardID = bonusCards[i].charAt(0) + bonusCards[i].charAt(1);
-    console.log("===" + cardID);
-    var img_src = "/card_imgs/" + cardID + ".png";
-    $("body").append($("<img src='" + img_src + "' id='" + cardID + "_img'>"));
-  }
-  console.log("preRenderImgs-#1000");
 }
 
 function createDeck(taskOnly = false) {
