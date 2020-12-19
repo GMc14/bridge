@@ -1,4 +1,4 @@
-const lastModifiedString3 = ("Last modified: 2020/12/19 18:48:29");
+const lastModifiedString3 = ("Last modified: 2020/12/19 18:52:02");
 const deckTS = lastModifiedString3.replace("Last ", "").replace("modified: ", "");
 console.log("client_deckFunction.js " + lastModifiedString3);
 
@@ -72,7 +72,7 @@ function preRenderImgs(gameType) {
   $("body").append(cardImg);
   if (gameType == GameType.DIXIT) {
     for (var i = 1; i <= 144; i++) {
-      var cardID = "hearthstoners" + i;
+      var cardID = "heartstoners" + i;
       $("body").append($("<img src='/card_imgs/" + cardID + ".png' id='" + cardID + "_img'>"));
     }
   } else {
@@ -96,7 +96,7 @@ function createDeck(taskOnly = false) {
   taskDeck = [];
   // if (gameType == GameType.DIXIT) {
   //   for (var i = 1; i <= 144; i++) {
-  //     deck.push(new Card("hearthstoners", i));
+  //     deck.push(new Card("heartstoners", i));
   //   }
   // } else {
   console.log("createDeck: " + JSON.stringify(suits) + "  :  " + JSON.stringify(ranks));
