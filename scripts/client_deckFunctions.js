@@ -1,4 +1,4 @@
-const lastModifiedString3 = ("Last modified: 2020/12/19 18:18:26");
+const lastModifiedString3 = ("Last modified: 2020/12/19 18:48:29");
 const deckTS = lastModifiedString3.replace("Last ", "").replace("modified: ", "");
 console.log("client_deckFunction.js " + lastModifiedString3);
 
@@ -71,13 +71,9 @@ function preRenderImgs(gameType) {
   var cardImg = $("<img src='" + cardback + "' class='cardback'>");
   $("body").append(cardImg);
   if (gameType == GameType.DIXIT) {
-    for (var i = 1; i <= 154; i++) {
-      var cardID = "hearthstoners (" + i + ")";
-      console.log("===a " + cardID);
-      var img_src = "/card_imgs/" + cardID + ".png";
-      cardID = cardID.replace("(", "").replace(")", "").replace(" ", "");
-      console.log("===b " + cardID);
-      $("body").append($("<img src='" + img_src + "' id='" + cardID + "_img'>"));
+    for (var i = 1; i <= 144; i++) {
+      var cardID = "hearthstoners" + i;
+      $("body").append($("<img src='/card_imgs/" + cardID + ".png' id='" + cardID + "_img'>"));
     }
   } else {
     for (var i = 0; i < suits.length; i++) {
@@ -99,25 +95,26 @@ function createDeck(taskOnly = false) {
   deck = [];
   taskDeck = [];
   // if (gameType == GameType.DIXIT) {
-  //   for (var i = 1; i <= 154; i++) {
+  //   for (var i = 1; i <= 144; i++) {
   //     deck.push(new Card("hearthstoners", i));
   //   }
   // } else {
-    for (var i = 0; i < suits.length; i++) {
-      for (var j = 0; j < ranks.length; j++) {
-        if (gameType == GameType.CREW) {
-          taskDeck.push(new Card(suits[i], ranks[j]));
-        }
-        if (!taskOnly) {
-          deck.push(new Card(suits[i], ranks[j]));
-        }
+  console.log("createDeck: " + JSON.stringify(suits) + "  :  " + JSON.stringify(ranks));
+  for (var i = 0; i < suits.length; i++) {
+    for (var j = 0; j < ranks.length; j++) {
+      if (gameType == GameType.CREW) {
+        taskDeck.push(new Card(suits[i], ranks[j]));
+      }
+      if (!taskOnly) {
+        deck.push(new Card(suits[i], ranks[j]));
       }
     }
-    if (!taskOnly) {
-      for (var i = 0; i < bonusCards.length; i++) {
-        deck.push(new Card(bonusCards[i].charAt(0), bonusCards[i].charAt(1)));
-      }
+  }
+  if (!taskOnly) {
+    for (var i = 0; i < bonusCards.length; i++) {
+      deck.push(new Card(bonusCards[i].charAt(0), bonusCards[i].charAt(1)));
     }
+  }
   // }
 }
 

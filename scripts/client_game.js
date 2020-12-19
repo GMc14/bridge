@@ -1,4 +1,4 @@
-const lastModifiedString4 = ("Last modified: 2020/12/19 18:18:10");
+const lastModifiedString4 = ("Last modified: 2020/12/19 18:48:42");
 const gameTS=lastModifiedString4.replace("Last ","").replace("modified: ","");
 console.log("client_game.js "+lastModifiedString4);
 
@@ -131,7 +131,7 @@ function setGameType(gT) {
         gameConfig_minPlayerCount = 1;
         gameConfig_maxPlayerCount = 5;
         suits = new Array("hearthstoners");
-        ranks = [...Array(154).keys()].map(x => x++);;
+        ranks = [...Array(144).keys()].map(x => x++);;
     } else {
         alert("Unknown GameType: " + gameType);
     }
