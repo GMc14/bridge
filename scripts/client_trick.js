@@ -1,4 +1,4 @@
-const lastModifiedString9 = ("Last modified: 2020/12/19 17:48:09");
+const lastModifiedString9 = ("Last modified: 2020/12/19 19:35:39");
 const trickTS = lastModifiedString9.replace("Last ", "").replace("modified: ", "");
 console.log("client_trick.js " + lastModifiedString9);
 
@@ -30,6 +30,7 @@ function isFollowingSuit(card) {
 }
 
 function resolveTrick() {
+//todo, disable card play during voting
 
   if (gameConfig_playFaceDown) {
     console.log("GMcCards-rules.js-resolveTrick-gameConfig_playFaceDown");

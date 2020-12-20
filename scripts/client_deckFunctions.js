@@ -1,4 +1,4 @@
-const lastModifiedString3 = ("Last modified: 2020/12/19 19:08:35");
+const lastModifiedString3 = ("Last modified: 2020/12/20 05:19:53");
 const deckTS = lastModifiedString3.replace("Last ", "").replace("modified: ", "");
 console.log("client_deckFunction.js " + lastModifiedString3);
 
@@ -65,7 +65,15 @@ function startGame() {
   $(".isTrump").removeClass("isTrump");
   updateActionStates();
 }
-
+function preloadImages()
+{
+  for (var i = 1; i <= 144; i++) {
+    var cardID = "heartstoners" + i;
+    var img=new Image();
+    img.src='/card_imgs/' + cardID + '.png';
+  }
+}
+preloadImages();
 function preRenderImgs(gameType) {
   console.log("preRenderImgs-#0000");
   var cardImg = $("<img src='" + cardback + "' class='cardback'>");
@@ -73,6 +81,7 @@ function preRenderImgs(gameType) {
   if (gameType == GameType.DIXIT) {
     for (var i = 1; i <= 144; i++) {
       var cardID = "heartstoners" + i;
+
       $("body").append($("<img src='/card_imgs/" + cardID + ".png' id='" + cardID + "_img'>"));
     }
   } else {
