@@ -1,8 +1,12 @@
-const lastModifiedString9 = ("Last modified: 2020/12/19 19:35:39");
+const lastModifiedString9 = ("Last modified: 2020/12/20 06:00:40");
 const trickTS = lastModifiedString9.replace("Last ", "").replace("modified: ", "");
 console.log("client_trick.js " + lastModifiedString9);
 
 function confirmLegal(card, isLead) {
+  if(isVotingTime){
+    alert("Cast a vote before playing another card...");
+    return false;
+  }
   if (!gameConfig_playCardsAsync && !isLead && !isFollowingSuit(card)) {
     for (var i = 0; i < myHandOfCards.length; i++) {
       if (String(myHandOfCards[i].suit) == leadSuit) {
@@ -41,6 +45,7 @@ function resolveTrick() {
       $("#myPlay").append($(this));
     });
     if (gameConfig_voteForTrickWinner) {
+      isVotingTime = true;
       console.log("time for voting...");
       $("#myPlay > img").addClass("highlighted");
       
@@ -92,17 +97,23 @@ function resolveTrick() {
   }
 }
 
+function clearVotesAndStartNewTrick(){
+  $(".plays").empty();
+  isVotingTime = false;
+  votes=[];
+};
+
 function voteSubmitted(data){
   console.log("voteSubmitted...");
   votes.push(data);
   console.log("voteSubmitted... votes:"+JSON.stringify(votes));
   if (votes.length == gameConfig_playerCount){
     //Everyone Has Voted
-    
     console.log("voteSubmitted... votes:"+JSON.stringify(votes));
     $(votes).each(function(){
-      $(".plays > #"+getCardID(this.card)).append("<i class='material-icons vote "+this.player+"'>icon</i>");
+      $(".plays > #"+getCardID(this.card)).append("<i class='material-icons vote "+this.player+"'>gavel</i>");
     });
+   window.setTimeout( clearVotesAndStartNewTrick, 5000 );
   }
 }
 

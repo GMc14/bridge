@@ -1,4 +1,4 @@
-const lastModifiedString4 = ("Last modified: 2020/12/19 18:51:56");
+const lastModifiedString4 = ("Last modified: 2020/12/20 05:56:15");
 const gameTS=lastModifiedString4.replace("Last ","").replace("modified: ","");
 console.log("client_game.js "+lastModifiedString4);
 
@@ -11,6 +11,7 @@ var inversePlayerIdMap = [];
 //Game
 var gameType;
 var bonusCards;
+var isVotingTime = false;
 var gameConfig_gameName;
 var gameConfig_permaTrumpSuit;
 var gameConfig_hasTeams;

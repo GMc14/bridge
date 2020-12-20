@@ -1,4 +1,4 @@
-const lastModifiedString3 = ("Last modified: 2020/12/20 05:19:53");
+const lastModifiedString3 = ("Last modified: 2020/12/20 05:54:23");
 const deckTS = lastModifiedString3.replace("Last ", "").replace("modified: ", "");
 console.log("client_deckFunction.js " + lastModifiedString3);
 
@@ -652,8 +652,8 @@ function cardDrawn(data) {
       hand = "#loc" + inversePlayerIdMap[data.player] + "Hand";
       cardObj = $(".cardback:eq(0)").clone().show();
     }
-
     console.log("cardDrawn hand: " + hand + "     cardObj" + JSON.stringify(cardObj));
+    $(cardObj).click(playCard);
     $(hand).append(cardObj);
   }
 }
