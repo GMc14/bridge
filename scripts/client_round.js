@@ -1,9 +1,6 @@
-const { clear } = require("console");
-
-const lastModifiedString7 = ("Last modified: 2020/12/21 20:04:02");
+const lastModifiedString7 = ("Last modified: 2020/12/21 20:07:35");
 const roundTS = lastModifiedString7.replace("Last ", "").replace("modified: ", "");
 console.log("client_round.js " + lastModifiedString7);
-
 
 function winnerOfRound(data) {
     var trickWinner = data.player;
