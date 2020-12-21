@@ -1,4 +1,6 @@
-const lastModifiedString7 = ("Last modified: 2020/11/27 14:15:33");
+const { clear } = require("console");
+
+const lastModifiedString7 = ("Last modified: 2020/12/21 20:04:02");
 const roundTS = lastModifiedString7.replace("Last ", "").replace("modified: ", "");
 console.log("client_round.js " + lastModifiedString7);
 
@@ -9,7 +11,7 @@ function winnerOfRound(data) {
     roundNumber++;
     lead = trickWinner;
     currentPlayer = trickWinner;
-
+    endRound();
     updateTurnIndicator(lead, playerNum == currentPlayer, true);
 
     console.log("[][][][][][][] winner of round: " + trickWinner + " cards:" + trickCardIDs);
@@ -34,7 +36,7 @@ function winnerOfRound(data) {
     }
 }
 
-function endRound(){
-
+function endRound() {
+    console.log("remove highlighted");
     $(".highlighted").removeClass("highlighted");
 }

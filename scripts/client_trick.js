@@ -1,4 +1,4 @@
-const lastModifiedString9 = ("Last modified: 2020/12/21 02:36:57");
+const lastModifiedString9 = ("Last modified: 2020/12/21 20:03:15");
 const trickTS = lastModifiedString9.replace("Last ", "").replace("modified: ", "");
 console.log("client_trick.js " + lastModifiedString9);
 
@@ -218,8 +218,10 @@ function updateTurnIndicator(playerOnTurn, isMe = false, isLead = false) {
 
 
   $("#turnText").html("<b>" + (isLead ? "Lead" : "Turn") + ": </b>" + playerOnTurnName);
+  console.log("updateTurnIndicator isMe " + isMe);
   if (isMe) {
     $("#myHand").addClass("highlighted");
+    console.log("highlight My Hand 1");
     if (!isLead && gameConfig_biddingState == BiddingStates.FINISHED) {
       highlightPlayable();
     }
