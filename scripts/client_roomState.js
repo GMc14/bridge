@@ -1,4 +1,4 @@
-const lastModifiedString6 = ("Last modified: 2020/12/19 18:53:04");
+const lastModifiedString6 = ("Last modified: 2020/12/21 04:12:37");
 const roomTS = lastModifiedString6.replace("Last ", "").replace("modified: ", "");
 console.log("client_roomState.js " + lastModifiedString6);
 
@@ -152,7 +152,7 @@ function initSettings() {
     $("#cardBackChoices").append('<img class="cardBackOption" id="cardBackOption' + i + '" src="card_imgs/cardback_' +
       i + '.png">');
   }
-  for (i = 1; i < 14; i++) {
+  for (i = 1; i <= 4; i++) {
     $("#tableClothChoices").append('<img class="tableClothOption" id="tableClothOption' + i + '" src="table_imgs/bg' +
       i + '.jpg">');
   }

@@ -167,6 +167,10 @@ div#myHand.highlighted {
 
 .vote {
   color: rgb(36, 223, 76);
+  display: block !important;
+  position: relative;
+  top: 0px;
+  left: 0px;
   z-index: 99999;
 }
 

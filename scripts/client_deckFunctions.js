@@ -1,4 +1,4 @@
-const lastModifiedString3 = ("Last modified: 2020/12/20 05:54:23");
+const lastModifiedString3 = ("Last modified: 2020/12/21 19:52:16");
 const deckTS = lastModifiedString3.replace("Last ", "").replace("modified: ", "");
 console.log("client_deckFunction.js " + lastModifiedString3);
 
@@ -65,26 +65,17 @@ function startGame() {
   $(".isTrump").removeClass("isTrump");
   updateActionStates();
 }
-function preloadImages()
-{
-  for (var i = 1; i <= 144; i++) {
-    var cardID = "heartstoners" + i;
-    var img=new Image();
-    img.src='/card_imgs/' + cardID + '.png';
-  }
-}
-preloadImages();
 function preRenderImgs(gameType) {
   console.log("preRenderImgs-#0000");
   var cardImg = $("<img src='" + cardback + "' class='cardback'>");
   $("body").append(cardImg);
-  if (gameType == GameType.DIXIT) {
-    for (var i = 1; i <= 144; i++) {
-      var cardID = "heartstoners" + i;
+  // if (gameType == GameType.DIXIT) {
+  //   for (var i = 1; i <= ranks.length; i++) {
+  //     var cardID = "heartstoners" + i;
 
-      $("body").append($("<img src='/card_imgs/" + cardID + ".png' id='" + cardID + "_img'>"));
-    }
-  } else {
+  //     $("body").append($("<img src='/card_imgs/" + cardID + ".png' id='" + cardID + "_img'>"));
+  //   }
+  // } else {
     for (var i = 0; i < suits.length; i++) {
       for (var j = 0; j < ranks.length; j++) {
         var cardID = suits[i] + ranks[j];
@@ -97,17 +88,12 @@ function preRenderImgs(gameType) {
       $("body").append($("<img src='/card_imgs/" + bonusCards[i] + ".png' id='" + bonusCards[i] + "_img'>"));
     }
     console.log("preRenderImgs-#1000");
-  }
+  // }
 }
 
 function createDeck(taskOnly = false) {
   deck = [];
   taskDeck = [];
-  // if (gameType == GameType.DIXIT) {
-  //   for (var i = 1; i <= 144; i++) {
-  //     deck.push(new Card("heartstoners", i));
-  //   }
-  // } else {
   console.log("createDeck: " + JSON.stringify(suits) + "  :  " + JSON.stringify(ranks));
   for (var i = 0; i < suits.length; i++) {
     for (var j = 0; j < ranks.length; j++) {
