@@ -1,4 +1,4 @@
-const lastModifiedString9 = ("Last modified: 2020/12/20 06:00:40");
+const lastModifiedString9 = ("Last modified: 2020/12/21 02:36:57");
 const trickTS = lastModifiedString9.replace("Last ", "").replace("modified: ", "");
 console.log("client_trick.js " + lastModifiedString9);
 
@@ -111,9 +111,9 @@ function voteSubmitted(data){
     //Everyone Has Voted
     console.log("voteSubmitted... votes:"+JSON.stringify(votes));
     $(votes).each(function(){
-      $(".plays > #"+getCardID(this.card)).append("<i class='material-icons vote "+this.player+"'>gavel</i>");
+      $(".plays > #"+getCardID(this.card)).parent().prepend("<i class='material-icons vote"+this.player+"'>gavel</i>");
     });
-   window.setTimeout( clearVotesAndStartNewTrick, 5000 );
+   window.setTimeout( clearVotesAndStartNewTrick, 2000);
   }
 }
 

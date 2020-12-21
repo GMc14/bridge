@@ -165,6 +165,11 @@ div#myHand.highlighted {
   content: 'gps_fixed';
 }
 
+.vote {
+  color: rgb(36, 223, 76);
+  z-index: 99999;
+}
+
 #myPlay {
   box-sizing: border-box;
   top: 40vh;
