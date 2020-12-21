@@ -1,4 +1,4 @@
-const lastModifiedString5 = ("Last modified: 2020/12/21 20:07:55");
+const lastModifiedString5 = ("Last modified: 2020/12/21 20:11:17");
 const gmTS=lastModifiedString5.replace("Last ","").replace("modified: ","");
 console.log("client_gameMaster.js "+lastModifiedString5);
 
@@ -58,7 +58,7 @@ $(function () {
   $('#chooseTask').on('click', function () {
     console.log("Choose a task card...");
     $("#taskOptions").toggle();
-    if ($("#taskOptions").is(":visible")) {
+    // if ($("#taskOptions").is(":visible")) {
       $("#taskOptions").empty();
       taskDeck = getSorted(taskDeck);
       var previousSuit;
@@ -81,7 +81,7 @@ $(function () {
         taskDeck.splice(selectedCardIndex, 1);
         $("#taskOptions").empty();
       });
-    }
+    // }
   });
   $('#hideTasks').on('click', function () {
     $("#taskOptions").empty();
