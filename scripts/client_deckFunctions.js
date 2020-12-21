@@ -1,4 +1,4 @@
-const lastModifiedString3 = ("Last modified: 2020/12/21 19:52:16");
+const lastModifiedString3 = ("Last modified: 2020/12/21 20:14:37");
 const deckTS = lastModifiedString3.replace("Last ", "").replace("modified: ", "");
 console.log("client_deckFunction.js " + lastModifiedString3);
 
@@ -92,6 +92,7 @@ function preRenderImgs(gameType) {
 }
 
 function createDeck(taskOnly = false) {
+  $(".isTrump").removeClass("isTrump");
   deck = [];
   taskDeck = [];
   console.log("createDeck: " + JSON.stringify(suits) + "  :  " + JSON.stringify(ranks));
