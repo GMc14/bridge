@@ -1,4 +1,4 @@
-console.log("server.js Last modified: 2021/01/06 20:48:35");
+console.log("server.js Last modified: 2021/01/06 20:52:15");
 
 var maximumRoomSize = 10;
 var http = require("http"),
@@ -40,7 +40,7 @@ var server = http.createServer(function (req, res) {
 console.log("server running on Port " + PORT);
 var io = socketio.listen(server);
 
-function enter(socket) {
+function enter(socket, nickname) {
   var playerId = socket.id;
   var roomID = socket.room;
   console.log("room: " + JSON.stringify(io.sockets.adapter.rooms[roomID]));
@@ -61,12 +61,12 @@ function enter(socket) {
   if (!io.sockets.adapter.rooms[roomID].players) {
     io.sockets.adapter.rooms[roomID].players = new Array({
       id: playerId,
-      nickname: ""
+      nickname: nickname
     });
   } else {
     io.sockets.adapter.rooms[roomID].players.push({
       id: playerId,
-      nickname: ""
+      nickname: nickname
     });
   }
   console.log("@@@  @@@: " + JSON.stringify(io.sockets.adapter.rooms[roomID]));
@@ -125,7 +125,7 @@ io.sockets.on('connection', function (socket) {
       socket.join(data.roomID);
       socket.room = data.roomID;
       socket.nickname = data.username;
-      enter(socket);
+      enter(socket, data.username);
     } else {
       console.log("thisRoom is full? " + JSON.stringify(io.sockets.adapter.rooms[data.roomID]));
       io.sockets.to(socket.id).emit('fullRoom', thisRoom.length);
