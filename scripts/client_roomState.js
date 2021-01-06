@@ -1,4 +1,4 @@
-const lastModifiedString6 = ("Last modified: 2021/01/06 20:35:09");
+const lastModifiedString6 = ("Last modified: 2021/01/06 21:21:39");
 const roomTS = lastModifiedString6.replace("Last ", "").replace("modified: ", "");
 console.log("client_roomState.js " + lastModifiedString6);
 
@@ -95,8 +95,9 @@ function attemptJoinRoom() {
   $("#roomLoader").show();
 }
 
-function roomJoinedSuccess(roomID) {
-  $("#roomText").html("<b>Room: </b>" + roomID);
+function roomJoinedSuccess() {
+  console.log("roomJoinedSuccess ---");
+  $("#roomText").html("<b>Room: </b>" + $("#roomID").val().toUpperCase());
   $("#topbar").show();
   // $("#leaveRoom").show();
   $("#playerSetup").show();
