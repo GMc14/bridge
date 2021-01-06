@@ -1,4 +1,4 @@
-const lastModifiedString6 = ("Last modified: 2021/01/06 21:38:26");
+const lastModifiedString6 = ("Last modified: 2021/01/06 22:38:33");
 const roomTS = lastModifiedString6.replace("Last ", "").replace("modified: ", "");
 console.log("client_roomState.js " + lastModifiedString6);
 
@@ -248,7 +248,7 @@ function notifyRoomFull() {
 
 function notifyNameTaken() {
   $("#roomLoader").hide();
-  console.log("--------name Taken-----------");
+  console.log("--------name aken-----------");
   alert("Username taken, try a different one");
 }
 
