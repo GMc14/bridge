@@ -1,4 +1,4 @@
-console.log("server.js Last modified: 2021/01/06 21:49:27");
+console.log("server.js Last modified: 2021/01/06 21:53:53");
 
 var maximumRoomSize = 10;
 var http = require("http"),
@@ -121,11 +121,11 @@ io.sockets.on('connection', function (socket) {
     if (!thisRoom || thisRoom.length < maximumRoomSize) {
       var nameIsAvailable = true;
       if (thisRoom && thisRoom.players) {
-        $(thisRoom.players).each(function () {
-          if (this.nickname == nickname) {
+        for (var i = 0; i < room.players.length; i++) {
+          if (io.sockets.adapter.rooms[socket.room].players[i].nickname == nickname) {
             nameIsAvailable = false;
           }
-        });
+        }
       }
       if (nameIsAvailable) {
         console.log("thisRoom all good: " + thisRoom);
