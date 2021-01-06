@@ -1,4 +1,4 @@
-console.log("server.js Last modified: 2021/01/06 20:40:59");
+console.log("server.js Last modified: 2021/01/06 20:48:35");
 
 var maximumRoomSize = 10;
 var http = require("http"),
@@ -69,7 +69,7 @@ function enter(socket) {
       nickname: ""
     });
   }
-  console.log("@@@ enter room @@@: " + JSON.stringify(io.sockets.adapter.rooms[roomID]));
+  console.log("@@@  @@@: " + JSON.stringify(io.sockets.adapter.rooms[roomID]));
   io.sockets.to(socket.room).emit('updateRoom', io.sockets.adapter.rooms[roomID]);
 }
 

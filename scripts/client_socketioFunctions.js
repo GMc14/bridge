@@ -1,4 +1,4 @@
-const lastModifiedString8 = ("Last modified: 2021/01/06 20:30:11");
+const lastModifiedString8 = ("Last modified: 2021/01/06 20:48:31");
 const socketTS = lastModifiedString8.replace("Last ", "").replace("modified: ", "");
 console.log("client_socketioFunction.js " + lastModifiedString8);
 
@@ -7,6 +7,7 @@ var socketio = io.connect();
 
 $(function () {
     socketio.on('updateRoom', function (room) {
+        console.log("UpdateRoom: "+JSON.stringify(room));
         updateRoom(room);
     });
     socketio.on('leftInGame', function (nickname) {
