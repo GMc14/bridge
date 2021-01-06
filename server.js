@@ -1,4 +1,4 @@
-console.log("server.js Last modified: 2021/01/06 20:52:15");
+console.log("server.js Last modified: 2021/01/06 21:09:41");
 
 var maximumRoomSize = 10;
 var http = require("http"),
@@ -52,22 +52,21 @@ function enter(socket, nickname) {
   if (!io.sockets.adapter.rooms[roomID].gameType) {
     io.sockets.adapter.rooms[roomID].gameType = 1;
   }
-  
+
   if (!io.sockets.adapter.rooms[roomID].seats) {
     io.sockets.adapter.rooms[roomID].seats = new Array("");
   } else {
     io.sockets.adapter.rooms[roomID].seats.push("");
   }
+
+  var playerObj = {
+    id: playerId,
+    nickname: nickname
+  };
   if (!io.sockets.adapter.rooms[roomID].players) {
-    io.sockets.adapter.rooms[roomID].players = new Array({
-      id: playerId,
-      nickname: nickname
-    });
+    io.sockets.adapter.rooms[roomID].players = new Array(playerObj);
   } else {
-    io.sockets.adapter.rooms[roomID].players.push({
-      id: playerId,
-      nickname: nickname
-    });
+    io.sockets.adapter.rooms[roomID].players.push(playerObj);
   }
   console.log("@@@  @@@: " + JSON.stringify(io.sockets.adapter.rooms[roomID]));
   io.sockets.to(socket.room).emit('updateRoom', io.sockets.adapter.rooms[roomID]);
@@ -84,7 +83,7 @@ function leave(room, playerId) {
 }
 
 function setNickname(socket, playerId, nickname, triggerUpdate = false) {
-  console.log("server setNickname... playerId: "+playerId+"   nickname: "+nickname);
+  console.log("server setNickname... playerId: " + playerId + "   nickname: " + nickname);
   var room = io.sockets.adapter.rooms[socket.room];
   for (var i = 0; i < room.players.length; i++) {
     if (room.players[i].id == playerId) {
@@ -120,12 +119,24 @@ io.sockets.on('connection', function (socket) {
   socket.on('enterRoom', function (data) {
     var thisRoom = io.sockets.adapter.rooms[data.roomID];
     if (!thisRoom || thisRoom.length < maximumRoomSize) {
-      console.log("thisRoom all good: " + thisRoom);
-      //console.log("socket: " + JSON.stringify(socket, getCircularReplacer()));
-      socket.join(data.roomID);
-      socket.room = data.roomID;
-      socket.nickname = data.username;
-      enter(socket, data.username);
+      var nameIsAvailable = true;
+      if (thisRoom) {
+        $(thisRoom.players).each(function () {
+          if (this.nickname == nickname) {
+            nameIsAvailable = false;
+          }
+        });
+      }
+      if (nameIsAvailable) {
+        console.log("thisRoom all good: " + thisRoom);
+        //console.log("socket: " + JSON.stringify(socket, getCircularReplacer()));
+        socket.join(data.roomID);
+        socket.room = data.roomID;
+        socket.nickname = data.username;
+        enter(socket, data.username);
+      } else {
+        io.sockets.to(socket.room).emit('nameTaken');
+      }
     } else {
       console.log("thisRoom is full? " + JSON.stringify(io.sockets.adapter.rooms[data.roomID]));
       io.sockets.to(socket.id).emit('fullRoom', thisRoom.length);
@@ -243,6 +254,5 @@ io.sockets.on('connection', function (socket) {
   socket.on('submitVote', function (data) {
     io.sockets.to(socket.room).emit('voteSubmitted', data);
   });
-  
-});
 
+});
