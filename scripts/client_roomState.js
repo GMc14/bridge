@@ -1,4 +1,4 @@
-const lastModifiedString6 = ("Last modified: 2021/01/06 20:31:22");
+const lastModifiedString6 = ("Last modified: 2021/01/06 20:35:09");
 const roomTS = lastModifiedString6.replace("Last ", "").replace("modified: ", "");
 console.log("client_roomState.js " + lastModifiedString6);
 
@@ -80,7 +80,7 @@ function addSeatToTable(seatNumber) {
 }
 
 function attemptJoinRoom() {
-  console.log("--------joinRoom-----------");
+  console.log("--------attemptJoinRoom-----------");
   roomID = $("#roomID").val().toUpperCase();
 
   var username = $("#nicknameInput").val();
