@@ -1,4 +1,4 @@
-console.log("server.js Last modified: 2020/11/27 14:19:37");
+console.log("server.js Last modified: 2021/01/06 20:27:46");
 
 var maximumRoomSize = 10;
 var http = require("http"),
@@ -117,16 +117,17 @@ function stand(room, playerId) {
 
 io.sockets.on('connection', function (socket) {
   //Room State
-  socket.on('enterRoom', function (roomID) {
-    var thisRoom = io.sockets.adapter.rooms[roomID];
+  socket.on('enterRoom', function (data) {
+    var thisRoom = io.sockets.adapter.rooms[data.roomID];
     if (!thisRoom || thisRoom.length < maximumRoomSize) {
       console.log("thisRoom all good: " + thisRoom);
       //console.log("socket: " + JSON.stringify(socket, getCircularReplacer()));
-      socket.join(roomID);
-      socket.room = roomID;
+      socket.join(data.roomID);
+      socket.room = data.roomIDdata.roomID;
+      socket.nickname = data.username;
       enter(socket);
     } else {
-      console.log("thisRoom is full? " + JSON.stringify(io.sockets.adapter.rooms[roomID]));
+      console.log("thisRoom is full? " + JSON.stringify(io.sockets.adapter.rooms[data.roomID]));
       //io.sockets.to(socket.id).emit('fullRoom', thisRoom.length);
     }
   });

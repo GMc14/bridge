@@ -1,4 +1,4 @@
-const lastModifiedString5 = ("Last modified: 2020/12/21 20:13:48");
+const lastModifiedString5 = ("Last modified: 2020/12/23 16:10:29");
 const gmTS=lastModifiedString5.replace("Last ","").replace("modified: ","");
 console.log("client_gameMaster.js "+lastModifiedString5);
 
@@ -85,7 +85,6 @@ $(function () {
   });
   $('#hideTasks').on('click', function () {
     $("#taskOptions").empty();
-    $(".isTrump").removeClass("isTrump");
     createDeck(true);
     socketio.emit('hideTasks');
   });

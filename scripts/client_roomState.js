@@ -1,4 +1,4 @@
-const lastModifiedString6 = ("Last modified: 2020/12/21 04:12:37");
+const lastModifiedString6 = ("Last modified: 2021/01/06 20:31:22");
 const roomTS = lastModifiedString6.replace("Last ", "").replace("modified: ", "");
 console.log("client_roomState.js " + lastModifiedString6);
 
@@ -27,17 +27,6 @@ function initPlayerModule() {
     $("#teamInfo").toggle(gameConfig_hasTeams);
     socketio.emit('setGameType', gameType);
   });
-
-  var previousNickName = $.cookie("nickname").replace("0", "");
-  if (previousNickName) {
-    while (playerNickNames.includes(previousNickName) || $("#playersInRoom").html().indexOf(previousNickName) > -1) {
-      previousNickName = previousNickName + "0";
-    }
-
-    $("#nicknameInput").val(previousNickName);
-    console.log("--------------previousNickName----------------" + previousNickName);
-    socketio.emit('setNickname', previousNickName);
-  }
 
   $("#startGameButton").toggle(isGameMaster);
   $("#startGameButton:visible").on("click", function () {
@@ -90,21 +79,30 @@ function addSeatToTable(seatNumber) {
   }
 }
 
-function joinRoom() {
+function attemptJoinRoom() {
   console.log("--------joinRoom-----------");
-  roomID = $("#roomID").val();
+  roomID = $("#roomID").val().toUpperCase();
+
+  var username = $("#nicknameInput").val();
   while (roomID.length < 4) {
     roomID = roomID.concat(roomCodeCandidates.charAt(Math.floor(Math.random() * roomCodeCandidates.length)));
   }
-  roomID = roomID.toUpperCase()
-  socketio.emit('enterRoom', roomID);
+  roomID = roomID.toUpperCase();
+  socketio.emit('enterRoom', {
+    username: username,
+    roomID: roomID
+  });
+  $("#roomLoader").show();
+}
 
+function roomJoinedSuccess(roomID) {
   $("#roomText").html("<b>Room: </b>" + roomID);
   $("#topbar").show();
   // $("#leaveRoom").show();
   $("#playerSetup").show();
   //$("#chat").show();
   $("#roomSelection").hide();
+  $("#roomLoader").hide();
 }
 
 function leaveRoom() {
@@ -218,7 +216,7 @@ $(function () {
   });
   $("#joinRoomForm").on('submit', function (e) {
     e.preventDefault();
-    joinRoom();
+    attemptJoinRoom();
   });
   $("#missionNumberInput").change(function () {
     socketio.emit('setMission', $(this).val());
@@ -241,8 +239,15 @@ function setClientPlayerId(playerId) {
 }
 
 function notifyRoomFull() {
+  $("#roomLoader").hide();
   console.log("--------fullRoom-----------");
   alert("Room is Full. Try Again Later");
+}
+
+function notifyNameTaken() {
+  $("#roomLoader").hide();
+  console.log("--------name Taken-----------");
+  alert("Username taken, try a different one");
 }
 
 function notifyUserLeftRoom(nickname) {
@@ -269,6 +274,7 @@ function applyTableCloth(tableCloth) {
 }
 
 function updateRoom(room) {
+  roomJoinedSuccess(room.roomID);
   roomState = room;
   console.log("--------updateRoom-----------" + JSON.stringify(roomState));
   if (roomState.gameType) {

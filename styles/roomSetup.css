@@ -24,7 +24,9 @@
   display: none;
   z-index: 101;
 }
-
+#roomLoader{
+  display: none;
+}
 .largeInputText {
   margin-top: 1vmin;
   margin-bottom: 2vh;

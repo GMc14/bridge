@@ -1,4 +1,4 @@
-const lastModifiedString8 = ("Last modified: 2020/12/19 17:49:51");
+const lastModifiedString8 = ("Last modified: 2021/01/06 20:30:11");
 const socketTS = lastModifiedString8.replace("Last ", "").replace("modified: ", "");
 console.log("client_socketioFunction.js " + lastModifiedString8);
 
@@ -59,6 +59,9 @@ $(function () {
     });
     socketio.on('fullRoom', function () {
         notifyRoomFull();
+    });
+    socketio.on('nameTaken', function () {
+        notifyNameTaken();
     });
     socketio.on('message', function (data) {
         showMessage(data.msg, data.nickname);
