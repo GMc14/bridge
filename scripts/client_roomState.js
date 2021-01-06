@@ -1,4 +1,4 @@
-const lastModifiedString6 = ("Last modified: 2021/01/06 21:21:39");
+const lastModifiedString6 = ("Last modified: 2021/01/06 21:24:07");
 const roomTS = lastModifiedString6.replace("Last ", "").replace("modified: ", "");
 console.log("client_roomState.js " + lastModifiedString6);
 
@@ -88,6 +88,7 @@ function attemptJoinRoom() {
     roomID = roomID.concat(roomCodeCandidates.charAt(Math.floor(Math.random() * roomCodeCandidates.length)));
   }
   roomID = roomID.toUpperCase();
+  $("#roomID").val(roomID)
   socketio.emit('enterRoom', {
     username: username,
     roomID: roomID
@@ -97,7 +98,7 @@ function attemptJoinRoom() {
 
 function roomJoinedSuccess() {
   console.log("roomJoinedSuccess ---");
-  $("#roomText").html("<b>Room: </b>" + $("#roomID").val().toUpperCase());
+  $("#roomText").html("<b>Room: </b>" + $("#roomID").val());
   $("#topbar").show();
   // $("#leaveRoom").show();
   $("#playerSetup").show();
