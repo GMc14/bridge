@@ -1,4 +1,4 @@
-console.log("server.js Last modified: 2021/01/06 22:38:05");
+console.log("server.js Last modified: 2021/01/06 22:43:51");
 
 var maximumRoomSize = 10;
 var http = require("http"),
@@ -117,10 +117,14 @@ function stand(room, playerId) {
 io.sockets.on('connection', function (socket) {
   //Room State
   socket.on('enterRoom', function (data) {
+    console.log("===========enterRoom" + JSON.stringify(data));
     var thisRoom = io.sockets.adapter.rooms[data.roomID];
     if (!thisRoom || thisRoom.length < maximumRoomSize) {
+      
+      console.log("===========enterRoom: has size");
       var nameIsAvailable = true;
       if (thisRoom && thisRoom.players) {
+        console.log("===========enterRoom: has some players");
         for (var i = 0; i < thisRoom.players.length; i++) {
           if (thisRoom.players[i].nickname && thisRoom.players[i].nickname == data.username) {
             nameIsAvailable = false;
@@ -128,6 +132,7 @@ io.sockets.on('connection', function (socket) {
         }
       }
       if (nameIsAvailable) {
+        console.log("===========enterRoom: name available");
         console.log("thisRoom all good: " + thisRoom);
         //console.log("socket: " + JSON.stringify(socket, getCircularReplacer()));
         socket.join(data.roomID);
@@ -135,6 +140,7 @@ io.sockets.on('connection', function (socket) {
         socket.nickname = data.username;
         enter(socket, data.username);
       } else {
+        console.log("===========enterRoom: name taken");
         io.sockets.to(socket.room).emit('nameTaken');
       }
     } else {
