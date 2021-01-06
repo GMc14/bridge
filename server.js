@@ -1,4 +1,4 @@
-console.log("server.js Last modified: 2021/01/06 22:43:51");
+console.log("server.js Last modified: 2021/01/06 22:57:26");
 
 var maximumRoomSize = 10;
 var http = require("http"),
@@ -141,7 +141,7 @@ io.sockets.on('connection', function (socket) {
         enter(socket, data.username);
       } else {
         console.log("===========enterRoom: name taken");
-        io.sockets.to(socket.room).emit('nameTaken');
+        io.sockets.to(socket.id).emit('nameTaken');
       }
     } else {
       console.log("thisRoom is full? " + JSON.stringify(io.sockets.adapter.rooms[data.roomID]));
