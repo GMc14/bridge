@@ -24,22 +24,28 @@
   display: none;
   z-index: 101;
 }
-#roomLoader{
+
+#roomLoader {
   display: none;
 }
+
 .largeInputText {
   margin-top: 1vmin;
   margin-bottom: 2vh;
   text-align: center;
   font-size: 4vmax;
 }
-
+.setupInputLabel{
+  
+  font-size: 2.5vmax;
+}
 #enterRoomButton {
-  float: right;
-  margin-top: 1vmin;
-  margin-right: 1vmax;
+  margin-top: 2vmax;
   font-size: 4vmax;
   padding: 1vmin;
+  border-radius: 0.5vmin;
+  transform: translate(-50%, 0%);
+  margin-left: 50%;
 }
 
 #startGameButton {
@@ -49,6 +55,7 @@
   float: right;
   margin-left: 4vmax;
 }
+
 #startGameButton:disabled {
   background-color: #777;
   background-color: #444;
