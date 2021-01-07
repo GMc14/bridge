@@ -1,4 +1,4 @@
-const lastModifiedString6 = ("Last modified: 2021/01/06 22:38:33");
+const lastModifiedString6 = ("Last modified: 2021/01/06 23:33:35");
 const roomTS = lastModifiedString6.replace("Last ", "").replace("modified: ", "");
 console.log("client_roomState.js " + lastModifiedString6);
 
@@ -188,6 +188,7 @@ $(function () {
   $("#gameDrop").append($("<option value='" + GameType.BRIDGE + "'>Bridge (4)</option>"));
   $("#gameDrop").append($("<option value='" + GameType.EUCHRE + "'>Euchre (3-4)</option>"));
   $("#gameDrop").append($("<option value='" + GameType.DIXIT + "'>Dixit (1-5)</option>"));
+  $("#gameDrop").append($("<option value='" + GameType.WEREWOLF + "'>Werewolf (3-99)</option>"));
   initSettings();
   $("#helpLegendTrigger").click(function () {
     console.log("show THINGSSSS");

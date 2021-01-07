@@ -1,4 +1,4 @@
-const lastModifiedString4 = ("Last modified: 2020/12/21 19:52:21");
+const lastModifiedString4 = ("Last modified: 2021/01/07 00:18:05");
 const gameTS=lastModifiedString4.replace("Last ","").replace("modified: ","");
 console.log("client_game.js "+lastModifiedString4);
 
@@ -74,6 +74,7 @@ function setGameType(gT) {
     gameConfig_padTrickWithRandoms = false;
     gameConfig_voteForTrickWinner = false;
 
+    gameConfig_cardsPlayable = true;
     gameConfig_mustFollowSuit = true;
     gameConfig_showWonTricks = true;
 
@@ -133,6 +134,11 @@ function setGameType(gT) {
         gameConfig_maxPlayerCount = 5;
         //suits = new Array("heartstoners");
         //ranks = [...Array(25).keys()].map(x => x++);;
+    } else if (gameType == GameType.WEREWOLF) {
+        gameConfig_startCardsPerPlayer = 1;
+        gameConfig_cardsPlayable = false;      
+        gameConfig_minPlayerCount = 3;
+        gameConfig_maxPlayerCount = 99;
     } else {
         alert("Unknown GameType: " + gameType);
     }
@@ -184,6 +190,11 @@ const GameType = {
     "BRIDGE": 2,
     "EUCHRE": 3,
     "DIXIT": 4,
+    "WEREWOLF":5,
+    "SECRETHITLER":6,
+    "AVALON":7,
+    "TWOROOMS":8,
+    "ONENIGHT":9
 };
 
 

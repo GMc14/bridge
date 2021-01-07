@@ -1,4 +1,4 @@
-const lastModifiedString3 = ("Last modified: 2020/12/21 20:14:37");
+const lastModifiedString3 = ("Last modified: 2021/01/07 00:17:55");
 const deckTS = lastModifiedString3.replace("Last ", "").replace("modified: ", "");
 console.log("client_deckFunction.js " + lastModifiedString3);
 
@@ -65,6 +65,7 @@ function startGame() {
   $(".isTrump").removeClass("isTrump");
   updateActionStates();
 }
+
 function preRenderImgs(gameType) {
   console.log("preRenderImgs-#0000");
   var cardImg = $("<img src='" + cardback + "' class='cardback'>");
@@ -76,24 +77,32 @@ function preRenderImgs(gameType) {
   //     $("body").append($("<img src='/card_imgs/" + cardID + ".png' id='" + cardID + "_img'>"));
   //   }
   // } else {
-    for (var i = 0; i < suits.length; i++) {
-      for (var j = 0; j < ranks.length; j++) {
-        var cardID = suits[i] + ranks[j];
-        console.log("===" + cardID);
-        var img_src = "/card_imgs/" + cardID + ".png";
-        $("body").append($("<img src='" + img_src + "' id='" + cardID + "_img'>"));
-      }
+  for (var i = 0; i < suits.length; i++) {
+    for (var j = 0; j < ranks.length; j++) {
+      var cardID = suits[i] + ranks[j];
+      console.log("===" + cardID);
+      var img_src = "/card_imgs/" + cardID + ".png";
+      $("body").append($("<img src='" + img_src + "' id='" + cardID + "_img'>"));
     }
-    for (var i = 0; i < bonusCards.length; i++) {
-      $("body").append($("<img src='/card_imgs/" + bonusCards[i] + ".png' id='" + bonusCards[i] + "_img'>"));
-    }
-    console.log("preRenderImgs-#1000");
+  }
+  for (var i = 0; i < bonusCards.length; i++) {
+    $("body").append($("<img src='/card_imgs/" + bonusCards[i] + ".png' id='" + bonusCards[i] + "_img'>"));
+  }
+  console.log("preRenderImgs-#1000");
   // }
 }
 
 function createDeck(taskOnly = false) {
   $(".isTrump").removeClass("isTrump");
   deck = [];
+  if(gameType == GameType.WEREWOLF){
+    var werewolfCount = Math.ceil(Math.sqrt(gameConfig_playerCount-1));
+      
+    for (var i = 0; i < gameConfig_playerCount; i++) {
+        taskDeck.push(new Card(i<werewolfCount?"W":"V", 0));
+    }
+      
+  }
   taskDeck = [];
   console.log("createDeck: " + JSON.stringify(suits) + "  :  " + JSON.stringify(ranks));
   for (var i = 0; i < suits.length; i++) {
@@ -401,8 +410,10 @@ function displayMyCards() {
     var cardID = getCardID(myHandOfCards[i]);
     var encodedI = i + 10;
     var cardDiv = $("<div class='myCards' id='" + (encodedI + cardID) + "'></div>");
-    $(cardDiv).append($("#" + cardID + "_img").clone().show())
-    $(cardDiv).click(playCard);
+    $(cardDiv).append($("#" + cardID + "_img").clone().show());
+    if (gameConfig_cardsPlayable) {
+      $(cardDiv).click(playCard);
+    }
     $("#myHand").append(cardDiv);
   }
 }
@@ -597,7 +608,7 @@ function cardPlayed(data) {
   } else {
     if ($(".plays > img").length == gameConfig_playerCount) {
       //allPlayersHavePlayed
-      
+
       console.log("allPlayersHavePlayed");
       resolveTrick();
     } else {
@@ -640,7 +651,9 @@ function cardDrawn(data) {
       cardObj = $(".cardback:eq(0)").clone().show();
     }
     console.log("cardDrawn hand: " + hand + "     cardObj" + JSON.stringify(cardObj));
-    $(cardObj).click(playCard);
+    if (gameConfig_cardsPlayable) {
+      $(cardObj).click(playCard);
+    }
     $(hand).append(cardObj);
   }
 }
