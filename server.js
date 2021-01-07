@@ -1,4 +1,4 @@
-console.log("server.js Last modified: 2021/01/06 22:57:26");
+console.log("server.js Last modified: 2021/01/07 16:01:56");
 
 var maximumRoomSize = 10;
 var http = require("http"),
@@ -106,6 +106,34 @@ function sit(socket, seatIndex, playerId) {
   io.sockets.to(socket.room).emit('updateRoom', io.sockets.adapter.rooms[socket.room]);
 }
 
+function seatUnseatedPlayers(socket) {
+  var room = io.sockets.adapter.rooms[socket.room];
+  for (var i = 0; i < room.players.length; i++) {
+    var playerId = room.players[i].id;
+    var needsASeat = true;
+    var emptySeat = 99999;
+    for (var j = 0; j < room.seats.length; j++) {
+      if (room.seats[j] === '') {
+        if (j < emptySeat) {
+          emptySeat = j;
+        }
+      } else if (room.seats[j] === playerId) {
+        needsASeat = false;
+      }
+
+    }
+    if (needsASeat) {
+      sit(socket,emptySeat,playerId);
+    }
+
+  }
+
+
+
+  io.sockets.adapter.rooms[socket.room].seats[seatIndex] = playerId;
+  io.sockets.to(socket.room).emit('updateRoom', io.sockets.adapter.rooms[socket.room]);
+}
+
 function stand(room, playerId) {
   var seatIndex = room.seats.indexOf(playerId);
   if (seatIndex > -1) {
@@ -120,7 +148,7 @@ io.sockets.on('connection', function (socket) {
     console.log("===========enterRoom" + JSON.stringify(data));
     var thisRoom = io.sockets.adapter.rooms[data.roomID];
     if (!thisRoom || thisRoom.length < maximumRoomSize) {
-      
+
       console.log("===========enterRoom: has size");
       var nameIsAvailable = true;
       if (thisRoom && thisRoom.players) {
@@ -217,6 +245,7 @@ io.sockets.on('connection', function (socket) {
     console.log("---startGameOnServer----");
     var startGamePlayerCount = io.sockets.adapter.rooms[socket.room].length;
     console.log("---startGameOnServer---- startGamePlayerCount" + startGamePlayerCount);
+    seatUnseatedPlayers(socket);
     io.sockets.to(socket.room).emit('updateRoom', io.sockets.adapter.rooms[socket.room]);
     io.sockets.to(socket.room).emit('startGame', {
       playerCount: startGamePlayerCount,

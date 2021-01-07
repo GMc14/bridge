@@ -1,4 +1,4 @@
-const lastModifiedString4 = ("Last modified: 2021/01/07 00:18:05");
+const lastModifiedString4 = ("Last modified: 2021/01/07 02:20:11");
 const gameTS=lastModifiedString4.replace("Last ","").replace("modified: ","");
 console.log("client_game.js "+lastModifiedString4);
 
@@ -73,7 +73,7 @@ function setGameType(gT) {
     gameCongid_drawBackUp = false;
     gameConfig_padTrickWithRandoms = false;
     gameConfig_voteForTrickWinner = false;
-
+    gameConfig_chooseSeats = true;
     gameConfig_cardsPlayable = true;
     gameConfig_mustFollowSuit = true;
     gameConfig_showWonTricks = true;
@@ -124,6 +124,7 @@ function setGameType(gT) {
         gameConfig_gameName = 'Dixit';
         gameConfig_playFaceDown = true;
         gameConfig_playCardsAsync = true;
+        gameConfig_chooseSeats = false;
         gameCongid_drawBackUp = true;
         gameConfig_voteForTrickWinner = true;
         gameConfig_padTrickWithRandoms = true; //TODO: implement before card reveal
@@ -139,6 +140,7 @@ function setGameType(gT) {
         gameConfig_cardsPlayable = false;      
         gameConfig_minPlayerCount = 3;
         gameConfig_maxPlayerCount = 99;
+        gameConfig_chooseSeats = false;
     } else {
         alert("Unknown GameType: " + gameType);
     }

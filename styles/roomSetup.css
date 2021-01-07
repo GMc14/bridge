@@ -36,7 +36,10 @@
 
 #enterRoomButton {
   float: right;
-  margin-top: -1vh;
+  margin-top: 1vmin;
+  margin-right: 1vmax;
+  font-size: 4vmax;
+  padding: 1vmin;
 }
 
 #startGameButton {
@@ -44,6 +47,11 @@
   background-color: #117733;
   color: white;
   float: right;
+  margin-left: 4vmax;
+}
+#startGameButton:disabled {
+  background-color: #777;
+  background-color: #444;
 }
 
 #tableClothChoices, #cardBackChoices {

@@ -1,4 +1,4 @@
-const lastModifiedString3 = ("Last modified: 2021/01/07 00:29:00");
+const lastModifiedString3 = ("Last modified: 2021/01/07 00:33:56");
 const deckTS = lastModifiedString3.replace("Last ", "").replace("modified: ", "");
 console.log("client_deckFunction.js " + lastModifiedString3);
 
@@ -87,23 +87,23 @@ function preRenderImgs(gameType) {
   }
   for (var i = 0; i < bonusCards.length; i++) {
     $("body").append($("<img src='/card_imgs/" + bonusCards[i] + ".png' id='" + bonusCards[i] + "_img'>"));
-  } 
+  }
 
-    $("body").append($("<img src='/card_imgs/V0.png' id='V0_img'>"));
-    $("body").append($("<img src='/card_imgs/W0.png' id='W0_img'>"));
+  $("body").append($("<img src='/card_imgs/V0.png' id='V0_img'>"));
+  $("body").append($("<img src='/card_imgs/W0.png' id='W0_img'>"));
   console.log("preRenderImgs-#1000");
   // }
 }
 
 function createDeck(taskOnly = false) {
   deck = [];
-  if(gameType == GameType.WEREWOLF){
-    var werewolfCount = Math.floor(Math.sqrt(gameConfig_playerCount-1));
-      
+  if (gameType == GameType.WEREWOLF) {
+    var werewolfCount = Math.floor(Math.sqrt(gameConfig_playerCount - 1));
+
     for (var i = 0; i < gameConfig_playerCount; i++) {
-      deck.push(new Card(i<werewolfCount?"W":"V", 0));
+      deck.push(new Card(i < werewolfCount ? "W" : "V", 0));
     }
-    return;   
+    return;
   }
   taskDeck = [];
   console.log("createDeck: " + JSON.stringify(suits) + "  :  " + JSON.stringify(ranks));
@@ -344,63 +344,60 @@ function deal(data) {
   console.log("--------------dealToClients---------------- " + JSON.stringify(data, null, 4));
   console.log("--------------dealToClients---------------- playerNum: " + playerNum);
   console.log("--------------dealToClients---------------- gameType: " + gameType);
-
   var myPIndex = Number(playerNum.slice(-1)) - 1;
   myHandOfCards = data.hands[myPIndex];
-
-
   $("#showCase").empty();
-
-  if (data.trumpCard) {
-    console.log("------- Trump Card: " + data.trumpCard);
-    displayTrumpCard(data.trumpCard)
-    trumpSuit = data.trumpCard.suit;
-  } else if (gameConfig_permaTrumpSuit) {
-    trumpSuit = gameConfig_permaTrumpSuit;
-  }
   displayMyCards();
   for (var j = 1; j < gameConfig_playerCount; j++) {
     displayOtherCards(j, data.hands[j - 1].length);
   }
+  if (gameConfig_cardsPlayable) {
+    if (data.trumpCard) {
+      console.log("------- Trump Card: " + data.trumpCard);
+      displayTrumpCard(data.trumpCard)
+      trumpSuit = data.trumpCard.suit;
+    } else if (gameConfig_permaTrumpSuit) {
+      trumpSuit = gameConfig_permaTrumpSuit;
+    }
+    if (gameConfig_bidForTrump) {
+      //Start with left of the dealer
+      lead = getNextPlayerName(dealer);
+      startBidding();
+    } else {
+      if (startPlayerCard) {
+        console.log("------- startPlayerCard how could this go wrong?: " + startPlayerCard);
+        for (var i = 0; i < data.hands.length; i++) {
+          for (var j = 0; j < data.hands[i].length; j++) {
+            console.log("------- startPlayerCard i: " + i + "  j:" + j);
+            if (data.hands[i][j].suit == startPlayerCard.charAt(0) && data.hands[i][j].rank == startPlayerCard.charAt(1)) {
 
-  if (gameConfig_bidForTrump) {
-    //Start with left of the dealer
-    lead = getNextPlayerName(dealer);
-    startBidding();
-  } else {
-    if (startPlayerCard) {
-      console.log("------- startPlayerCard how could this go wrong?: " + startPlayerCard);
-      for (var i = 0; i < data.hands.length; i++) {
-        for (var j = 0; j < data.hands[i].length; j++) {
-          console.log("------- startPlayerCard i: " + i + "  j:" + j);
-          if (data.hands[i][j].suit == startPlayerCard.charAt(0) && data.hands[i][j].rank == startPlayerCard.charAt(1)) {
+              currentPlayer = "Player" + Number(i + 1);
 
-            currentPlayer = "Player" + Number(i + 1);
-
-            console.log("------- FOUND ONE: " + i + " | " + currentPlayer);
-            j = data.hands[i].length;
-            i = data.hands.length;
-            break;
+              console.log("------- FOUND ONE: " + i + " | " + currentPlayer);
+              j = data.hands[i].length;
+              i = data.hands.length;
+              break;
+            }
           }
         }
+      } else if (gameConfig_playCardsAsync) {
+        currentPlayer = -1;
+      } else {
+        //Start with left of the dealer
+        currentPlayer = getNextPlayerName(dealer);
       }
-    } else if (gameConfig_playCardsAsync) {
-      currentPlayer = -1;
-    } else {
-      //Start with left of the dealer
-      currentPlayer = getNextPlayerName(dealer);
+      lead = currentPlayer;
+      var leaderNum = inversePlayerIdMap[lead];
+      console.log("----dealToClients getNicknameForPlayer----- ");
+      commanderName = getNicknameForPlayer(lead);
+      $(".highlighted").removeClass("highlighted");
+      updateTurnIndicator(lead, playerNum == lead, true);
+      console.log("--------------commanderName---------------- #loc" + commanderName + '   lead' + lead);
+      console.log("--------------markingLeader---------------- #loc" + leaderNum + 'name');
+      $(".leader").removeClass("leader");
+      $('#loc' + leaderNum + 'name').addClass("leader");
+      $('#bidOfRoundText').show();
     }
-    lead = currentPlayer;
-    var leaderNum = inversePlayerIdMap[lead];
-    console.log("----dealToClients getNicknameForPlayer----- ");
-    commanderName = getNicknameForPlayer(lead);
-    $(".highlighted").removeClass("highlighted");
-    updateTurnIndicator(lead, playerNum == lead, true);
-    console.log("--------------commanderName---------------- #loc" + commanderName + '   lead' + lead);
-    console.log("--------------markingLeader---------------- #loc" + leaderNum + 'name');
-    $(".leader").removeClass("leader");
-    $('#loc' + leaderNum + 'name').addClass("leader");
-    $('#bidOfRoundText').show();
   }
   console.log("--------------dealt...ToClients---------------- playerNum: " + playerNum);
 }
@@ -606,7 +603,9 @@ function cardPlayed(data) {
       console.log("not a sync, NOT back to leader");
     }
     currentPlayer = getNextPlayerName(currentPlayer);
-    updateTurnIndicator(currentPlayer, currentPlayer == playerNum, false);
+    if (gameConfig_cardsPlayable) {
+      updateTurnIndicator(currentPlayer, currentPlayer == playerNum, false);
+    }
   } else {
     if ($(".plays > img").length == gameConfig_playerCount) {
       //allPlayersHavePlayed

@@ -1,4 +1,4 @@
-const lastModifiedString6 = ("Last modified: 2021/01/06 23:33:35");
+const lastModifiedString6 = ("Last modified: 2021/01/07 02:32:45");
 const roomTS = lastModifiedString6.replace("Last ", "").replace("modified: ", "");
 console.log("client_roomState.js " + lastModifiedString6);
 
@@ -38,29 +38,32 @@ function initPlayerModule() {
   });
 }
 
+function takeASeat(playerNum) {
+  nickname = String($("#nicknameInput").val());
+  seatIndex = Number($(this).attr("data-player-number"));
+  console.log("playerSelect >> playerNum: " + playerNum + "  >> nickname: " + nickname + "  >>  seatIndex: " + seatIndex);
+  if (nickname == '' || playerNickNames.indexOf(nickname) > -1) {
+    alert('Pick a unique Nickname!');
+  } else {
+    $("#myName").append(playerNum + ": " + nickname);
+    $.cookie("nickname", nickname);
+    console.log("--------------playerBtns emit playerSit...----------------");
+    socketio.emit('playerSit', {
+      nickname: nickname,
+      seatIndex: seatIndex,
+      playerId: clientPlayerId
+    });
+    //TODO: show chat if want to use it $('#chat').show();
+    playerColor = playerColors[seatIndex - 1];
+    $(".playerBtns").prop('disabled', true);
+    $("#nicknameInput").prop('disabled', true);
+  }
+}
+
 function applySeatButtonClickListener() {
   $(".playerBtns").on("click", function () {
     console.log("--------------playerBtns Click----------------");
-    playerNum = $(this).val();
-    nickname = String($("#nicknameInput").val());
-    seatIndex = Number($(this).attr("data-player-number"));
-    console.log("playerSelect >> playerNum: " + playerNum + "  >> nickname: " + nickname + "  >>  seatIndex: " + seatIndex);
-    if (nickname == '' || playerNickNames.indexOf(nickname) > -1) {
-      alert('Pick a unique Nickname!');
-    } else {
-      $("#myName").append(playerNum + ": " + nickname);
-      $.cookie("nickname", nickname);
-      console.log("--------------playerBtns emit playerSit...----------------");
-      socketio.emit('playerSit', {
-        nickname: nickname,
-        seatIndex: seatIndex,
-        playerId: clientPlayerId
-      });
-      //TODO: show chat if want to use it $('#chat').show();
-      playerColor = playerColors[seatIndex - 1];
-      $(".playerBtns").prop('disabled', true);
-      $("#nicknameInput").prop('disabled', true);
-    }
+    takeASeat($(this).val());
   });
 }
 
@@ -77,6 +80,32 @@ function addSeatToTable(seatNumber) {
     $(seatButton).attr("value", "Player" + seatNumber);
     $("#seatingArea").append(seatButton);
   }
+}
+
+function isOkayToStartTheGame() {
+  var lowestOpen = 999;
+  var highestReadied = 0;
+
+  $('.playerBtns').each(function () {
+    var number = Number($(this).data("player-number"));
+    var isReadied = $(this).prop("disabled");
+    console.log("P#:" + number);
+    if (isReadied && number > highestReadied) {
+      highestReadied = number;
+    }
+    if (!isReadied && number < lowestOpen) {
+      lowestOpen = number;
+    }
+  });
+
+  var isOkay = lowestOpen > highestReadied &&
+    highestReadied >= gameConfig_minPlayerCount &&
+    highestReadied <= gameConfig_maxPlayerCount;
+
+  console.log("gameConfig_minPlayerCount: " + gameConfig_minPlayerCount + "   gameConfig_maxPlayerCount: " + gameConfig_maxPlayerCount);
+  console.log("A: " + (lowestOpen > highestReadied) + "   B: " + (highestReadied >= gameConfig_minPlayerCount) + "  C: " + (highestReadied <= gameConfig_maxPlayerCount));
+  console.log("LO: " + lowestOpen + "   HR: " + highestReadied + "  okay? " + isOkay);
+  return isOkay;
 }
 
 function attemptJoinRoom() {
@@ -113,31 +142,6 @@ function leaveRoom() {
   // $("#roomText").remove();
   // roomModule();
   window.location.reload();
-}
-
-function isOkayToStartTheGame() {
-  var lowestOpen = 999;
-  var highestReadied = 0;
-  $('.playerBtns').each(function () {
-    var number = Number($(this).data("player-number"));
-    var isReadied = $(this).prop("disabled");
-    console.log("P#:" + number);
-    if (isReadied && number > highestReadied) {
-      highestReadied = number;
-    }
-    if (!isReadied && number < lowestOpen) {
-      lowestOpen = number;
-    }
-  });
-
-  var isOkay = lowestOpen > highestReadied &&
-    highestReadied >= gameConfig_minPlayerCount &&
-    highestReadied <= gameConfig_maxPlayerCount;
-
-  console.log("gameConfig_minPlayerCount: " + gameConfig_minPlayerCount + "   gameConfig_maxPlayerCount: " + gameConfig_maxPlayerCount);
-  console.log("A: " + (lowestOpen > highestReadied) + "   B: " + (highestReadied >= gameConfig_minPlayerCount) + "  C: " + (highestReadied <= gameConfig_maxPlayerCount));
-  console.log("LO: " + lowestOpen + "   HR: " + highestReadied + "  okay? " + isOkay);
-  return isOkay;
 }
 
 function scrollToChatBottom() {
@@ -295,7 +299,12 @@ function updateRoom(room) {
     addSeatToTable(counter);
     counter = counter + 1;
   });
-  applySeatButtonClickListener();
+  if (gameConfig_chooseSeats) {
+    applySeatButtonClickListener();
+  } else {
+    $("#seatingArea").hide();
+  }
+
   $.each(roomState.players, function () {
     var nickname = this.nickname;
     if (nickname.length <= 0) {
@@ -315,8 +324,9 @@ function updateRoom(room) {
       playerNickNames[seatIndex - 1] = nickname;
     }
   });
+
   $("#playersInRoom").html(standingPlayersHTMLString);
-  $(startGameButton).prop("disabled", !isOkayToStartTheGame());
+  $("#startGameButton").prop("disabled", !isOkayToStartTheGame());
 }
 
 function getNicknameForPlayer(player) {

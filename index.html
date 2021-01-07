@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <title>GMcCrew</title>
   <script>
-    const lastModifiedString10 = ("Last modified: 2021/01/06 22:48:35");
+    const lastModifiedString10 = ("Last modified: 2021/01/07 16:13:42");
     const htmlTS = lastModifiedString10.replace("Last ", "").replace("modified: ", "");
     console.log("index.html " + lastModifiedString10);
   </script>
@@ -84,7 +84,7 @@
       <div id="roomSelection">
         <form id="joinRoomForm">
           <span class='setupInputLabel' id='nicknameLabel'>Name:</span>
-          <input id='nicknameInput' class="largeInputText" title="Your Name" placeholder="Your Name" maxlength="20" type='text'></input>
+          <input id='nicknameInput' class="largeInputText" title="Your Name" placeholder="Your Name" size="20" maxlength="12" type='text'></input>
           <script>
             $("#nicknameInput").keyup(function (event) {
               this.value = this.value.replace(/[^a-zA-Z0-9\d]/, '');
@@ -97,7 +97,7 @@
           </script>
           <span class='setupInputLabel'>Create or Join Room:</span><br>
           <input id="roomID" class="largeInputText" type="text" title="4 Letter Room Code" placeholder="Room Code"
-            maxlength="4" pattern="[a-zA-Z0-9]+">
+            maxlength="4" size="8" pattern="[a-zA-Z0-9]+"><br>
           <input id="enterRoomButton" type="submit" value="Enter">
           <div id="roomLoader" class="loader loader-bouncing is-active"></div>
         </form>
