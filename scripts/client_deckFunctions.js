@@ -1,4 +1,4 @@
-const lastModifiedString3 = ("Last modified: 2021/01/07 00:17:55");
+const lastModifiedString3 = ("Last modified: 2021/01/07 00:22:46");
 const deckTS = lastModifiedString3.replace("Last ", "").replace("modified: ", "");
 console.log("client_deckFunction.js " + lastModifiedString3);
 
@@ -49,7 +49,7 @@ function startGame() {
       return ++oldval;
     });
     $(".plyrDropName").show();
-
+    $(".isTrump").removeClass("isTrump");
     createDeck();
     deck = getShuffled(deck);
     dealCards();
@@ -93,15 +93,14 @@ function preRenderImgs(gameType) {
 }
 
 function createDeck(taskOnly = false) {
-  $(".isTrump").removeClass("isTrump");
   deck = [];
   if(gameType == GameType.WEREWOLF){
     var werewolfCount = Math.ceil(Math.sqrt(gameConfig_playerCount-1));
       
     for (var i = 0; i < gameConfig_playerCount; i++) {
-        taskDeck.push(new Card(i<werewolfCount?"W":"V", 0));
+      deck.push(new Card(i<werewolfCount?"W":"V", 0));
     }
-      
+    return;   
   }
   taskDeck = [];
   console.log("createDeck: " + JSON.stringify(suits) + "  :  " + JSON.stringify(ranks));
