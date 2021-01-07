@@ -1,4 +1,4 @@
-const lastModifiedString3 = ("Last modified: 2021/01/07 00:22:46");
+const lastModifiedString3 = ("Last modified: 2021/01/07 00:29:00");
 const deckTS = lastModifiedString3.replace("Last ", "").replace("modified: ", "");
 console.log("client_deckFunction.js " + lastModifiedString3);
 
@@ -87,7 +87,10 @@ function preRenderImgs(gameType) {
   }
   for (var i = 0; i < bonusCards.length; i++) {
     $("body").append($("<img src='/card_imgs/" + bonusCards[i] + ".png' id='" + bonusCards[i] + "_img'>"));
-  }
+  } 
+
+    $("body").append($("<img src='/card_imgs/V0.png' id='V0_img'>"));
+    $("body").append($("<img src='/card_imgs/W0.png' id='W0_img'>"));
   console.log("preRenderImgs-#1000");
   // }
 }
@@ -95,7 +98,7 @@ function preRenderImgs(gameType) {
 function createDeck(taskOnly = false) {
   deck = [];
   if(gameType == GameType.WEREWOLF){
-    var werewolfCount = Math.ceil(Math.sqrt(gameConfig_playerCount-1));
+    var werewolfCount = Math.floor(Math.sqrt(gameConfig_playerCount-1));
       
     for (var i = 0; i < gameConfig_playerCount; i++) {
       deck.push(new Card(i<werewolfCount?"W":"V", 0));
