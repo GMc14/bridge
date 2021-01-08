@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <title>GMcCrew</title>
   <script>
-    const lastModifiedString10 = ("Last modified: 2021/01/07 17:39:28");
+    const lastModifiedString10 = ("Last modified: 2021/01/08 01:22:36");
     const htmlTS = lastModifiedString10.replace("Last ", "").replace("modified: ", "");
     console.log("index.html " + lastModifiedString10);
   </script>
@@ -86,25 +86,6 @@
           <span class='setupInputLabel' id='nicknameLabel'>Name:</span>
           <input id='nicknameInput' class="largeInputText" title="Your Name" placeholder="Your Name" size="20"
             maxlength="12" type='text'></input>
-          <script>
-            function validateInputs() {
-              var nameInputValue = $("#nicknameInput").val();
-              var longEnoughName = nameInputValue.length >= 2;
-              console.log("nameInputValue: " + nameInputValue + ", longEnoughName: " + longEnoughName);
-              $("#enterRoomButton").prop("disabled", !longEnoughName);
-            }
-
-            $("#nicknameInput").keyup(function (event) {
-              this.value = this.value.replace(/[^a-zA-Z0-9\d]/, '');
-              validateInputs();
-            });
-
-            var previousNickName = $.cookie("nickname").replace("0", "");
-            if (previousNickName) {
-              $("#nicknameInput").val(previousNickName);
-              validateInputs();
-            }
-          </script>
           <span class='setupInputLabel'>Room:</span><br>
           <input id="roomID" class="largeInputText" type="text" title="4 Letter Room Code" placeholder="Room Code"
             maxlength="4" size="20" pattern="[a-zA-Z0-9]+"><br>
@@ -202,6 +183,24 @@
     console.log(JSON.stringify(dates));
     var maxDate = new Date(Math.max.apply(null, dates));
     $("#timeStamp").text("Updated: " + maxDate.toUTCString());
+
+    function validateInputs() {
+      var nameInputValue = $("#nicknameInput").val();
+      var longEnoughName = nameInputValue.length >= 2;
+      console.log("nameInputValue: " + nameInputValue + ", longEnoughName: " + longEnoughName);
+      $("#enterRoomButton").prop("disabled", !longEnoughName);
+    }
+
+    $("#nicknameInput").keyup(function (event) {
+      this.value = this.value.replace(/[^a-zA-Z0-9\d]/, '');
+      validateInputs();
+    });
+
+    var previousNickName = $.cookie("nickname").replace("0", "");
+    if (previousNickName) {
+      $("#nicknameInput").val(previousNickName);
+      validateInputs();
+    }
   </script>
 </body>
 
