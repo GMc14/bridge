@@ -1,4 +1,4 @@
-const lastModifiedString6 = ("Last modified: 2021/01/08 03:06:01");
+const lastModifiedString6 = ("Last modified: 2021/01/08 22:01:55");
 const roomTS = lastModifiedString6.replace("Last ", "").replace("modified: ", "");
 console.log("client_roomState.js " + lastModifiedString6);
 
@@ -7,14 +7,14 @@ var path = window.location.pathname;
 console.log("window.location.pathname: " + path);
 
 const roomCodeCandidates = "234689ABCEFJKMNPQRTVWXY";
-const playerColors = ['#004499', '#770011', '#666600', '#116600', '#440099', '#883300', '#006666', '#660066'];
+const playerColors = ['#770011', '#883300', '#666600', '#116600', '#006666', '#004499', '#440099', '#660066', '#e6194b', '#f58231', '#ffe119', '#bcf60c', '#3cb44b', '#46f0f0', '#4363d8', '#911eb4', '#f032e6', '#ffbebe', '#ffd8b1', '#fafac8', '#aaffc3', '#aac3ff', '#e6beff', '#fac8fa', '#808080', '#ffffff', '#000000'];
 var playerModuleIsShowing = false;
 var playerNickNames = ['', '', '', '', '', '', '', ''];
 
 function initPlayerModule() {
   console.log("--------------initPlayerModule----------------");
   if (playerModuleIsShowing) {
-    console.log("-------------- Been Hee Before ----------------");
+    console.log("-------------- Been Here Before ----------------");
     return;
   }
   playerModuleIsShowing = true;
@@ -82,6 +82,10 @@ function addSeatToTable(seatNumber) {
 }
 
 function isOkayToStartTheGame() {
+  if (!gameConfig_chooseSeats) {
+    const playerCount = $('.playerBtns').length;
+    return playerCount >= gameConfig_minPlayerCount && playerCount <= gameConfig_maxPlayerCount
+  }
   var lowestOpen = 999;
   var highestReadied = 0;
 
@@ -279,7 +283,13 @@ function applyTableCloth(tableCloth) {
   }
 }
 
+function hideTasks() {
+  $("#showCase").empty();
+  $("#showCase").hide();
+}
+
 function updateRoom(room) {
+  console.log("UpdateRoom: " + JSON.stringify(room));
   roomJoinedSuccess(room.roomID);
   roomState = room;
   console.log("--------updateRoom-----------" + JSON.stringify(roomState));

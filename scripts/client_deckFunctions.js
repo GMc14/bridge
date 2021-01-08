@@ -1,4 +1,4 @@
-const lastModifiedString3 = ("Last modified: 2021/01/07 00:33:56");
+const lastModifiedString3 = ("Last modified: 2021/01/08 22:01:01");
 const deckTS = lastModifiedString3.replace("Last ", "").replace("modified: ", "");
 console.log("client_deckFunction.js " + lastModifiedString3);
 
@@ -266,6 +266,7 @@ function sortHand() {
 }
 
 function setTrumpCardOrderIcon(cardID, icon) {
+  console.log("--------------setTrumpCardOrderIcon----------------data.card " + JSON.stringify(data.card) + ",  data.icon: " + data.icon);
   $("#token" + cardID).find("img").attr("src", "/token_imgs/" + icon + ".png");
 }
 
@@ -279,6 +280,7 @@ function setTrumpCardAssignee(cardID, player) {
 }
 
 function setPlayerShortName(forPlayerNumber, shortName) {
+  console.log("--------------assignShortNameToClients----------------data.playerNumber " + data.playerNumber + ",  data.shortName: " + data.shortName);
   var _idSelector = "#loc" + inversePlayerIdMap['Player' + forPlayerNumber] + "name";
   var tempPlayerNum = playerNum.replace('Player', '');
   console.log("Is it me? " + forPlayerNumber + "  vs. " + tempPlayerNum);

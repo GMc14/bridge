@@ -1,4 +1,4 @@
-const lastModifiedString8 = ("Last modified: 2021/01/06 20:48:31");
+const lastModifiedString8 = ("Last modified: 2021/01/08 22:01:38");
 const socketTS = lastModifiedString8.replace("Last ", "").replace("modified: ", "");
 console.log("client_socketioFunction.js " + lastModifiedString8);
 
@@ -7,7 +7,6 @@ var socketio = io.connect();
 
 $(function () {
     socketio.on('updateRoom', function (room) {
-        console.log("UpdateRoom: "+JSON.stringify(room));
         updateRoom(room);
     });
     socketio.on('leftInGame', function (nickname) {
@@ -66,5 +65,23 @@ $(function () {
     });
     socketio.on('message', function (data) {
         showMessage(data.msg, data.nickname);
+    });
+    socketio.on('makeGameMaster', function () {
+        makeGameMaster();
+    });
+    socketio.on('taskDrawn', function (card) {
+        displayTrumpCard(card);
+    });
+    socketio.on('hideTasks', function () {
+        hideTasks();
+    });
+    socketio.on('cycleClientOrderIcon', function (data) {
+        setTrumpCardOrderIcon(getCardID(data.card), data.icon);
+    });
+    socketio.on('cycleClientOrderAssignee', function (data) {
+        setTrumpCardAssignee(getCardID(data.card), data.player);
+    });
+    socketio.on('assignShortNameToClients', function (data) {
+        setPlayerShortName(data.playerNumber, data.shortName);
     });
 });

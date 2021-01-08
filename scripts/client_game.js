@@ -1,4 +1,4 @@
-const lastModifiedString4 = ("Last modified: 2021/01/07 02:20:11");
+const lastModifiedString4 = ("Last modified: 2021/01/08 22:01:58");
 const gameTS=lastModifiedString4.replace("Last ","").replace("modified: ","");
 console.log("client_game.js "+lastModifiedString4);
 
