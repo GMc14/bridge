@@ -1,4 +1,4 @@
-const lastModifiedString6 = ("Last modified: 2021/01/07 02:32:45");
+const lastModifiedString6 = ("Last modified: 2021/01/08 03:06:01");
 const roomTS = lastModifiedString6.replace("Last ", "").replace("modified: ", "");
 console.log("client_roomState.js " + lastModifiedString6);
 
@@ -38,9 +38,8 @@ function initPlayerModule() {
   });
 }
 
-function takeASeat(playerNum) {
+function takeASeat(playerNum, seatIndex) {
   nickname = String($("#nicknameInput").val());
-  seatIndex = Number($(this).attr("data-player-number"));
   console.log("playerSelect >> playerNum: " + playerNum + "  >> nickname: " + nickname + "  >>  seatIndex: " + seatIndex);
   if (nickname == '' || playerNickNames.indexOf(nickname) > -1) {
     alert('Pick a unique Nickname!');
@@ -63,7 +62,7 @@ function takeASeat(playerNum) {
 function applySeatButtonClickListener() {
   $(".playerBtns").on("click", function () {
     console.log("--------------playerBtns Click----------------");
-    takeASeat($(this).val());
+    takeASeat($(this).val(), Number($(this).attr("data-player-number")));
   });
 }
 
@@ -300,8 +299,11 @@ function updateRoom(room) {
     counter = counter + 1;
   });
   if (gameConfig_chooseSeats) {
+    $("#playerSelectLabel").show();
+    $("#seatingArea").show();
     applySeatButtonClickListener();
   } else {
+    $("#playerSelectLabel").hide();
     $("#seatingArea").hide();
   }
 
