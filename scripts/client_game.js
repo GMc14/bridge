@@ -1,4 +1,4 @@
-const lastModifiedString4 = ("Last modified: 2021/01/09 02:56:48");
+const lastModifiedString4 = ("Last modified: 2021/01/09 03:12:17");
 const gameTS=lastModifiedString4.replace("Last ","").replace("modified: ","");
 console.log("client_game.js "+lastModifiedString4);
 
@@ -201,7 +201,10 @@ const GameType = {
 };
 
 function constructUnseatedPlayArea(){
-    console.log("========================constructUnseatedPlayArea"+gameConfig_playerCount);
+
+    gameConfig_playerCount  = roomState.players.length;
+    
+    console.log("================ "+gameConfig_playerCount+" ========constructUnseatedPlayArea ");
     var clientNumber = Number(client_playerNumString.slice(-1));
     for (var j = 1; j < gameConfig_playerCount; j++) {
         var pNumber = Number((clientNumber + j - 1) % gameConfig_playerCount) + 1;
