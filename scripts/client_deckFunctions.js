@@ -1,4 +1,4 @@
-const lastModifiedString3 = ("Last modified: 2021/01/08 22:01:01");
+const lastModifiedString3 = ("Last modified: 2021/01/09 01:06:15");
 const deckTS = lastModifiedString3.replace("Last ", "").replace("modified: ", "");
 console.log("client_deckFunction.js " + lastModifiedString3);
 
@@ -17,7 +17,11 @@ function initialStartGame(data) {
   gameConfig_playerCount = data.playerCount;
   cardback = $(".cardBackOption.ui-selected").prop("src");
   preRenderImgs(data.gameType);
-  constructPlayArea();
+  if (gameConfig_chooseSeats) {
+    constructSeatedPlayArea();
+  } else {
+    constructUnseatedPlayArea();
+  }
   startGame();
 }
 

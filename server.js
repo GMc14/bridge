@@ -1,4 +1,4 @@
-console.log("server.js Last modified: 2021/01/09 00:56:59");
+console.log("server.js Last modified: 2021/01/09 01:16:53");
 
 var maximumRoomSize = 10;
 var http = require("http"),
@@ -70,13 +70,13 @@ function enter(socket, nickname) {
     io.sockets.adapter.rooms[roomID].players.push(playerObj);
   }
 
-  for (var i = 0; i< 5;i++){
-    io.sockets.adapter.rooms[roomID].seats.push("");
-    io.sockets.adapter.rooms[roomID].players.push({
-      id: playerId+"p"+i,
-      nickname: (nickname+"a"+i)
-    });
-  }
+  // for (var i = 0; i< 5;i++){
+  //   io.sockets.adapter.rooms[roomID].seats.push("");
+  //   io.sockets.adapter.rooms[roomID].players.push({
+  //     id: playerId+"p"+i,
+  //     nickname: (nickname+"a"+i)
+  //   });
+  // }
 
 
   console.log("@@@  @@@: " + JSON.stringify(io.sockets.adapter.rooms[roomID]));

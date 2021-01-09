@@ -1,4 +1,4 @@
-const lastModifiedString4 = ("Last modified: 2021/01/08 22:01:58");
+const lastModifiedString4 = ("Last modified: 2021/01/09 01:06:37");
 const gameTS=lastModifiedString4.replace("Last ","").replace("modified: ","");
 console.log("client_game.js "+lastModifiedString4);
 
@@ -199,8 +199,11 @@ const GameType = {
     "ONENIGHT":9
 };
 
+function constructUnseatedPlayArea(){
+    
+}
 
-function constructPlayArea() {
+function constructSeatedPlayArea() {
   var clientNumber = Number(playerNum.slice(-1));
   for (var j = 1; j < gameConfig_playerCount; j++) {
       var pNumber = Number((clientNumber + j - 1) % gameConfig_playerCount) + 1;
