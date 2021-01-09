@@ -1,4 +1,4 @@
-const lastModifiedString6 = ("Last modified: 2021/01/09 00:47:00");
+const lastModifiedString6 = ("Last modified: 2021/01/09 00:57:03");
 const roomTS = lastModifiedString6.replace("Last ", "").replace("modified: ", "");
 console.log("client_roomState.js " + lastModifiedString6);
 
@@ -30,6 +30,7 @@ function initPlayerModule() {
 
   $("#startGameButton").toggle(isGameMaster);
   $("#startGameButton:visible").on("click", function () {
+    console.log("startGameButton Clicked");
     if (isOkayToStartTheGame()) {
       socketio.emit('startGameOnServer', gameType);
     } else {

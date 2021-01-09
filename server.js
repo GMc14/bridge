@@ -1,4 +1,4 @@
-console.log("server.js Last modified: 2021/01/09 00:35:14");
+console.log("server.js Last modified: 2021/01/09 00:56:59");
 
 var maximumRoomSize = 10;
 var http = require("http"),
@@ -136,12 +136,8 @@ function seatUnseatedPlayers(socket) {
     if (needsASeat) {
       sit(socket, emptySeat, playerId);
     }
-
   }
 
-
-
-  io.sockets.adapter.rooms[socket.room].seats[seatIndex] = playerId;
   io.sockets.to(socket.room).emit('updateRoom', io.sockets.adapter.rooms[socket.room]);
 }
 
