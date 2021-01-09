@@ -1,4 +1,4 @@
-const lastModifiedString6 = ("Last modified: 2021/01/08 22:01:55");
+const lastModifiedString6 = ("Last modified: 2021/01/08 22:09:35");
 const roomTS = lastModifiedString6.replace("Last ", "").replace("modified: ", "");
 console.log("client_roomState.js " + lastModifiedString6);
 
@@ -83,6 +83,7 @@ function addSeatToTable(seatNumber) {
 
 function isOkayToStartTheGame() {
   if (!gameConfig_chooseSeats) {
+    console.log("isOkayToStartTheGame?? "+playerCount+" <> "+gameConfig_minPlayerCount);
     const playerCount = $('.playerBtns').length;
     return playerCount >= gameConfig_minPlayerCount && playerCount <= gameConfig_maxPlayerCount
   }

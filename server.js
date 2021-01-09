@@ -1,4 +1,4 @@
-console.log("server.js Last modified: 2021/01/07 16:01:56");
+console.log("server.js Last modified: 2021/01/09 00:35:14");
 
 var maximumRoomSize = 10;
 var http = require("http"),
@@ -6,7 +6,8 @@ var http = require("http"),
   fs = require("fs"),
   path = require("path"),
   PORT = process.env.PORT || 1234;
-var server = http.createServer(function (req, res) {
+
+  var server = http.createServer(function (req, res) {
   var filePath = req.url;
   if (filePath == '/') {
     filePath = './index.html';
@@ -68,6 +69,16 @@ function enter(socket, nickname) {
   } else {
     io.sockets.adapter.rooms[roomID].players.push(playerObj);
   }
+
+  for (var i = 0; i< 5;i++){
+    io.sockets.adapter.rooms[roomID].seats.push("");
+    io.sockets.adapter.rooms[roomID].players.push({
+      id: playerId+"p"+i,
+      nickname: (nickname+"a"+i)
+    });
+  }
+
+
   console.log("@@@  @@@: " + JSON.stringify(io.sockets.adapter.rooms[roomID]));
   io.sockets.to(socket.room).emit('updateRoom', io.sockets.adapter.rooms[roomID]);
 }
@@ -123,7 +134,7 @@ function seatUnseatedPlayers(socket) {
 
     }
     if (needsASeat) {
-      sit(socket,emptySeat,playerId);
+      sit(socket, emptySeat, playerId);
     }
 
   }
