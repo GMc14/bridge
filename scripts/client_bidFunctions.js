@@ -1,5 +1,5 @@
 
-const lastModifiedString1 = ("Last modified: 2021/01/09 02:16:48");
+const lastModifiedString1 = ("Last modified: 2021/01/09 02:25:12");
 const bidTS=lastModifiedString1.replace("Last ","").replace("modified: ","");
 console.log("client_bidFunctions.js "+lastModifiedString1);
 
@@ -10,8 +10,8 @@ var currentBid;
 var passCount = 0;
 
 function updateActionStates() {
-  const isMyTurn = client_playerNum == currentBidder;
-  console.log("updateActionStates  " + isMyTurn + "  :" + client_playerNum + " =? " + currentBidder + "   gameConfig_biddingState:" + gameConfig_biddingState);
+  const isMyTurn = client_playerNumString == currentBidder;
+  console.log("updateActionStates  " + isMyTurn + "  :" + client_playerNumString + " =? " + currentBidder + "   gameConfig_biddingState:" + gameConfig_biddingState);
   $("#orderUp").toggle(gameConfig_biddingState == BiddingStates.ORDERING_UP && isMyTurn);
   $("#declareSuit").toggle(gameConfig_biddingState == BiddingStates.SUIT_SELECTION && isMyTurn);
   $("#suitSelectionDropdown").toggle(gameConfig_biddingState == BiddingStates.SUIT_SELECTION && isMyTurn);
@@ -20,7 +20,7 @@ function updateActionStates() {
 }
 
 function startBidding() {
-  const isMyTurn = client_playerNum == currentBidder;
+  const isMyTurn = client_playerNumString == currentBidder;
   console.log("GMcCards-bidFunctions.js-startBidding: " + gameConfig_biddingState);
   if (gameConfig_biddingState == BiddingStates.PREBID) {
     if (gameType == GameType.EUCHRE) {
@@ -87,7 +87,7 @@ function startBidding() {
   }
   //Start Left of the dealer
   currentBidder = lead;
-  updateTurnIndicator(currentBidder, client_playerNum == currentBidder, false);
+  updateTurnIndicator(currentBidder, client_playerNumString == currentBidder, false);
   updateActionStates();
 
 }
@@ -124,7 +124,7 @@ function someonePassed() {
     if (passCount == gameConfig_playerCount) {
       $('#bidOfRoundText').html('<b>' + currentBidder + ": " + currentBid + '</b>');
       $('#bidOfRoundText').show();
-      if (client_playerNum == currentBidder || client_playerNum == getNextPlayerName(getNextPlayerName(currentBidder))) {
+      if (client_playerNumString == currentBidder || client_playerNumString == getNextPlayerName(getNextPlayerName(currentBidder))) {
         handsNeeded = 6 + Number(currentBid.charAt(0));
       } else {
         handsNeeded = 14 - (6 + Number(currentBid.charAt(0)));
@@ -148,7 +148,7 @@ function someonePassed() {
   }
 
   currentBidder = getNextPlayerName(currentBidder);
-  updateTurnIndicator(currentBidder, client_playerNum == currentBidder, false);
+  updateTurnIndicator(currentBidder, client_playerNumString == currentBidder, false);
   updateActionStates();
 }
 
@@ -171,7 +171,7 @@ function biddingFinished() {
   gameConfig_biddingState = BiddingStates.FINISHED;
   currentPlayer = lead;
   updateActionStates();
-  updateTurnIndicator(lead, client_playerNum == lead, true);
+  updateTurnIndicator(lead, client_playerNumString == lead, true);
 }
 
 

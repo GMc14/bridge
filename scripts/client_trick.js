@@ -1,4 +1,4 @@
-const lastModifiedString9 = ("Last modified: 2021/01/09 02:14:37");
+const lastModifiedString9 = ("Last modified: 2021/01/09 02:25:12");
 const trickTS = lastModifiedString9.replace("Last ", "").replace("modified: ", "");
 console.log("client_trick.js " + lastModifiedString9);
 
@@ -57,7 +57,7 @@ function resolveTrick() {
           var card = getCardFromID(cardID);
           socketio.emit('submitVote', {
             card: card,
-            player: client_playerNum
+            player: client_playerNumString
           });
         }
       });
@@ -90,7 +90,7 @@ function resolveTrick() {
       tricksWon++;
       addTrickWinText("myWin", tricksWon);
       socketio.emit('winner', {
-        player: client_playerNum,
+        player: client_playerNumString,
         trickCards: trickCardIDs
       });
     }

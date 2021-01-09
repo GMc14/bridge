@@ -1,4 +1,4 @@
-const lastModifiedString4 = ("Last modified: 2021/01/09 02:21:07");
+const lastModifiedString4 = ("Last modified: 2021/01/09 02:25:12");
 const gameTS=lastModifiedString4.replace("Last ","").replace("modified: ","");
 console.log("client_game.js "+lastModifiedString4);
 
@@ -171,8 +171,8 @@ const euchreRanks = new Array(9, 10, 11, 12, 13, 14);
 var commanderName;
 //Player values
 var nickname;
-var client_username
-var client_playerNum;
+var client_username;
+var client_playerNumString;
 var seatIndex;
 var clientPlayerId;
 var myHandOfCards;
@@ -205,7 +205,7 @@ function constructUnseatedPlayArea(){
 }
 
 function constructSeatedPlayArea() {
-  var clientNumber = Number(client_playerNum.slice(-1));
+  var clientNumber = Number(client_playerNumString.slice(-1));
   for (var j = 1; j < gameConfig_playerCount; j++) {
       var pNumber = Number((clientNumber + j - 1) % gameConfig_playerCount) + 1;
 
@@ -251,7 +251,7 @@ function constructSeatedPlayArea() {
       $("#myDrpPlyrName").append('<option value="' + this + '">' + this + '</option>');
   });
   $("#myDrpPlyrName").change(function () {
-      var playerNumber = client_playerNum.replace('Player', '');
+      var playerNumber = client_playerNumString.replace('Player', '');
       var shortName = $(this).val();
       console.log(">>>>>>>>>>>>>myDrpPlyrName selected ---------------- playerNumber:" + playerNumber + " : " + shortName);
       socketio.emit('assignShortName', {

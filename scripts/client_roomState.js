@@ -1,4 +1,4 @@
-const lastModifiedString6 = ("Last modified: 2021/01/09 02:22:06");
+const lastModifiedString6 = ("Last modified: 2021/01/09 02:25:12");
 const roomTS = lastModifiedString6.replace("Last ", "").replace("modified: ", "");
 console.log("client_roomState.js " + lastModifiedString6);
 
@@ -33,11 +33,11 @@ function initPlayerModule() {
 
 // function takeASeat(seatIndex) {
 //   nickname = String($("#nicknameInput").val());
-//   console.log("playerSelect >> client_playerNum: " + client_playerNum + "  >> nickname: " + nickname + "  >>  seatIndex: " + seatIndex);
+//   console.log("playerSelect >> client_playerNumString: " + client_playerNumString + "  >> nickname: " + nickname + "  >>  seatIndex: " + seatIndex);
 //   if (nickname == '' || playerNickNamesBySeatIndex.indexOf(nickname) > -1) {
 //     alert('Pick a unique Nickname!');
 //   } else {
-//     $("#myName").append(client_playerNum + ": " + nickname);
+//     $("#myName").append(client_playerNumString + ": " + nickname);
 //     $.cookie("nickname", nickname);
 //     console.log("--------------playerBtns emit playerSit...----------------");
 //     socketio.emit('playerSit', {
@@ -55,7 +55,7 @@ function initPlayerModule() {
 // function applySeatButtonClickListener() {
 //   $(".playerBtns").on("click", function () {
 //     console.log("--------------playerBtns Click----------------");
-//     client_playerNum = $(this).val();
+//     client_playerNumString = $(this).val();
 //     takeASeat(Number($(this).attr("data-player-number")));
 //   });
 // }
@@ -321,8 +321,8 @@ function updateRoom(room) {
     if (nickname == client_username) { //TODO: Base on ID instead of nickname
       console.log("All Happening For This Player ("+nickname+")");
       $.cookie("nickname", nickname);
-      client_playerNum = seatIndex;
-      $("#myName").append(client_playerNum + ": " + nickname);
+      client_playerNumString = "Player" + seatIndex;
+      $("#myName").append(client_playerNumString + ": " + nickname);
       playerColor = playerColors[seatIndex - 1];
     }
     console.log("--------seatIndex-----------" + seatIndex + "  for:" + this.id);
