@@ -1,4 +1,4 @@
-const lastModifiedString4 = ("Last modified: 2021/01/09 02:33:11");
+const lastModifiedString4 = ("Last modified: 2021/01/09 02:51:14");
 const gameTS=lastModifiedString4.replace("Last ","").replace("modified: ","");
 console.log("client_game.js "+lastModifiedString4);
 
@@ -201,7 +201,25 @@ const GameType = {
 };
 
 function constructUnseatedPlayArea(){
-    
+    var clientNumber = Number(client_playerNumString.slice(-1));
+    for (var j = 1; j < gameConfig_playerCount; j++) {
+        var pNumber = Number((clientNumber + j - 1) % gameConfig_playerCount) + 1;
+        var name = $('<div alt="loc' + j + 'name" id="loc' + j + 'name" class="name"></div>');
+        var playerHand = $('<div alt="loc' + j + 'Hand" class="otherPlayerHand" id="loc' + j + 'Hand" ></div>');
+        $(playerContainer).append(playerHand);
+        $(playerContainer).append(name);
+        var playerContainer = $("<div alt='loc" + j + "Container' id='loc" + j + "Container' class='locationContainer'></div>");
+        $("#gameBoard").append(playerContainer);
+        $("#loc" + j + "name").html('Player' + pNumber + ': ' + playerNickNamesBySeatIndex[pNumber - 1]);
+        var positionRelativeToCenter = j - ((gameConfig_playerCount) / 2);
+        playerIdMap[j] = 'Player' + pNumber;
+        inversePlayerIdMap['Player' + pNumber] = j;
+        $(playerContainer).css({
+            "left": ((j - 1) * 90 / (gameConfig_playerCount - 1) + 15.5) + "vw",
+            "top": "12vh",
+            "transform": "rotate(" + positionRelativeToCenter * 15 + "deg) translateY(" + Math.abs(positionRelativeToCenter) * 4 + "vmax)"
+        });
+    }
 }
 
 function constructSeatedPlayArea() {

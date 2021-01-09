@@ -1,4 +1,4 @@
-const lastModifiedString6 = ("Last modified: 2021/01/09 02:30:54");
+const lastModifiedString6 = ("Last modified: 2021/01/09 02:46:52");
 const roomTS = lastModifiedString6.replace("Last ", "").replace("modified: ", "");
 console.log("client_roomState.js " + lastModifiedString6);
 
@@ -322,7 +322,7 @@ function updateRoom(room) {
       console.log("All Happening For This Player ("+nickname+")");
       $.cookie("nickname", nickname);
       client_playerNumString = "Player" + seatIndex;
-      $("#myName").append(client_playerNumString + ": " + nickname);
+      $("#myName").text(client_playerNumString + ": " + nickname);
       playerColor = playerColors[seatIndex - 1];
     }
     console.log("--------seatIndex-----------" + seatIndex + "  for:" + this.id);
