@@ -1,4 +1,4 @@
-const lastModifiedString4 = ("Last modified: 2021/01/09 02:56:15");
+const lastModifiedString4 = ("Last modified: 2021/01/09 02:56:48");
 const gameTS=lastModifiedString4.replace("Last ","").replace("modified: ","");
 console.log("client_game.js "+lastModifiedString4);
 
@@ -211,7 +211,7 @@ function constructUnseatedPlayArea(){
         $(playerContainer).append(playerHand);
         $(playerContainer).append(name);
         $("#gameBoard").append(playerContainer);
-        $("#loc" + j + "name").html('Player' + pNumber + ': ' + playerNickNamesBySeatIndex[pNumber - 1]);
+        $("#loc" + j + "name").html(playerNickNamesBySeatIndex[pNumber - 1]);
         var positionRelativeToCenter = j - ((gameConfig_playerCount) / 2);
         playerIdMap[j] = 'Player' + pNumber;
         inversePlayerIdMap['Player' + pNumber] = j;

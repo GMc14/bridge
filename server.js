@@ -1,4 +1,4 @@
-console.log("server.js Last modified: 2021/01/09 01:38:29");
+console.log("server.js Last modified: 2021/01/09 02:59:25");
 
 var maximumRoomSize = 10;
 var http = require("http"),
@@ -7,7 +7,7 @@ var http = require("http"),
   path = require("path"),
   PORT = process.env.PORT || 1234;
 
-  var server = http.createServer(function (req, res) {
+var server = http.createServer(function (req, res) {
   var filePath = req.url;
   if (filePath == '/') {
     filePath = './index.html';
@@ -41,6 +41,17 @@ var http = require("http"),
 console.log("server running on Port " + PORT);
 var io = socketio.listen(server);
 
+function addDummies(count, playerId, nickname) {
+
+  for (var i = 0; i < count; i++) {
+    io.sockets.adapter.rooms[roomID].seats.push("");
+    io.sockets.adapter.rooms[roomID].players.push({
+      id: playerId + "p" + i,
+      nickname: (nickname + "a" + i)
+    });
+  }
+}
+
 function enter(socket, nickname) {
   var playerId = socket.id;
   var roomID = socket.room;
@@ -70,14 +81,7 @@ function enter(socket, nickname) {
     io.sockets.adapter.rooms[roomID].players.push(playerObj);
   }
 
-  // for (var i = 0; i< 5;i++){
-  //   io.sockets.adapter.rooms[roomID].seats.push("");
-  //   io.sockets.adapter.rooms[roomID].players.push({
-  //     id: playerId+"p"+i,
-  //     nickname: (nickname+"a"+i)
-  //   });
-  // }
-
+  addDummies(20, playerId, nickname);
 
   console.log("@@@  @@@: " + JSON.stringify(io.sockets.adapter.rooms[roomID]));
   io.sockets.to(socket.room).emit('updateRoom', io.sockets.adapter.rooms[roomID]);
