@@ -1,4 +1,4 @@
-console.log("server.js Last modified: 2021/01/09 02:59:25");
+console.log("server.js Last modified: 2021/01/09 03:03:00");
 
 var maximumRoomSize = 10;
 var http = require("http"),
@@ -41,7 +41,7 @@ var server = http.createServer(function (req, res) {
 console.log("server running on Port " + PORT);
 var io = socketio.listen(server);
 
-function addDummies(count, playerId, nickname) {
+function addDummies(count, roomID, playerId, nickname) {
 
   for (var i = 0; i < count; i++) {
     io.sockets.adapter.rooms[roomID].seats.push("");
@@ -81,7 +81,7 @@ function enter(socket, nickname) {
     io.sockets.adapter.rooms[roomID].players.push(playerObj);
   }
 
-  addDummies(20, playerId, nickname);
+  addDummies(20, roomID, playerId, nickname);
 
   console.log("@@@  @@@: " + JSON.stringify(io.sockets.adapter.rooms[roomID]));
   io.sockets.to(socket.room).emit('updateRoom', io.sockets.adapter.rooms[roomID]);
