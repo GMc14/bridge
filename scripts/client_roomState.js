@@ -1,4 +1,4 @@
-const lastModifiedString6 = ("Last modified: 2021/01/08 22:09:35");
+const lastModifiedString6 = ("Last modified: 2021/01/09 00:47:00");
 const roomTS = lastModifiedString6.replace("Last ", "").replace("modified: ", "");
 console.log("client_roomState.js " + lastModifiedString6);
 
@@ -82,9 +82,9 @@ function addSeatToTable(seatNumber) {
 }
 
 function isOkayToStartTheGame() {
-  if (!gameConfig_chooseSeats) {
-    console.log("isOkayToStartTheGame?? "+playerCount+" <> "+gameConfig_minPlayerCount);
+  if (!gameConfig_chooseSeats) {    
     const playerCount = $('.playerBtns').length;
+    console.log("isOkayToStartTheGame?? "+playerCount+" <> "+gameConfig_minPlayerCount);
     return playerCount >= gameConfig_minPlayerCount && playerCount <= gameConfig_maxPlayerCount
   }
   var lowestOpen = 999;
