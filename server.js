@@ -1,4 +1,4 @@
-console.log("server.js Last modified: 2021/01/09 01:16:53");
+console.log("server.js Last modified: 2021/01/09 01:38:29");
 
 var maximumRoomSize = 10;
 var http = require("http"),
@@ -55,9 +55,9 @@ function enter(socket, nickname) {
   }
 
   if (!io.sockets.adapter.rooms[roomID].seats) {
-    io.sockets.adapter.rooms[roomID].seats = new Array("");
+    io.sockets.adapter.rooms[roomID].seats = new Array(playerId);
   } else {
-    io.sockets.adapter.rooms[roomID].seats.push("");
+    io.sockets.adapter.rooms[roomID].seats.push(playerId);
   }
 
   var playerObj = {
@@ -193,18 +193,18 @@ io.sockets.on('connection', function (socket) {
     io.sockets.to(roomID).emit('updateRoom', io.sockets.adapter.rooms[roomID]);
   });
   socket.on('playerSit', function (data) {
-    var thisRoom = io.sockets.adapter.rooms[socket.room];
-    console.log("playerSit... data: " + JSON.stringify(data));
-    console.log("playerSit... socket.room: " + JSON.stringify(socket.room));
-    console.log("playerSit... thisRoom: " + JSON.stringify(thisRoom));
-    console.log("playerSit... socket.id: " + JSON.stringify(socket.id));
+    // var thisRoom = io.sockets.adapter.rooms[socket.room];
+    // console.log("playerSit... data: " + JSON.stringify(data));
+    // console.log("playerSit... socket.room: " + JSON.stringify(socket.room));
+    // console.log("playerSit... thisRoom: " + JSON.stringify(thisRoom));
+    // console.log("playerSit... socket.id: " + JSON.stringify(socket.id));
 
-    if (socket.id == data.playerId || socket.id == thisRoom.gameMaster) {
-      setNickname(socket, data.playerId, data.nickname);
-      sit(socket, data.seatIndex - 1, data.playerId, data.nickname);
-    } else {
-      console.log("unauthorized sit");
-    }
+    // if (socket.id == data.playerId || socket.id == thisRoom.gameMaster) {
+    //   setNickname(socket, data.playerId, data.nickname);
+    //   sit(socket, data.seatIndex - 1, data.playerId, data.nickname);
+    // } else {
+    //   console.log("unauthorized sit");
+    // }
   });
   socket.on('setNickname', function (nickname) {
     console.log("$$$$$$$$$$$$$$$$$$$$      setNickname...: " + JSON.stringify(nickname));
@@ -252,7 +252,7 @@ io.sockets.on('connection', function (socket) {
     console.log("---startGameOnServer----");
     var startGamePlayerCount = io.sockets.adapter.rooms[socket.room].length;
     console.log("---startGameOnServer---- startGamePlayerCount" + startGamePlayerCount);
-    seatUnseatedPlayers(socket);
+    // seatUnseatedPlayers(socket);
     io.sockets.to(socket.room).emit('updateRoom', io.sockets.adapter.rooms[socket.room]);
     io.sockets.to(socket.room).emit('startGame', {
       playerCount: startGamePlayerCount,

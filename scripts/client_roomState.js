@@ -1,4 +1,4 @@
-const lastModifiedString6 = ("Last modified: 2021/01/09 01:25:55");
+const lastModifiedString6 = ("Last modified: 2021/01/09 01:53:41");
 const roomTS = lastModifiedString6.replace("Last ", "").replace("modified: ", "");
 console.log("client_roomState.js " + lastModifiedString6);
 
@@ -9,7 +9,7 @@ console.log("window.location.pathname: " + path);
 const roomCodeCandidates = "234689ABCEFJKMNPQRTVWXY";
 const playerColors = ['#770011', '#883300', '#666600', '#116600', '#006666', '#004499', '#440099', '#660066', '#e6194b', '#f58231', '#ffe119', '#bcf60c', '#3cb44b', '#46f0f0', '#4363d8', '#911eb4', '#f032e6', '#ffbebe', '#ffd8b1', '#fafac8', '#aaffc3', '#aac3ff', '#e6beff', '#fac8fa', '#808080', '#ffffff', '#000000'];
 var playerModuleIsShowing = false;
-var playerNickNames = ['', '', '', '', '', '', '', ''];
+var playerNickNamesBySeatIndex = [];
 
 function initPlayerModule() {
   console.log("--------------initPlayerModule----------------");
@@ -29,89 +29,81 @@ function initPlayerModule() {
   });
 
   $("#startGameButton").toggle(isGameMaster);
-  $("#startGameButton:visible").on("click", function () {
-    console.log("startGameButton Clicked");
-    if (isOkayToStartTheGame()) {
-      socketio.emit('startGameOnServer', gameType);
-    } else {
-      alert("Problematic Open Seats");
-    }
-  });
 }
 
-function takeASeat(playerNum, seatIndex) {
-  nickname = String($("#nicknameInput").val());
-  console.log("playerSelect >> playerNum: " + playerNum + "  >> nickname: " + nickname + "  >>  seatIndex: " + seatIndex);
-  if (nickname == '' || playerNickNames.indexOf(nickname) > -1) {
-    alert('Pick a unique Nickname!');
-  } else {
-    $("#myName").append(playerNum + ": " + nickname);
-    $.cookie("nickname", nickname);
-    console.log("--------------playerBtns emit playerSit...----------------");
-    socketio.emit('playerSit', {
-      nickname: nickname,
-      seatIndex: seatIndex,
-      playerId: clientPlayerId
-    });
-    //TODO: show chat if want to use it $('#chat').show();
-    playerColor = playerColors[seatIndex - 1];
-    $(".playerBtns").prop('disabled', true);
-    $("#nicknameInput").prop('disabled', true);
-  }
-}
+// function takeASeat(playerNum, seatIndex) {
+//   nickname = String($("#nicknameInput").val());
+//   console.log("playerSelect >> playerNum: " + playerNum + "  >> nickname: " + nickname + "  >>  seatIndex: " + seatIndex);
+//   if (nickname == '' || playerNickNamesBySeatIndex.indexOf(nickname) > -1) {
+//     alert('Pick a unique Nickname!');
+//   } else {
+//     $("#myName").append(playerNum + ": " + nickname);
+//     $.cookie("nickname", nickname);
+//     console.log("--------------playerBtns emit playerSit...----------------");
+//     socketio.emit('playerSit', {
+//       nickname: nickname,
+//       seatIndex: seatIndex,
+//       playerId: clientPlayerId
+//     });
+//     //TODO: show chat if want to use it $('#chat').show();
+//     playerColor = playerColors[seatIndex - 1];
+//     $(".playerBtns").prop('disabled', true);
+//     $("#nicknameInput").prop('disabled', true);
+//   }
+// }
 
-function applySeatButtonClickListener() {
-  $(".playerBtns").on("click", function () {
-    console.log("--------------playerBtns Click----------------");
-    playerNum = $(this).val();
-    takeASeat(playerNum, Number($(this).attr("data-player-number")));
-  });
-}
+// function applySeatButtonClickListener() {
+//   $(".playerBtns").on("click", function () {
+//     console.log("--------------playerBtns Click----------------");
+//     playerNum = $(this).val();
+//     takeASeat(playerNum, Number($(this).attr("data-player-number")));
+//   });
+// }
 
-function addSeatToTable(seatNumber) {
-  if (seatNumber < 0) {
-    console.log("--------------addSeatToTable ----------------: invalid seat: " + seatNumber);
-    return;
-  }
-  console.log("--------------addSeatToTable ----------------: " + seatNumber);
-  if ($("#btnPlayer" + seatNumber).length < 1) {
-    var seatButton = $("<input type='button' class='playerBtns'></input>");
-    $(seatButton).attr("id", "btnPlayer" + seatNumber)
-    $(seatButton).attr("data-player-number", seatNumber);
-    $(seatButton).attr("value", "Player" + seatNumber);
-    $("#seatingArea").append(seatButton);
-  }
-}
+// function addSeatToTable(seatNumber) {
+//   if (seatNumber < 0) {
+//     console.log("--------------addSeatToTable ----------------: invalid seat: " + seatNumber);
+//     return;
+//   }
+//   console.log("--------------addSeatToTable ----------------: " + seatNumber);
+//   if ($("#btnPlayer" + seatNumber).length < 1) {
+//     var seatButton = $("<input type='button' class='playerBtns'></input>");
+//     $(seatButton).attr("id", "btnPlayer" + seatNumber)
+//     $(seatButton).attr("data-player-number", seatNumber);
+//     $(seatButton).attr("value", "Player" + seatNumber);
+//     $("#seatingArea").append(seatButton);
+//   }
+// }
 
-function isOkayToStartTheGame() {
-  if (!gameConfig_chooseSeats) {    
-    const playerCount = $('.playerBtns').length;
-    console.log("isOkayToStartTheGame?? "+playerCount+" <> "+gameConfig_minPlayerCount);
-    return playerCount >= gameConfig_minPlayerCount && playerCount <= gameConfig_maxPlayerCount
-  }
-  var lowestOpen = 999;
-  var highestReadied = 0;
+function isOkayToStartTheGame(playerCount) {
+  // if (!gameConfig_chooseSeats) {
+  //   const playerCount = $('.playerBtns').length;
+  //   console.log("isOkayToStartTheGame?? " + playerCount + " <> " + gameConfig_minPlayerCount);
+  //   return playerCount >= gameConfig_minPlayerCount && playerCount <= gameConfig_maxPlayerCount
+  // }
+  // var lowestOpen = 999;
+  // var highestReadied = 0;
 
-  $('.playerBtns').each(function () {
-    var number = Number($(this).data("player-number"));
-    var isReadied = $(this).prop("disabled");
-    console.log("P#:" + number);
-    if (isReadied && number > highestReadied) {
-      highestReadied = number;
-    }
-    if (!isReadied && number < lowestOpen) {
-      lowestOpen = number;
-    }
-  });
+  // $('.playerBtns').each(function () {
+  //   var number = Number($(this).data("player-number"));
+  //   var isReadied = $(this).prop("disabled");
+  //   console.log("P#:" + number);
+  //   if (isReadied && number > highestReadied) {
+  //     highestReadied = number;
+  //   }
+  //   if (!isReadied && number < lowestOpen) {
+  //     lowestOpen = number;
+  //   }
+  // });
 
-  var isOkay = lowestOpen > highestReadied &&
-    highestReadied >= gameConfig_minPlayerCount &&
-    highestReadied <= gameConfig_maxPlayerCount;
+  // var isOkay = lowestOpen > highestReadied &&
+  //   highestReadied >= gameConfig_minPlayerCount &&
+  //   highestReadied <= gameConfig_maxPlayerCount;
 
-  console.log("gameConfig_minPlayerCount: " + gameConfig_minPlayerCount + "   gameConfig_maxPlayerCount: " + gameConfig_maxPlayerCount);
-  console.log("A: " + (lowestOpen > highestReadied) + "   B: " + (highestReadied >= gameConfig_minPlayerCount) + "  C: " + (highestReadied <= gameConfig_maxPlayerCount));
-  console.log("LO: " + lowestOpen + "   HR: " + highestReadied + "  okay? " + isOkay);
-  return isOkay;
+  // console.log("gameConfig_minPlayerCount: " + gameConfig_minPlayerCount + "   gameConfig_maxPlayerCount: " + gameConfig_maxPlayerCount);
+  // console.log("A: " + (lowestOpen > highestReadied) + "   B: " + (highestReadied >= gameConfig_minPlayerCount) + "  C: " + (highestReadied <= gameConfig_maxPlayerCount));
+  // console.log("LO: " + lowestOpen + "   HR: " + highestReadied + "  okay? " + isOkay);
+  return playerCount >= gameConfig_minPlayerCount && playerCount <= gameConfig_maxPlayerCount;
 }
 
 function attemptJoinRoom() {
@@ -307,18 +299,18 @@ function updateRoom(room) {
   $("#seatingArea").empty();
 
   var counter = 1;
-  $.each(roomState.players, function () {
-    addSeatToTable(counter);
-    counter = counter + 1;
-  });
-  if (gameConfig_chooseSeats) {
-    $("#playerSelectLabel").show();
-    $("#seatingArea").show();
-    applySeatButtonClickListener();
-  } else {
-    $("#playerSelectLabel").hide();
-    $("#seatingArea").hide();
-  }
+  // $.each(roomState.players, function () {
+  //   addSeatToTable(counter);
+  //   counter = counter + 1;
+  // });
+  // if (gameConfig_chooseSeats) {
+  //   $("#playerSelectLabel").show();
+  //   $("#seatingArea").show();
+  //   applySeatButtonClickListener();
+  // } else {
+  $("#playerSelectLabel").hide();
+  $("#seatingArea").hide();
+  // }
 
   $.each(roomState.players, function () {
     var nickname = this.nickname;
@@ -326,6 +318,13 @@ function updateRoom(room) {
       nickname = this.id;
     }
     var seatIndex = roomState.seats.indexOf(this.id) + 1;
+    if (nickname == $("usr").val()) {
+      console.log("All Happening For This Player ("+nickname+")");
+      $.cookie("nickname", nickname);
+      playerNum = seatIndex;
+      $("#myName").append(playerNum + ": " + nickname);
+      playerColor = playerColors[seatIndex - 1];
+    }
     console.log("--------seatIndex-----------" + seatIndex + "  for:" + this.id);
     console.log("--------roomState.seats-----------" + JSON.stringify(roomState.seats));
     if (seatIndex < 1) {
@@ -336,12 +335,20 @@ function updateRoom(room) {
       console.log("--------seat " + nickname + " at the table-----------" + seatIndex + "  for:" + this.id);
       $("#btnPlayer" + seatIndex).val(nickname);
       $("#btnPlayer" + seatIndex).prop('disabled', true);
-      playerNickNames[seatIndex - 1] = nickname;
+      playerNickNamesBySeatIndex[seatIndex - 1] = nickname;
     }
   });
 
   $("#playersInRoom").html(standingPlayersHTMLString);
-  $("#startGameButton").prop("disabled", !isOkayToStartTheGame());
+  $("#startGameButton").prop("disabled", !isOkayToStartTheGame(roomState.players.length));
+  $("#startGameButton:visible").on("click", function () {
+    console.log("startGameButton Clicked");
+    if (isOkayToStartTheGame(roomState.players.length)) {
+      socketio.emit('startGameOnServer', roomState.gameType);
+    } else {
+      alert("Problematic Open Seats");
+    }
+  });
 }
 
 function getNicknameForPlayer(player) {
@@ -349,5 +356,5 @@ function getNicknameForPlayer(player) {
     return "Anyone";
   }
   var myPIndex = Number(player.slice(-1)) - 1;
-  return playerNickNames[myPIndex];
+  return playerNickNamesBySeatIndex[myPIndex];
 }
