@@ -1,4 +1,4 @@
-const lastModifiedString3 = ("Last modified: 2021/01/09 01:06:15");
+const lastModifiedString3 = ("Last modified: 2021/01/09 02:16:25");
 const deckTS = lastModifiedString3.replace("Last ", "").replace("modified: ", "");
 console.log("client_deckFunction.js " + lastModifiedString3);
 
@@ -59,7 +59,7 @@ function startGame() {
     dealCards();
   }
 
-  console.log("[][][][][][][][][][] IS DEALER? " + (playerNum == dealer) + "[][][][][][][][][][][]");
+  console.log("[][][][][][][][][][] IS DEALER? " + (client_playerNum == dealer) + "[][][][][][][][][][][]");
   $('#bidOfRoundText').hide();
   $('.winCount').text(0);
   $('td').css('background-color', 'transparent');
@@ -283,12 +283,12 @@ function setTrumpCardAssignee(cardID, player) {
   $("#assignment" + cardID).addClass(player);
 }
 
-function setPlayerShortName(forPlayerNumber, shortName) {
+function setPlayerShortName(playerToName, shortName) {
   console.log("--------------assignShortNameToClients----------------data.playerNumber " + data.playerNumber + ",  data.shortName: " + data.shortName);
-  var _idSelector = "#loc" + inversePlayerIdMap['Player' + forPlayerNumber] + "name";
-  var tempPlayerNum = playerNum.replace('Player', '');
-  console.log("Is it me? " + forPlayerNumber + "  vs. " + tempPlayerNum);
-  if (forPlayerNumber == tempPlayerNum) {
+  var _idSelector = "#loc" + inversePlayerIdMap['Player' + playerToName] + "name";
+  var tempPlayerIndicator = client_playerNum.replace('Player', '');
+  console.log("Is it me? " + playerToName + "  vs. " + tempPlayerIndicator);
+  if (playerToName == tempPlayerIndicator) {
     console.log("That's Me");
     _idSelector = "#myName";
   }
@@ -348,9 +348,9 @@ function displayTrumpCard(trumpCard) {
 
 function deal(data) {
   console.log("--------------dealToClients---------------- " + JSON.stringify(data, null, 4));
-  console.log("--------------dealToClients---------------- playerNum: " + playerNum);
+  console.log("--------------dealToClients---------------- client_playerNum: " + client_playerNum);
   console.log("--------------dealToClients---------------- gameType: " + gameType);
-  var myPIndex = Number(playerNum.slice(-1)) - 1;
+  var myPIndex = Number(client_playerNum.slice(-1)) - 1;
   myHandOfCards = data.hands[myPIndex];
   $("#showCase").empty();
   displayMyCards();
@@ -397,7 +397,7 @@ function deal(data) {
       console.log("----dealToClients getNicknameForPlayer----- ");
       commanderName = getNicknameForPlayer(lead);
       $(".highlighted").removeClass("highlighted");
-      updateTurnIndicator(lead, playerNum == lead, true);
+      updateTurnIndicator(lead, client_playerNum == lead, true);
       console.log("--------------commanderName---------------- #loc" + commanderName + '   lead' + lead);
       console.log("--------------markingLeader---------------- #loc" + leaderNum + 'name');
       $(".leader").removeClass("leader");
@@ -405,7 +405,7 @@ function deal(data) {
       $('#bidOfRoundText').show();
     }
   }
-  console.log("--------------dealt...ToClients---------------- playerNum: " + playerNum);
+  console.log("--------------dealt...ToClients---------------- client_playerNum: " + client_playerNum);
 }
 
 function displayMyCards() {
@@ -471,7 +471,7 @@ function highlightCommunicatable() {
 
   $(".onlyOption").click(function () {
     socketio.emit('communicateCard', {
-      player: playerNum,
+      player: client_playerNum,
       cardID: $(this).prop('id').slice(0, -4),
       type: 'onlyCard'
     });
@@ -480,7 +480,7 @@ function highlightCommunicatable() {
   });
   $(".highestOption").click(function () {
     socketio.emit('communicateCard', {
-      player: playerNum,
+      player: client_playerNum,
       cardID: $(this).prop('id').slice(0, -4),
       type: 'highestCard'
     });
@@ -489,7 +489,7 @@ function highlightCommunicatable() {
   });
   $(".lowestOption").click(function () {
     socketio.emit('communicateCard', {
-      player: playerNum,
+      player: client_playerNum,
       cardID: $(this).prop('id').slice(0, -4),
       type: 'lowestCard'
     });
@@ -542,19 +542,19 @@ function displayOtherCards(seatIndex, handSize) {
 }
 
 function playCard() {
-  console.log("--------------playCard >>>>>>>>>>>>>" + currentPlayer + " =? " + playerNum + "   " + JSON.stringify(this));
-  if (gameConfig_playCardsAsync || currentPlayer == playerNum) {
+  console.log("--------------playCard >>>>>>>>>>>>>" + currentPlayer + " =? " + client_playerNum + "   " + JSON.stringify(this));
+  if (gameConfig_playCardsAsync || currentPlayer == client_playerNum) {
     var num = $(this).attr('id').substr(0, 2);
     var cardID = $(this).attr('id').substr(2);
     var card = getCardFromID(cardID);
     // console.log("--------------playCard! " + num + " : " + JSON.stringify(card));
-    if (confirmLegal(card, playerNum == lead)) {
+    if (confirmLegal(card, client_playerNum == lead)) {
       if (gameConfig_cardsPerTurn == 1 || $("#myPlay").children().length < gameConfig_cardsPerTurn) {
         myHandOfCards[Number(num) - 10].suit = "Z";
         $(this).detach();
         socketio.emit('playCard', {
           card: card,
-          player: playerNum
+          player: client_playerNum
         });
       }
     } else {
@@ -568,12 +568,12 @@ function playCard() {
 function cardPlayed(data) {
   var player = data.player;
   var card = data.card;
-  console.log("socketFunctions -> cardPlayed card: " + JSON.stringify(card) + "  >>  player: " + player + "  >> getNextPlayerName: " + getNextPlayerName(playerNum) + "  >>  prevPlayer: " + prevPlayer(playerNum));
+  console.log("socketFunctions -> cardPlayed card: " + JSON.stringify(card) + "  >>  player: " + player + "  >> getNextPlayerName: " + getNextPlayerName(client_playerNum) + "  >>  prevPlayer: " + prevPlayer(client_playerNum));
   if (player == lead) {
-    console.log("ssocketFunctions -> cardPLayed EMPTY" + playerNum + "  :  " + player + "  |  " + lead);
+    console.log("ssocketFunctions -> cardPLayed EMPTY" + client_playerNum + "  :  " + player + "  |  " + lead);
     $(".plays").empty();
   } else {
-    console.log("ssocketFunctions -> cardPLayed " + playerNum + "  :  " + player + "  |  " + lead);
+    console.log("ssocketFunctions -> cardPLayed " + client_playerNum + "  :  " + player + "  |  " + lead);
   }
   console.log("othersPlayed++++++++++++ player: " + player + " card:" + JSON.stringify(card));
 
@@ -587,7 +587,7 @@ function cardPlayed(data) {
       $(cardObj).addClass('isTrump');
     }
   }
-  if (player != playerNum) {
+  if (player != client_playerNum) {
     var seatIndex = inversePlayerIdMap[player];
     console.log("othersPlayed++++++++++++ seatIndex:" + seatIndex);
     $("#loc" + seatIndex + "Hand").find(".otherCards").first().remove();
@@ -610,7 +610,7 @@ function cardPlayed(data) {
     }
     currentPlayer = getNextPlayerName(currentPlayer);
     if (gameConfig_cardsPlayable) {
-      updateTurnIndicator(currentPlayer, currentPlayer == playerNum, false);
+      updateTurnIndicator(currentPlayer, currentPlayer == client_playerNum, false);
     }
   } else {
     if ($(".plays > img").length == gameConfig_playerCount) {
@@ -647,7 +647,7 @@ function cardDrawn(data) {
   if (data.card) {
     var hand;
     var cardObj;
-    if (data.player == playerNum) {
+    if (data.player == client_playerNum) {
       hand = "#myHand";
       let encodedId = (myHandOfCards.length + 10) + getCardID(data.card);
       myHandOfCards.push(data.card);

@@ -1,4 +1,4 @@
-const lastModifiedString7 = ("Last modified: 2020/12/21 20:07:35");
+const lastModifiedString7 = ("Last modified: 2021/01/09 02:16:53");
 const roundTS = lastModifiedString7.replace("Last ", "").replace("modified: ", "");
 console.log("client_round.js " + lastModifiedString7);
 
@@ -9,7 +9,7 @@ function winnerOfRound(data) {
     lead = trickWinner;
     currentPlayer = trickWinner;
     endRound();
-    updateTurnIndicator(lead, playerNum == currentPlayer, true);
+    updateTurnIndicator(lead, client_playerNum == currentPlayer, true);
 
     console.log("[][][][][][][] winner of round: " + trickWinner + " cards:" + trickCardIDs);
     var winnerIndex = inversePlayerIdMap[trickWinner];
@@ -23,7 +23,7 @@ function winnerOfRound(data) {
     } else {
         console.log("[][][][][][][] no bueno winner mustBeMe");
     }
-    // if (gameConfig_hasTeams && gameConfig_playerCount == 4 && trickWinner == getNextPlayerName(getNextPlayerName(playerNum))) {
+    // if (gameConfig_hasTeams && gameConfig_playerCount == 4 && trickWinner == getNextPlayerName(getNextPlayerName(client_playerNum))) {
     //     tricksWon++;
     // }
     if (roundNumber == gameConfig_numberOfRounds) {

@@ -1,4 +1,4 @@
-const lastModifiedString6 = ("Last modified: 2021/01/09 01:53:41");
+const lastModifiedString6 = ("Last modified: 2021/01/09 02:22:06");
 const roomTS = lastModifiedString6.replace("Last ", "").replace("modified: ", "");
 console.log("client_roomState.js " + lastModifiedString6);
 
@@ -31,13 +31,13 @@ function initPlayerModule() {
   $("#startGameButton").toggle(isGameMaster);
 }
 
-// function takeASeat(playerNum, seatIndex) {
+// function takeASeat(seatIndex) {
 //   nickname = String($("#nicknameInput").val());
-//   console.log("playerSelect >> playerNum: " + playerNum + "  >> nickname: " + nickname + "  >>  seatIndex: " + seatIndex);
+//   console.log("playerSelect >> client_playerNum: " + client_playerNum + "  >> nickname: " + nickname + "  >>  seatIndex: " + seatIndex);
 //   if (nickname == '' || playerNickNamesBySeatIndex.indexOf(nickname) > -1) {
 //     alert('Pick a unique Nickname!');
 //   } else {
-//     $("#myName").append(playerNum + ": " + nickname);
+//     $("#myName").append(client_playerNum + ": " + nickname);
 //     $.cookie("nickname", nickname);
 //     console.log("--------------playerBtns emit playerSit...----------------");
 //     socketio.emit('playerSit', {
@@ -55,8 +55,8 @@ function initPlayerModule() {
 // function applySeatButtonClickListener() {
 //   $(".playerBtns").on("click", function () {
 //     console.log("--------------playerBtns Click----------------");
-//     playerNum = $(this).val();
-//     takeASeat(playerNum, Number($(this).attr("data-player-number")));
+//     client_playerNum = $(this).val();
+//     takeASeat(Number($(this).attr("data-player-number")));
 //   });
 // }
 
@@ -110,14 +110,14 @@ function attemptJoinRoom() {
   console.log("--------attemptJoinRoom-----------");
   roomID = $("#roomID").val().toUpperCase();
 
-  var username = $("#nicknameInput").val();
+  client_username = $("#nicknameInput").val();
   while (roomID.length < 4) {
     roomID = roomID.concat(roomCodeCandidates.charAt(Math.floor(Math.random() * roomCodeCandidates.length)));
   }
   roomID = roomID.toUpperCase();
   $("#roomID").val(roomID)
   socketio.emit('enterRoom', {
-    username: username,
+    username: client_username,
     roomID: roomID
   });
   $("#roomLoader").show();
@@ -318,11 +318,11 @@ function updateRoom(room) {
       nickname = this.id;
     }
     var seatIndex = roomState.seats.indexOf(this.id) + 1;
-    if (nickname == $("usr").val()) {
+    if (nickname == client_username) { //TODO: Base on ID instead of nickname
       console.log("All Happening For This Player ("+nickname+")");
       $.cookie("nickname", nickname);
-      playerNum = seatIndex;
-      $("#myName").append(playerNum + ": " + nickname);
+      client_playerNum = seatIndex;
+      $("#myName").append(client_playerNum + ": " + nickname);
       playerColor = playerColors[seatIndex - 1];
     }
     console.log("--------seatIndex-----------" + seatIndex + "  for:" + this.id);
