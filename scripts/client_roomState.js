@@ -1,4 +1,4 @@
-const lastModifiedString6 = ("Last modified: 2021/01/09 02:25:12");
+const lastModifiedString6 = ("Last modified: 2021/01/09 02:30:54");
 const roomTS = lastModifiedString6.replace("Last ", "").replace("modified: ", "");
 console.log("client_roomState.js " + lastModifiedString6);
 
@@ -295,10 +295,10 @@ function updateRoom(room) {
   gameConfig_playerCount = roomState.players.length;
   initPlayerModule();
   console.log("--------updateRoom ------roomState.players-----" + JSON.stringify(roomState.players));
-  var standingPlayersHTMLString = "Waiting for... <br />";
+  var standingPlayersHTMLString = "Players: <br />";
   $("#seatingArea").empty();
 
-  var counter = 1;
+  // var counter = 1;
   // $.each(roomState.players, function () {
   //   addSeatToTable(counter);
   //   counter = counter + 1;
@@ -336,6 +336,9 @@ function updateRoom(room) {
       $("#btnPlayer" + seatIndex).val(nickname);
       $("#btnPlayer" + seatIndex).prop('disabled', true);
       playerNickNamesBySeatIndex[seatIndex - 1] = nickname;
+
+      standingPlayersHTMLString = standingPlayersHTMLString.concat(nickname);
+      standingPlayersHTMLString = standingPlayersHTMLString.concat("<br />");
     }
   });
 
