@@ -1,4 +1,4 @@
-const lastModifiedString6 = ("Last modified: 2021/01/09 00:57:03");
+const lastModifiedString6 = ("Last modified: 2021/01/09 01:25:55");
 const roomTS = lastModifiedString6.replace("Last ", "").replace("modified: ", "");
 console.log("client_roomState.js " + lastModifiedString6);
 
@@ -63,7 +63,8 @@ function takeASeat(playerNum, seatIndex) {
 function applySeatButtonClickListener() {
   $(".playerBtns").on("click", function () {
     console.log("--------------playerBtns Click----------------");
-    takeASeat($(this).val(), Number($(this).attr("data-player-number")));
+    playerNum = $(this).val();
+    takeASeat(playerNum, Number($(this).attr("data-player-number")));
   });
 }
 
