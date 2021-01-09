@@ -1,4 +1,4 @@
-const lastModifiedString4 = ("Last modified: 2021/01/09 02:25:12");
+const lastModifiedString4 = ("Last modified: 2021/01/09 02:33:11");
 const gameTS=lastModifiedString4.replace("Last ","").replace("modified: ","");
 console.log("client_game.js "+lastModifiedString4);
 
@@ -233,7 +233,7 @@ function constructSeatedPlayArea() {
       });
       playerIdMap[j] = 'Player' + pNumber;
       inversePlayerIdMap['Player' + pNumber] = j;
-      $("#loc" + j + "name").html('Player' + pNumber + ': ' + playerNickNames[pNumber - 1]);
+      $("#loc" + j + "name").html('Player' + pNumber + ': ' + playerNickNamesBySeatIndex[pNumber - 1]);
       $.each(playerOptions, function () {
           $("#drpPlyrName" + j).append('<option value="' + this + '">' + this + '</option>');
       });
