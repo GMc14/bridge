@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <title>GMcCrew</title>
   <script>
-    const lastModifiedString10 = ("Last modified: 2021/01/08 01:22:36");
+    const lastModifiedString10 = ("Last modified: 2021/01/13 01:48:39");
     const htmlTS = lastModifiedString10.replace("Last ", "").replace("modified: ", "");
     console.log("index.html " + lastModifiedString10);
   </script>
@@ -25,11 +25,13 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Tangerine">
   <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Dawning of a New Day'>
 
+  <link rel="stylesheet" href="main.css">
   <link rel="stylesheet" type="text/css" href="styles/index.css">
   <link rel="stylesheet" type="text/css" href="styles/roomSetup.css">
   <link rel="stylesheet" type="text/css" href="styles/chat.css">
   <link rel="stylesheet" type="text/css" href="styles/cards.css">
   <link rel="stylesheet" type="text/css" href="styles/loader-bouncing.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300i,400,700,900,900i|Work+Sans:400,900" >
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js" type="text/javascript"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js" type="text/javascript">
   </script>
@@ -49,7 +51,12 @@
 </head>
 
 <body>
+  <div id="render-target"></div>
+  <div class="circleContainer">
+    <div class="circle"></div>
+  </div>
   <span id='signature'>GMc14</span>
+
   <div id="gameBoard">
     <div id=topbar>
       <span id="gameNameText"></span>
@@ -176,6 +183,48 @@
   </div>
   <span id="timeStamp">---</span>
   <script>
+    $(window).resize(function () {
+      // layoutAroundOval();
+    });
+
+    function layoutAroundOval() {
+      var itemCount = 25;
+      var extraPadding = Math.floor(itemCount / 5);
+      extraPadding += (extraPadding + 1) % 2;
+      var halfPadding = Math.floor(extraPadding / 2);
+      console.log(extraPadding);
+      var widthPct = 80;
+      var heightPct = 50;
+      var width = $(window).width() * widthPct*1.0/100;
+      var height = $(window).height() * heightPct*1.0/100;
+      $(".circle").css("width", width + "px");
+      $(".circle").css("height", height + "px");
+      $(".circle").css("margin-top", "-"+heightPct/2 + "vh");
+      $(".circle").css("margin-left", "-"+widthPct/2 + "vw");
+
+      $(".circle").empty();
+      for (var i = 1; i <= (itemCount + extraPadding); i++) {
+        if (i > (itemCount + halfPadding) || i <= halfPadding) {
+          $(".circle").append("<div class='tick red'></div>");
+        } else {
+          $(".circle").append("<div class='tick'></div>");
+        }
+        var angle = (360 * 1.0 * i / (itemCount + extraPadding));
+        angle += 90;
+        angle = angle % 360;
+        var angleRads = angle * (Math.PI / 180);
+        var widthComponent = (width / 2) * Math.sin(angleRads);
+        var heightComponent = (height / 2) * Math.cos(angleRads);
+        var radius = (width / 2) * (height / 2) / Math.sqrt(Math.pow(widthComponent, 2) + Math.pow(heightComponent, 2));
+        console.log("angle: "+angle + " radius: " + radius+ " widthComponent: "+widthComponent+"  heightComponent:"+heightComponent);
+        $(".circle .tick:nth-child(" + i + ")").css("transform", "rotate(" + angle + "deg) translate(" + radius +
+        "px)");
+      }
+    }
+    // $("#gameSetup").hide();
+    //   layoutAroundOval();
+  </script>
+  <script>
     var dates = [htmlTS, bidTS, crewTS, deckTS, gameTS, gmTS, roomTS, roundTS, socketTS, trickTS, utilTS];
     var dates = dates.map(function (e) {
       return new Date(e);
@@ -196,7 +245,7 @@
       validateInputs();
     });
 
-    var previousNickName = $.cookie("nickname").replace("0", "");
+    var previousNickName = $.cookie("nickname");
     if (previousNickName) {
       $("#nicknameInput").val(previousNickName);
       validateInputs();

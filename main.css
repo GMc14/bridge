@@ -1,0 +1,35 @@
+/* CSS declarations go here */
+body {
+  background-color: lightgrey;
+  background-size: cover;
+  margin: 0;
+  font-family:"Work Sans"
+
+}
+.card-container{
+  background-repeat: no-repeat;
+  background-size: auto;
+  height: 400px;
+}
+
+.game-status {
+  border-bottom: solid 1px gray;
+  font-size: larger;
+  display: flex;
+  padding: 40px;
+  text-align: center;;
+  flex-direction: column;
+  justify-content: space-around;
+}
+.scrollable-list {
+  padding-top: 20px;
+  height: 300px;
+  overflow-y:scroll;
+}
+
+.bottom-info {
+  bottom: 0;
+  position: fixed;
+  width: 100%;
+  text-align: center
+}

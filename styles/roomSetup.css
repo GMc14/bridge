@@ -20,6 +20,35 @@
   margin-bottom: 2vh;
 }
 
+.circleContainer {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  background: #117733;
+}
+
+.circle {
+  background: pink;
+  border-radius: 50%;
+  position: relative;
+}
+
+.circle .tick {
+  width: 50px;
+  height: 50px;
+  background: #ff4;
+  border-radius: 50%;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin-top: -25px;
+  margin-left: -25px;
+}
+
+.circle .red {
+  background: #f44;
+}
+
 #playerSetup {
   display: none;
   z-index: 101;
@@ -35,17 +64,18 @@
   text-align: center;
   font-size: 4vmax;
 }
-.setupInputLabel{
-  
+
+.setupInputLabel {
   font-size: 2.5vmax;
 }
+
 #enterRoomButton {
   margin-top: 2vmax;
   font-size: 4vmax;
   padding: 1vmin;
   border-radius: 0.5vmax;
   transform: translate(-50%, 0%);
-  box-shadow: 0 .5rem 1rem rgba(0,0,0,.15) !important;
+  box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .15) !important;
   margin-left: 50%;
 }
 
