@@ -1,4 +1,4 @@
-const lastModifiedString3 = ("Last modified: 2021/01/09 02:25:12");
+const lastModifiedString3 = ("Last modified: 2021/02/06 17:31:57");
 const deckTS = lastModifiedString3.replace("Last ", "").replace("modified: ", "");
 console.log("client_deckFunction.js " + lastModifiedString3);
 
@@ -270,7 +270,7 @@ function sortHand() {
 }
 
 function setTrumpCardOrderIcon(cardID, icon) {
-  console.log("--------------setTrumpCardOrderIcon----------------data.card " + JSON.stringify(data.card) + ",  data.icon: " + data.icon);
+  console.log("--------------setTrumpCardOrderIcon----------------data.card " + cardID + ",  data.icon: " + icon);
   $("#token" + cardID).find("img").attr("src", "/token_imgs/" + icon + ".png");
 }
 

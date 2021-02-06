@@ -187,7 +187,7 @@ div#myHand.highlighted {
 }
 
 .potentialTask {
-  width: 4vmax;
+  height: 5vmax;
   margin: 1px;
   background: #fff;
 }
