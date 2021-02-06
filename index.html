@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <title>GMcCrew</title>
   <script>
-    const lastModifiedString10 = ("Last modified: 2021/01/13 02:25:30");
+    const lastModifiedString10 = ("Last modified: 2021/02/06 01:40:46");
     const htmlTS = lastModifiedString10.replace("Last ", "").replace("modified: ", "");
     console.log("index.html " + lastModifiedString10);
   </script>
@@ -184,44 +184,44 @@
   </div>
   <span id="timeStamp">---</span>
   <script>
-    $(window).resize(function () {
-      // layoutAroundOval();
-    });
+    // $(window).resize(function () {
+    //   // layoutAroundOval();
+    // });
 
-    function layoutAroundOval() {
-      var itemCount = 25;
-      var extraPadding = Math.floor(itemCount / 5);
-      extraPadding += (extraPadding + 1) % 2;
-      var halfPadding = Math.floor(extraPadding / 2);
-      console.log(extraPadding);
-      var widthPct = 80;
-      var heightPct = 50;
-      var width = $(window).width() * widthPct*1.0/100;
-      var height = $(window).height() * heightPct*1.0/100;
-      $(".circle").css("width", width + "px");
-      $(".circle").css("height", height + "px");
-      $(".circle").css("margin-top", "-"+heightPct/2 + "vh");
-      $(".circle").css("margin-left", "-"+widthPct/2 + "vw");
+    // function layoutAroundOval() {
+    //   var itemCount = 25;
+    //   var extraPadding = Math.floor(itemCount / 5);
+    //   extraPadding += (extraPadding + 1) % 2;
+    //   var halfPadding = Math.floor(extraPadding / 2);
+    //   console.log(extraPadding);
+    //   var widthPct = 80;
+    //   var heightPct = 50;
+    //   var width = $(window).width() * widthPct*1.0/100;
+    //   var height = $(window).height() * heightPct*1.0/100;
+    //   $(".circle").css("width", width + "px");
+    //   $(".circle").css("height", height + "px");
+    //   $(".circle").css("margin-top", "-"+heightPct/2 + "vh");
+    //   $(".circle").css("margin-left", "-"+widthPct/2 + "vw");
 
-      $(".circle").empty();
-      for (var i = 1; i <= (itemCount + extraPadding); i++) {
-        if (i > (itemCount + halfPadding) || i <= halfPadding) {
-          $(".circle").append("<div class='tick red'></div>");
-        } else {
-          $(".circle").append("<div class='tick'></div>");
-        }
-        var angle = (360 * 1.0 * i / (itemCount + extraPadding));
-        angle += 90;
-        angle = angle % 360;
-        var angleRads = angle * (Math.PI / 180);
-        var widthComponent = (width / 2) * Math.sin(angleRads);
-        var heightComponent = (height / 2) * Math.cos(angleRads);
-        var radius = (width / 2) * (height / 2) / Math.sqrt(Math.pow(widthComponent, 2) + Math.pow(heightComponent, 2));
-        console.log("angle: "+angle + " radius: " + radius+ " widthComponent: "+widthComponent+"  heightComponent:"+heightComponent);
-        $(".circle .tick:nth-child(" + i + ")").css("transform", "rotate(" + angle + "deg) translate(" + radius +
-        "px)");
-      }
-    }
+    //   $(".circle").empty();
+    //   for (var i = 1; i <= (itemCount + extraPadding); i++) {
+    //     if (i > (itemCount + halfPadding) || i <= halfPadding) {
+    //       $(".circle").append("<div class='tick red'></div>");
+    //     } else {
+    //       $(".circle").append("<div class='tick'></div>");
+    //     }
+    //     var angle = (360 * 1.0 * i / (itemCount + extraPadding));
+    //     angle += 90;
+    //     angle = angle % 360;
+    //     var angleRads = angle * (Math.PI / 180);
+    //     var widthComponent = (width / 2) * Math.sin(angleRads);
+    //     var heightComponent = (height / 2) * Math.cos(angleRads);
+    //     var radius = (width / 2) * (height / 2) / Math.sqrt(Math.pow(widthComponent, 2) + Math.pow(heightComponent, 2));
+    //     console.log("angle: "+angle + " radius: " + radius+ " widthComponent: "+widthComponent+"  heightComponent:"+heightComponent);
+    //     $(".circle .tick:nth-child(" + i + ")").css("transform", "rotate(" + angle + "deg) translate(" + radius +
+    //     "px)");
+    //   }
+    // }
     // $("#gameSetup").hide();
     //   layoutAroundOval();
   </script>
