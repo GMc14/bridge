@@ -1,4 +1,4 @@
-console.log("server.js Last modified: 2021/02/08 20:17:32");
+console.log("server.js Last modified: 2021/02/08 21:21:41");
 
 var maximumRoomSize = 10;
 var http = require("http"),
@@ -262,7 +262,7 @@ io.sockets.on('connection', function (socket) {
     console.log("---startGameOnServer---- startGamePlayerCount" + startGamePlayerCount);
     // seatUnseatedPlayers(socket);
     io.sockets.to(socket.room).emit('updateRoom', io.sockets.adapter.rooms[socket.room]);
-    io.sockets.to(socket.room).emit('startGame', {
+    io.sockets.to(socket.room).emit('startGameOnClient', {
       playerCount: startGamePlayerCount,
       gameType: gameType
     });
