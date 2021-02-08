@@ -1,4 +1,4 @@
-const lastModifiedString3 = ("Last modified: 2021/02/08 20:42:30");
+const lastModifiedString3 = ("Last modified: 2021/02/08 20:59:44");
 const deckTS = lastModifiedString3.replace("Last ", "").replace("modified: ", "");
 console.log("client_deckFunction.js " + lastModifiedString3);
 
@@ -350,6 +350,8 @@ var cardsConcealed = true;
 
 function deal(data) {
   cardsConcealed = true;
+  $('.plays').css('transform', 'scale(1)');
+  $('.plays').css('width', '20vw');
   console.log("--------------dealToClients---------------- " + JSON.stringify(data, null, 4));
   console.log("--------------dealToClients---------------- client_playerNumString: " + client_playerNumString);
   console.log("--------------dealToClients---------------- gameType: " + gameType);
@@ -415,6 +417,8 @@ function revealCards() {
   if (cardsConcealed) {
     cardsConcealed = false;
     $(".myCards").each(playCard);
+    $('.plays').css('transform', 'scale(0.5)');
+    $('.plays').css('width', '30vw');
   }
 }
 
