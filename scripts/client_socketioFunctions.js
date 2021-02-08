@@ -1,4 +1,4 @@
-const lastModifiedString8 = ("Last modified: 2021/02/08 21:21:15");
+const lastModifiedString8 = ("Last modified: 2021/02/08 21:44:16");
 const socketTS = lastModifiedString8.replace("Last ", "").replace("modified: ", "");
 console.log("client_socketioFunction.js " + lastModifiedString8);
 
@@ -13,7 +13,6 @@ $(function () {
         notifyUserLeftRoom(nickname);
     });
     socketio.on('startGameOnClient', function (data) {
-        
       console.warn("Starting Game startGameOnClient");
         initialStartGame(data);
     });
