@@ -1,4 +1,4 @@
-const lastModifiedString6 = ("Last modified: 2021/02/08 21:45:52");
+const lastModifiedString6 = ("Last modified: 2021/02/08 21:57:06");
 const roomTS = lastModifiedString6.replace("Last ", "").replace("modified: ", "");
 console.log("client_roomState.js " + lastModifiedString6);
 
@@ -347,13 +347,12 @@ function updateRoom(room) {
   $("#playersInRoom").html(standingPlayersHTMLString);
   $("#startGameButton").prop("disabled", !isOkayToStartTheGame(roomState.players.length));
   var thisShitAlreadyFired = false;
-  $("#startGameButton").one("click", function (event) {
-
+  $("#startGameButton").click(function (event) {
+    $("#startGameButton").prop("disabled", true);
     event.stopPropagation();
     event.preventDefault();
     console.log("startGameButton Clicked");
     if (!thisShitAlreadyFired && isOkayToStartTheGame(roomState.players.length)) {
-      $("#startGameButton").prop("disabled", true);
       thisShitAlreadyFired = true;
       console.warn("Starting Game on Server");
       socketio.emit('startGameOnServer', roomState.gameType);
