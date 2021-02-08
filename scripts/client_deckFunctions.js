@@ -1,4 +1,4 @@
-const lastModifiedString3 = ("Last modified: 2021/02/08 20:59:44");
+const lastModifiedString3 = ("Last modified: 2021/02/08 21:11:56");
 const deckTS = lastModifiedString3.replace("Last ", "").replace("modified: ", "");
 console.log("client_deckFunction.js " + lastModifiedString3);
 
@@ -12,7 +12,15 @@ var tokenOptions = ['x', '1', '2', '3', '4', '5', 'i', 'ii', 'iii', 'iiii', 'O',
 var playerOptions = ['', 'GM', 'AM', 'EM', "AP", "AB", "MJ", "SJ"];
 
 function initialStartGame(data) {
-  console.log("initialStartGame");
+  console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ initialStartGame");
+  console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ initialStartGame");
+  console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ initialStartGame");
+  console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ initialStartGame");
+  console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ initialStartGame");
+  console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ initialStartGame");
+  console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ initialStartGame");
+  console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ initialStartGame");
+  console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ initialStartGame");
   setGameType(data.gameType);
   gameConfig_playerCount = data.playerCount;
   cardback = $(".cardBackOption.ui-selected").prop("src");
@@ -563,7 +571,8 @@ function playCard() {
     var card = getCardFromID(cardID);
     // console.log("--------------playCard! " + num + " : " + JSON.stringify(card));
     if (!cardsConcealed || confirmLegal(card, client_playerNumString == lead)) {
-      if (!cardsConcealed || gameConfig_cardsPerTurn == 1 || $("#myPlay").children().length < gameConfig_cardsPerTurn) {
+      
+      if (myHandOfCards[Number(num) - 10] && (!cardsConcealed || gameConfig_cardsPerTurn == 1 || $("#myPlay").children().length < gameConfig_cardsPerTurn)) {
         myHandOfCards[Number(num) - 10].suit = "Z";
         $(this).detach();
         socketio.emit('playCard', {

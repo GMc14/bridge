@@ -1,4 +1,4 @@
-const lastModifiedString4 = ("Last modified: 2021/02/08 20:27:42");
+const lastModifiedString4 = ("Last modified: 2021/02/08 21:12:20");
 const gameTS=lastModifiedString4.replace("Last ","").replace("modified: ","");
 console.log("client_game.js "+lastModifiedString4);
 
@@ -204,7 +204,7 @@ function constructUnseatedPlayArea(){
 
     gameConfig_playerCount  = roomState.players.length;
     
-    console.log("================ "+gameConfig_playerCount+" ========constructUnseatedPlayArea ");
+    console.log("====#####fuzzwut?#####============ "+gameConfig_playerCount+" ========constructUnseatedPlayArea ");
     var clientNumber = Number(client_playerNumString.slice(-1));
     for (var j = 1; j < gameConfig_playerCount; j++) {
         var pNumber = Number((clientNumber + j - 1) % gameConfig_playerCount) + 1;
@@ -248,6 +248,8 @@ function constructSeatedPlayArea() {
     console.log("========================constructSeatedPlayArea");
   var clientNumber = Number(client_playerNumString.slice(-1));
   for (var j = 1; j < gameConfig_playerCount; j++) {
+      
+    console.log("========================constructSeatedPlayArea j:"+j);
       var pNumber = Number((clientNumber + j - 1) % gameConfig_playerCount) + 1;
 
       var stuff = $('<div alt="loc' + j + 'stuff" id="loc' + j + 'stuff" class="stuff"></div>');
