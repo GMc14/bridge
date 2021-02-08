@@ -1,4 +1,4 @@
-const lastModifiedString5 = ("Last modified: 2021/02/08 20:17:11");
+const lastModifiedString5 = ("Last modified: 2021/02/08 20:49:43");
 const gmTS = lastModifiedString5.replace("Last ", "").replace("modified: ", "");
 console.log("client_gameMaster.js " + lastModifiedString5);
 
@@ -26,7 +26,7 @@ $(function () {
   $('#restartGameButton').on('click', function () {
     socketio.emit('restartGame');
   });
-  $('#restartGameButton').on('click', function () {
+  $('#revealCards').on('click', function () {
     socketio.emit('revealCards');
   });
   $('#drawTask').on('click', function () {
