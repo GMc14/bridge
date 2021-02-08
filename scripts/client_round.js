@@ -1,4 +1,4 @@
-const lastModifiedString7 = ("Last modified: 2021/01/09 02:25:12");
+const lastModifiedString7 = ("Last modified: 2021/02/08 20:14:23");
 const roundTS = lastModifiedString7.replace("Last ", "").replace("modified: ", "");
 console.log("client_round.js " + lastModifiedString7);
 
@@ -15,10 +15,10 @@ function winnerOfRound(data) {
     var winnerIndex = inversePlayerIdMap[trickWinner];
     if (winnerIndex) {
         console.log("[][][][][][][] put trick in... loc" + winnerIndex + "stuff");
-        addTrickWin("loc" + winnerIndex + "stuff", trickCardIDs);
         var winsId = "loc" + winnerIndex + "wins";
         var currentWins = Number($("#" + winsId).text());
-        console.log("OOOOOOOOOOOOOOOOOOOOO}}}}}}}}}}}}  currentWins: " + currentWins);
+        console.log("OOOOOOOOOOO"+winsId+"OOOOOOOOOO}}}}}}}}}}}}  currentWins: " + currentWins);
+        addTrickWin("loc" + winnerIndex + "stuff", trickCardIDs);
         addTrickWinText(winsId, currentWins + 1);
     } else {
         console.log("[][][][][][][] no bueno winner mustBeMe");

@@ -1,4 +1,4 @@
-const lastModifiedString9 = ("Last modified: 2021/01/09 02:25:12");
+const lastModifiedString9 = ("Last modified: 2021/02/08 20:13:18");
 const trickTS = lastModifiedString9.replace("Last ", "").replace("modified: ", "");
 console.log("client_trick.js " + lastModifiedString9);
 
@@ -136,6 +136,7 @@ function compareRawCard(card1, card2) {
 }
 
 function addTrickWinText(who, wins) {
+  console.log("addTrickWinText: "+who+" :: "+wins);
   $("#" + who).text(wins);
 }
 
