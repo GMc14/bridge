@@ -1,4 +1,4 @@
-const lastModifiedString6 = ("Last modified: 2021/01/09 02:46:52");
+const lastModifiedString6 = ("Last modified: 2021/02/08 20:24:33");
 const roomTS = lastModifiedString6.replace("Last ", "").replace("modified: ", "");
 console.log("client_roomState.js " + lastModifiedString6);
 
@@ -228,7 +228,9 @@ $(function () {
     $("#handNumberInput").val(0);
   });
   $("#handNumberInput").change(function () {
-    socketio.emit('setHand', $(this).val());
+    const value = $(this).val();
+    console.log("origin hand #: "+value);
+    socketio.emit('setHand', value);
   });
   $("#missionNumberInput").val(1);
 });

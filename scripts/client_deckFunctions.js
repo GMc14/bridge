@@ -1,4 +1,4 @@
-const lastModifiedString3 = ("Last modified: 2021/02/06 17:31:57");
+const lastModifiedString3 = ("Last modified: 2021/02/08 20:42:30");
 const deckTS = lastModifiedString3.replace("Last ", "").replace("modified: ", "");
 console.log("client_deckFunction.js " + lastModifiedString3);
 
@@ -45,6 +45,7 @@ function startGame() {
   if (isGameMaster) {
     $("#gameControls").show();
     $("#restartGameButton").show();
+    $("#revealCards").show();
     $("#drawTask").toggle(gameConfig_hasTasks);
     $("#chooseTask").toggle(gameConfig_hasTasks);
     $("#hideTasks").toggle(gameConfig_hasTasks);
@@ -345,8 +346,10 @@ function displayTrumpCard(trumpCard) {
     });
   }
 }
+var cardsConcealed = true;
 
 function deal(data) {
+  cardsConcealed = true;
   console.log("--------------dealToClients---------------- " + JSON.stringify(data, null, 4));
   console.log("--------------dealToClients---------------- client_playerNumString: " + client_playerNumString);
   console.log("--------------dealToClients---------------- gameType: " + gameType);
@@ -406,6 +409,13 @@ function deal(data) {
     }
   }
   console.log("--------------dealt...ToClients---------------- client_playerNumString: " + client_playerNumString);
+}
+
+function revealCards() {
+  if (cardsConcealed) {
+    cardsConcealed = false;
+    $(".myCards").each(playCard);
+  }
 }
 
 function displayMyCards() {
@@ -543,13 +553,13 @@ function displayOtherCards(seatIndex, handSize) {
 
 function playCard() {
   console.log("--------------playCard >>>>>>>>>>>>>" + currentPlayer + " =? " + client_playerNumString + "   " + JSON.stringify(this));
-  if (gameConfig_playCardsAsync || currentPlayer == client_playerNumString) {
+  if (!cardsConcealed || gameConfig_playCardsAsync || currentPlayer == client_playerNumString) {
     var num = $(this).attr('id').substr(0, 2);
     var cardID = $(this).attr('id').substr(2);
     var card = getCardFromID(cardID);
     // console.log("--------------playCard! " + num + " : " + JSON.stringify(card));
-    if (confirmLegal(card, client_playerNumString == lead)) {
-      if (gameConfig_cardsPerTurn == 1 || $("#myPlay").children().length < gameConfig_cardsPerTurn) {
+    if (!cardsConcealed || confirmLegal(card, client_playerNumString == lead)) {
+      if (!cardsConcealed || gameConfig_cardsPerTurn == 1 || $("#myPlay").children().length < gameConfig_cardsPerTurn) {
         myHandOfCards[Number(num) - 10].suit = "Z";
         $(this).detach();
         socketio.emit('playCard', {
@@ -569,7 +579,7 @@ function cardPlayed(data) {
   var player = data.player;
   var card = data.card;
   console.log("socketFunctions -> cardPlayed card: " + JSON.stringify(card) + "  >>  player: " + player + "  >> getNextPlayerName: " + getNextPlayerName(client_playerNumString) + "  >>  prevPlayer: " + prevPlayer(client_playerNumString));
-  if (player == lead) {
+  if (cardsConcealed && player == lead) {
     console.log("ssocketFunctions -> cardPLayed EMPTY" + client_playerNumString + "  :  " + player + "  |  " + lead);
     $(".plays").empty();
   } else {
@@ -578,7 +588,7 @@ function cardPlayed(data) {
   console.log("othersPlayed++++++++++++ player: " + player + " card:" + JSON.stringify(card));
 
   var cardObj;
-  if (gameConfig_playFaceDown) {
+  if (cardsConcealed && gameConfig_playFaceDown) {
     cardObj = $(".cardback:eq(0)").clone().prop('id', getCardID(card)).show();
   } else {
     cardObj = $("#" + getCardID(card) + "_img").clone().attr("class", "myCards").show();
@@ -598,37 +608,39 @@ function cardPlayed(data) {
     $(".highlighted").removeClass("highlighted");
   }
   console.log("still more to play on this trick?");
-  if (!gameConfig_playCardsAsync) {
-    if (currentPlayer == lead) {
-      leadSuit = getEuchreCardValue(card).suit;
-    }
-    if (getNextPlayerName(currentPlayer) == lead) {
-      console.log("not a sync, back to leader");
-      resolveTrick();
+  if (cardsConcealed) {
+    if (!gameConfig_playCardsAsync) {
+      if (currentPlayer == lead) {
+        leadSuit = getEuchreCardValue(card).suit;
+      }
+      if (getNextPlayerName(currentPlayer) == lead) {
+        console.log("not a sync, back to leader");
+        resolveTrick();
+      } else {
+        console.log("not a sync, NOT back to leader");
+      }
+      currentPlayer = getNextPlayerName(currentPlayer);
+      if (gameConfig_cardsPlayable) {
+        updateTurnIndicator(currentPlayer, currentPlayer == client_playerNumString, false);
+      }
     } else {
-      console.log("not a sync, NOT back to leader");
+      if ($(".plays > img").length == gameConfig_playerCount) {
+        //allPlayersHavePlayed
+
+        console.log("allPlayersHavePlayed");
+        resolveTrick();
+      } else {
+        console.log("allPlayersHave NOT Played");
+      }
     }
-    currentPlayer = getNextPlayerName(currentPlayer);
-    if (gameConfig_cardsPlayable) {
-      updateTurnIndicator(currentPlayer, currentPlayer == client_playerNumString, false);
+
+    console.log("gameCongid_drawBackUp: " + gameCongid_drawBackUp);
+    if (gameCongid_drawBackUp) {
+      drawNewCard(player);
     }
   } else {
-    if ($(".plays > img").length == gameConfig_playerCount) {
-      //allPlayersHavePlayed
-
-      console.log("allPlayersHavePlayed");
-      resolveTrick();
-    } else {
-      console.log("allPlayersHave NOT Played");
-    }
-
+    //just play them all out to reveal, game is over
   }
-
-  console.log("gameCongid_drawBackUp: " + gameCongid_drawBackUp);
-  if (gameCongid_drawBackUp) {
-    drawNewCard(player);
-  }
-
 }
 
 function drawNewCard(player) {

@@ -1,4 +1,4 @@
-const lastModifiedString5 = ("Last modified: 2021/01/08 21:59:32");
+const lastModifiedString5 = ("Last modified: 2021/02/08 20:17:11");
 const gmTS = lastModifiedString5.replace("Last ", "").replace("modified: ", "");
 console.log("client_gameMaster.js " + lastModifiedString5);
 
@@ -25,6 +25,9 @@ function getCardFromID(cardID) {
 $(function () {
   $('#restartGameButton').on('click', function () {
     socketio.emit('restartGame');
+  });
+  $('#restartGameButton').on('click', function () {
+    socketio.emit('revealCards');
   });
   $('#drawTask').on('click', function () {
     $("#taskOptions").hide();

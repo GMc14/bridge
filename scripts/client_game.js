@@ -1,4 +1,4 @@
-const lastModifiedString4 = ("Last modified: 2021/01/09 04:20:53");
+const lastModifiedString4 = ("Last modified: 2021/02/08 20:27:42");
 const gameTS=lastModifiedString4.replace("Last ","").replace("modified: ","");
 console.log("client_game.js "+lastModifiedString4);
 
@@ -218,7 +218,6 @@ function constructUnseatedPlayArea(){
         var positionRelativeToCenter = j - ((gameConfig_playerCount) / 2);
         playerIdMap[j] = 'Player' + pNumber;
         inversePlayerIdMap['Player' + pNumber] = j;
-
     }
 
     for (var j = 1; j < gameConfig_playerCount; j++) {

@@ -1,4 +1,4 @@
-const lastModifiedString8 = ("Last modified: 2021/01/09 00:57:34");
+const lastModifiedString8 = ("Last modified: 2021/02/08 20:24:29");
 const socketTS = lastModifiedString8.replace("Last ", "").replace("modified: ", "");
 console.log("client_socketioFunction.js " + lastModifiedString8);
 
@@ -17,6 +17,9 @@ $(function () {
     });
     socketio.on('restartGame', function () {
         startGame();
+    });
+    socketio.on('revealCards', function () {
+        revealCards();
     });
     socketio.on('dealToClients', function (data) {
         deal(data);
@@ -43,10 +46,10 @@ $(function () {
         cardCommunicated(data);
     });
     socketio.on('setMission', function (data) {
-        updateMissionNumber();
+        updateMissionNumber(data);
     });
     socketio.on('setHand', function (data) {
-        updateAttemptNumber();
+        updateAttemptNumber(data);
     });
     socketio.on('cardDrawn', function (data) {
         cardDrawn(data);
