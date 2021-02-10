@@ -1,4 +1,4 @@
-const lastModifiedString6 = ("Last modified: 2021/02/08 21:57:06");
+const lastModifiedString6 = ("Last modified: 2021/02/10 01:51:24");
 const roomTS = lastModifiedString6.replace("Last ", "").replace("modified: ", "");
 console.log("client_roomState.js " + lastModifiedString6);
 
@@ -345,15 +345,16 @@ function updateRoom(room) {
   });
 
   $("#playersInRoom").html(standingPlayersHTMLString);
+  $( "#startGameButton" ).off();
   $("#startGameButton").prop("disabled", !isOkayToStartTheGame(roomState.players.length));
-  var thisShitAlreadyFired = false;
+
+  //FIXME: kill existing listener
   $("#startGameButton").click(function (event) {
     $("#startGameButton").prop("disabled", true);
     event.stopPropagation();
     event.preventDefault();
     console.log("startGameButton Clicked");
-    if (!thisShitAlreadyFired && isOkayToStartTheGame(roomState.players.length)) {
-      thisShitAlreadyFired = true;
+    if (isOkayToStartTheGame(roomState.players.length)) {
       console.warn("Starting Game on Server");
       socketio.emit('startGameOnServer', roomState.gameType);
     } else {
