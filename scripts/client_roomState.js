@@ -1,4 +1,4 @@
-const lastModifiedString6 = ("Last modified: 2021/02/10 01:51:24");
+const lastModifiedString6 = ("Last modified: 2021/02/10 01:52:56");
 const roomTS = lastModifiedString6.replace("Last ", "").replace("modified: ", "");
 console.log("client_roomState.js " + lastModifiedString6);
 
@@ -345,12 +345,11 @@ function updateRoom(room) {
   });
 
   $("#playersInRoom").html(standingPlayersHTMLString);
-  $( "#startGameButton" ).off();
+  $("#startGameButton" ).off();
   $("#startGameButton").prop("disabled", !isOkayToStartTheGame(roomState.players.length));
 
   //FIXME: kill existing listener
   $("#startGameButton").click(function (event) {
-    $("#startGameButton").prop("disabled", true);
     event.stopPropagation();
     event.preventDefault();
     console.log("startGameButton Clicked");
